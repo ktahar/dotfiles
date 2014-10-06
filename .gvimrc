@@ -16,7 +16,7 @@ elseif g:PC_ID == 1
 elseif g:PC_ID == 3
     :autocmd GUIEnter * winpos 136 0
     set lines=56
-    set columns=160
+    set columns=120
 endif
 
 """ cursor blink off
@@ -43,7 +43,7 @@ set guioptions-=e
 if has("win32") || has("win64")
     autocmd guienter * set transparency=240
     autocmd FocusGained * set transparency=240
-    autocmd FocusLost * set transparency=200
+    autocmd FocusLost * set transparency=220
 endif
 
 """ maps

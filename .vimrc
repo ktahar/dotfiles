@@ -22,7 +22,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Refer to |:NeoBundle-examples|.
 " Python
 NeoBundle 'davidhalter/jedi-vim'
-NeoBundle 'ivanov/vim-ipython'
+" NeoBundle 'ivanov/vim-ipython'
 " Latex
 NeoBundle 'vim-latex', {'type' : 'nosync', 'base' : '~/vimfiles/bundle.nosync'}
 " Color
@@ -187,7 +187,7 @@ nnoremap <silent> <Leader>cd :cd %:h<CR>:pwd<CR>
 
 """ Testing...
 "" enable msys tools
-if g:PC_ID == 0 || g:PC_ID == 1
+if g:PC_ID == 0 || g:PC_ID == 1 || g:PC_ID == 3
     let $PATH = $PATH . ";C:\\MinGW\\msys\\1.0\\bin"
 endif
 

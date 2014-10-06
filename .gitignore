@@ -2,3 +2,6 @@
 .vimrc~
 *.bat~
 *.vim~
+.gvimrc~
+.vimrc.local~
+matplotlibrc~
