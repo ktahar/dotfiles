@@ -1,0 +1,39 @@
+# Roots of the synchronization
+root = C:/Users/K.Tahara/work/
+root = //HATANOSHARE/Public/Researches/Graphene/work/
+
+# Paths to synchronize
+path = draftsight
+path = expt
+path = py
+
+# Ignore
+ignore = Name {,.}*{.py~}
+ignore = Name {,.}*{.pyc}
+ignore = Name {,.}*{.html~}
+ignore = Name {,.}*{.css~}
+ignore = Name {,.}*{.txt~}
+ignore = Name {,.}*{.fit~}
+ignore = Name {,.}*{.cond~}
+ignore = Name {,.}*{.lnk}
+ignore = Name {Thumbs.db}
+
+ignore = Path py/doc
+ignore = Path py/o
+ignore = Path py/old
+ignore = Path py/meow_log
+ignore = Path py/modules
+
+# user specific data
+ignore = Path expt/plt/fityk_path.dump
+ignore = Path expt/samples/fityk_path.dump
+
+# old expt data
+ignore = Path expt/*/2011*
+ignore = Path expt/*/2012*
+ignore = Path expt/*/2013*
+ignore = Path expt/transport/Prober_New/2012*
+ignore = Path expt/transport/Prober_New/2013*
+ignore = Path expt/transport/Prober_Old
+ignore = Path expt/transport/LTProber_OdaLab
+ignore = Path expt/om/graphene_from_MPI

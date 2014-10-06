@@ -1,0 +1,37 @@
+# Roots of the synchronization
+root = C:/Users/K.Tahara/
+root = F:/
+
+# Paths to synchronize 
+path = work
+path = docs
+
+# Ignore
+ignore = Name {,.}*{.html~}
+ignore = Name {,.}*{.css~}
+ignore = Name {,.}*{.pyc}
+ignore = Name {,.}*{.py~}
+ignore = Name {,.}*{.txt~}
+ignore = Name {,.}*{.tex~}
+ignore = Name {,.}*{.bib~}
+ignore = Name {,.}*{.lnk}
+ignore = Name {Thumbs.db}
+
+ignore = Path work/py/doc
+ignore = Path work/py/o
+ignore = Path work/py/old
+ignore = Path work/py/meow_log
+ignore = Path work/py/modules
+
+# old expt data
+ignore = Path work/expt/*/2011*
+ignore = Path work/expt/*/2012*
+ignore = Path work/expt/*/2013*
+ignore = Path work/expt/transport/Prober_New/2012*
+ignore = Path work/expt/transport/Prober_New/2013*
+ignore = Path work/expt/transport/Prober_Old
+ignore = Path work/expt/transport/LTProber_OdaLab
+ignore = Path work/expt/om/graphene_from_MPI
+
+ignore = Path {work/tex/bibtex/library.bib}
+
