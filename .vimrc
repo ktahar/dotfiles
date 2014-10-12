@@ -182,6 +182,8 @@ endif
 " }}}
 
 """ map
+nnoremap ; :
+nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :cd %:h<CR>:pwd<CR>
 
