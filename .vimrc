@@ -116,6 +116,13 @@ set foldmethod=marker
 "" Python skeleton
 autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
 
+"" Golang runtimes. These settings are done by default in Kaoriya vim. So skipped on windows.
+if ! (has('win32') || has('win64'))
+    set rtp+=$GOROOT/misc/vim
+    exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+    exe "set rtp+=" . globpath($GOPATH, "src/github.com/golang/lint/misc/vim")
+endif
+
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
@@ -161,6 +168,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" Golang setting is done by default.
 " let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*'
 "}}}
 
