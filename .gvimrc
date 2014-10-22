@@ -9,14 +9,20 @@ if g:PC_ID == 0
     :autocmd GUIEnter * winpos 166 0
     set lines=56
     set columns=80
+    set guifont=Consolas:h11:cSHIFTJIS
+    set guifontwide=MS_Gothic:h12:cSHIFTJIS
 elseif g:PC_ID == 1
     :autocmd GUIEnter * winpos 136 0
     set lines=40
     set columns=80
+    set guifont=Consolas:h11:cSHIFTJIS
+    set guifontwide=MS_Gothic:h12:cSHIFTJIS
 elseif g:PC_ID == 3
     :autocmd GUIEnter * winpos 136 0
     set lines=56
     set columns=120
+    set guifont=Inconsolata:h13:cSHIFTJIS
+    set guifontwide=MS_Gothic:h12:cSHIFTJIS
 endif
 
 """ cursor blink off
@@ -29,9 +35,6 @@ set mousehide
 
 """ JP GUI
 set linespace=0
-set guifont=Consolas:h11:cSHIFTJIS
-"set guifont=MS_Gothic:h12:cSHIFTJIS
-set guifontwide=MS_Gothic:h12:cSHIFTJIS
 " set guioptions+=M
 set guioptions-=g
 set guioptions-=m
