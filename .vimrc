@@ -132,7 +132,11 @@ source $VIMRUNTIME/macros/matchit.vim
 "" Vimwiki {{{
 if g:PC_ID == 0 || g:PC_ID == 1
     let wiki = {}
-    let wiki.path = '~/SkyDrive/docs/vimwiki/'
+    if g:PC_ID == 0
+        let wiki.path = '~/OneDrive/docs/vimwiki/'
+    else
+        let wiki.path = '~/SkyDrive/docs/vimwiki/'
+    endif
     let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
     let g:vimwiki_list = [wiki]
     let g:vimwiki_camel_case = 0
