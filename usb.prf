@@ -1,10 +1,10 @@
 # Roots of the synchronization
-root = C:/Users/K.Tahara/
+root = C:/Users/ktahara
 root = F:/
 
 # Paths to synchronize 
 path = work
-path = docs
+# path = docs
 
 # Ignore
 ignore = Name {,.}*{.html~}
@@ -17,6 +17,7 @@ ignore = Name {,.}*{.bib~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
 
+ignore = Path work/go
 ignore = Path work/py/doc
 ignore = Path work/py/o
 ignore = Path work/py/old
