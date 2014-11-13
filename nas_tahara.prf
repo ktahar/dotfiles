@@ -5,7 +5,7 @@ root = //HATANOSHARE/home
 # Paths to synchronize
 
 path = work
-path = docs
+# path = docs
 
 # Ignore
 ignore = Name {,.}*{.html~}
@@ -19,7 +19,9 @@ ignore = Name {Thumbs.db}
 
 ignore = Path work/draftsight
 ignore = Path work/expt
+ignore = Path work/go
 ignore = Path work/py
 
 ignore = Path */2011*
 ignore = Path */2012*
+ignore = Path */2013*
