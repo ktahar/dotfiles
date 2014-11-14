@@ -1,5 +1,5 @@
 # Roots of the synchronization
-root = C:/Users/K.Tahara/work/
+root = C:/Users/ktahara/work/
 root = //HATANOSHARE/Public/Researches/Graphene/work/
 
 # Paths to synchronize
@@ -37,3 +37,4 @@ ignore = Path expt/transport/Prober_New/2013*
 ignore = Path expt/transport/Prober_Old
 ignore = Path expt/transport/LTProber_OdaLab
 ignore = Path expt/om/graphene_from_MPI
+ignore = Path {expt/plt/.webaxs}
