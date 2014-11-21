@@ -15,4 +15,5 @@ ignore = Name {,.}*{.fit~}
 ignore = Name {,.}*{.cond~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
-
+ignore = Name {__pycache__}
+ignore = Name {.webaxs}

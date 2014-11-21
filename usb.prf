@@ -16,6 +16,8 @@ ignore = Name {,.}*{.tex~}
 ignore = Name {,.}*{.bib~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
+ignore = Name {__pycache__}
+ignore = Name {.webaxs}
 
 ignore = Path work/go
 ignore = Path work/py/doc
@@ -35,4 +37,3 @@ ignore = Path work/expt/transport/LTProber_OdaLab
 ignore = Path work/expt/om/graphene_from_MPI
 
 ignore = Path {work/tex/bibtex/library.bib}
-

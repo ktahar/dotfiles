@@ -14,3 +14,4 @@ ignore = Name {,.}*{.xys~}
 ignore = Name {,.}*{.xzs~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
+ignore = Name {__pycache__}

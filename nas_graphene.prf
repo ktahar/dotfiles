@@ -6,7 +6,7 @@ root = //HATANOSHARE/Public/Researches/Graphene/work/
 path = draftsight
 path = expt
 path = py
-
+
 # Ignore
 ignore = Name {,.}*{.py~}
 ignore = Name {,.}*{.pyc}
@@ -17,6 +17,8 @@ ignore = Name {,.}*{.fit~}
 ignore = Name {,.}*{.cond~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
+ignore = Name {__pycache__}
+ignore = Name {.webaxs}
 
 ignore = Path py/doc
 ignore = Path py/o
@@ -37,4 +39,3 @@ ignore = Path expt/transport/Prober_New/2013*
 ignore = Path expt/transport/Prober_Old
 ignore = Path expt/transport/LTProber_OdaLab
 ignore = Path expt/om/graphene_from_MPI
-ignore = Path {expt/plt/.webaxs}

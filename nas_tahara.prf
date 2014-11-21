@@ -16,6 +16,8 @@ ignore = Name {,.}*{.txt~}
 ignore = Name {,.}*{.tex~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
+ignore = Name {__pycache__}
+ignore = Name {.webaxs}
 
 ignore = Path work/draftsight
 ignore = Path work/expt
