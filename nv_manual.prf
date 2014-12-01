@@ -1,0 +1,17 @@
+# Roots of the synchronization
+root = C:/Users/ktahara/SkyDrive
+root = //NV-PC/Share/ktahara
+
+# Paths to synchronize
+path = docs/manual
+
+# Ignore
+ignore = Name {,.}*{.py~}
+ignore = Name {,.}*{.pyc}
+ignore = Name {,.}*{.txt~}
+ignore = Name {,.}*{.odmr~}
+ignore = Name {,.}*{.xys~}
+ignore = Name {,.}*{.xzs~}
+ignore = Name {,.}*{.lnk}
+ignore = Name {Thumbs.db}
+ignore = Name {__pycache__}
