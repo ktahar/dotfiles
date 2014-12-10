@@ -6,6 +6,7 @@ root = //NV-PC/Share/ktahara
 path = docs/manual
 
 # Ignore
+ignore = Path docs/manual/Hamamatsu/Minispectrometer/SampleApl/SampleApl.exe
 ignore = Name {,.}*{.py~}
 ignore = Name {,.}*{.pyc}
 ignore = Name {,.}*{.txt~}
