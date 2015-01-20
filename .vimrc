@@ -33,12 +33,17 @@ NeoBundle 'vim-scripts/Wombat'
 " Other Utils
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'thinca/vim-fontzoom'
+" NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'vimwiki/vimwiki'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'itchyny/lightline.vim'
 " Neocomplete
 NeoBundle 'Shougo/neocomplete.vim'
+" Markdown
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
 
 let vimproc_updcmd = has('win64') ?
       \ 'tools\\update-dll-mingw 64' : 'tools\\update-dll-mingw 32'
