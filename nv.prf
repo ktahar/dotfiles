@@ -1,5 +1,5 @@
 # Roots of the synchronization
-root = C:/Users/ktahara/work/expt
+root = C:/Users/ktahara/work/expt_dia
 root = //NV-PC/Share/ktahara
 
 # Paths to synchronize
@@ -12,6 +12,7 @@ ignore = Name {,.}*{.txt~}
 ignore = Name {,.}*{.odmr~}
 ignore = Name {,.}*{.xys~}
 ignore = Name {,.}*{.xzs~}
+ignore = Name {,.}*{.yzs~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
 ignore = Name {__pycache__}
