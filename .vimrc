@@ -132,6 +132,19 @@ endif
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
+"" Binary
+" vim -b : edit binary using xxd-format!
+augroup Binary
+    au!
+    au BufReadPre  *.npy let &bin=1
+    au BufReadPost *.npy if &bin | %!xxd
+    au BufReadPost *.npy set ft=xxd | endif
+    au BufWritePre *.npy if &bin | %!xxd -r
+    au BufWritePre *.npy endif
+    au BufWritePost *.npy if &bin | %!xxd
+    au BufWritePost *.npy set nomod | endif
+augroup END
+
 """ Plugin 
 source $VIMRUNTIME/macros/matchit.vim
 
