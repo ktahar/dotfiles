@@ -23,8 +23,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Python
 NeoBundle 'davidhalter/jedi-vim'
 " NeoBundle 'ivanov/vim-ipython'
-" Latex
-NeoBundle 'vim-latex', {'type' : 'nosync', 'base' : '~/vimfiles/bundle.nosync'}
 " Color
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'w0ng/vim-hybrid'
@@ -132,7 +130,7 @@ endif
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
-"" Binary
+"" Binary {{{
 " vim -b : edit binary using xxd-format!
 augroup Binary
     au!
@@ -144,6 +142,7 @@ augroup Binary
     au BufWritePost *.npy if &bin | %!xxd
     au BufWritePost *.npy set nomod | endif
 augroup END
+"}}}
 
 """ Plugin 
 source $VIMRUNTIME/macros/matchit.vim
@@ -195,24 +194,6 @@ let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*f
 " Golang setting is done by default.
 " let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*'
 "}}}
-
-"" Vim-LaTeX{{{
-if g:PC_ID == 0 || g:PC_ID == 1
-    set shellslash
-    set grepprg=grep\ -nH\ $*
-    let g:tex_flavor='latex'
-    let g:Tex_BibtexFlavor = 'pbibtex -kanji=utf8'
-    let g:Tex_CompileRule_dvi = 'platex -kanji=utf8 -no-guess-input-enc -synctex=1 -src-specials -interaction=nonstopmode $*'
-    let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-    let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
-    let g:Tex_ViewRule_pdf = 'C:/Program Files/SumatraPDF/SumatraPDF.exe -reuse-instance'
-endif
-if g:PC_ID == 0
-    let g:Tex_ViewRule_dvi = 'c:/dviout/dviout.exe -1'
-elseif g:PC_ID == 1
-    let g:Tex_ViewRule_dvi = 'c:/w32tex/dviout/dviout.exe -1'
-endif
-" }}}
 
 """ map
 nnoremap ; :
