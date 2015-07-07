@@ -10,16 +10,16 @@ setl iskeyword+=:
 " Script below from TeXWiki/Vim/tex.vim
 "
 if has('win32') || has('win64')
-  let g:typeset = 'pdfuplatex'
-  let g:viewer = 'sumatrapdf'
+  let s:typeset = 'pdfuplatex'
+  let s:viewer = 'sumatrapdf'
 elseif has('macunix')
-  let g:typeset = 'pdfuplatex'
-  let g:viewer = 'skim'
+  let s:typeset = 'pdfuplatex'
+  let s:viewer = 'skim'
 else
-  let g:typeset = 'pdfuplatex'
-  let g:viewer = 'evince'
+  let s:typeset = 'pdfuplatex'
+  let s:viewer = 'evince'
 endif
-let g:master = expand("%:t")
+let s:master = expand("%:t")
 
 com! -nargs=1 Typeset :call SetTypeset(<f-args>)
 com! -nargs=1 Viewer :call SetViewer(<f-args>)
@@ -31,19 +31,19 @@ function! TypesetFile()
     return ''
   end
 
-  if g:typeset == 'pdfuplatex'
+  if s:typeset == 'pdfuplatex'
     call PdfupLaTeX("pdfuplatex")
-  elseif g:typeset == 'pdfuplatex2'
+  elseif s:typeset == 'pdfuplatex2'
     call PdfupLaTeX("pdfuplatex2")
-  elseif g:typeset == 'pdflatex'
+  elseif s:typeset == 'pdflatex'
     call PdfLaTeX("pdflatex")
-  elseif g:typeset == 'lualatex'
+  elseif s:typeset == 'lualatex'
     call PdfLaTeX("lualatex")
-  elseif g:typeset == 'luajitlatex'
+  elseif s:typeset == 'luajitlatex'
     call PdfLaTeX("luajitlatex")
-  elseif g:typeset == 'xelatex'
+  elseif s:typeset == 'xelatex'
     call PdfLaTeX("xelatex")
-  elseif g:typeset == 'latexmk'
+  elseif s:typeset == 'latexmk'
     call Latexmk("latexmk")
   else
     call PdfupLaTeX("pdfuplatex")
@@ -57,29 +57,29 @@ function! ViewFile()
     return ''
   end
 
-  if g:viewer == 'sumatrapdf'
+  if s:viewer == 'sumatrapdf'
     call SumatraPDF()
-  elseif g:viewer == 'fwdsumatrapdf'
+  elseif s:viewer == 'fwdsumatrapdf'
     call FwdSumatraPDF()
-  elseif g:viewer == 'texworks'
+  elseif s:viewer == 'texworks'
     call TeXworks()
-  elseif g:viewer == 'preview'
+  elseif s:viewer == 'preview'
     call Preview()
-  elseif g:viewer == 'texshop'
+  elseif s:viewer == 'texshop'
     call TeXShop()
-  elseif g:viewer == 'skim'
+  elseif s:viewer == 'skim'
     call Skim()
-  elseif g:viewer == 'evince'
+  elseif s:viewer == 'evince'
     call Evince()
-  elseif g:viewer == 'fwdevince'
+  elseif s:viewer == 'fwdevince'
     call FwdEvince()
-  elseif g:viewer == 'okular'
+  elseif s:viewer == 'okular'
     call Okular()
-  elseif g:viewer == 'zathura'
+  elseif s:viewer == 'zathura'
     call Zathura()
-  elseif g:viewer == 'qpdfview'
+  elseif s:viewer == 'qpdfview'
     call Qpdfview()
-  elseif g:viewer == 'acroread'
+  elseif s:viewer == 'acroread'
     call AdobeAcrobatReaderDC()
   endif
   return ''
@@ -88,74 +88,74 @@ endfunction
 function! SetViewer(viewer)
   if has('win32') || has('win64')
     if a:viewer == 'texworks'
-      let g:viewer = 'texworks'
+      let s:viewer = 'texworks'
     elseif a:viewer == 'sumatrapdf'
-      let g:viewer = 'sumatrapdf'
+      let s:viewer = 'sumatrapdf'
     elseif a:viewer == 'fwdsumatrapdf'
-      let g:viewer = 'fwdsumatrapdf'
+      let s:viewer = 'fwdsumatrapdf'
     elseif a:viewer == 'acroread'
-      let g:viewer = 'acroread'
+      let s:viewer = 'acroread'
     else
-      let g:viewer = 'texworks'
+      let s:viewer = 'texworks'
     endif
   elseif has('macunix')
     if a:viewer == 'preview'
-      let g:viewer = 'preview'
+      let s:viewer = 'preview'
     elseif a:viewer == 'texshop'
-      let g:viewer = 'texshop'
+      let s:viewer = 'texshop'
     elseif a:viewer == 'texworks'
-      let g:viewer = 'texworks'
+      let s:viewer = 'texworks'
     elseif a:viewer == 'skim'
-      let g:viewer = 'skim'
+      let s:viewer = 'skim'
     elseif a:viewer == 'acroread'
-      let g:viewer = 'acroread'
+      let s:viewer = 'acroread'
     else
-      let g:viewer = 'preview'
+      let s:viewer = 'preview'
     endif
   else
     if a:viewer == 'evince'
-      let g:viewer = 'evince'
+      let s:viewer = 'evince'
     elseif a:viewer == 'fwdevince'
-      let g:viewer = 'fwdevince'
+      let s:viewer = 'fwdevince'
     elseif a:viewer == 'texworks'
-      let g:viewer = 'texworks'
+      let s:viewer = 'texworks'
     elseif a:viewer == 'okular'
-      let g:viewer = 'okular'
+      let s:viewer = 'okular'
     elseif a:viewer == 'zathura'
-      let g:viewer = 'zathura'
+      let s:viewer = 'zathura'
     elseif a:viewer == 'qpdfview'
-      let g:viewer = 'qpdfview'
+      let s:viewer = 'qpdfview'
     elseif a:viewer == 'acroread'
-      let g:viewer = 'acroread'
+      let s:viewer = 'acroread'
     else
-      let g:viewer = 'evince'
+      let s:viewer = 'evince'
     endif
   endif
 endfunction
 
 function! SetTypeset(type)
   if a:type == 'pdfuplatex'
-    let g:typeset = 'pdfuplatex'
+    let s:typeset = 'pdfuplatex'
   elseif a:type == 'pdfuplatex2'
-    let g:typeset = 'pdfuplatex2'
+    let s:typeset = 'pdfuplatex2'
   elseif a:type == 'pdflatex'
-    let g:typeset = 'pdflatex'
+    let s:typeset = 'pdflatex'
   elseif a:type == 'lualatex'
-    let g:typeset = 'lualatex'
+    let s:typeset = 'lualatex'
   elseif a:type == 'luajitlatex'
-    let g:typeset = 'luajitlatex'
+    let s:typeset = 'luajitlatex'
   elseif a:type == 'xelatex'
-    let g:typeset = 'xelatex'
+    let s:typeset = 'xelatex'
   elseif a:type == 'latexmk'
-    let g:typeset = 'latexmk'
+    let s:typeset = 'latexmk'
   else
-    let g:typeset = 'pdfuplatex'
+    let s:typeset = 'pdfuplatex'
   endif
 endfunction
 
 function! SetTeXmaster(master)
   if a:master != ''
-    let g:master = a:master
+    let s:master = a:master
   endif
 endfunction
 
@@ -168,12 +168,12 @@ function! PdfupLaTeX(type)
   w
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
   if a:type == 'pdfuplatex'
     if has('win32') || has('win64')
       let ptex2pdf = 'ptex2pdf -u -l -ot "-synctex=1 -no-guess-input-enc -kanji=utf8 -sjis-terminal"' . ' "' . masterTeXFile . '"'
-      if g:viewer == 'acroread'
+      if s:viewer == 'acroread'
         let pdfclose = 'tasklist /fi "IMAGENAME eq AcroRd32.exe" /nh | findstr "AcroRd32.exe" > nul && echo exit | pdfdde --r15'
         let execString = 'cd /d ' . masterDir . ' && ' . pdfclose . ' & ' . ptex2pdf
       else
@@ -188,7 +188,7 @@ function! PdfupLaTeX(type)
       let latex = 'uplatex -synctex=1 -no-guess-input-enc -kanji=utf8 -sjis-terminal' . ' "' . masterTeXFile . '"'
       let dvips = 'dvips -Ppdf -z -f' . ' "' . masterBaseName . '.dvi"' . ' | convbkmk -u > "' . masterBaseName . '.ps"'
       let ps2pdf = 'ps2pdf.exe' . ' "' . masterBaseName . '.ps"'
-      if g:viewer == 'acroread'
+      if s:viewer == 'acroread'
         let pdfclose = 'tasklist /fi "IMAGENAME eq AcroRd32.exe" /nh | findstr "AcroRd32.exe" > nul && echo exit | pdfdde --r15'
         let execString = 'cd /d ' . masterDir . ' && ' . pdfclose . ' & ' . latex . ' && ' . dvips . ' && ' . ps2pdf
       else
@@ -217,7 +217,7 @@ function! PdfLaTeX(type)
   w
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
   if a:type == 'pdflatex'
     let pdflatex = 'pdflatex -synctex=1' . ' "' . masterTeXFile . '"'
@@ -230,7 +230,7 @@ function! PdfLaTeX(type)
   endif
 
   if has('win32') || has('win64')
-    if g:viewer == 'acroread'
+    if s:viewer == 'acroread'
       let pdfclose = 'tasklist /fi "IMAGENAME eq AcroRd32.exe" /nh | findstr "AcroRd32.exe" > nul && echo exit | pdfdde --r15'
       let execString = 'cd /d ' . masterDir . ' && ' . pdfclose . ' & ' . pdflatex
     else
@@ -255,14 +255,14 @@ function! Latexmk(type)
   w
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
   if a:type == 'latexmk'
     let latexmk = 'latexmk -gg' . ' "' . masterTeXFile . '"'
   endif
 
   if has('win32') || has('win64')
-    if g:viewer == 'acroread'
+    if s:viewer == 'acroread'
       let pdfclose = 'tasklist /fi "IMAGENAME eq AcroRd32.exe" /nh | findstr "AcroRd32.exe" > nul && echo exit | pdfdde --r15'
       let execString = 'cd /d ' . masterDir . ' && ' . pdfclose . ' & ' . latexmk
     else
@@ -273,9 +273,10 @@ function! Latexmk(type)
   endif
 
   execute 'lcd ' . masterDir
-  execute 'silent! !' execString
-  redraw!
-  return ''
+  execute '!' execString
+  "execute 'silent! !' execString
+  "redraw!
+  "return ''
 endfunction
 
 function! TeXworks()
@@ -285,7 +286,7 @@ function! TeXworks()
   end
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   if has('win32') || has('win64')
     if glob('C:/w32tex/share/texworks/TeXworks.exe') != ''
@@ -318,7 +319,7 @@ function! SumatraPDF()
 
   let masterDir = expand("%:p:h")
   let currentTeXFile = expand("%:t")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   if has('win32') || has('win64')
     if glob('C:/Program Files/SumatraPDF/SumatraPDF.exe') != ''
@@ -345,7 +346,7 @@ function! FwdSumatraPDF()
 
   let masterDir = expand("%:p:h")
   let currentTeXFile = expand("%:t")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   if has('win32') || has('win64')
     let viewer = 'fwdsumatrapdf'
@@ -365,7 +366,7 @@ function! Preview()
   end
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'open -a Preview.app'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" &'
@@ -383,7 +384,7 @@ function! TeXShop()
   end
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'open -a TeXShop.app'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" &'
@@ -402,7 +403,7 @@ function! Skim()
 
   let masterDir = expand("%:p:h")
   let currentTeXFile = expand("%:t")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' ' . line(".") . ' "' . masterPDFFile . '" "' . currentTeXFile . '" &'
@@ -420,7 +421,7 @@ function! Evince()
   end
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'evince'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" &'
@@ -439,7 +440,7 @@ function! FwdEvince()
 
   let masterDir = expand("%:p:h")
   let currentTeXFile = expand("%:t")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'fwdevince'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" ' . line(".") . ' "' . currentTeXFile . '" &'
@@ -458,7 +459,7 @@ function! Okular()
 
   let masterDir = expand("%:p:h")
   let currentTeXFile = expand("%:p")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'okular'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' --unique "file:' . masterPDFFile . '\#src:' . line(".") . ' ' . currentTeXFile . '" &'
@@ -476,7 +477,7 @@ function! Zathura()
   end
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'zathura -s -x "vim --servername synctex -n --remote-silent +\%{line} \%{input}"'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" &'
@@ -495,7 +496,7 @@ function! Qpdfview()
 
   let masterDir = expand("%:p:h")
   let currentTeXFile = expand("%:t")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'qpdfview'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' --unique "' . masterPDFFile . '\#src:' . currentTeXFile . ':' . line(".") . ':0' . '" &'
@@ -513,7 +514,7 @@ function! AdobeAcrobatReaderDC()
   end
 
   let masterDir = expand("%:p:h")
-  let masterTeXFile = g:master
+  let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   if has('win32') || has('win64')
     if glob('C:/Program Files/Adobe/Acrobat Reader DC/Reader/AcroRd32.exe') != ''
@@ -538,7 +539,8 @@ function! AdobeAcrobatReaderDC()
   return ''
 endfunction
 
-noremap <expr> <Leader>r Latexmk('latexmk')
-noremap <expr> <Leader>e TypesetFile()
-noremap <expr> <Leader>v ViewFile()
+nnoremap <expr> <Leader>r Latexmk('latexmk')
+"nnoremap <silent><buffer> <LocalLeader>r :call Latexmk('latexmk')<CR>
+nnoremap <expr> <Leader>e TypesetFile()
+nnoremap <expr> <Leader>v ViewFile()
 
