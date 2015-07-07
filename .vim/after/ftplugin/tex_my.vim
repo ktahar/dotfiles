@@ -7,8 +7,9 @@ setl fileencoding=utf-8
 setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 setl iskeyword+=:
 
-" Script below from TeXWiki/Vim/tex.vim
-"
+" Script below from TeXWiki/Vim/tex.vim.
+" Modified to use local variables, mappings and command definitions.
+
 if has('win32') || has('win64')
   let s:typeset = 'pdfuplatex'
   let s:viewer = 'sumatrapdf'
@@ -20,10 +21,6 @@ else
   let s:viewer = 'evince'
 endif
 let s:master = expand("%:t")
-
-com! -nargs=1 -buffer Typeset :call <SID>SetTypeset(<f-args>)
-com! -nargs=1 -buffer Viewer :call <SID>SetViewer(<f-args>)
-com! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
 function! s:TypesetFile()
   if &ft != 'tex'
@@ -540,6 +537,11 @@ function! s:AdobeAcrobatReaderDC()
   redraw!
   return ''
 endfunction
+
+" Command definitions ans Mappings
+command! -nargs=1 -buffer Typeset :call <SID>SetTypeset(<f-args>)
+command! -nargs=1 -buffer Viewer :call <SID>SetViewer(<f-args>)
+command! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
 nnoremap <expr><silent><buffer> <Leader>r <SID>Latexmk('latexmk')
 "nnoremap <silent><buffer> <LocalLeader>r :call Latexmk('latexmk')<CR>
