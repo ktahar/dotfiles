@@ -21,71 +21,71 @@ else
 endif
 let s:master = expand("%:t")
 
-com! -nargs=1 Typeset :call SetTypeset(<f-args>)
-com! -nargs=1 Viewer :call SetViewer(<f-args>)
-com! -nargs=1 TeXmaster :call SetTeXmaster(<f-args>)
+com! -nargs=1 -buffer Typeset :call <SID>SetTypeset(<f-args>)
+com! -nargs=1 -buffer Viewer :call <SID>SetViewer(<f-args>)
+com! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
-function! TypesetFile()
+function! s:TypesetFile()
   if &ft != 'tex'
     echo "calling TeXworks from a non-tex file"
     return ''
   end
 
   if s:typeset == 'pdfuplatex'
-    call PdfupLaTeX("pdfuplatex")
+    call s:PdfupLaTeX("pdfuplatex")
   elseif s:typeset == 'pdfuplatex2'
-    call PdfupLaTeX("pdfuplatex2")
+    call s:PdfupLaTeX("pdfuplatex2")
   elseif s:typeset == 'pdflatex'
-    call PdfLaTeX("pdflatex")
+    call s:PdfLaTeX("pdflatex")
   elseif s:typeset == 'lualatex'
-    call PdfLaTeX("lualatex")
+    call s:PdfLaTeX("lualatex")
   elseif s:typeset == 'luajitlatex'
-    call PdfLaTeX("luajitlatex")
+    call s:PdfLaTeX("luajitlatex")
   elseif s:typeset == 'xelatex'
-    call PdfLaTeX("xelatex")
+    call s:PdfLaTeX("xelatex")
   elseif s:typeset == 'latexmk'
-    call Latexmk("latexmk")
+    call s:Latexmk("latexmk")
   else
-    call PdfupLaTeX("pdfuplatex")
+    call s:PdfupLaTeX("pdfuplatex")
   endif
   return ''
 endfunction
 
-function! ViewFile()
+function! s:ViewFile()
   if &ft != 'tex'
     echo "calling TeXworks from a non-tex file"
     return ''
   end
 
   if s:viewer == 'sumatrapdf'
-    call SumatraPDF()
+    call s:SumatraPDF()
   elseif s:viewer == 'fwdsumatrapdf'
-    call FwdSumatraPDF()
+    call s:FwdSumatraPDF()
   elseif s:viewer == 'texworks'
-    call TeXworks()
+    call s:TeXworks()
   elseif s:viewer == 'preview'
-    call Preview()
+    call s:Preview()
   elseif s:viewer == 'texshop'
-    call TeXShop()
+    call s:TeXShop()
   elseif s:viewer == 'skim'
-    call Skim()
+    call s:Skim()
   elseif s:viewer == 'evince'
-    call Evince()
+    call s:Evince()
   elseif s:viewer == 'fwdevince'
-    call FwdEvince()
+    call s:FwdEvince()
   elseif s:viewer == 'okular'
-    call Okular()
+    call s:Okular()
   elseif s:viewer == 'zathura'
-    call Zathura()
+    call s:Zathura()
   elseif s:viewer == 'qpdfview'
-    call Qpdfview()
+    call s:Qpdfview()
   elseif s:viewer == 'acroread'
-    call AdobeAcrobatReaderDC()
+    call s:AdobeAcrobatReaderDC()
   endif
   return ''
 endfunction
 
-function! SetViewer(viewer)
+function! s:SetViewer(viewer)
   if has('win32') || has('win64')
     if a:viewer == 'texworks'
       let s:viewer = 'texworks'
@@ -133,7 +133,7 @@ function! SetViewer(viewer)
   endif
 endfunction
 
-function! SetTypeset(type)
+function! s:SetTypeset(type)
   if a:type == 'pdfuplatex'
     let s:typeset = 'pdfuplatex'
   elseif a:type == 'pdfuplatex2'
@@ -153,13 +153,13 @@ function! SetTypeset(type)
   endif
 endfunction
 
-function! SetTeXmaster(master)
+function! s:SetTeXmaster(master)
   if a:master != ''
     let s:master = a:master
   endif
 endfunction
 
-function! PdfupLaTeX(type)
+function! s:PdfupLaTeX(type)
   if &ft != 'tex'
     echo "calling PdfupLaTeX from a non-tex file"
     return ''
@@ -203,12 +203,13 @@ function! PdfupLaTeX(type)
   endif
 
   execute 'lcd ' . masterDir
-  execute 'silent! !' execString
+  execute '!' execString
+  "execute 'silent! !' execString
   redraw!
   return ''
 endfunction
 
-function! PdfLaTeX(type)
+function! s:PdfLaTeX(type)
   if &ft != 'tex'
     echo "calling PdfLaTeX from a non-tex file"
     return ''
@@ -241,12 +242,13 @@ function! PdfLaTeX(type)
   endif
 
   execute 'lcd ' . masterDir
-  execute 'silent! !' execString
+  execute '!' execString
+  "execute 'silent! !' execString
   redraw!
   return ''
 endfunction
 
-function! Latexmk(type)
+function! s:Latexmk(type)
   if &ft != 'tex'
     echo "calling Latexmk from a non-tex file"
     return ''
@@ -275,11 +277,11 @@ function! Latexmk(type)
   execute 'lcd ' . masterDir
   execute '!' execString
   "execute 'silent! !' execString
-  "redraw!
-  "return ''
+  redraw!
+  return ''
 endfunction
 
-function! TeXworks()
+function! s:TeXworks()
   if &ft != 'tex'
     echo "calling TeXworks from a non-tex file"
     return ''
@@ -311,7 +313,7 @@ function! TeXworks()
   return ''
 endfunction
 
-function! SumatraPDF()
+function! s:SumatraPDF()
   if &ft != 'tex'
     echo "calling SumatraPDF from a non-tex file"
     return ''
@@ -338,7 +340,7 @@ function! SumatraPDF()
   return ''
 endfunction
 
-function! FwdSumatraPDF()
+function! s:FwdSumatraPDF()
   if &ft != 'tex'
     echo "calling FwdSumatraPDF from a non-tex file"
     return ''
@@ -359,7 +361,7 @@ function! FwdSumatraPDF()
   return ''
 endfunction
 
-function! Preview()
+function! s:Preview()
   if &ft != 'tex'
     echo "calling Preview from a non-tex file"
     return ''
@@ -377,7 +379,7 @@ function! Preview()
   return ''
 endfunction
 
-function! TeXShop()
+function! s:TeXShop()
   if &ft != 'tex'
     echo "calling TeXShop from a non-tex file"
     return ''
@@ -395,7 +397,7 @@ function! TeXShop()
   return ''
 endfunction
 
-function! Skim()
+function! s:Skim()
   if &ft != 'tex'
     echo "calling Skim from a non-tex file"
     return ''
@@ -414,7 +416,7 @@ function! Skim()
   return ''
 endfunction
 
-function! Evince()
+function! s:Evince()
   if &ft != 'tex'
     echo "calling Evince from a non-tex file"
     return ''
@@ -432,7 +434,7 @@ function! Evince()
   return ''
 endfunction
 
-function! FwdEvince()
+function! s:FwdEvince()
   if &ft != 'tex'
     echo "calling FwdEvince from a non-tex file"
     return ''
@@ -451,7 +453,7 @@ function! FwdEvince()
   return ''
 endfunction
 
-function! Okular()
+function! s:Okular()
   if &ft != 'tex'
     echo "calling Okular from a non-tex file"
     return ''
@@ -470,7 +472,7 @@ function! Okular()
   return ''
 endfunction
 
-function! Zathura()
+function! s:Zathura()
   if &ft != 'tex'
     echo "calling Zathura from a non-tex file"
     return ''
@@ -488,7 +490,7 @@ function! Zathura()
   return ''
 endfunction
 
-function! Qpdfview()
+function! s:Qpdfview()
   if &ft != 'tex'
     echo "calling Qpdfview from a non-tex file"
     return ''
@@ -507,7 +509,7 @@ function! Qpdfview()
   return ''
 endfunction
 
-function! AdobeAcrobatReaderDC()
+function! s:AdobeAcrobatReaderDC()
   if &ft != 'tex'
     echo "calling Adobe Reader from a non-tex file"
     return ''
@@ -539,8 +541,8 @@ function! AdobeAcrobatReaderDC()
   return ''
 endfunction
 
-nnoremap <expr> <Leader>r Latexmk('latexmk')
+nnoremap <expr><silent><buffer> <Leader>r <SID>Latexmk('latexmk')
 "nnoremap <silent><buffer> <LocalLeader>r :call Latexmk('latexmk')<CR>
-nnoremap <expr> <Leader>e TypesetFile()
-nnoremap <expr> <Leader>v ViewFile()
+nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
+nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
 
