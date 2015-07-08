@@ -13,6 +13,6 @@ function! s:PandocHTML()
     cd %:h
     !pandoc -o %:r.html %
 endfunction
-" command! Exec call <SID>PandocHTML()
+" command! -buffer Exec call <SID>PandocHTML()
 nnoremap <silent><buffer> <LocalLeader>E :call <SID>PandocHTML()<CR>
 

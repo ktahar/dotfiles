@@ -13,7 +13,7 @@ function! s:ExecPy()
     cd %:h
     !python %
 endfunction
-" command! Exec call <SID>ExecPy()
+" command! -buffer Exec call <SID>ExecPy()
 nnoremap <silent><buffer> <LocalLeader>e :call <SID>ExecPy()<CR>
 
 " Execute current file (interactive) \E
@@ -21,5 +21,5 @@ function! s:ExecPy_i()
     cd %:h
     !python -i %
 endfunction
-" command! Exec call <SID>ExecPy()
+" command! -buffer Exec call <SID>ExecPy()
 nnoremap <silent><buffer> <LocalLeader>E :call <SID>ExecPy_i()<CR>
