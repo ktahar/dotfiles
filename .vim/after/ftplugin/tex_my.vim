@@ -278,6 +278,39 @@ function! s:Latexmk(type)
   return ''
 endfunction
 
+function! s:LatexmkSilent(type)
+  if &ft != 'tex'
+    echo "calling Latexmk from a non-tex file"
+    return ''
+  end
+
+  w
+
+  let masterDir = expand("%:p:h")
+  let masterTeXFile = s:master
+  let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
+  if a:type == 'latexmk'
+    let latexmk = 'latexmk -gg' . ' "' . masterTeXFile . '"'
+  endif
+
+  if has('win32') || has('win64')
+    if s:viewer == 'acroread'
+      let pdfclose = 'tasklist /fi "IMAGENAME eq AcroRd32.exe" /nh | findstr "AcroRd32.exe" > nul && echo exit | pdfdde --r15'
+      let execString = 'cd /d ' . masterDir . ' && ' . pdfclose . ' & ' . latexmk
+    else
+      let execString = 'cd /d ' . masterDir . ' && ' . latexmk
+    endif
+  else
+    let execString = 'cd ' . masterDir . ' && ' . latexmk
+  endif
+
+  execute 'lcd ' . masterDir
+  "execute '!' execString
+  execute 'silent! !' execString
+  redraw!
+  return ''
+endfunction
+
 function! s:TeXworks()
   if &ft != 'tex'
     echo "calling TeXworks from a non-tex file"
@@ -543,8 +576,9 @@ command! -nargs=1 -buffer Typeset :call <SID>SetTypeset(<f-args>)
 command! -nargs=1 -buffer Viewer :call <SID>SetViewer(<f-args>)
 command! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
-nnoremap <expr><silent><buffer> <Leader>r <SID>Latexmk('latexmk')
+nnoremap <expr><silent><buffer> <Leader>e <SID>LatexmkSilent('latexmk')
+nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('latexmk')
 "nnoremap <silent><buffer> <LocalLeader>r :call Latexmk('latexmk')<CR>
-nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
+"nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
 nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
 
