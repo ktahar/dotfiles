@@ -18,6 +18,7 @@ ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
 ignore = Name {__pycache__}
 ignore = Name {.webaxs}
+ignore = Name {.git}
 
 ignore = Path work/go
 ignore = Path work/py/doc

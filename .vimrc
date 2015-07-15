@@ -185,7 +185,7 @@ let g:jedi#force_py_version = 3
 let g:neocomplete#enable_at_startup = 0
 let g:jedi#completions_enabled = 1
 let g:jedi#auto_vim_configuration = 1
-let g:jedi#popup_select_first = 0
+let g:jedi#popup_select_first = 1
 let g:jedi#rename_command = "<Leader>R"
 if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
