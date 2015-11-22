@@ -130,6 +130,9 @@ endif
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
+"" TeX thing
+let g:tex_flavor = "latex"
+
 "" Binary {{{
 " vim -b : edit binary using xxd-format!
 augroup Binary
