@@ -192,6 +192,7 @@ let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*f
 "}}}
 
 """ map
+inoremap <C-j> <ESC>
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
