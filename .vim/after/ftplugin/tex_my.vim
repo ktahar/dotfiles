@@ -20,7 +20,11 @@ else
   let s:typeset = 'pdfuplatex'
   let s:viewer = 'evince'
 endif
-let s:master = expand("%:t")
+
+" Set TeXmaster only if it doesn't exist
+if !exists("s:master")
+    let s:master = expand("%:t")
+endif
 
 function! s:TypesetFile()
   if &ft != 'tex'
@@ -153,7 +157,17 @@ endfunction
 function! s:SetTeXmaster(master)
   if a:master != ''
     let s:master = a:master
+    call s:EchoTeXmaster()
   endif
+endfunction
+
+function! s:SetTeXmasterCurrent()
+  let s:master = expand("%:t")
+  call s:EchoTeXmaster()
+endfunction
+
+function! s:EchoTeXmaster()
+  echo "TeXmaster: " . s:master
 endfunction
 
 function! s:PdfupLaTeX(type)
@@ -581,4 +595,6 @@ nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('latexmk')
 "nnoremap <silent><buffer> <LocalLeader>r :call Latexmk('latexmk')<CR>
 "nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
 nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
+nnoremap <expr><silent><buffer> <Leader>r <SID>SetTeXmasterCurrent()
+nnoremap <expr><silent><buffer> <Leader>R <SID>EchoTeXmaster()
 
