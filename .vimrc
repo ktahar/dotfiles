@@ -1,64 +1,55 @@
 """ K.Tahara's vimrc
-" set g:PC_ID home(0) lab_note(1) lab_WS(2) lab_NV(3)
 
+" set g:PC_ID home(0) lab_note(1) lab_WS(2) lab_NV(3) in ~/dotfiles/.vimrc.local
 if filereadable(expand('~/dotfiles/_vimrc.local'))
     source ~/dotfiles/_vimrc.local
 elseif filereadable(expand('~/dotfiles/.vimrc.local'))
     source ~/dotfiles/.vimrc.local
 endif
 
-""" Neobundle {{{
-if has('vim_starting')
-    set nocompatible
-    set runtimepath+=~/vimfiles/bundle/neobundle.vim/
+""" Vundle {{{
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+if (has('win32') || has('win64'))
+    set rtp+=~/vimfiles/bundle/Vundle.vim
+    call vundle#begin('$USERPROFILE/vimfiles/bundle/')
+elseif
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
 endif
 
-call neobundle#begin(expand('~/vimfiles/bundle/'))
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" My Bundles here:
-" Refer to |:NeoBundle-examples|.
 " Python
-NeoBundle 'davidhalter/jedi-vim'
-" NeoBundle 'ivanov/vim-ipython'
-" Color
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'jnurmine/Zenburn'
-NeoBundle 'vim-scripts/Wombat'
-" Other Utils
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'thinca/vim-fontzoom'
-" NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'vimwiki/vimwiki'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'itchyny/lightline.vim'
-" Neocomplete
-NeoBundle 'Shougo/neocomplete.vim'
+Plugin 'davidhalter/jedi-vim'
+" Plugin 'ivanov/vim-ipython'
+
 " Markdown
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'tyru/open-browser.vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'kannokanno/previm'
+Plugin 'tyru/open-browser.vim'
 
-let vimproc_updcmd = has('win64') ?
-      \ 'tools\\update-dll-mingw 64' : 'tools\\update-dll-mingw 32'
-execute "NeoBundle 'Shougo/vimproc.vim'," . string({
-      \ 'build' : {
-      \     'windows' : vimproc_updcmd,
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ })
+" Color scheme
+Plugin 'nanotech/jellybeans.vim'
+" Plugin 'w0ng/vim-hybrid'
+" Plugin 'jnurmine/Zenburn'
+" Plugin 'vim-scripts/Wombat'
 
-call neobundle#end()
+" Other Utils
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'thinca/vim-fontzoom'
+" Plugin 'thinca/vim-quickrun'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'vimwiki/vimwiki'
+Plugin 'majutsushi/tagbar'
+Plugin 'itchyny/lightline.vim'
 
-filetype plugin indent on
-
-NeoBundleCheck
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 """}}}
 
 """ Basic settings {{{
@@ -161,9 +152,9 @@ endif
 "}}}
 
 "" CtrlP {{{
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_max_files = 10000
 let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_max_files = 10000
+" let g:ctrlp_clear_cache_on_exit = 0
 "}}}
 
 "" Tagbar {{{
@@ -178,20 +169,10 @@ let g:lightline = {
 
 "" jedi-vim{{{
 let g:jedi#force_py_version = 3
-"}}}
-
-"" Neocomplete and Jedi {{{
-let g:neocomplete#enable_at_startup = 0
 let g:jedi#completions_enabled = 1
 let g:jedi#auto_vim_configuration = 1
-let g:jedi#popup_select_first = 1
+" let g:jedi#popup_select_first = 1
 let g:jedi#rename_command = "<Leader>R"
-if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-" Golang setting is done by default.
-" let g:neocomplete#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*'
 "}}}
 
 """ map
