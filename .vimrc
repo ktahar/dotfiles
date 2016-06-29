@@ -168,9 +168,10 @@ let g:lightline = {
 "}}}
 
 "" jedi-vim{{{
+let g:jedi#completions_command = "<C-N>"
 let g:jedi#force_py_version = 3
-let g:jedi#completions_enabled = 1
 let g:jedi#auto_vim_configuration = 1
+"let g:jedi#completions_enabled = 1
 " let g:jedi#popup_select_first = 1
 let g:jedi#rename_command = "<Leader>R"
 "}}}
