@@ -1,6 +1,6 @@
 # Roots of the synchronization
-root = C:/Users/ktahara
-root = F:/
+root = C:/Users/kskta
+root = H:/
 
 # Paths to synchronize 
 path = work
@@ -27,6 +27,8 @@ ignore = Path work/py/o
 ignore = Path work/py/old
 ignore = Path work/py/meow_log
 ignore = Path work/py/modules
+ignore = Path work/py/liberty
+ignore = Path work/cs/MWboard01
 ignore = Path work/tex/bibtex
 
 # old expt data
