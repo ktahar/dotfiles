@@ -14,6 +14,7 @@ ignore = Name {,.}*{.py~}
 ignore = Name {,.}*{.txt~}
 ignore = Name {,.}*{.tex~}
 ignore = Name {,.}*{.bib~}
+ignore = Name {,.}*{.v~}
 ignore = Name {,.}*{.lnk}
 ignore = Name {Thumbs.db}
 ignore = Name {__pycache__}
@@ -30,6 +31,7 @@ ignore = Path work/py/modules
 ignore = Path work/py/liberty
 ignore = Path work/cs/MWboard01
 ignore = Path work/tex/bibtex
+ignore = Path work/hdl/MWboard01
 
 # old expt data
 ignore = Path work/expt/*/2011*
