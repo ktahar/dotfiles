@@ -30,6 +30,7 @@ ignore = Path work/py/meow_log
 ignore = Path work/py/modules
 ignore = Path work/py/liberty
 ignore = Path work/cs/MWboard01
+ignore = Path work/hdl/MWBoard01
 ignore = Path work/tex/bibtex
 ignore = Path work/hdl/MWboard01
 
