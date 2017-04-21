@@ -1,28 +1,16 @@
 """ K.Tahara's gvimrc
-" set g:PC_ID home(0) lab_note(1) lab_WS(2) lab_NV(3)
+" set g:PC_ID home_Windows (0) home_Ubuntu (1) in ~/dotfiles/.vimrc.local
 
 " vb disable must be repeated in _gvimrc
 set visualbell t_vb=
 
 """ screen size
 if g:PC_ID == 0
-    :autocmd GUIEnter * winpos 166 0
-    set lines=56
-    set columns=80
-    set guifont=Inconsolata:h14:cSHIFTJIS
-    "set guifont=Consolas:h11:cSHIFTJIS
-    set guifontwide=MS_Gothic:h12:cSHIFTJIS
-elseif g:PC_ID == 1
-    :autocmd GUIEnter * winpos 136 0
-    set lines=40
-    set columns=80
-    set guifont=Inconsolata:h14:cSHIFTJIS
-    set guifontwide=MS_Gothic:h12:cSHIFTJIS
-elseif g:PC_ID == 3
-    :autocmd GUIEnter * winpos 136 0
-    set lines=56
+    :autocmd GUIEnter * winpos -1620 0
+    set lines=54
     set columns=120
     set guifont=Inconsolata:h14:cSHIFTJIS
+    "set guifont=Consolas:h11:cSHIFTJIS
     set guifontwide=MS_Gothic:h12:cSHIFTJIS
 endif
 
@@ -66,7 +54,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 
 """ open vimwiki if vim starts without file
-if g:PC_ID == 0 || g:PC_ID == 1
+if g:PC_ID == 0
     if @% == ''
         silent VimwikiIndex
     endif
