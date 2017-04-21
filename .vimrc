@@ -1,6 +1,6 @@
 """ K.Tahara's vimrc
 
-" set g:PC_ID home(0) lab_note(1) lab_WS(2) lab_NV(3) in ~/dotfiles/.vimrc.local
+" set g:PC_ID home_Windows (0) home_Ubuntu (1) in ~/dotfiles/.vimrc.local
 if filereadable(expand('~/dotfiles/_vimrc.local'))
     source ~/dotfiles/_vimrc.local
 elseif filereadable(expand('~/dotfiles/.vimrc.local'))
@@ -15,7 +15,7 @@ filetype off                  " required
 if (has('win32') || has('win64'))
     set rtp+=~/vimfiles/bundle/Vundle.vim
     call vundle#begin('$USERPROFILE/vimfiles/bundle/')
-elseif
+else
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 endif
@@ -142,7 +142,7 @@ augroup END
 source $VIMRUNTIME/macros/matchit.vim
 
 "" Vimwiki {{{
-if g:PC_ID == 0 || g:PC_ID == 1
+if g:PC_ID == 0
     let wiki = {}
     let wiki.path = '~/OneDrive/docs/vimwiki/'
     let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
@@ -185,12 +185,12 @@ nnoremap <silent> <Leader>cd :cd %:h<CR>:pwd<CR>
 
 """ Testing...
 "" enable msys tools
-if g:PC_ID == 0 || g:PC_ID == 1 || g:PC_ID == 3
+if g:PC_ID == 0
     let $PATH = $PATH . ";C:\\MinGW\\msys\\1.0\\bin"
 endif
 
 """ cd ~\ if vim starts without file
-if g:PC_ID == 0 || g:PC_ID == 1 || g:PC_ID == 3
+if g:PC_ID == 0
     if @% == ''
         cd ~\
     endif
