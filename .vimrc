@@ -45,7 +45,7 @@ Plugin 'thinca/vim-fontzoom'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vimwiki/vimwiki'
 Plugin 'majutsushi/tagbar'
-Plugin 'itchyny/lightline.vim'
+"Plugin 'itchyny/lightline.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -159,12 +159,6 @@ let g:ctrlp_working_path_mode = 'ra'
 
 "" Tagbar {{{
 nnoremap <silent> <Leader>f :TagbarToggle<CR>
-"}}}
-
-"" Lightline{{{
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ }
 "}}}
 
 "" jedi-vim{{{
