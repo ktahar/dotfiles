@@ -24,7 +24,9 @@ endif
 Plugin 'VundleVim/Vundle.vim'
 
 " Python
-Plugin 'davidhalter/jedi-vim'
+if g:PC_ID == 0
+    Plugin 'davidhalter/jedi-vim'
+endif
 " Plugin 'ivanov/vim-ipython'
 
 " Markdown
@@ -165,12 +167,14 @@ nnoremap <silent> <Leader>f :TagbarToggle<CR>
 "}}}
 
 "" jedi-vim{{{
-let g:jedi#completions_command = "<C-N>"
-let g:jedi#force_py_version = 3
-let g:jedi#auto_vim_configuration = 1
-"let g:jedi#completions_enabled = 1
-" let g:jedi#popup_select_first = 1
-let g:jedi#rename_command = "<Leader>R"
+if g:PC_ID == 0
+    let g:jedi#completions_command = "<C-N>"
+    let g:jedi#force_py_version = 3
+    let g:jedi#auto_vim_configuration = 1
+    "let g:jedi#completions_enabled = 1
+    " let g:jedi#popup_select_first = 1
+    let g:jedi#rename_command = "<Leader>R"
+endif
 "}}}
 
 """ map
