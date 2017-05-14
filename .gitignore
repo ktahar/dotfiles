@@ -1,9 +1,12 @@
 .vimrc.local
+
+.gitignore~
 .vimrc~
+.gvimrc~
+matplotlibrc~
+.vimrc.local~
 *.bat~
 *.vim~
-.gvimrc~
-.vimrc.local~
-matplotlibrc~
 *.prf~
 *.un~
+*.conf~
