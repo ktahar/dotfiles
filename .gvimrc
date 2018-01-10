@@ -44,6 +44,7 @@ endif
 if has("win32") || has("win64")
 nnoremap <M-x> :simalt ~x<CR>
 nnoremap <M-r> :simalt ~r<CR>
+nnoremap <M-n> :simalt ~n<CR>
 endif
 
 """ colorscheme
