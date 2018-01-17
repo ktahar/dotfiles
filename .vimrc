@@ -184,12 +184,6 @@ nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :cd %:h<CR>:pwd<CR>
 
-""" Testing...
-"" enable msys tools
-if g:PC_ID == 0
-    let $PATH = $PATH . ";C:\\MinGW\\msys\\1.0\\bin"
-endif
-
 """ cd ~\ if vim starts without file
 if g:PC_ID == 0
     if @% == ''
