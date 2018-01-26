@@ -123,6 +123,9 @@ endif
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
+"" Sumo extension
+autocmd BufNewFile,BufRead *.{sumocfg} set filetype=xml
+
 "" TeX thing
 let g:tex_flavor = "latex"
 
@@ -169,7 +172,9 @@ nnoremap <silent> <Leader>f :TagbarToggle<CR>
 "" jedi-vim{{{
 if g:PC_ID == 0 || g:PC_ID == 2
     let g:jedi#completions_command = "<C-N>"
-    let g:jedi#force_py_version = 3
+    if g:PC_ID == 0
+        let g:jedi#force_py_version = 3
+    endif
     let g:jedi#auto_vim_configuration = 1
     "let g:jedi#completions_enabled = 1
     " let g:jedi#popup_select_first = 1
