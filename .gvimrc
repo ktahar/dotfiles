@@ -1,5 +1,5 @@
 """ K.Tahara's gvimrc
-" set g:PC_ID home_Windows (0) home_Ubuntu (1) lab_Windows (2) in ~/dotfiles/.vimrc.local
+" set g:PC_ID home_Windows (0) home_Linux (1) lab_Windows (2) lab_Linux (3) in ~/dotfiles/.vimrc.local
 
 " vb disable must be repeated in _gvimrc
 set visualbell t_vb=

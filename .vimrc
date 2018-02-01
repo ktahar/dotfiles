@@ -1,5 +1,5 @@
 """ K.Tahara's vimrc
-" set g:PC_ID home_Windows (0) home_Ubuntu (1) lab_Windows (2) in ~/dotfiles/.vimrc.local
+" set g:PC_ID home_Windows (0) home_Linux (1) lab_Windows (2) lab_Linux (3) in ~/dotfiles/.vimrc.local
 
 if filereadable(expand('~/dotfiles/_vimrc.local'))
     source ~/dotfiles/_vimrc.local
@@ -24,7 +24,7 @@ endif
 Plugin 'VundleVim/Vundle.vim'
 
 " Python
-if g:PC_ID == 0 || g:PC_ID == 2
+if g:PC_ID == 0 || g:PC_ID == 2 || g:PC_ID == 3
     Plugin 'davidhalter/jedi-vim'
 endif
 " Plugin 'ivanov/vim-ipython'
@@ -170,7 +170,7 @@ nnoremap <silent> <Leader>f :TagbarToggle<CR>
 "}}}
 
 "" jedi-vim{{{
-if g:PC_ID == 0 || g:PC_ID == 2
+if g:PC_ID == 0 || g:PC_ID == 2 || g:PC_ID == 3
     let g:jedi#completions_command = "<C-N>"
     if g:PC_ID == 0
         let g:jedi#force_py_version = 3
