@@ -111,7 +111,11 @@ set tabstop=8 expandtab shiftwidth=4 softtabstop=4
 set foldmethod=marker
 
 "" Python skeleton
-autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
+if (has('win32') || has('win64'))
+    autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
+else
+    autocmd BufNewFile *.py 0r ~/.vim/skeleton.py
+endif
 
 "" Golang runtimes. These settings are done by default in Kaoriya vim. So skipped on windows.
 if ! (has('win32') || has('win64'))
