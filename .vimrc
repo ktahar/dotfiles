@@ -117,18 +117,14 @@ else
     autocmd BufNewFile *.py 0r ~/.vim/skeleton.py
 endif
 
-"" Golang runtimes. These settings are done by default in Kaoriya vim. So skipped on windows.
-if ! (has('win32') || has('win64'))
-    set rtp+=$GOROOT/misc/vim
-    exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
-    exe "set rtp+=" . globpath($GOPATH, "src/github.com/golang/lint/misc/vim")
-endif
-
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
 "" Sumo extension
 autocmd BufNewFile,BufRead *.{sumocfg} set filetype=xml
+
+"" GridLAB-D extension
+autocmd BufNewFile,BufRead *.{glm} set filetype=glm
 
 "" TeX thing
 let g:tex_flavor = "latex"
