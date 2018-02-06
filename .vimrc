@@ -169,7 +169,7 @@ let g:ctrlp_prompt_mappings = {
 "}}}
 
 "" Tagbar {{{
-nnoremap <silent> <Leader>t :TagbarToggle<CR>
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
 "}}}
 
 "" jedi-vim{{{
