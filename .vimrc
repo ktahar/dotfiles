@@ -160,9 +160,14 @@ endif
 "}}}
 
 "" CtrlP {{{
+let g:ctrlp_map = '<c-k>'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_max_files = 10000
 " let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_prompt_mappings = {
+            \ 'AcceptSelection("t")': ['<c-g>', '<c-t>'],
+            \ 'PrtExit()':            ['<esc>', '<c-c>'],
+            \ }
 "}}}
 
 "" Tagbar {{{
@@ -188,6 +193,8 @@ nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :cd %:h<CR>:pwd<CR>
+nnoremap <C-n> :cn<CR>
+nnoremap <C-p> :cp<CR>
 
 """ cd ~\ if vim starts without file
 if g:PC_ID == 0 || g:PC_ID == 2
