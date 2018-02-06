@@ -3,16 +3,21 @@
 
 syn keyword glmInclude module
 syn match glmInclude "#include"
-syn keyword glmStatement clock object schedule
-"syn keyword glmType name timezone starttime stoptime from to length configuration
-
+syn match glmInclude "#set"
 hi def link glmInclude Include
+
+syn keyword glmStatement clock object schedule
 hi def link glmStatement Statement
+
+"syn keyword glmType name timezone starttime stoptime from to length configuration
 "hi def link glmType Type
 
 syn region  glmString  start=+'+ end=+'+
 syn region  glmString  start=+"+ end=+"+
 hi def link glmString String
+
+syn region  glmComment start="//" end="$"
+hi def link glmComment Comment
 
 " Integers (taken from python)
 syn match   glmNumber	"\<\%([1-9]\d*\|0\)[Ll]\=\>"
