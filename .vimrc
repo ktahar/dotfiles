@@ -24,9 +24,7 @@ endif
 Plugin 'VundleVim/Vundle.vim'
 
 " Python
-if g:PC_ID == 0 || g:PC_ID == 2 || g:PC_ID == 3
-    Plugin 'davidhalter/jedi-vim'
-endif
+Plugin 'davidhalter/jedi-vim'
 " Plugin 'ivanov/vim-ipython'
 
 " Markdown
@@ -171,20 +169,18 @@ let g:ctrlp_prompt_mappings = {
 "}}}
 
 "" Tagbar {{{
-nnoremap <silent> <Leader>f :TagbarToggle<CR>
+nnoremap <silent> <Leader>t :TagbarToggle<CR>
 "}}}
 
 "" jedi-vim{{{
-if g:PC_ID == 0 || g:PC_ID == 2 || g:PC_ID == 3
-    let g:jedi#completions_command = "<C-N>"
-    if g:PC_ID == 0
-        let g:jedi#force_py_version = 3
-    endif
-    let g:jedi#auto_vim_configuration = 1
-    "let g:jedi#completions_enabled = 1
-    " let g:jedi#popup_select_first = 1
-    let g:jedi#rename_command = "<Leader>R"
+let g:jedi#completions_command = "<C-N>"
+if g:PC_ID == 0
+    let g:jedi#force_py_version = 3
 endif
+let g:jedi#auto_vim_configuration = 1
+" let g:jedi#completions_enabled = 1
+" let g:jedi#popup_select_first = 1
+let g:jedi#rename_command = "<Leader>R"
 "}}}
 
 """ map
