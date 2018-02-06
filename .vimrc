@@ -97,7 +97,7 @@ set incsearch
 set hlsearch
 
 """ File 
-set fileencodings=iso-2022-jp,iso-2022-jp-3,utf-8,cp932,euc-jp,default,latin1
+set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,latin1
 
 """ Skip loading mswin.vim
 "let g:skip_loading_mswin=1
