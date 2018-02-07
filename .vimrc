@@ -178,6 +178,10 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_prompt_mappings = {
             \ 'AcceptSelection("t")': ['<c-g>', '<c-t>'],
             \ 'PrtExit()':            ['<esc>', '<c-c>'],
+            \ 'PrtHistory(-1)':       ['<c-j>'],
+            \ 'PrtHistory(1)':        ['<c-k>'],
+            \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+            \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
             \ }
 if executable('ag')
     let g:ctrlp_use_caching = 0
