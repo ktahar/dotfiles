@@ -116,6 +116,10 @@ filetype plugin indent on
 set tabstop=8 expandtab shiftwidth=4 softtabstop=4
 set foldmethod=marker
 
+""" Autocmds
+"" grep to quickfix
+autocmd QuickFixCmdPost *grep* cwindow
+
 "" Python skeleton
 if (has('win32') || has('win64'))
     autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
@@ -174,6 +178,10 @@ let g:ctrlp_prompt_mappings = {
             \ 'AcceptSelection("t")': ['<c-g>', '<c-t>'],
             \ 'PrtExit()':            ['<esc>', '<c-c>'],
             \ }
+if executable('ag')
+    let g:ctrlp_use_caching = 0
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden -g ""'
+endif
 "}}}
 
 "" Tagbar {{{
@@ -193,8 +201,8 @@ let g:jedi#rename_command = "<Leader>R"
 
 "" open-browser{{{
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
+nnoremap gx <Plug>(openbrowser-smart-search)
+vnoremap gx <Plug>(openbrowser-smart-search)
 "}}}
 
 """ map
@@ -202,9 +210,11 @@ inoremap <C-j> <ESC>
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
-nnoremap <silent> <Leader>cd :cd %:h<CR>:pwd<CR>
-nnoremap <C-n> :cn<CR>
-nnoremap <C-p> :cp<CR>
+nnoremap <silent> <Leader>cd :<C-u>cd %:h<CR>:pwd<CR>
+nnoremap <C-n> :<C-u>cn<CR>
+nnoremap <C-p> :<C-u>cp<CR>
+
+nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
 
 """ cd ~\ if vim starts without file
 if g:PC_ID == 0 || g:PC_ID == 2
