@@ -214,7 +214,13 @@ nnoremap <silent> <Leader>cd :<C-u>cd %:h<CR>:pwd<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
 
+"" grep related
 nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
+if executable('ag')
+    set grepprg=ag\ --hidden\ --vimgrep\ $*
+    set grepformat=%f:%l:%c:%m
+    nnoremap <Leader>a :<C-u>sil gr  `git ls-files`<Home><Right><Right><Right><Right><Right><Right><Right>
+endif
 
 """ cd ~\ if vim starts without file
 if g:PC_ID == 0 || g:PC_ID == 2
