@@ -28,24 +28,32 @@ Plugin 'davidhalter/jedi-vim'
 " Plugin 'ivanov/vim-ipython'
 
 " Markdown
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
 Plugin 'kannokanno/previm'
 Plugin 'tyru/open-browser.vim'
 
-" Color scheme
-Plugin 'nanotech/jellybeans.vim'
-" Plugin 'w0ng/vim-hybrid'
-" Plugin 'jnurmine/Zenburn'
-" Plugin 'vim-scripts/Wombat'
-
 " Other Utils
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'thinca/vim-fontzoom'
-" Plugin 'thinca/vim-quickrun'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'vimwiki/vimwiki'
 Plugin 'majutsushi/tagbar'
-"Plugin 'itchyny/lightline.vim'
+" Plugin 'thinca/vim-quickrun'
+" Plugin 'itchyny/lightline.vim'
+
+" On windows I use gVim.
+if (has('win32') || has('win64'))
+    Plugin 'thinca/vim-fontzoom'
+
+    " Color scheme
+    Plugin 'nanotech/jellybeans.vim'
+    " Plugin 'w0ng/vim-hybrid'
+    " Plugin 'jnurmine/Zenburn'
+    " Plugin 'vim-scripts/Wombat'
+endif
+
+if g:PC_ID == 0
+    Plugin 'vimwiki/vimwiki'
+endif
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -181,6 +189,12 @@ let g:jedi#auto_vim_configuration = 1
 " let g:jedi#completions_enabled = 1
 " let g:jedi#popup_select_first = 1
 let g:jedi#rename_command = "<Leader>R"
+"}}}
+
+"" open-browser{{{
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 "}}}
 
 """ map
