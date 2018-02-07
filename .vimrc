@@ -72,6 +72,7 @@ set backup
 set backupdir=.,~/tmp
 set swapfile
 set directory=~/tmp,.
+set undofile
 set undodir=~/tmp,.
 
 """ UI 
