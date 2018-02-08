@@ -171,19 +171,15 @@ endif
 "}}}
 
 "" CtrlP {{{
-let g:ctrlp_map = '<c-k>'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_max_files = 10000
 " let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_prompt_mappings = {
             \ 'AcceptSelection("t")': ['<c-g>', '<c-t>'],
             \ 'PrtExit()':            ['<esc>', '<c-c>'],
-            \ 'PrtHistory(-1)':       ['<c-j>'],
-            \ 'PrtHistory(1)':        ['<c-k>'],
-            \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-            \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
             \ }
 if executable('ag')
+    let g:ctrlp_regexp = 1
     let g:ctrlp_use_caching = 0
     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden -g ""'
 endif
@@ -216,8 +212,8 @@ nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :<C-u>cd %:h<CR>:pwd<CR>
-nnoremap <C-n> :<C-u>cn<CR>
-nnoremap <C-p> :<C-u>cp<CR>
+nnoremap <C-j> :<C-u>cn<CR>
+nnoremap <C-k> :<C-u>cp<CR>
 
 "" grep related
 nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
