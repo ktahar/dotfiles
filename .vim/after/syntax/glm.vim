@@ -1,9 +1,11 @@
 " Vim syntax for GridLAB-D model file
 "
 
-syn keyword glmInclude module
-syn match glmInclude "#include"
-syn match glmInclude "#set"
+"syn keyword glmInclude module
+"syn keyword glmInclude link
+syn match glmInclude "^\s*#\w*"
+syn match glmInclude "^\s*link"
+syn match glmInclude "^\s*module"
 hi def link glmInclude Include
 
 syn keyword glmStatement clock object schedule
