@@ -14,3 +14,5 @@ ln -s ${HOME}/dotfiles/.vim/skeleton.py ${HOME}/.vim/skeleton.py
 ln -s ${HOME}/dotfiles/.vim/after ${HOME}/.vim/after
 ln -s ${HOME}/dotfiles/.vim/plugin ${HOME}/.vim/plugin
 
+echo "source \$HOME/dotfiles/alias.sh" >> ${HOME}/.bashrc
+

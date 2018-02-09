@@ -37,6 +37,7 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
+Plugin 'editorconfig/editorconfig-vim'
 " Plugin 'thinca/vim-quickrun'
 " Plugin 'itchyny/lightline.vim'
 

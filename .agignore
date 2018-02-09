@@ -1,4 +1,7 @@
+*~
 .git
 .hg
 HTML
-*.*~
+*.o
+*.lo
+*.vcproj
