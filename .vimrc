@@ -38,6 +38,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'ryanoasis/vim-devicons'
 " Plugin 'thinca/vim-quickrun'
 " Plugin 'itchyny/lightline.vim'
 
