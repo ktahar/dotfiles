@@ -4,3 +4,4 @@ bind '"\C-n": history-search-forward'
 bind '"\C-j": vi-movement-mode'
 
 alias ll='ls -Bltr'
+alias la='ls -altr'
