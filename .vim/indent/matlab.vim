@@ -1,11 +1,21 @@
-if exists("b:did_indent_matlab_my")
+" Modified Matlab indent.
+" Added openblock keywords (function, classdef, properties, and methods).
+
+" Only load this indent file when no other was loaded.
+if exists("b:did_indent")
   finish
 endif
-let b:did_indent_matlab_my = 1
+let b:did_indent = 1
+
+" Some preliminary setting
+setlocal indentkeys=!,o,O=end,=case,=else,=elseif,=otherwise,=catch
 
 setlocal indentexpr=MyGetMatlabIndent(v:lnum)
 
-" My indent function. Added openblock keywords (function, classdef, properties, and methods).
+" Only define the function once.
+if exists("*MyGetMatlabIndent")
+  finish
+endif
 
 function MyGetMatlabIndent(lnum)
   " Give up if this line is explicitly joined.

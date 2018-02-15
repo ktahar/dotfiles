@@ -13,6 +13,7 @@ mkdir ${HOME}/.vim
 ln -s ${HOME}/dotfiles/.vim/skeleton.py ${HOME}/.vim/skeleton.py
 ln -s ${HOME}/dotfiles/.vim/after ${HOME}/.vim/after
 ln -s ${HOME}/dotfiles/.vim/plugin ${HOME}/.vim/plugin
+ln -s ${HOME}/dotfiles/.vim/indent ${HOME}/.vim/indent
 
 echo "source \$HOME/dotfiles/.bashrc" >> ${HOME}/.bashrc
 
