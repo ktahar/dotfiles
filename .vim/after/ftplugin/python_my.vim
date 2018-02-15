@@ -4,9 +4,9 @@ endif
 let b:did_ftplugin_python_my = 1
 
 setl fileencoding=utf-8
-setl autoindent
-setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 setl foldmethod=indent
+
+" setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 " setl omnifunc=jedi#completions "this is done automatically
 
 " Execute current file \e
