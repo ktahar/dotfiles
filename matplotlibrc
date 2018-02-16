@@ -196,7 +196,7 @@ backend      : Qt5Agg
 # The font.size property is the default font size for text, given in pts.
 # 10 pt is the standard value.
 #
-#font.family         : sans-serif
+font.family         : sans-serif
 #font.style          : normal
 #font.variant        : normal
 #font.weight         : medium
@@ -209,7 +209,7 @@ backend      : Qt5Agg
 font.size           : 18.0 # 10.0
 #font.serif          : DejaVu Serif, Bitstream Vera Serif, New Century Schoolbook, Century Schoolbook L, Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman, Times, Palatino, Charter, serif
 #font.sans-serif     : DejaVu Sans, Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Arial, Helvetica, Avant Garde, sans-serif
-font.sans-serif     : Arial, Helvetica, sans-serif
+font.sans-serif     : Arial, DejaVu Sans, Bitstream Vera Sans, Lucida Grande, Verdana, Geneva, Lucid, Helvetica, Avant Garde, sans-serif
 #font.cursive        : Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, cursive
 #font.fantasy        : Comic Sans MS, Chicago, Charcoal, Impact, Western, Humor Sans, xkcd, fantasy
 #font.monospace      : DejaVu Sans Mono, Bitstream Vera Sans Mono, Andale Mono, Nimbus Mono L, Courier New, Courier, Fixed, Terminal, monospace
@@ -389,7 +389,7 @@ ytick.major.pad      : 6 # 3.5      # distance to major tick label in points
 ytick.minor.pad      : 6 # 3.4      # distance to the minor tick label in points
 #ytick.color          : k      # color of the tick labels
 #ytick.labelsize      : medium # fontsize of the tick labels
-ytick.direction      : in    # direction: in, out, or inout
+ytick.direction      : in # out   # direction: in, out, or inout
 #ytick.minor.visible  : False  # visibility of minor ticks on y-axis
 #ytick.major.left     : True   # draw y axis left major ticks
 #ytick.major.right    : True   # draw y axis right major ticks
@@ -415,7 +415,7 @@ ytick.direction      : in    # direction: in, out, or inout
 #legend.numpoints     : 1        # the number of marker points in the legend line
 #legend.scatterpoints : 1        # number of scatter points
 #legend.markerscale   : 1.0      # the relative size of legend markers vs. original
-#legend.fontsize      : medium
+legend.fontsize      : small
 # Dimensions as fraction of fontsize:
 #legend.borderpad     : 0.4      # border whitespace
 #legend.labelspacing  : 0.5      # the vertical space between the legend entries
