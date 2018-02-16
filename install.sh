@@ -9,6 +9,7 @@ ln -s ${HOME}/dotfiles/.gitignore_global ${HOME}/.gitignore_global
 ln -s ${HOME}/dotfiles/.agignore ${HOME}/.agignore
 mkdir ${HOME}/.config/matplotlib
 ln -s ${HOME}/dotfiles/matplotlibrc ${HOME}/.config/matplotlib/matplotlibrc
+ln -s ${HOME}/dotfiles/ipython_startup.py ${HOME}/.ipython/profile_default/startup/ipython_startup.py
 mkdir ${HOME}/.vim
 ln -s ${HOME}/dotfiles/.vim/skeleton.py ${HOME}/.vim/skeleton.py
 ln -s ${HOME}/dotfiles/.vim/after ${HOME}/.vim/after
