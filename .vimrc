@@ -30,6 +30,7 @@ Plugin 'davidhalter/jedi-vim'
 " Markdown
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
+Plugin 'mzlogin/vim-markdown-toc'
 Plugin 'kannokanno/previm'
 Plugin 'tyru/open-browser.vim'
 
