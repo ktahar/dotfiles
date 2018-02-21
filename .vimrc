@@ -228,8 +228,8 @@ let g:jedi#rename_command = "<Leader>R"
 
 "" open-browser{{{
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nnoremap gx <Plug>(openbrowser-smart-search)
-vnoremap gx <Plug>(openbrowser-smart-search)
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 "}}}
 
 """ map
