@@ -40,6 +40,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'tpope/vim-obsession'
 " Plugin 'thinca/vim-quickrun'
 " Plugin 'itchyny/lightline.vim'
 
