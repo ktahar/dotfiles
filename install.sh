@@ -45,3 +45,5 @@ else
     echo "~/.bashrc is already setup to source \$HOME/dotfiles/.bashrc"
 fi
 
+git config --global core.excludesfile ~/.gitignore_global
+
