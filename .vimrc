@@ -242,6 +242,17 @@ nnoremap <silent> <Leader>cd :<C-u>cd %:h<CR>:pwd<CR>
 nnoremap <C-j> :<C-u>cn<CR>
 nnoremap <C-k> :<C-u>cp<CR>
 
+nnoremap <C-W><C-h> <C-W>H
+nnoremap <C-W><C-j> <C-W>J
+nnoremap <C-W><C-k> <C-W>K
+nnoremap <C-W><C-l> <C-W>L
+nnoremap <C-W>H 6<C-W><
+nnoremap <C-W>J 3<C-W>+
+nnoremap <C-W>K 3<C-W>-
+nnoremap <C-W>L 6<C-W>>
+nnoremap <silent> <C-W><Bar> :<C-u>vsplit<CR>
+nnoremap <silent> <C-W>- :<C-u>split<CR>
+
 "" grep related
 nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
 if executable('ag')
