@@ -1,9 +1,9 @@
 #!/bin/bash
 
-DIRS=".vim .config/matplotlib"
+DIRS=".vim .config/matplotlib .ipython/profile_default/startup"
 for dn in $DIRS; do
     if [ ! -e $HOME/$dn ]; then
-        mkdir $HOME/$dn
+        mkdir -p $HOME/$dn
         echo "Made directory ~/${dn}."
     else
         echo "Directory ~/${dn} exists."
