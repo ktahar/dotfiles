@@ -1,9 +1,9 @@
 #!/bin/bash
 
-DIRS=".vim .config/matplotlib"
+DIRS=".vim .config/matplotlib .ipython/profile_default/startup"
 for dn in $DIRS; do
     if [ ! -e $HOME/$dn ]; then
-        mkdir $HOME/$dn
+        mkdir -p $HOME/$dn
         echo "Made directory ~/${dn}."
     else
         echo "Directory ~/${dn} exists."
@@ -44,4 +44,6 @@ if ! grep "source \$HOME/dotfiles/.bashrc" $HOME/.bashrc > /dev/null; then
 else
     echo "~/.bashrc is already setup to source \$HOME/dotfiles/.bashrc"
 fi
+
+git config --global core.excludesfile ~/.gitignore_global
 
