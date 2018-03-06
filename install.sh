@@ -34,7 +34,8 @@ fi
 
 if [ ! -e ~/dotfiles/.vimrc.local ]; then
     cp ~/dotfiles/.vimrc.local.example ~/dotfiles/.vimrc.local
-    echo "Made file ~/dotfiles/.vimrc.local.\nDon't forget to edit this later."
+    echo "Made file ~/dotfiles/.vimrc.local."
+    echo "Don't forget to edit this later."
 else
     echo "Directory ~/dotfiles/.vimrc.local exists."
 fi
