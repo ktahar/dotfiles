@@ -121,7 +121,13 @@ filetype plugin indent on
 set tabstop=8 expandtab shiftwidth=4 softtabstop=4
 set foldmethod=marker
 
-""" Autocmds
+""" command and autocmd definitions
+"" DiffOrig from vimrc_example.vim
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+                \ | wincmd p | diffthis
+endif
+
 "" grep to quickfix
 autocmd QuickFixCmdPost *grep* cwindow
 
