@@ -47,4 +47,7 @@ else
 fi
 
 git config --global core.excludesfile ~/.gitignore_global
+git config --global core.editor vim
+git config --global user.name "Kosuke Tahara"
+git config --global user.email "ksk.tahara@gmail.com"
 
