@@ -4,6 +4,7 @@ endif
 let b:did_ftplugin_markdown_my = 1
 
 setl fileencoding=utf-8
+setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 " Open browser preview by Previm \e
 nnoremap <silent><buffer> <LocalLeader>e :PrevimOpen<CR>
