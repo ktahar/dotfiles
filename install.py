@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import subprocess
 
 def main_windows():
     """make directories and symbolic links for windows.
@@ -53,6 +54,12 @@ def main_windows():
             else:
                 print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
                 print("[ERROR] be sure to run as Administrator")
+
+    vundle_path = os.path.join(home, r"vimfiles\bundle\Vundle.vim")
+    if os.path.exists(vundle_path):
+        print(r"[INFO] already exists: %s" % vundle_path)
+    else:
+        subprocess.run(['git', 'clone', 'https://github.com/VundleVim/Vundle.vim.git', vundle_path])
 
 def main_posix():
     raise NotImplementedError("This is todo.")
