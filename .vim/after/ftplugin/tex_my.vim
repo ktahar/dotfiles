@@ -18,7 +18,7 @@ elseif has('macunix')
   let s:viewer = 'skim'
 else
   let s:typeset = 'pdfuplatex'
-  let s:viewer = 'evince'
+  let s:viewer = 'fwdevince'
 endif
 
 " Set TeXmaster only if it doesn't exist
@@ -45,7 +45,7 @@ function! s:TypesetFile()
   elseif s:typeset == 'xelatex'
     call s:PdfLaTeX("xelatex")
   elseif s:typeset == 'latexmk'
-    call s:Latexmk("latexmk")
+    call s:Latexmk("default", 0)
   else
     call s:PdfupLaTeX("pdfuplatex")
   endif
@@ -259,7 +259,7 @@ function! s:PdfLaTeX(type)
   return ''
 endfunction
 
-function! s:Latexmk(type)
+function! s:Latexmk(type, silent)
   if &ft != 'tex'
     echo "calling Latexmk from a non-tex file"
     return ''
@@ -270,8 +270,10 @@ function! s:Latexmk(type)
   let masterDir = expand("%:p:h")
   let masterTeXFile = s:master
   let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
-  if a:type == 'latexmk'
+  if a:type == 'default'
     let latexmk = 'latexmk -gg' . ' "' . masterTeXFile . '"'
+  elseif a:type == 'xelatex'
+    let latexmk = 'latexmk -gg -xelatex' . ' "' . masterTeXFile . '"'
   endif
 
   if has('win32') || has('win64')
@@ -286,41 +288,11 @@ function! s:Latexmk(type)
   endif
 
   execute 'lcd ' . masterDir
-  execute '!' execString
-  "execute 'silent! !' execString
-  redraw!
-  return ''
-endfunction
-
-function! s:LatexmkSilent(type)
-  if &ft != 'tex'
-    echo "calling Latexmk from a non-tex file"
-    return ''
-  end
-
-  w
-
-  let masterDir = expand("%:p:h")
-  let masterTeXFile = s:master
-  let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
-  if a:type == 'latexmk'
-    let latexmk = 'latexmk -gg' . ' "' . masterTeXFile . '"'
-  endif
-
-  if has('win32') || has('win64')
-    if s:viewer == 'acroread'
-      let pdfclose = 'tasklist /fi "IMAGENAME eq AcroRd32.exe" /nh | findstr "AcroRd32.exe" > nul && echo exit | pdfdde --r15'
-      let execString = 'cd /d ' . masterDir . ' && ' . pdfclose . ' & ' . latexmk
-    else
-      let execString = 'cd /d ' . masterDir . ' && ' . latexmk
-    endif
+  if a:silent
+    execute 'silent! !' execString
   else
-    let execString = 'cd ' . masterDir . ' && ' . latexmk
+    execute '!' execString
   endif
-
-  execute 'lcd ' . masterDir
-  "execute '!' execString
-  execute 'silent! !' execString
   redraw!
   return ''
 endfunction
@@ -488,7 +460,7 @@ function! s:FwdEvince()
   let currentTeXFile = expand("%:t")
   let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
-  let viewer = 'fwdevince'
+  let viewer = expand("~/dotfiles/fwdevince")
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" ' . line(".") . ' "' . currentTeXFile . '" &'
 
   execute 'lcd ' . masterDir
@@ -525,7 +497,7 @@ function! s:Zathura()
   let masterDir = expand("%:p:h")
   let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
-  let viewer = 'zathura -s -x "vim --servername synctex -n --remote-silent +\%{line} \%{input}"'
+  let viewer = 'zathura -x "vim --servername synctex -n --remote-silent +\%{line} \%{input}"'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" &'
 
   execute 'lcd ' . masterDir
@@ -585,14 +557,15 @@ function! s:AdobeAcrobatReaderDC()
   return ''
 endfunction
 
-" Command definitions ans Mappings
+" Command definitions and Mappings
 command! -nargs=1 -buffer Typeset :call <SID>SetTypeset(<f-args>)
 command! -nargs=1 -buffer Viewer :call <SID>SetViewer(<f-args>)
 command! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
-nnoremap <expr><silent><buffer> <Leader>e <SID>LatexmkSilent('latexmk')
-nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('latexmk')
-"nnoremap <silent><buffer> <LocalLeader>r :call Latexmk('latexmk')<CR>
+nnoremap <expr><silent><buffer> <Leader>e <SID>Latexmk('default', 1)
+nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('default', 0)
+nnoremap <expr><silent><buffer> <Leader>x <SID>Latexmk('xelatex', 1)
+nnoremap <expr><silent><buffer> <Leader>X <SID>Latexmk('xelatex', 0)
 "nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
 nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
 nnoremap <expr><silent><buffer> <Leader>r <SID>SetTeXmasterCurrent()
