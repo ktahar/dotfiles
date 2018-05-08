@@ -4,21 +4,18 @@
 " vb disable must be repeated in _gvimrc
 set visualbell t_vb=
 
-""" screen size
+""" screen size and fonts
 if g:PC_ID == 1
     :autocmd GUIEnter * winpos -1620 0
     set lines=54
     set columns=120
-    set guifont=Inconsolata:h14:cSHIFTJIS
-    "set guifont=Consolas:h11:cSHIFTJIS
+    set guifont=Cica:h14:cSHIFTJIS
     set guifontwide=MS_Gothic:h12:cSHIFTJIS
 elseif g:PC_ID == 2
     :autocmd GUIEnter * winpos 250 0
-    set lines=63
+    set lines=54
     set columns=120
-    "set guifont=Ricty_Diminished:h14:cSHIFTJIS
-    set guifont=Inconsolata:h14:cSHIFTJIS
-    "set guifont=Consolas:h11:cSHIFTJIS
+    set guifont=Cica:h14:cSHIFTJIS
     set guifontwide=MS_Gothic:h12:cSHIFTJIS
 endif
 
