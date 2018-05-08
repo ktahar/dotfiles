@@ -58,11 +58,10 @@ colorscheme jellybeans
 """ do something if starting gvim without file.
 """ open personal memo on home_Windows. cd to $HOME otherwise.
 if @% == ''
+    silent cd ~
     if g:PC_ID == 1
-        silent edit ~\OneDrive\docs\memo\index.md
-        silent cd ~\OneDrive\docs\memo
-    else
-        silent cd ~/
+        silent tabedit ~\OneDrive\docs\memo\index.md
+        silent lcd ~\OneDrive\docs\memo
     endif
 endif
 

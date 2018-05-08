@@ -227,7 +227,7 @@ inoremap <C-j> <ESC>
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
-nnoremap <silent> <Leader>cd :<C-u>cd %:h<CR>:pwd<CR>
+nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <C-j> :<C-u>cn<CR>
 nnoremap <C-k> :<C-u>cp<CR>
 
