@@ -250,10 +250,3 @@ if executable('ag')
     nnoremap <Leader>a :<C-u>sil gr  `git ls-files`<Home><Right><Right><Right><Right><Right><Right><Right>
 endif
 
-""" cd ~\ if vim starts without file
-if (has('win32') || has('win64'))
-    if @% == ''
-        cd ~\
-    endif
-endif
-

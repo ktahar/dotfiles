@@ -55,3 +55,14 @@ endif
 """ colorscheme
 colorscheme jellybeans
 
+""" do something if starting gvim without file.
+""" open personal memo on home_Windows. cd to $HOME otherwise.
+if @% == ''
+    if g:PC_ID == 1
+        silent edit ~\OneDrive\docs\memo\index.md
+        silent cd ~\OneDrive\docs\memo
+    else
+        silent cd ~/
+    endif
+endif
+
