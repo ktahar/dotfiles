@@ -1,5 +1,4 @@
 """ K.Tahara's vimrc
-" set g:PC_ID home_Windows (0) home_Linux (1) lab_Windows (2) lab_Linux (3) in ~/dotfiles/.vimrc.local
 
 if filereadable(expand('~/dotfiles/_vimrc.local'))
     source ~/dotfiles/_vimrc.local
@@ -41,8 +40,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'tpope/vim-obsession'
+Plugin 'itchyny/lightline.vim'
 " Plugin 'thinca/vim-quickrun'
-" Plugin 'itchyny/lightline.vim'
 
 " On windows I use gVim.
 if (has('win32') || has('win64'))
@@ -53,10 +52,6 @@ if (has('win32') || has('win64'))
     " Plugin 'w0ng/vim-hybrid'
     " Plugin 'jnurmine/Zenburn'
     " Plugin 'vim-scripts/Wombat'
-endif
-
-if g:PC_ID == 0
-    Plugin 'vimwiki/vimwiki'
 endif
 
 " All of your Plugins must be added before the following line
@@ -193,16 +188,6 @@ endif
 """ Plugin 
 source $VIMRUNTIME/macros/matchit.vim
 
-"" Vimwiki {{{
-if g:PC_ID == 0
-    let wiki = {}
-    let wiki.path = '~/OneDrive/docs/vimwiki/'
-    let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
-    let g:vimwiki_list = [wiki]
-    let g:vimwiki_camel_case = 0
-endif
-"}}}
-
 "" CtrlP {{{
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_max_files = 10000
@@ -224,10 +209,8 @@ nnoremap <silent> <Leader>b :TagbarToggle<CR>
 
 "" jedi-vim{{{
 let g:jedi#completions_command = "<C-N>"
-if g:PC_ID == 0
-    let g:jedi#force_py_version = 3
-endif
 let g:jedi#auto_vim_configuration = 1
+" let g:jedi#force_py_version = 3
 " let g:jedi#completions_enabled = 1
 " let g:jedi#popup_select_first = 1
 let g:jedi#rename_command = "<Leader>R"
@@ -268,7 +251,7 @@ if executable('ag')
 endif
 
 """ cd ~\ if vim starts without file
-if g:PC_ID == 0 || g:PC_ID == 2
+if (has('win32') || has('win64'))
     if @% == ''
         cd ~\
     endif

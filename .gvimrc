@@ -1,11 +1,11 @@
 """ K.Tahara's gvimrc
-" set g:PC_ID home_Windows (0) home_Linux (1) lab_Windows (2) lab_Linux (3) in ~/dotfiles/.vimrc.local
+" set g:PC_ID other (0) home_Windows (1) lab_Windows (2) in ~/dotfiles/.vimrc.local
 
 " vb disable must be repeated in _gvimrc
 set visualbell t_vb=
 
 """ screen size
-if g:PC_ID == 0
+if g:PC_ID == 1
     :autocmd GUIEnter * winpos -1620 0
     set lines=54
     set columns=120
@@ -57,15 +57,4 @@ endif
 
 """ colorscheme
 colorscheme jellybeans
-
-"" indent-guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_guide_size = 1
-
-""" open vimwiki if vim starts without file
-if g:PC_ID == 0
-    if @% == ''
-        silent VimwikiIndex
-    endif
-endif
 
