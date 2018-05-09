@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import shutil
 import subprocess
 
 def main_windows():
@@ -15,8 +16,8 @@ def main_windows():
     kdll = ctypes.windll.LoadLibrary("kernel32.dll")
     shdll = ctypes.windll.LoadLibrary("Shell32.dll")
 
-    if not shdll.IsUserAnAdmin():
-        raise RuntimeError("This script have to be run as an Administrator")
+    admin = shdll.IsUserAnAdmin()
+    # TODO: prompt here
 
     dirs = [r".vim", r".config\matplotlib", r".ipython\profile_default\startup"]
 
@@ -48,13 +49,29 @@ def main_windows():
             print("[INFO] already exists: %s" % ln)
         else:
             isdir = 1 if os.path.isdir(tgt) else 0
-            ret = kdll.CreateSymbolicLinkW(ln, tgt, isdir)
-            if ret == 1:
-                print("created link %s" % ln)
+            if admin:
+                ret = kdll.CreateSymbolicLinkW(ln, tgt, isdir)
+                if ret == 1:
+                    print("created sym link %s" % ln)
+                else:
+                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
+                    print("[ERROR] be sure to run as Administrator")
+            elif not isdir:
+                ret = kdll.CreateHardLinkW(ln, tgt, None)
+                if ret:
+                    print("created hard link %s" % ln)
+                else:
+                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
             else:
-                print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
-                print("[ERROR] be sure to run as Administrator")
+                # create junction to the directory (no win api?)
+                subprocess.run(['mklink', '/J', ln, tgt], shell=True)
+                print("created junction %s" % ln)
 
+    shutil.copy(os.path.join(home, "dotfiles\.vimrc.local.example"),
+            os.path.join(home, "dotfiles\.vimrc.local"))
+    print("Made file ~/dotfiles/.vimrc.local.")
+    print("[WARN] Don't forget to edit this later.")
+    return
     vundle_path = os.path.join(home, r"vimfiles\bundle\Vundle.vim")
     if os.path.exists(vundle_path):
         print(r"[INFO] already exists: %s" % vundle_path)

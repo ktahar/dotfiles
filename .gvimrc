@@ -13,9 +13,9 @@ if g:PC_ID == 1
     set guifontwide=MS_Gothic:h12:cSHIFTJIS
 elseif g:PC_ID == 2
     :autocmd GUIEnter * winpos 250 0
-    set lines=54
+    set lines=52
     set columns=120
-    set guifont=Cica:h14:cSHIFTJIS
+    set guifont=Cica:h15:cSHIFTJIS
     set guifontwide=MS_Gothic:h12:cSHIFTJIS
 endif
 
