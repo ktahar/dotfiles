@@ -40,7 +40,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'tpope/vim-obsession'
-Plugin 'itchyny/lightline.vim'
+" Plugin 'itchyny/lightline.vim'
 " Plugin 'thinca/vim-quickrun'
 
 " On windows I use gVim.
