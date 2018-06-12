@@ -1,7 +1,8 @@
 !! Xresources
 
 XTerm*termName:     xterm-256color
-XTerm*faceName:     Cica-16:size=10:antialias=false
+XTerm*faceName:     Cica
+XTerm*faceSize:     18
 XTerm*locale:       true
 XTerm*saveLines:    4096
 
