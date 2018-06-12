@@ -192,6 +192,7 @@ endif
 source $VIMRUNTIME/macros/matchit.vim
 
 "" CtrlP {{{
+let g:ctrlp_map = '<c-j>'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_max_files = 10000
 " let g:ctrlp_clear_cache_on_exit = 0
@@ -233,8 +234,8 @@ nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
-nnoremap <C-j> :<C-u>cn<CR>
-nnoremap <C-k> :<C-u>cp<CR>
+nnoremap <C-n> :<C-u>cn<CR>
+nnoremap <C-p> :<C-u>cp<CR>
 
 nnoremap s <Nop>
 nnoremap sh <C-W>h
@@ -257,7 +258,7 @@ nnoremap <silent> s- :<C-u>sp<CR>
 nnoremap sn gt
 nnoremap sp gT
 
-"" grep related
+"" grep related (TODO: define function etc.?)
 nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
 if executable('ag')
     set grepprg=ag\ --hidden\ --vimgrep\ $*
