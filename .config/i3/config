@@ -26,7 +26,7 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+d kill
+bindsym $mod+x kill
 
 # start dmenu (a program launcher)
 bindsym $mod+semicolon exec dmenu_run
@@ -85,7 +85,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
