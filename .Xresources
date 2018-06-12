@@ -1,0 +1,45 @@
+!! Xresources
+
+XTerm*termName:     xterm-256color
+XTerm*faceName:     Cica-16:size=10:antialias=false
+XTerm*locale:       true
+XTerm*saveLines:    4096
+
+!! Color-scheme Solarized dark from http://terminal.sexy
+
+! special
+XTerm*foreground:   #93a1a1
+XTerm*background:   #002b36
+XTerm*cursorColor:  #93a1a1
+
+! black
+XTerm*color0:       #002b36
+XTerm*color8:       #657b83
+
+! red
+XTerm*color1:       #dc322f
+XTerm*color9:       #dc322f
+
+! green
+XTerm*color2:       #859900
+XTerm*color10:      #859900
+
+! yellow
+XTerm*color3:       #b58900
+XTerm*color11:      #b58900
+
+! blue
+XTerm*color4:       #268bd2
+XTerm*color12:      #268bd2
+
+! magenta
+XTerm*color5:       #6c71c4
+XTerm*color13:      #6c71c4
+
+! cyan
+XTerm*color6:       #2aa198
+XTerm*color14:      #2aa198
+
+! white
+XTerm*color7:       #93a1a1
+XTerm*color15:      #fdf6e3
