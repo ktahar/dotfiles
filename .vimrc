@@ -77,7 +77,7 @@ set undodir=~/tmp,.
 """ UI 
 set visualbell t_vb=
 set title
-set ruler
+set noruler
 set number
 set wrap
 set showtabline=1
@@ -109,6 +109,9 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,l
 "let g:skip_loading_mswin=1
 
 "}}}
+
+""" Statusline
+set statusline=%<%f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %15.(%l/%L,%c%V%)
 
 """ Indent etc.
 syntax on
@@ -223,6 +226,8 @@ vmap gx <Plug>(openbrowser-smart-search)
 "}}}
 
 """ map
+let mapleader = "\<Space>"
+
 inoremap <C-j> <ESC>
 nnoremap ; :
 nnoremap : ;
@@ -231,16 +236,26 @@ nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <C-j> :<C-u>cn<CR>
 nnoremap <C-k> :<C-u>cp<CR>
 
-nnoremap <C-W><C-h> <C-W>H
-nnoremap <C-W><C-j> <C-W>J
-nnoremap <C-W><C-k> <C-W>K
-nnoremap <C-W><C-l> <C-W>L
-nnoremap <C-W>H 6<C-W><
-nnoremap <C-W>J 3<C-W>+
-nnoremap <C-W>K 3<C-W>-
-nnoremap <C-W>L 6<C-W>>
-nnoremap <silent> <C-W><Bar> :<C-u>vsplit<CR>
-nnoremap <silent> <C-W>- :<C-u>split<CR>
+nnoremap s <Nop>
+nnoremap sh <C-W>h
+nnoremap sj <C-W>j
+nnoremap sk <C-W>k
+nnoremap sl <C-W>l
+nnoremap s<C-h> <C-W>H
+nnoremap s<C-j> <C-W>J
+nnoremap s<C-k> <C-W>K
+nnoremap s<C-l> <C-W>L
+nnoremap sH 6<C-W><
+nnoremap sJ 3<C-W>+
+nnoremap sK 3<C-W>-
+nnoremap sL 6<C-W>>
+nnoremap so <C-W>o
+nnoremap sc <C-W>c
+nnoremap <silent> s\ :<C-u>vsp<CR>
+nnoremap <silent> s<Bar> :<C-u>vsp<CR>
+nnoremap <silent> s- :<C-u>sp<CR>
+nnoremap sn gt
+nnoremap sp gT
 
 "" grep related
 nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
