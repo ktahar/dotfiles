@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIRS=".vim .config/matplotlib .ipython/profile_default/startup"
+DIRS=".vim .config/i3 .config/matplotlib .ipython/profile_default/startup"
 for dn in $DIRS; do
     if [ ! -e $HOME/$dn ]; then
         mkdir -p $HOME/$dn
@@ -10,7 +10,7 @@ for dn in $DIRS; do
     fi
 done
 
-FILES=".vimrc .gvimrc .latexmkrc .tmux.conf .ctags .gitignore_global .agignore .vim/after .vim/plugin .vim/indent .vim/skeleton.py .config/matplotlib/matplotlibrc .ipython/profile_default/startup/ipython_startup.py"
+FILES=".vimrc .gvimrc .latexmkrc .tmux.conf .ctags .gitignore_global .agignore .vim/after .vim/plugin .vim/indent .vim/skeleton.py .config/i3/config .config/matplotlib/matplotlibrc .ipython/profile_default/startup/ipython_startup.py"
 for fn in $FILES; do
     if [ ! -e $HOME/$fn ]; then
         ln -s $HOME/dotfiles/$fn $HOME/$fn
