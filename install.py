@@ -4,10 +4,31 @@ import os
 import shutil
 import subprocess
 
+def prompt(msg, default='y'):
+    if sys.version_info.major == 2: inp = raw_input
+    else: inp = input
+
+    if not isinstance(default, str): default = ''
+    default = default.lower()
+
+    if default == 'y':
+        return inp('%s [Y/n]:' % msg).lower() != 'n'
+    elif default == 'n':
+        return inp('%s [y/N]:' % msg).lower() == 'y'
+    else:
+        while True:
+            a = inp('%s [y/n]:' % msg).lower()
+            if a == 'y':
+                return True
+            elif a == 'n':
+                return False
+
 def main_windows():
     """make directories and symbolic links for windows.
 
-    Note that you must run this script with Administrator privilege.
+    Note that you should run this script with Administrator privilege.
+    Creates hardlinks and junctions if executed without Admin. priv.
+
     """
 
     import ctypes
@@ -17,7 +38,10 @@ def main_windows():
     shdll = ctypes.windll.LoadLibrary("Shell32.dll")
 
     admin = shdll.IsUserAnAdmin()
-    # TODO: prompt here
+    if not admin:
+        print("You don't have Administrator priviledge. If you can get it, I recommend to install with it.")
+        if not prompt('Install anyway?', 'n'):
+            return
 
     dirs = [r".vim", r".config\matplotlib", r".ipython\profile_default\startup"]
 
@@ -71,7 +95,7 @@ def main_windows():
             os.path.join(home, "dotfiles\.vimrc.local"))
     print("Made file ~/dotfiles/.vimrc.local.")
     print("[WARN] Don't forget to edit this later.")
-    return
+
     vundle_path = os.path.join(home, r"vimfiles\bundle\Vundle.vim")
     if os.path.exists(vundle_path):
         print(r"[INFO] already exists: %s" % vundle_path)
