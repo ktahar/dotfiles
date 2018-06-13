@@ -111,7 +111,7 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,l
 "}}}
 
 """ Statusline
-set statusline=%<%f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %15.(%l/%L,%c%V%)
+set statusline=%<%f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %12.(%l/%L,%)%3.v
 
 """ Indent etc.
 syntax on
