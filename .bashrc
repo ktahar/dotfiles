@@ -7,5 +7,3 @@ set -o ignoreeof
 
 alias ll='ls -Bltr'
 alias la='ls -altr'
-
-export TERM=gnome-256color

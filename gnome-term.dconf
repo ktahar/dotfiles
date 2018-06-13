@@ -4,12 +4,14 @@ cjk-utf8-ambiguous-width='narrow'
 scrollbar-policy='never'
 palette=['rgb(0,43,54)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(108,113,196)', 'rgb(42,161,152)', 'rgb(147,161,161)', 'rgb(101,123,131)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(108,113,196)', 'rgb(42,161,152)', 'rgb(253,246,227)']
 visible-name='ktaha'
+custom-command='env TERM=gnome-256color /bin/bash'
 default-size-columns=80
 cursor-shape='block'
 scroll-on-output=false
-use-theme-colors=false
+use-custom-command=true
 use-system-font=false
 use-transparent-background=false
+use-theme-colors=false
 font='Cica 16'
 use-theme-transparency=false
 allow-bold=true
