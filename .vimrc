@@ -227,6 +227,7 @@ vmap gx <Plug>(openbrowser-smart-search)
 "}}}
 
 """ map
+nnoremap <Space> <Nop>
 let mapleader = "\<Space>"
 
 inoremap <C-j> <ESC>
