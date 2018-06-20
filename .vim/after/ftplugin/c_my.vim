@@ -4,7 +4,7 @@ endif
 let b:did_ftplugin_c_my = 1
 
 " GNU Global
-nnoremap <silent><buffer> <LocalLeader>f :Gtags -f %<CR>
-nnoremap <buffer> <LocalLeader>g :Gtags -g 
-nnoremap <silent><buffer> <LocalLeader>d :GtagsCursor<CR>
+nnoremap <silent><buffer> <Leader>f :Gtags -f %<CR>
+nnoremap <buffer> <Leader>g :Gtags -g 
+nnoremap <silent><buffer> <Leader>d :GtagsCursor<CR>
 

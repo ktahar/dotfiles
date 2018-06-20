@@ -19,7 +19,7 @@ function! s:ExecPy()
     endif
 endfunction
 " command! -buffer Exec call <SID>ExecPy()
-nnoremap <silent><buffer> <LocalLeader>e :call <SID>ExecPy()<CR>
+nnoremap <silent><buffer> <Leader>e :call <SID>ExecPy()<CR>
 
 " Execute current file (interactive) \E
 function! s:ExecPy_i()
@@ -31,4 +31,4 @@ function! s:ExecPy_i()
     endif
 endfunction
 " command! -buffer Exec call <SID>ExecPy()
-nnoremap <silent><buffer> <LocalLeader>E :call <SID>ExecPy_i()<CR>
+nnoremap <silent><buffer> <Leader>E :call <SID>ExecPy_i()<CR>
