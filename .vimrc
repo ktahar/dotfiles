@@ -271,6 +271,8 @@ let g:ctrlp_clear_cache_on_exit = 1
 
 "" Tagbar {{{
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
+let g:tagbar_map_togglesort = "r"
+let g:tagbar_sort = 0
 "}}}
 
 "" jedi-vim {{{
