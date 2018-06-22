@@ -8,7 +8,7 @@ setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 setl smartindent
 
 " Open browser preview by Previm \e
-nnoremap <silent><buffer> <LocalLeader>e :PrevimOpen<CR>
+nnoremap <silent><buffer> <Leader>e :PrevimOpen<CR>
 
 " Convert to html by pandoc \E
 function! s:PandocHTML()
