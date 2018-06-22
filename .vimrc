@@ -89,6 +89,7 @@ set showmode
 set showcmd
 set wildmenu
 set wildmode=list:longest,full
+set statusline=%<%f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %12.(%l/%L,%)%3.v
 
 """ Input 
 set iminsert=0
@@ -110,29 +111,49 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,l
 
 "}}}
 
-""" Statusline
-set statusline=%<%f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %12.(%l/%L,%)%3.v
+""" map{{{
+nnoremap <Space> <Nop>
+let mapleader = "\<Space>"
 
-""" Cursor
-if has("unix")
-    if $TERM == "screen-256color"
-        let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>[6 q\<Esc>\\"
-        let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>[4 q\<Esc>\\"
-        let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-    else
-        let &t_SI = "\<Esc>[6 q"
-        let &t_SR = "\<Esc>[4 q"
-        let &t_EI = "\<Esc>[2 q"
-    endif
+inoremap <C-j> <ESC>
+nnoremap ; :
+nnoremap : ;
+nnoremap Y y$
+nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
+nnoremap <C-n> :<C-u>cn<CR>
+nnoremap <C-p> :<C-u>cp<CR>
+
+nnoremap s <Nop>
+nnoremap sh <C-W>h
+nnoremap sj <C-W>j
+nnoremap sk <C-W>k
+nnoremap sl <C-W>l
+nnoremap s<C-h> <C-W>H
+nnoremap s<C-j> <C-W>J
+nnoremap s<C-k> <C-W>K
+nnoremap s<C-l> <C-W>L
+nnoremap sH 6<C-W><
+nnoremap sJ 3<C-W>+
+nnoremap sK 3<C-W>-
+nnoremap sL 6<C-W>>
+nnoremap so <C-W>o
+nnoremap sc <C-W>c
+nnoremap <silent> s\ :<C-u>vsp<CR>
+nnoremap <silent> s<Bar> :<C-u>vsp<CR>
+nnoremap <silent> s- :<C-u>sp<CR>
+nnoremap sn gt
+nnoremap sp gT
+"}}}
+
+""" Commands (grep, diff etc.) {{{
+"" grep related (TODO: define function etc.?)
+nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
+if executable('ag')
+    set grepprg=ag\ --hidden\ --vimgrep\ $*
+    set grepformat=%f:%l:%c:%m
+    nnoremap <Leader>a :<C-u>sil gr  `git ls-files`<Home><Right><Right><Right><Right><Right><Right><Right>
 endif
 
-""" Indent etc.
-syntax on
-filetype plugin indent on
-set tabstop=8 expandtab shiftwidth=4 softtabstop=4
-set foldmethod=marker
-
-""" command and autocmd definitions
 "" DiffOrig from vimrc_example.vim
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
@@ -141,6 +162,14 @@ endif
 
 "" grep to quickfix
 autocmd QuickFixCmdPost *grep* cwindow
+
+"}}}
+
+""" Fileformat and Filetype {{{
+syntax on
+filetype plugin indent on
+set tabstop=8 expandtab shiftwidth=4 softtabstop=4
+set foldmethod=marker
 
 "" Python skeleton
 if (has('win32') || has('win64'))
@@ -177,6 +206,21 @@ augroup Binary
     au BufWritePost *.npy set nomod | endif
 augroup END
 "}}}
+"}}}
+
+""" Terminal specific {{{
+""" Cursor
+if has("unix")
+    if $TERM == "screen-256color"
+        let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>[6 q\<Esc>\\"
+        let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>[4 q\<Esc>\\"
+        let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
+    else
+        let &t_SI = "\<Esc>[6 q"
+        let &t_SR = "\<Esc>[4 q"
+        let &t_EI = "\<Esc>[2 q"
+    endif
+endif
 
 "" Fcitx {{{
 if executable('fcitx-remote')
@@ -200,8 +244,9 @@ if executable('fcitx-remote')
     autocmd InsertEnter * call ActivateFcitx()
 endif
 "}}}
+"}}}
 
-""" Plugin 
+""" Plugins {{{
 source $VIMRUNTIME/macros/matchit.vim
 
 "" CtrlP {{{
@@ -224,7 +269,7 @@ endif
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 "}}}
 
-"" jedi-vim{{{
+"" jedi-vim {{{
 let g:jedi#completions_command = "<C-N>"
 let g:jedi#auto_vim_configuration = 1
 " let g:jedi#force_py_version = 3
@@ -233,50 +278,10 @@ let g:jedi#auto_vim_configuration = 1
 let g:jedi#rename_command = "<Leader>R"
 "}}}
 
-"" open-browser{{{
+"" open-browser {{{
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 "}}}
 
-""" map
-nnoremap <Space> <Nop>
-let mapleader = "\<Space>"
-
-inoremap <C-j> <ESC>
-nnoremap ; :
-nnoremap : ;
-nnoremap Y y$
-nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
-nnoremap <C-n> :<C-u>cn<CR>
-nnoremap <C-p> :<C-u>cp<CR>
-
-nnoremap s <Nop>
-nnoremap sh <C-W>h
-nnoremap sj <C-W>j
-nnoremap sk <C-W>k
-nnoremap sl <C-W>l
-nnoremap s<C-h> <C-W>H
-nnoremap s<C-j> <C-W>J
-nnoremap s<C-k> <C-W>K
-nnoremap s<C-l> <C-W>L
-nnoremap sH 6<C-W><
-nnoremap sJ 3<C-W>+
-nnoremap sK 3<C-W>-
-nnoremap sL 6<C-W>>
-nnoremap so <C-W>o
-nnoremap sc <C-W>c
-nnoremap <silent> s\ :<C-u>vsp<CR>
-nnoremap <silent> s<Bar> :<C-u>vsp<CR>
-nnoremap <silent> s- :<C-u>sp<CR>
-nnoremap sn gt
-nnoremap sp gT
-
-"" grep related (TODO: define function etc.?)
-nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
-if executable('ag')
-    set grepprg=ag\ --hidden\ --vimgrep\ $*
-    set grepformat=%f:%l:%c:%m
-    nnoremap <Leader>a :<C-u>sil gr  `git ls-files`<Home><Right><Right><Right><Right><Right><Right><Right>
-endif
-
+"}}}
