@@ -51,7 +51,12 @@ def clone_git_repos(tmux):
         if os.path.exists(path):
             print(r"[INFO] already exists: %s" % path)
         else:
-            subprocess.run(['git', 'clone', repo, path])
+            if shutil.which('proxy.sh') is not None:
+                subprocess.run(['proxy.sh', 'git', 'clone', repo, path])
+            elif shutil.which('proxy.bat') is not None:
+                subprocess.run(['proxy.bat', 'git', 'clone', repo, path])
+            else:
+                subprocess.run(['git', 'clone', repo, path])
 
 def setup_bashrc():
     home = os.environ.get('HOME')
@@ -84,7 +89,10 @@ def install_apt_packages():
             "ncurses-term",
             ]
 
-    subprocess.run(['sudo', 'apt', 'install'] + pkgs)
+    if shutil.which('proxy.sh') is not None:
+        subprocess.run(['proxy.sh', 'sudo', '-E', 'apt', 'install'] + pkgs)
+    else:
+        subprocess.run(['sudo', 'apt', 'install'] + pkgs)
 
 def main_windows():
     """make directories and symbolic links for windows.
