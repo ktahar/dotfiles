@@ -1,0 +1,16 @@
+[/]
+foreground-color='#F1F1EBEBEBEB'
+visible-name='ktaha'
+login-shell=false
+palette='#484848483E3E:#DCDC25256666:#8F8FC0C02929:#D4D4C9C96E6E:#5555BCBCCECE:#93935858FEFE:#5656B7B7A5A5:#ACACADADA1A1:#767671715E5E:#FAFA27277272:#A7A7E2E22E2E:#E7E7DBDB7575:#6666D9D9EEEE:#AEAE8282FFFF:#6666EFEFD5D5:#CFCFD0D0C2C2'
+custom-command='env TERM=gnome-256color /bin/bash'
+use-system-font=false
+use-custom-command=true
+use-theme-colors=false
+update-records=true
+font='Cica 16'
+allow-bold=true
+bold-color-same-as-fg=true
+bold-color='#F1F1EBEBEBEB'
+background-color='#272728282222'
+cursor-blink-mode='off'
