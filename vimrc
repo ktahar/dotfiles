@@ -147,7 +147,7 @@ nnoremap sp gT
 "" grep related (TODO: define function etc.?)
 nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
 if executable('ag')
-    set grepprg=ag\ --hidden\ --vimgrep\ $*
+    set grepprg=ag\ --vimgrep\ $*
     set grepformat=%f:%l:%c:%m
     nnoremap <Leader>a :<C-u>sil gr  `git ls-files`<Home><Right><Right><Right><Right><Right><Right><Right>
 endif
