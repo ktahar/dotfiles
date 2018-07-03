@@ -261,7 +261,7 @@ let g:ctrlp_prompt_mappings = {
             \ }
 if executable('ag')
     let g:ctrlp_regexp = 1
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden -g ""'
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup -g ""'
 endif
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
