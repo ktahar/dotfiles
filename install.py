@@ -24,6 +24,51 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
+def copy_vimrc_local():
+    home = os.environ.get('HOME')
+
+    vimrc_local = os.path.join(home, "dotfiles", "vimrc.local")
+    vimrc_local_example = os.path.join(home, "dotfiles", "vimrc.local.example")
+    if os.path.exists(vimrc_local):
+        print(r"[INFO] already exists: %s" % vimrc_local)
+    else:
+        shutil.copy(vimrc_local_example, vimrc_local)
+        print("Made file ~/dotfiles/vimrc.local.")
+        print("[WARN] Don't forget to edit this later.")
+
+def clone_git_repos(tmux):
+    home = os.environ.get('HOME')
+
+    git_repos = [
+            ("https://github.com/VundleVim/Vundle.vim.git", ".vim/bundle/Vundle.vim")
+            ]
+
+    if tmux:
+        git_repos.append(("https://github.com/tmux-plugins/tmux-resurrect", ".tmux/plugins/tmux-resurrect"))
+
+    for repo, path in git_repos:
+        path = os.path.join(home, path)
+        if os.path.exists(path):
+            print(r"[INFO] already exists: %s" % path)
+        else:
+            subprocess.run(['git', 'clone', repo, path])
+
+def setup_bashrc():
+    home = os.environ.get('HOME')
+
+    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n"}
+    for fn in contents:
+        p = os.path.join(home, fn)
+        with open(p) as f:
+            if contents[fn] in f.read():
+                print('%s has already been set up.' % p)
+                continue
+        print('Appending following contents to %s.' % p)
+        print(contents[fn])
+        if prompt('OK?'):
+            with open(p, 'a') as f:
+                f.write(contents[fn])
+
 def set_git_global_config():
     configs = [("core.excludesfile", "~/.gitignore_global"), 
             ("core.editor", "vim"), 
@@ -61,7 +106,7 @@ def main_windows():
         if not prompt('Install anyway?', 'n'):
             return
 
-    dirs = [r".vim", r".config\matplotlib", r".ipython\profile_default\startup"]
+    dirs = [r"vimfiles", r".config\matplotlib", r".ipython\profile_default\startup"]
 
     for d in dirs:
         dn = os.path.join(home, d)
@@ -72,15 +117,15 @@ def main_windows():
             os.makedirs(dn)
             print("created dir %s" % dn)
 
-    files = [(r"_vimrc", r".vimrc"),
-            (r"_gvimrc", r".gvimrc"),
-            (r".latexmkrc",)*2,
-            (r".config\matplotlib\matplotlibrc",)*2,
-            (r".ipython\profile_default\startup\ipython_startup.py",)*2,
-            (r"vimfiles\skeleton.py", r".vim\skeleton.py"),
-            (r"vimfiles\after", r".vim\after"),
-            (r"vimfiles\plugin", r".vim\plugin"),
-            (r"vimfiles\indent", r".vim\indent"),
+    files = [(r"_vimrc", r"vimrc"),
+            (r"_gvimrc", r"gvimrc"),
+            (r".latexmkrc", r"latexmkrc"),
+            (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
+            (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
+            (r"vimfiles\skeleton.py", r"vim\skeleton.py"),
+            (r"vimfiles\after", r"vim\after"),
+            (r"vimfiles\plugin", r"vim\plugin"),
+            (r"vimfiles\indent", r"vim\indent"),
             ]
 
     for f in files:
@@ -109,16 +154,9 @@ def main_windows():
                 subprocess.run(['mklink', '/J', ln, tgt], shell=True)
                 print("created junction %s" % ln)
 
-    shutil.copy(os.path.join(home, "dotfiles\.vimrc.local.example"),
-            os.path.join(home, "dotfiles\.vimrc.local"))
-    print("Made file ~/dotfiles/.vimrc.local.")
-    print("[WARN] Don't forget to edit this later.")
-
-    vundle_path = os.path.join(home, r"vimfiles\bundle\Vundle.vim")
-    if os.path.exists(vundle_path):
-        print(r"[INFO] already exists: %s" % vundle_path)
-    else:
-        subprocess.run(['git', 'clone', 'https://github.com/VundleVim/Vundle.vim.git', vundle_path])
+    # additional things
+    copy_vimrc_local()
+    clone_git_repos(False)
 
 def main_posix():
     home = os.environ.get('HOME')
@@ -159,38 +197,10 @@ def main_posix():
             os.symlink(tgt, ln)
             print("created sym link %s" % ln)
 
-    git_repos = [("https://github.com/tmux-plugins/tmux-resurrect", ".tmux/plugins/tmux-resurrect"),
-            ("https://github.com/VundleVim/Vundle.vim.git", ".vim/bundle/Vundle.vim"),
-            ]
-    for repo, path in git_repos: 
-        path = os.path.join(home, path)
-        if os.path.exists(path):
-            print(r"[INFO] already exists: %s" % path)
-        else:
-            subprocess.run(['git', 'clone', repo, path])
-
-    vimrc_local = os.path.join(home, "dotfiles", "vimrc.local")
-    vimrc_local_example = os.path.join(home, "dotfiles", "vimrc.local.example")
-    if os.path.exists(vimrc_local):
-        print(r"[INFO] already exists: %s" % vimrc_local)
-    else:
-        shutil.copy(vimrc_local_example, vimrc_local)
-        print("Made file ~/dotfiles/.vimrc.local.")
-        print("Don't forget to edit this later.")
-
-    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n"}
-    for fn in contents:
-        p = os.path.join(home, fn)
-        with open(p) as f:
-            if contents[fn] in f.read():
-                print('%s has already been set up.' % p)
-                continue
-        print('Appending following contents to %s.' % p)
-        print(contents[fn])
-        if prompt('OK?'):
-            with open(p, 'a') as f:
-                f.write(contents[fn])
-
+    # additional things
+    clone_git_repos(True)
+    copy_vimrc_local()
+    setup_bashrc()
     set_git_global_config()
     install_apt_packages()
 

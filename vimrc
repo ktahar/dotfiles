@@ -1,9 +1,7 @@
 """ K.Tahara's vimrc
 
-if filereadable(expand('~/dotfiles/_vimrc.local'))
-    source ~/dotfiles/_vimrc.local
-elseif filereadable(expand('~/dotfiles/.vimrc.local'))
-    source ~/dotfiles/.vimrc.local
+if filereadable(expand('~/dotfiles/vimrc.local'))
+    source ~/dotfiles/vimrc.local
 endif
 
 """ Vundle {{{
