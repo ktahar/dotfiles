@@ -24,9 +24,7 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
-def copy_vimrc_local():
-    home = os.environ.get('HOME')
-
+def copy_vimrc_local(home):
     vimrc_local = os.path.join(home, "dotfiles", "vimrc.local")
     vimrc_local_example = os.path.join(home, "dotfiles", "vimrc.local.example")
     if os.path.exists(vimrc_local):
@@ -36,14 +34,13 @@ def copy_vimrc_local():
         print("Made file ~/dotfiles/vimrc.local.")
         print("[WARN] Don't forget to edit this later.")
 
-def clone_git_repos(tmux):
-    home = os.environ.get('HOME')
-
+def clone_git_repos(home, posix):
     git_repos = [
-            ("https://github.com/VundleVim/Vundle.vim.git", ".vim/bundle/Vundle.vim")
+            ("https://github.com/VundleVim/Vundle.vim.git", 
+                ".vim/bundle/Vundle.vim" if posix else r"vimfiles\bundle\Vundle.vim")
             ]
 
-    if tmux:
+    if posix:
         git_repos.append(("https://github.com/tmux-plugins/tmux-resurrect", ".tmux/plugins/tmux-resurrect"))
 
     for repo, path in git_repos:
@@ -58,9 +55,7 @@ def clone_git_repos(tmux):
             else:
                 subprocess.run(['git', 'clone', repo, path])
 
-def setup_bashrc():
-    home = os.environ.get('HOME')
-
+def setup_bashrc(home):
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n"}
     for fn in contents:
         p = os.path.join(home, fn)
@@ -163,8 +158,8 @@ def main_windows():
                 print("created junction %s" % ln)
 
     # additional things
-    copy_vimrc_local()
-    clone_git_repos(False)
+    copy_vimrc_local(home)
+    clone_git_repos(home, False)
 
 def main_posix():
     home = os.environ.get('HOME')
@@ -206,9 +201,9 @@ def main_posix():
             print("created sym link %s" % ln)
 
     # additional things
-    clone_git_repos(True)
-    copy_vimrc_local()
-    setup_bashrc()
+    clone_git_repos(home, True)
+    copy_vimrc_local(home)
+    setup_bashrc(home)
     set_git_global_config()
     install_apt_packages()
 
