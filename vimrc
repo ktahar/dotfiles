@@ -213,14 +213,14 @@ if has("unix")
         let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>[6 q\<Esc>\\"
         let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>[4 q\<Esc>\\"
         let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-    else
+    elseif $TERM == "gnome-256color"
         let &t_SI = "\<Esc>[6 q"
         let &t_SR = "\<Esc>[4 q"
         let &t_EI = "\<Esc>[2 q"
     endif
 endif
 
-"" Fcitx {{{
+"" Linux Input Methods {{{
 if executable('fcitx-remote')
     let g:input_toggle = 0
     function! DeactivateFcitx()
@@ -240,6 +240,26 @@ if executable('fcitx-remote')
 
     autocmd InsertLeave * call DeactivateFcitx()
     autocmd InsertEnter * call ActivateFcitx()
+
+elseif executable('ibus')
+    let g:input_toggle = 0
+    function! DeactivateIbusMozc()
+        let g:input_status = system('ibus engine')
+        if g:input_status =~ '^mozc-jp'
+            let g:input_toggle = 1
+            let l:a = system('ibus engine xkb:us::eng')
+        endif
+    endfunction
+    function! ActivateIbusMozc()
+        let g:input_status = system('ibus engine')
+        if g:input_status !~ '^mozc-jp' && g:input_toggle == 1
+            let l:a = system('ibus engine mozc-jp')
+            let g:input_toggle = 0
+        endif
+    endfunction
+
+    autocmd InsertLeave * call DeactivateIbusMozc()
+    autocmd InsertEnter * call ActivateIbusMozc()
 endif
 "}}}
 "}}}
