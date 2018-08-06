@@ -11,7 +11,7 @@ setl foldmethod=indent
 
 " Execute current file \e
 function! s:ExecPy()
-    cd %:h
+    lcd %:h
     if executable('python3')
         !python3 %
     elseif executable('python')
@@ -23,7 +23,7 @@ nnoremap <silent><buffer> <Leader>e :call <SID>ExecPy()<CR>
 
 " Execute current file (interactive) \E
 function! s:ExecPy_i()
-    cd %:h
+    lcd %:h
     if executable('python3')
         !python3 -i %
     elseif executable('python')

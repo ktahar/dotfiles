@@ -12,7 +12,7 @@ nnoremap <silent><buffer> <Leader>e :PrevimOpen<CR>
 
 " Convert to html by pandoc \E
 function! s:PandocHTML()
-    " cd %:h
+    " lcd %:h
     !pandoc -o %:r.html %
 endfunction
 " command! -buffer Exec call <SID>PandocHTML()
