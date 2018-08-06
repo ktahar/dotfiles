@@ -87,7 +87,7 @@ set showmode
 set showcmd
 set wildmenu
 set wildmode=list:longest,full
-set statusline=%<%f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %12.(%l/%L,%)%3.v
+set statusline=[%<%{fnamemodify(getcwd(),':~')}]\ %f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %12.(%l/%L,%)%3.v
 
 """ Input 
 set iminsert=0
