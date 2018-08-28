@@ -118,6 +118,7 @@ nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
+nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
 
