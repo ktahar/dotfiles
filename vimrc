@@ -31,6 +31,12 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'kannokanno/previm'
 Plugin 'tyru/open-browser.vim'
 
+" Snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
 " Other Utils
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'

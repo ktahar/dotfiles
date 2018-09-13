@@ -272,7 +272,7 @@ font.sans-serif     : Arial, DejaVu Sans, Bitstream Vera Sans, Lucida Grande, Ve
 #mathtext.it  : serif:italic
 #mathtext.bf  : serif:bold
 #mathtext.sf  : sans
-#mathtext.fontset : dejavusans # Should be 'dejavusans' (default),
+mathtext.fontset : stix # Should be 'dejavusans' (default),
                                # 'dejavuserif', 'cm' (Computer Modern), 'stix',
                                # 'stixsans' or 'custom'
 #mathtext.fallback_to_cm : True  # When True, use symbols from the Computer Modern
