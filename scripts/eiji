@@ -7,7 +7,6 @@ import argparse
 import subprocess
 
 version = 144
-color = 34 # 31: red, 32: green, 33: yellow, 34: blue,...
 
 dirn = 'eijiro-utf8'
 paths = {}
@@ -85,12 +84,23 @@ def auto_dict(words):
         return ['waei']
 
 def colorize(words, text, case):
+    color = 34 # 31: red, 32: green, 33: yellow, 34: blue,...
     if case:
         p = re.compile(words)
     else:
         p = re.compile(words, re.IGNORECASE)
 
     return p.sub("\033[1;{}m{}\033[0m".format(color, words), text)
+
+def colorize256(words, text, case, fg=4, bg=None, bold=True):
+    if case:
+        p = re.compile(words)
+    else:
+        p = re.compile(words, re.IGNORECASE)
+    _bold = "1;" if bold else ""
+    _bg = ";48;5;{}".format(bg) if bg is not None else ""
+
+    return p.sub("\033[{}38;5;{}{}m{}\033[0m".format(_bold, fg, _bg, words), text)
 
 def main():
     args = parse_args()
@@ -131,7 +141,7 @@ def main():
             continue
 
         res = res.replace('■', '|').replace('●', ':').replace('◆', '<>')
-        print(colorize(args.words, res, args.case_sensitive))
+        print(colorize256(args.words, res, args.case_sensitive, 12))
         if args.dict == 'auto':
             break
 
