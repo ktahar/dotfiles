@@ -81,7 +81,7 @@ def set_git_global_config():
 
 def install_apt_packages():
     pkgs = [
-            "ncurses-term",
+            "ncurses-term", "silversearcher-ag",
             ]
 
     if shutil.which('proxy.sh') is not None:

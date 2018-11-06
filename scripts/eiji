@@ -2,54 +2,134 @@
 
 import sys
 import os
+import re
 import argparse
 import subprocess
 
-dirn = 'eijiro-utf8'
 version = 144
-paths = {}
-dicts = ('eiji', 'reiji', 'ryaku', 'waei')
-for n in dicts:
-    paths[n] = os.path.join(os.environ['HOME'], 
-            dirn, 'eiji{}-utf8.txt'.format(version))
+color = 34 # 31: red, 32: green, 33: yellow, 34: blue,...
 
-modes = ('word',)
+dirn = 'eijiro-utf8'
+paths = {}
+dicts = ('eiji', 'reiji', 'ryaku', 'waei', 'auto')
+for n in dicts:
+    paths[n] = os.path.join(os.environ['HOME'],
+            dirn, '{}{}-utf8.txt'.format(n, version))
+
+searchers = ('ag', 'grep')
+opts = {
+        'ag': ['--nocolor', '--nonumbers'],
+        'grep': ['-E', '--color=never'],
+        }
+
+modes = (
+        'pre', # prefix search for index.
+        'suf', # suffix search for index.
+        'comp', # complete search for index.
+        'full', # full text search.
+        )
 
 def parse_args():
+    def check(opt, possible):
+        if opt not in possible:
+            print("Invalid argument given: {} not in {}".format(opt, possible))
+            parser.print_help()
+            sys.exit(1)
+
     parser = argparse.ArgumentParser(description='Helper script to grep eijiro dictionary.')
 
-    parser.add_argument('-d', '--dict', 
-            help="dictionary. one of {}".format(dicts),
-            type=str, default='eiji')
+    parser.add_argument('-d', '--dict', nargs='+',
+            help="dictionary. {}".format(dicts),
+            type=str, default=['auto'])
 
-    parser.add_argument('-m', '--mode', 
+    parser.add_argument('-m', '--mode',
             help="search mode. one of {}".format(modes),
-            type=str, default='word')
+            type=str, default='comp')
 
-    parser.add_argument('words', nargs='+',
-            help="words to search.") 
+    parser.add_argument('-s', '--searcher',
+            help="searcher program. one of {}".format(searchers),
+            type=str, default='grep')
+
+    parser.add_argument('-c', '--case-sensitive',
+            help="search case sensitively for Roman alphabets.",
+            action="store_true")
+
+    parser.add_argument('-v', '--verbose',
+            help="verbose output",
+            action="store_true")
+
+    parser.add_argument('words', nargs="+",
+            type=str, help="words to search.")
 
     args = parser.parse_args()
 
-    if args.dict not in dicts:
-        print("Invalid dictionary: {}".format(args.dict))
-        parser.print_help()
-        sys.exit(1)
-    if args.mode not in modes:
-        print("Invalid mode: {}".format(args.mode))
-        parser.print_help()
-        sys.exit(1)
+    for d in args.dict:
+        check(d, dicts)
+    check(args.mode, modes)
+    check(args.searcher, searchers)
+    args.words = " ".join(args.words)
 
     return args
+
+def auto_dict(words):
+    capital = re.compile(r'^[A-Z\s\.]+$')
+    roman = re.compile(r'^[a-zA-Z\s\.]+$')
+
+    if capital.match(words):
+        return ['ryaku', 'eiji']
+    elif roman.match(words):
+        return ['eiji', 'ryaku']
+    else:
+        return ['waei']
+
+def colorize(words, text, case):
+    if case:
+        p = re.compile(words)
+    else:
+        p = re.compile(words, re.IGNORECASE)
+
+    return p.sub("\033[1;{}m{}\033[0m".format(color, words), text)
 
 def main():
     args = parse_args()
 
-    p = paths[args.dict]
-    if args.mode == 'word':
-        expr = '^{}  {{'.format(args.words[0])
+    if args.dict == ['auto']:
+        ds = auto_dict(args.words)
+    else:
+        ds = args.dict
 
-    subprocess.run(['grep', expr, p, '-i'])
+    w = args.words.replace('.', r'\.')
+
+    if args.mode == 'comp':
+        expr = r'^{}\s+[{{:]'.format(w)
+    elif args.mode == 'pre':
+        expr = r'^{}'.format(w)
+    elif args.mode == 'suf':
+        expr = r'{}\s+[{{:]'.format(w)
+    else: # args.mode == 'full'
+        expr = r'{}'.format(w)
+
+    for d in ds:
+        cmd = [args.searcher, expr, paths[d]] + opts[args.searcher]
+        if not args.case_sensitive:
+            cmd.append('-i')
+
+        if args.verbose:
+            print('Searching "{}" in mode {}, dict {}, using {}...'.format(
+                w, args.mode, d, args.searcher))
+            print('Executing ' + ' '.join(cmd))
+
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE)
+
+        res = proc.stdout.decode()
+        if not res:
+            continue
+
+        res = res.replace('■', '|').replace('●', ':').replace('◆', '<>')
+        print(colorize(args.words, res, args.case_sensitive))
+        if args.dict == ['auto']:
+            break
+
     return
 
 if __name__ == '__main__': main()
