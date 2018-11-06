@@ -11,7 +11,7 @@ color = 34 # 31: red, 32: green, 33: yellow, 34: blue,...
 
 dirn = 'eijiro-utf8'
 paths = {}
-dicts = ('eiji', 'reiji', 'ryaku', 'waei', 'auto')
+dicts = ('eiji', 'reiji', 'ryaku', 'waei')
 for n in dicts:
     paths[n] = os.path.join(os.environ['HOME'],
             dirn, '{}{}-utf8.txt'.format(n, version))
@@ -38,9 +38,9 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description='Helper script to grep eijiro dictionary.')
 
-    parser.add_argument('-d', '--dict', nargs='+',
-            help="dictionary. {}".format(dicts),
-            type=str, default=['auto'])
+    parser.add_argument('-d', '--dict', nargs='?',
+            help="dictionaries to search. delimit by ','. possible values are {}. By default, inspect automatically.".format(dicts),
+            type=str, default='auto')
 
     parser.add_argument('-m', '--mode',
             help="search mode. one of {}".format(modes),
@@ -63,8 +63,10 @@ def parse_args():
 
     args = parser.parse_args()
 
-    for d in args.dict:
-        check(d, dicts)
+    if args.dict != 'auto':
+        args.dict = [d.strip() for d in args.dict.split(',')]
+        for d in args.dict:
+            check(d, dicts)
     check(args.mode, modes)
     check(args.searcher, searchers)
     args.words = " ".join(args.words)
@@ -93,7 +95,7 @@ def colorize(words, text, case):
 def main():
     args = parse_args()
 
-    if args.dict == ['auto']:
+    if args.dict == 'auto':
         ds = auto_dict(args.words)
     else:
         ds = args.dict
@@ -117,7 +119,7 @@ def main():
         if args.verbose:
             print('Searching "{}" in mode {}, dict {}, using {}...'.format(
                 w, args.mode, d, args.searcher))
-            print('Executing ' + ' '.join(cmd))
+            print('$ ' + ' '.join(cmd))
 
         proc = subprocess.run(cmd, stdout=subprocess.PIPE)
 
@@ -127,7 +129,7 @@ def main():
 
         res = res.replace('■', '|').replace('●', ':').replace('◆', '<>')
         print(colorize(args.words, res, args.case_sensitive))
-        if args.dict == ['auto']:
+        if args.dict == 'auto':
             break
 
     return
