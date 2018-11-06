@@ -5,5 +5,7 @@ bind '"\C-j": vi-movement-mode'
 
 set -o ignoreeof
 
-alias ll='ls -Bltr'
-alias la='ls -altr'
+alias ll='ls -Bltrh'
+alias la='ls -altrh'
+
+export PATH=$PATH:$HOME/dotfiles/scripts

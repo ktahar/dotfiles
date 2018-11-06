@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import argparse
+import subprocess
+
+dirn = 'eijiro-utf8'
+version = 144
+paths = {}
+dicts = ('eiji', 'reiji', 'ryaku', 'waei')
+for n in dicts:
+    paths[n] = os.path.join(os.environ['HOME'], 
+            dirn, 'eiji{}-utf8.txt'.format(version))
+
+modes = ('word',)
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Helper script to grep eijiro dictionary.')
+
+    parser.add_argument('-d', '--dict', 
+            help="dictionary. one of {}".format(dicts),
+            type=str, default='eiji')
+
+    parser.add_argument('-m', '--mode', 
+            help="search mode. one of {}".format(modes),
+            type=str, default='word')
+
+    parser.add_argument('words', nargs='+',
+            help="words to search.") 
+
+    args = parser.parse_args()
+
+    if args.dict not in dicts:
+        print("Invalid dictionary: {}".format(args.dict))
+        parser.print_help()
+        sys.exit(1)
+    if args.mode not in modes:
+        print("Invalid mode: {}".format(args.mode))
+        parser.print_help()
+        sys.exit(1)
+
+    return args
+
+def main():
+    args = parse_args()
+
+    p = paths[args.dict]
+    if args.mode == 'word':
+        expr = '^{}  {{'.format(args.words[0])
+
+    subprocess.run(['grep', expr, p])
+    return
+
+if __name__ == '__main__': main()
+
