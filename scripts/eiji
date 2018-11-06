@@ -49,7 +49,7 @@ def main():
     if args.mode == 'word':
         expr = '^{}  {{'.format(args.words[0])
 
-    subprocess.run(['grep', expr, p])
+    subprocess.run(['grep', expr, p, '-i'])
     return
 
 if __name__ == '__main__': main()
