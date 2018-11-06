@@ -38,7 +38,7 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description='Helper script to grep eijiro dictionary.')
 
-    parser.add_argument('-d', '--dict', nargs='?',
+    parser.add_argument('-d', '--dict',
             help="dictionaries to search. delimit by ','. possible values are {}. By default, inspect automatically.".format(dicts),
             type=str, default='auto')
 
@@ -102,23 +102,26 @@ def main():
 
     w = args.words.replace('.', r'\.')
 
-    if args.mode == 'comp':
-        expr = r'^{}\s+[{{:]'.format(w)
-    elif args.mode == 'pre':
-        expr = r'^{}'.format(w)
-    elif args.mode == 'suf':
-        expr = r'{}\s+[{{:]'.format(w)
-    else: # args.mode == 'full'
-        expr = r'{}'.format(w)
-
     for d in ds:
+        mode = args.mode
+        # always full text search for reiji.
+        if d == 'reiji' or args.mode == 'full':
+            expr = w
+            mode = 'full'
+        elif args.mode == 'comp':
+            expr = r'^{}\s+[{{:]'.format(w)
+        elif args.mode == 'pre':
+            expr = r'^{}'.format(w)
+        elif args.mode == 'suf':
+            expr = r'{}\s+[{{:]'.format(w)
+
         cmd = [args.searcher, expr, paths[d]] + opts[args.searcher]
         if not args.case_sensitive:
             cmd.append('-i')
 
         if args.verbose:
             print('Searching "{}" in mode {}, dict {}, using {}...'.format(
-                w, args.mode, d, args.searcher))
+                w, mode, d, args.searcher))
             print('$ ' + ' '.join(cmd))
 
         proc = subprocess.run(cmd, stdout=subprocess.PIPE)
