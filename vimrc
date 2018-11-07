@@ -225,7 +225,7 @@ if has("unix")
         let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>[6 q\<Esc>\\"
         let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>[4 q\<Esc>\\"
         let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
-    elseif $TERM == "gnome-256color"
+    elseif ($TERM == "gnome-256color") || ($TERM == "xterm-256color")
         let &t_SI = "\<Esc>[6 q"
         let &t_SR = "\<Esc>[4 q"
         let &t_EI = "\<Esc>[2 q"
