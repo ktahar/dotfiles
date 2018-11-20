@@ -9,5 +9,6 @@ alias l='ls -Ch'
 alias ll='ls -Bltrh'
 alias la='ls -altrh'
 alias less='less -R'
+alias info='info --vi-keys'
 
 export PATH=$PATH:$HOME/dotfiles/scripts
