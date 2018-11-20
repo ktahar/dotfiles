@@ -11,4 +11,9 @@ alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 
+if [ -t 0 ]; then    # stdin is opened
+    stty stop undef  # unbind C-s
+    stty start undef # unbind C-q
+fi
+
 export PATH=$PATH:$HOME/dotfiles/scripts
