@@ -36,7 +36,7 @@ def copy_vimrc_local(home):
 
 def clone_git_repos(home, posix):
     git_repos = [
-            ("https://github.com/VundleVim/Vundle.vim.git", 
+            ("https://github.com/VundleVim/Vundle.vim.git",
                 ".vim/bundle/Vundle.vim" if posix else r"vimfiles\bundle\Vundle.vim")
             ]
 
@@ -55,25 +55,39 @@ def clone_git_repos(home, posix):
             else:
                 subprocess.run(['git', 'clone', repo, path])
 
-def setup_bashrc(home):
-    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n"}
+def setup_shell(home):
+    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
+            '.zshrc': "source $HOME/dotfiles/zshrc\n"}
     for fn in contents:
         p = os.path.join(home, fn)
+
+        if not os.path.exists(p):
+            print('Writing following contents to %s.' % p)
+            print(contents[fn])
+            if prompt('OK?'):
+                with open(p, 'w') as f:
+                    f.write(contents[fn])
+            continue
+
         with open(p) as f:
             if contents[fn] in f.read():
                 print('%s has already been set up.' % p)
                 continue
+
         print('Appending following contents to %s.' % p)
         print(contents[fn])
         if prompt('OK?'):
             with open(p, 'a') as f:
                 f.write(contents[fn])
 
+    if prompt('Change default shell to /bin/zsh?'):
+        subprocess.run(['chsh', '-s', '/bin/zsh'])
+
 def set_git_global_config():
-    configs = [("core.excludesfile", "~/.gitignore_global"), 
-            ("core.editor", "vim"), 
-            ("user.name", "Kosuke Tahara"), 
-            ("user.email", "ksk.tahara@gmail.com"), 
+    configs = [("core.excludesfile", "~/.gitignore_global"),
+            ("core.editor", "vim"),
+            ("user.name", "Kosuke Tahara"),
+            ("user.email", "ksk.tahara@gmail.com"),
             ("push.default", "simple")]
 
     for k, v in configs:
@@ -82,6 +96,7 @@ def set_git_global_config():
 def install_apt_packages():
     pkgs = [
             "ncurses-term", "silversearcher-ag",
+            "zsh", "zsh-doc",
             ]
 
     if shutil.which('proxy.sh') is not None:
@@ -203,7 +218,7 @@ def main_posix():
     # additional things
     clone_git_repos(home, True)
     copy_vimrc_local(home)
-    setup_bashrc(home)
+    setup_shell(home)
     set_git_global_config()
     install_apt_packages()
 
