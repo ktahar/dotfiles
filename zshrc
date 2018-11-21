@@ -15,8 +15,8 @@ else
     base_prompt="%F{green}%n%k "
 fi
 post_prompt="%b%f%k"
-base_prompt_no_color=$(echo "$base_prompt" | perl -pe "s/%\(F\{.*?\}|k\)//g")
-post_prompt_no_color=$(echo "$post_prompt" | perl -pe "s/%\(F\{.*?\}|k\)//g")
+base_prompt_no_color=${base_prompt//\%(F\{*\}|k)/}
+post_prompt_no_color=${post_prompt//\%(F\{*\}|k)/}
 prompt_newline=$'\n%{\r%}'
 
 my_prompt_precmd () {
@@ -25,10 +25,10 @@ my_prompt_precmd () {
     local prompt_length space_left
 
     base_prompt_expanded_no_color=$(print -P "$base_prompt_no_color")
-    base_prompt_etc=$(print -P "$base_prompt%(4~|...|)%3~")
+    base_prompt_etc=$(print -P "$base_prompt%~")
     prompt_length=${#base_prompt_etc}
     if [[ $prompt_length -lt 40 ]]; then
-        path_prompt="%B%F{blue}%(4~|...|)%3~%F{white}"
+        path_prompt="%B%F{blue}%~%F{white}"
     else
         space_left=$(( $COLUMNS - $#base_prompt_expanded_no_color - 2 ))
         path_prompt="%B%F{cyan}%${space_left}<...<%~$prompt_newline%F{white}"
