@@ -9,7 +9,11 @@ SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
 # prompt
-base_prompt="%F{green}%n@%m%k "
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    base_prompt="%F{green}%n@%m%k "
+else
+    base_prompt="%F{green}%n%k "
+fi
 post_prompt="%b%f%k"
 base_prompt_no_color=$(echo "$base_prompt" | perl -pe "s/%\(F\{.*?\}|k\)//g")
 post_prompt_no_color=$(echo "$post_prompt" | perl -pe "s/%\(F\{.*?\}|k\)//g")
