@@ -52,3 +52,9 @@ alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 
+# set envs just once.
+# should be in ~/.profile or something. but I want to be portable.
+if [ -z "${DOTFILES_ENV_SET+1}" ]; then
+    export DOTFILES_ENV_SET=1
+    export PATH=$PATH:$HOME/dotfiles/scripts
+fi
