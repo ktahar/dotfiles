@@ -460,7 +460,7 @@ function! s:FwdEvince()
   let currentTeXFile = expand("%:t")
   let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
-  let viewer = expand("~/dotfiles/fwdevince")
+  let viewer = 'fwdevince'
   let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" ' . line(".") . ' "' . currentTeXFile . '" &'
 
   execute 'lcd ' . masterDir
