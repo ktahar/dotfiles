@@ -1,10 +1,5 @@
 # K.Tahara's zshrc
 
-# prompt
-autoload -Uz promptinit
-promptinit
-prompt adam1 green blue
-
 setopt histignorealldups sharehistory autocd extendedglob nomatch
 unsetopt beep notify
 
@@ -12,6 +7,35 @@ unsetopt beep notify
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+
+# prompt
+base_prompt="%F{green}%n@%m%k "
+post_prompt="%b%f%k"
+base_prompt_no_color=$(echo "$base_prompt" | perl -pe "s/%\(F\{.*?\}|k\)//g")
+post_prompt_no_color=$(echo "$post_prompt" | perl -pe "s/%\(F\{.*?\}|k\)//g")
+prompt_newline=$'\n%{\r%}'
+
+my_prompt_precmd () {
+    setopt noxtrace localoptions
+    local base_prompt_expanded_no_color base_prompt_etc
+    local prompt_length space_left
+
+    base_prompt_expanded_no_color=$(print -P "$base_prompt_no_color")
+    base_prompt_etc=$(print -P "$base_prompt%(4~|...|)%3~")
+    prompt_length=${#base_prompt_etc}
+    if [[ $prompt_length -lt 40 ]]; then
+        path_prompt="%B%F{blue}%(4~|...|)%3~%F{white}"
+    else
+        space_left=$(( $COLUMNS - $#base_prompt_expanded_no_color - 2 ))
+        path_prompt="%B%F{cyan}%${space_left}<...<%~$prompt_newline%F{white}"
+    fi
+    PS1="$base_prompt$path_prompt %# $post_prompt"
+    PS2="$base_prompt$path_prompt %_> $post_prompt"
+    PS3="$base_prompt$path_prompt ?# $post_prompt"
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd my_prompt_precmd
 
 # completion
 autoload -Uz compinit
