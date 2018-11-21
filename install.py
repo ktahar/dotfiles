@@ -216,11 +216,11 @@ def main_posix():
             print("created sym link %s" % ln)
 
     # additional things
-    clone_git_repos(home, True)
     copy_vimrc_local(home)
-    setup_shell(home)
+    clone_git_repos(home, True)
     set_git_global_config()
     install_apt_packages()
+    setup_shell(home)
 
 if __name__ == '__main__':
     if os.name == 'nt':

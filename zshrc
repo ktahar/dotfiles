@@ -5,14 +5,15 @@ autoload -Uz promptinit
 promptinit
 prompt adam1 green blue
 
-setopt histignorealldups sharehistory
+setopt histignorealldups sharehistory autocd extendedglob nomatch
+unsetopt beep notify
 
 # history
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
-# Use modern completion system
+# completion
 autoload -Uz compinit
 compinit
 
