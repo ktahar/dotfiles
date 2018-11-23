@@ -19,6 +19,20 @@ base_prompt_no_color=${base_prompt//\%(F\{*\}|k)/}
 post_prompt_no_color=${post_prompt//\%(F\{*\}|k)/}
 prompt_newline=$'\n%{\r%}'
 
+## vcs
+autoload -Uz vcs_info
+autoload -Uz colors
+colors
+
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}*"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%c%u(%b)%f"
+zstyle ':vcs_info:*' actionformats "[%b|%a]"
+
+RPROMPT='${vcs_info_msg_0_}'
+
 my_prompt_precmd () {
     setopt noxtrace localoptions
     local base_prompt_expanded_no_color base_prompt_etc
@@ -36,6 +50,8 @@ my_prompt_precmd () {
     PS1="$base_prompt$path_prompt %# $post_prompt"
     PS2="$base_prompt$path_prompt %_> $post_prompt"
     PS3="$base_prompt$path_prompt ?# $post_prompt"
+
+    vcs_info
 }
 
 autoload -Uz add-zsh-hook
