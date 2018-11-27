@@ -92,7 +92,7 @@ autoload -Uz compinit
 compinit
 
 setopt auto_param_slash auto_param_keys menu_complete auto_menu auto_list
-setopt auto_pushd
+setopt auto_pushd pushd_ignore_dups
 DIRSTACKSIZE=20
 
 bindkey -M menuselect "h" vi-backward-char
@@ -115,7 +115,9 @@ zstyle ':completion:*' select-prompt %SScrolling: current selection at %p%s
 zstyle ':completion:*' use-compctl true # should be true to use ROS's completion
 zstyle ':completion:*' verbose true
 
+cdpath=(.. ~)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
