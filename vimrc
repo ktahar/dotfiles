@@ -40,6 +40,7 @@ Plugin 'honza/vim-snippets'
 " Other Utils
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
@@ -299,8 +300,12 @@ let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
 "}}}
 
+"" NERDTree {{{
+nnoremap <Leader>j :<C-u>NERDTreeToggle<CR>
+"}}}
+
 "" Tagbar {{{
-nnoremap <silent> <Leader>b :TagbarToggle<CR>
+nnoremap <silent> <Leader>b :<C-u>TagbarToggle<CR>
 let g:tagbar_map_togglesort = "r"
 let g:tagbar_sort = 0
 "}}}
