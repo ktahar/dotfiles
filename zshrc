@@ -8,6 +8,18 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
+# binding
+bindkey -v
+bindkey "^J" vi-cmd-mode
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+bindkey -M vicmd "?" history-incremental-search-backward
+bindkey -M vicmd "/" history-incremental-search-forward
+export KEYTIMEOUT=1
+
 # prompt
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     base_prompt="%F{green}%n@%m%k "
@@ -30,8 +42,6 @@ zstyle ':vcs_info:git:*' stagedstr "%F{yellow}*"
 zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
 zstyle ':vcs_info:*' formats "%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats "[%b|%a]"
-
-RPROMPT='${vcs_info_msg_0_}'
 
 my_prompt_precmd () {
     setopt noxtrace localoptions
@@ -57,6 +67,17 @@ my_prompt_precmd () {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd my_prompt_precmd
 
+## vi mode status indicator
+vi_prompt="[NORMAL]"
+RPROMPT='${vcs_info_msg_0_}'
+function zle-line-init zle-keymap-select {
+    RPROMPT="${${KEYMAP/vicmd/$vi_prompt}/(main|viins)/} ${vcs_info_msg_0_}"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
 # completion
 autoload -Uz compinit
 compinit
@@ -78,17 +99,6 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-# binding
-bindkey -v
-bindkey "^J" vi-cmd-mode
-autoload -Uz history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-bindkey -M vicmd "?" history-incremental-search-backward
-bindkey -M vicmd "/" history-incremental-search-forward
 
 # alias
 alias ls='ls --color=auto'
