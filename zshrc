@@ -4,11 +4,13 @@ setopt histignorealldups sharehistory autocd extendedglob nomatch
 unsetopt beep notify
 
 # history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=5000
+SAVEHIST=5000
 HISTFILE=~/.zsh_history
 
 # binding
+EDITOR=vim
+KEYTIMEOUT=1
 bindkey -v
 bindkey "^J" vi-cmd-mode
 autoload -Uz history-search-end
@@ -16,9 +18,14 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-bindkey -M vicmd "?" history-incremental-search-backward
-bindkey -M vicmd "/" history-incremental-search-forward
-export KEYTIMEOUT=1
+bindkey "^?" backward-delete-char
+bindkey "^H" backward-delete-char
+bindkey "^W" backward-kill-word
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd "^V" edit-command-line
+bindkey -M vicmd "/" history-incremental-search-backward
+bindkey -M vicmd "?" history-incremental-search-forward
 
 # prompt
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
@@ -68,14 +75,15 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd my_prompt_precmd
 
 ## vi mode status indicator
-vi_prompt="[NORMAL]"
+vicmd_prompt="[N]"
 RPROMPT='${vcs_info_msg_0_}'
-function zle-line-init zle-keymap-select {
-    RPROMPT="${${KEYMAP/vicmd/$vi_prompt}/(main|viins)/} ${vcs_info_msg_0_}"
+zle-line-init zle-line-finish zle-keymap-select () {
+    RPROMPT="${${KEYMAP/vicmd/$vicmd_prompt}/(main|viins)/}${vcs_info_msg_0_}"
     zle reset-prompt
 }
 
 zle -N zle-line-init
+zle -N zle-line-finish
 zle -N zle-keymap-select
 
 # completion
