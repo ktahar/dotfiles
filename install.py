@@ -96,7 +96,7 @@ def set_git_global_config():
 def install_apt_packages():
     pkgs = [
             "ncurses-term", "silversearcher-ag",
-            "zsh", "zsh-doc",
+            "zsh", "zsh-doc", "exuberant-ctags",
             ]
 
     if shutil.which('proxy.sh') is not None:
