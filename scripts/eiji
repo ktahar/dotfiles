@@ -140,7 +140,7 @@ def main():
         if not res:
             continue
 
-        res = res.replace('■', '|').replace('●', ':').replace('◆', '<>')
+        # res = res.replace('■', '|').replace('●', ':').replace('◆', '<>')
         print(colorize256(args.words, res, args.case_sensitive, 12))
         if args.dict == 'auto':
             break
