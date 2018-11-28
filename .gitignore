@@ -2,3 +2,4 @@ vimrc.local
 __pycache__
 *.pyc
 *~
+*.swp
