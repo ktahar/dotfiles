@@ -120,7 +120,7 @@ def install_apt_packages():
     pkgs = [
             "ncurses-term", "silversearcher-ag",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "exuberant-ctags",
+            "exuberant-ctags", "global",
             "build-essential", "cmake", "python3-dev", # to build YouCompleteMe
             ]
 
