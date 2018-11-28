@@ -1,17 +1,18 @@
 # K.Tahara's zshrc
 
-# general options
+# basic {{{
+## general options
 setopt ignore_eof autocd
 setopt extended_glob nomatch correct print_eight_bit
 unsetopt beep notify
 
-# history
+## history
 setopt histignorealldups sharehistory
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# binding
+## binding
 EDITOR=vim
 KEYTIMEOUT=1
 bindkey -v
@@ -29,8 +30,10 @@ zle -N edit-command-line
 bindkey -M vicmd "^V" edit-command-line
 bindkey -M vicmd "/" history-incremental-search-backward
 bindkey -M vicmd "?" history-incremental-search-forward
+#}}}
 
-# prompt
+# prompt {{{
+## show hostname only if ssh
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     base_prompt="%F{green}%n@%m%k "
 else
@@ -88,8 +91,9 @@ zle-line-init zle-line-finish zle-keymap-select () {
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
+#}}}
 
-# completion
+# completion {{{
 zmodload -i zsh/complist
 autoload -Uz compinit
 compinit
@@ -100,15 +104,15 @@ unsetopt menu_complete # should be unset to use auto_menu
 setopt auto_menu auto_list
 DIRSTACKSIZE=20
 
-# default bind for tab (^I) is expand-or-complete.
-# change complete-word when using completer _expand.
+## default bind for tab (^I) is expand-or-complete.
+## change complete-word when using completer _expand.
 bindkey "^I" complete-word
 bindkey -M menuselect "h" vi-backward-char
 bindkey -M menuselect "j" vi-down-line-or-history
 bindkey -M menuselect "k" vi-up-line-or-history
 bindkey -M menuselect "l" vi-forward-char
 
-# other completers: _match _prefix _list _history _correct
+## other completers: _match _prefix _list _history _correct
 zstyle ':completion:*' completer _expand _complete _approximate _ignored
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' format '[%B%d%b]'
@@ -122,18 +126,22 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 zstyle ':completion:*' select-prompt '%Sscrolling: at %p (%l)%s'
 zstyle ':completion:*' use-compctl true # should be true to use ROS's completion
 zstyle ':completion:*' verbose true
-# ignore backup or object files. but do not ignore for rm.
+## ignore backup or object files. but do not ignore for rm.
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?~' '*?.o'
-## testing unset.
-#zstyle ':completion:*' menu select=long
 
+## cd
 cdpath=(.. ~)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+#}}}
 
-# alias
+# commands, aliases, envs
+chpwd () {
+    ls --color=auto;
+}
+
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls -Ch'
@@ -141,10 +149,6 @@ alias ll='ls -Bltrh'
 alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
-
-chpwd () {
-    ls;
-}
 
 # set envs just once.
 # should be in ~/.profile or something. but I want to be portable.
