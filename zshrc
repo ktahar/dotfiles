@@ -156,3 +156,9 @@ if [ -z "${DOTFILES_ENV_SET+1}" ]; then
     export DOTFILES_ENV_SET=1
     export PATH=$PATH:$HOME/dotfiles/scripts
 fi
+
+# Plugins
+## zsh-syntax-highlighting
+if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi

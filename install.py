@@ -71,7 +71,7 @@ def setup_shell(home):
 
         with open(p) as f:
             if contents[fn] in f.read():
-                print('%s has already been set up.' % p)
+                print('[INFO] %s has already been set up.' % p)
                 continue
 
         print('Appending following contents to %s.' % p)
@@ -80,8 +80,11 @@ def setup_shell(home):
             with open(p, 'a') as f:
                 f.write(contents[fn])
 
-    if prompt('Change default shell to /bin/zsh?'):
-        subprocess.run(['chsh', '-s', '/bin/zsh'])
+    if 'SHELL' in os.environ and os.environ['SHELL'] == '/bin/zsh':
+        print('[INFO] Already using zsh.')
+    else:
+        if prompt('Change default shell to /bin/zsh?'):
+            subprocess.run(['chsh', '-s', '/bin/zsh'])
 
 def set_git_global_config():
     configs = [("core.excludesfile", "~/.gitignore_global"),
@@ -96,7 +99,8 @@ def set_git_global_config():
 def install_apt_packages():
     pkgs = [
             "ncurses-term", "silversearcher-ag",
-            "zsh", "zsh-doc", "exuberant-ctags",
+            "zsh", "zsh-doc", "zsh-syntax-highlighting",
+            "exuberant-ctags",
             ]
 
     if shutil.which('proxy.sh') is not None:
