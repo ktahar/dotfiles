@@ -99,13 +99,16 @@ unsetopt menu_complete # should be unset to use auto_menu
 setopt auto_menu auto_list
 DIRSTACKSIZE=20
 
+# default bind for tab (^I) is expand-or-complete.
+# change complete-word when using completer _expand.
+bindkey "^I" complete-word
 bindkey -M menuselect "h" vi-backward-char
 bindkey -M menuselect "j" vi-down-line-or-history
 bindkey -M menuselect "k" vi-up-line-or-history
 bindkey -M menuselect "l" vi-forward-char
 
-# other completers: _match _prefix _list _history
-zstyle ':completion:*' completer _expand _complete _correct _approximate _ignored
+# other completers: _match _prefix _list _history _correct
+zstyle ':completion:*' completer _expand _complete _approximate _ignored
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' format '[%B%d%b]'
 zstyle ':completion:*' group-name ''
