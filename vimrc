@@ -299,6 +299,12 @@ if executable('ag')
 endif
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
+nnoremap <C-M> :<C-u>CtrlPBuffer<CR>
+"}}}
+
+"" snipmate {{{
+imap <C-M> <Plug>snipMateNextOrTrigger
+smap <C-M> <Plug>snipMateNextOrTrigger
 "}}}
 
 "" NERDTree {{{
@@ -309,15 +315,6 @@ nnoremap <Leader>j :<C-u>NERDTreeToggle<CR>
 nnoremap <silent> <Leader>b :<C-u>TagbarToggle<CR>
 let g:tagbar_map_togglesort = "r"
 let g:tagbar_sort = 0
-"}}}
-
-"" jedi-vim {{{
-let g:jedi#completions_command = "<C-N>"
-let g:jedi#auto_vim_configuration = 1
-" let g:jedi#force_py_version = 3
-" let g:jedi#completions_enabled = 1
-" let g:jedi#popup_select_first = 1
-let g:jedi#rename_command = "<Leader>R"
 "}}}
 
 "" open-browser {{{
