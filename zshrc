@@ -1,12 +1,12 @@
 # K.Tahara's zshrc
 
 # general options
-setopt histignorealldups sharehistory autocd
-setopt ignore_eof
+setopt ignore_eof autocd
 setopt extended_glob nomatch correct print_eight_bit
 unsetopt beep notify
 
 # history
+setopt histignorealldups sharehistory
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
