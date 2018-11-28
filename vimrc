@@ -20,9 +20,9 @@ endif
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Python
-Plugin 'davidhalter/jedi-vim'
-" Plugin 'ivanov/vim-ipython'
+" Completion
+Plugin 'Valloric/YouCompleteMe'
+" Plugin 'davidhalter/jedi-vim'
 
 " Markdown
 "Plugin 'godlygeek/tabular'
@@ -38,13 +38,14 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
 " Other Utils
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-obsession'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
-Plugin 'tpope/vim-obsession'
 " Plugin 'itchyny/lightline.vim'
 " Plugin 'thinca/vim-quickrun'
 
@@ -66,12 +67,12 @@ filetype plugin indent on    " required
 
 """ Basic settings {{{
 
-""" important 
+""" important
 set nocompatible
 set noim
 set nopaste
 
-""" Back up 
+""" Back up
 set backup
 set backupdir=.,~/tmp
 set swapfile
@@ -79,7 +80,7 @@ set directory=~/tmp,.
 set undofile
 set undodir=~/tmp,.
 
-""" UI 
+""" UI
 set visualbell t_vb=
 set title
 set noruler
@@ -96,19 +97,19 @@ set wildmenu
 set wildmode=list:longest,full
 set statusline=[%<%{fnamemodify(getcwd(),':~')}]\ %f\ %h%m%r%w%=%y\ %{&fenc}\ %{&ff}\ %12.(%l/%L,%)%3.v
 
-""" Input 
+""" Input
 set iminsert=0
 set imsearch=0
 set backspace=indent,eol,start
 
-""" search 
+""" search
 set wrapscan
 set ignorecase
 set smartcase
 set incsearch
 set hlsearch
 
-""" File 
+""" File
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,latin1
 
 """ Skip loading mswin.vim

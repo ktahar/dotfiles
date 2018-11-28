@@ -86,6 +86,26 @@ def setup_shell(home):
         if prompt('Change default shell to /bin/zsh?'):
             subprocess.run(['chsh', '-s', '/bin/zsh'])
 
+def setup_vim(home, posix):
+    print('Installing vim Plugins...')
+    if shutil.which('proxy.sh') is not None:
+        subprocess.run(['proxy.sh', 'vim', '-c', 'VundleInstall', '-c', ':qa'])
+    else:
+        subprocess.run(['vim', '-c', 'VundleInstall', '-c', ':qa'])
+
+    if not prompt('Build YouCompleteMe?', default='n'):
+        return
+    print('Building YouCompleteMe...')
+    subprocess.run(['vim', '-c', 'VundleInstall', '-c', ':qa'])
+    ycm = ".vim/bundle/YouCompleteMe" if posix else r"vimfiles\bundle\YouCompleteMe"
+    ycm = os.path.join(home, ycm)
+    if shutil.which('proxy.sh') is not None:
+        subprocess.run(['proxy.sh', 'python3',
+            './install.py', '--clang-completer'], cwd=ycm)
+    else:
+        subprocess.run(['python3',
+            './install.py', '--clang-completer'], cwd=ycm)
+
 def set_git_global_config():
     configs = [("core.excludesfile", "~/.gitignore_global"),
             ("core.editor", "vim"),
@@ -101,6 +121,7 @@ def install_apt_packages():
             "ncurses-term", "silversearcher-ag",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags",
+            "build-essential", "cmake", "python3-dev", # to build YouCompleteMe
             ]
 
     if shutil.which('proxy.sh') is not None:
@@ -228,6 +249,7 @@ def main_posix():
     set_git_global_config()
     install_apt_packages()
     setup_shell(home)
+    setup_vim(home, True)
 
 if __name__ == '__main__':
     if os.name == 'nt':
