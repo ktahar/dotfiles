@@ -104,8 +104,9 @@ bindkey -M menuselect "j" vi-down-line-or-history
 bindkey -M menuselect "k" vi-up-line-or-history
 bindkey -M menuselect "l" vi-forward-char
 
+# other completers: _match _prefix _list _history
+zstyle ':completion:*' completer _expand _complete _correct _approximate _ignored
 zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _match _prefix _correct _approximate _list _history
 zstyle ':completion:*' format '[%B%d%b]'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:default' menu select=2
@@ -114,11 +115,12 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt '%Sat %p (%l): Hit TAB for more, or the character to insert%s'
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-#zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt '%Sscrolling: at %p (%l)%s'
 zstyle ':completion:*' use-compctl true # should be true to use ROS's completion
 zstyle ':completion:*' verbose true
-zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
+zstyle ':completion:*:*files' ignored-patterns '*?~'
+## testing unset.
+#zstyle ':completion:*' menu select=long
 
 cdpath=(.. ~)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd

@@ -179,7 +179,9 @@ def main_windows():
 def main_posix():
     home = os.environ.get('HOME')
 
-    dirs = [r".vim", r".config/matplotlib", r".ipython/profile_default/startup"]
+    dirs = [r".vim", r".config/matplotlib",
+            r".ipython/profile_default/startup", r"tmp",
+            r".config/gtk-3.0"]
 
     for d in dirs:
         dn = os.path.join(home, d)
