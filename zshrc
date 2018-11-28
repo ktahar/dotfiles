@@ -2,6 +2,7 @@
 
 # general options
 setopt histignorealldups sharehistory autocd
+setopt ignore_eof
 setopt extended_glob nomatch correct print_eight_bit
 unsetopt beep notify
 
@@ -121,7 +122,8 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 zstyle ':completion:*' select-prompt '%Sscrolling: at %p (%l)%s'
 zstyle ':completion:*' use-compctl true # should be true to use ROS's completion
 zstyle ':completion:*' verbose true
-zstyle ':completion:*:*files' ignored-patterns '*?~'
+# ignore backup or object files. but do not ignore for rm.
+zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?~' '*?.o'
 ## testing unset.
 #zstyle ':completion:*' menu select=long
 
