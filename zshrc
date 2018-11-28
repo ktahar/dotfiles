@@ -1,11 +1,13 @@
 # K.Tahara's zshrc
 
-setopt histignorealldups sharehistory autocd extendedglob nomatch
+# general options
+setopt histignorealldups sharehistory autocd
+setopt extended_glob nomatch correct print_eight_bit
 unsetopt beep notify
 
 # history
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # binding
@@ -91,8 +93,10 @@ zmodload -i zsh/complist
 autoload -Uz compinit
 compinit
 
-setopt auto_param_slash auto_param_keys menu_complete auto_menu auto_list
+setopt auto_param_slash auto_param_keys complete_in_word
 setopt auto_pushd pushd_ignore_dups
+unsetopt menu_complete # should be unset to use auto_menu
+setopt auto_menu auto_list
 DIRSTACKSIZE=20
 
 bindkey -M menuselect "h" vi-backward-char
@@ -108,12 +112,13 @@ zstyle ':completion:*:default' menu select=2
 eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
-#zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' list-prompt '%Sat %p (%l): Hit TAB for more, or the character to insert%s'
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling: current selection at %p%s
+#zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt '%Sscrolling: at %p (%l)%s'
 zstyle ':completion:*' use-compctl true # should be true to use ROS's completion
 zstyle ':completion:*' verbose true
+zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
 
 cdpath=(.. ~)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
@@ -130,9 +135,8 @@ alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 
-## lazy cd && ls function.
-cd () {
-    builtin cd $@ && ls;
+chpwd () {
+    ls;
 }
 
 # set envs just once.
