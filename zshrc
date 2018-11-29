@@ -149,6 +149,7 @@ alias ll='ls -Bltrh'
 alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
+alias vima='vim -u ~/dotfiles/vimrc_alt'
 
 # set envs just once.
 # should be in ~/.profile or something. but I want to be portable.

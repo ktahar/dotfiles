@@ -1,4 +1,4 @@
-""" K.Tahara's gvimrc
+" ktaha's gvimrc
 " set g:PC_ID other (0) home_Windows (1) lab_Windows (2) in ~/dotfiles/.vimrc.local
 
 " vb disable must be repeated in _gvimrc

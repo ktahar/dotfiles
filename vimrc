@@ -1,4 +1,4 @@
-""" K.Tahara's vimrc
+""" ktaha's vimrc
 
 if filereadable(expand('~/dotfiles/vimrc.local'))
     source ~/dotfiles/vimrc.local
