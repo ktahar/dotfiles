@@ -56,6 +56,18 @@ zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
 zstyle ':vcs_info:*' formats "%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats "[%b|%a]"
 
+my_prompt_vcs_enable=0
+my_prompt_vcs_toggle () {
+    if [ $my_prompt_vcs_enable = 1 ]; then
+        my_prompt_vcs_enable=0
+    else
+        my_prompt_vcs_enable=1
+    fi
+}
+zle -N my_prompt_vcs_toggle
+bindkey "^F" my_prompt_vcs_toggle
+bindkey -M vicmd "^F" my_prompt_vcs_toggle
+
 my_prompt_precmd () {
     setopt noxtrace localoptions
     local base_prompt_expanded_no_color base_prompt_etc
@@ -74,7 +86,12 @@ my_prompt_precmd () {
     PS2="$base_prompt$path_prompt %_> $post_prompt"
     PS3="$base_prompt$path_prompt ?# $post_prompt"
 
-    vcs_info
+    if [ $my_prompt_vcs_enable = 1 ]; then
+        vcs_info
+        my_rprompt='${vcs_info_msg_0_}'
+    else
+        my_rprompt=''
+    fi
 }
 
 autoload -Uz add-zsh-hook
@@ -82,9 +99,8 @@ add-zsh-hook precmd my_prompt_precmd
 
 ## vi mode status indicator
 vicmd_prompt="[N]"
-RPROMPT='${vcs_info_msg_0_}'
 zle-line-init zle-line-finish zle-keymap-select () {
-    RPROMPT="${${KEYMAP/vicmd/$vicmd_prompt}/(main|viins)/}${vcs_info_msg_0_}"
+    RPROMPT="${${KEYMAP/vicmd/$vicmd_prompt}/(main|viins)/}${my_rprompt}"
     zle reset-prompt
 }
 
