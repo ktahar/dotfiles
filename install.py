@@ -96,7 +96,6 @@ def setup_vim(home, posix):
     if not prompt('Build YouCompleteMe?', default='n'):
         return
     print('Building YouCompleteMe...')
-    subprocess.run(['vim', '-c', 'VundleInstall', '-c', ':qa'])
     ycm = ".vim/bundle/YouCompleteMe" if posix else r"vimfiles\bundle\YouCompleteMe"
     ycm = os.path.join(home, ycm)
     if shutil.which('proxy.sh') is not None:
