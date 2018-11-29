@@ -3,8 +3,8 @@
 # basic {{{
 ## general options
 setopt ignore_eof autocd
-setopt extended_glob nomatch correct print_eight_bit
-unsetopt beep notify
+setopt extended_glob nomatch print_eight_bit
+unsetopt beep notify correct
 
 ## history
 setopt histignorealldups sharehistory
