@@ -174,6 +174,10 @@ alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 alias vima='vim -u ~/dotfiles/vimrc_alt'
+alias gis='git status'
+alias gid='git diff'
+alias gia='git add'
+alias gic='git commit'
 
 # Plugins
 ## zsh-syntax-highlighting
