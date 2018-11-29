@@ -30,6 +30,15 @@ zle -N edit-command-line
 bindkey -M vicmd "^V" edit-command-line
 bindkey -M vicmd "/" history-incremental-search-backward
 bindkey -M vicmd "?" history-incremental-search-forward
+## buffer stack
+setopt noflowcontrol # unbind "^S" and "^Q"
+show_buffer_stack() {
+    POSTDISPLAY="
+stack: $LBUFFER"
+    zle push-line-or-edit
+}
+zle -N show_buffer_stack
+bindkey "^Q" show_buffer_stack
 #}}}
 
 # prompt {{{
