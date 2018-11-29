@@ -56,7 +56,7 @@ zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
 zstyle ':vcs_info:*' formats "%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats "[%b|%a]"
 
-my_prompt_vcs_enable=0
+my_prompt_vcs_enable=1
 my_prompt_vcs_toggle () {
     if [ $my_prompt_vcs_enable = 1 ]; then
         my_prompt_vcs_enable=0
@@ -88,9 +88,9 @@ my_prompt_precmd () {
 
     if [ $my_prompt_vcs_enable = 1 ]; then
         vcs_info
-        my_rprompt='${vcs_info_msg_0_}'
+        my_rprompt="${vcs_info_msg_0_}"
     else
-        my_rprompt=''
+        my_rprompt=""
     fi
 }
 
