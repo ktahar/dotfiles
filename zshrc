@@ -1,4 +1,4 @@
-# K.Tahara's zshrc
+# ktaha's zshrc
 
 # basic {{{
 ## general options
@@ -13,7 +13,6 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 ## binding
-EDITOR=vim
 KEYTIMEOUT=1
 bindkey -v
 bindkey "^J" vi-cmd-mode
@@ -175,13 +174,6 @@ alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 alias vima='vim -u ~/dotfiles/vimrc_alt'
-
-# set envs just once.
-# should be in ~/.profile or something. but I want to be portable.
-if [ -z "${DOTFILES_ENV_SET+1}" ]; then
-    export DOTFILES_ENV_SET=1
-    export PATH=$PATH:$HOME/dotfiles/scripts
-fi
 
 # Plugins
 ## zsh-syntax-highlighting

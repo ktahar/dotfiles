@@ -57,7 +57,8 @@ def clone_git_repos(home, posix):
 
 def setup_shell(home):
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
-            '.zshrc': "source $HOME/dotfiles/zshrc\n"}
+            '.zshrc': "source $HOME/dotfiles/zshrc\n",
+            '.zshenv': "source $HOME/dotfiles/zshenv\n"}
     for fn in contents:
         p = os.path.join(home, fn)
 
