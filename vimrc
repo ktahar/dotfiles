@@ -125,6 +125,9 @@ highlight Folded ctermfg=4 ctermbg=8
 """ map{{{
 nnoremap <Space> <Nop>
 let mapleader = "\<Space>"
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+nnoremap Q <Nop>
 
 inoremap <C-j> <ESC>
 nnoremap ; :
@@ -299,16 +302,16 @@ if executable('ag')
 endif
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
-nnoremap <C-M> :<C-u>CtrlPBuffer<CR>
+nnoremap <Leader>j :<C-u>CtrlPBuffer<CR>
 "}}}
 
 "" snipmate {{{
-imap <C-M> <Plug>snipMateNextOrTrigger
-smap <C-M> <Plug>snipMateNextOrTrigger
+imap <C-f> <Esc>a<Plug>snipMateNextOrTrigger
+smap <C-f> <Plug>snipMateNextOrTrigger
 "}}}
 
 "" NERDTree {{{
-nnoremap <Leader>j :<C-u>NERDTreeToggle<CR>
+nnoremap <Leader>t :<C-u>NERDTreeToggle<CR>
 "}}}
 
 "" Tagbar {{{
