@@ -1,4 +1,4 @@
-# K.Tahara's zshrc
+# ktaha's zshrc
 
 # basic {{{
 ## general options
@@ -13,7 +13,6 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 ## binding
-EDITOR=vim
 KEYTIMEOUT=1
 bindkey -v
 bindkey "^J" vi-cmd-mode
@@ -30,6 +29,15 @@ zle -N edit-command-line
 bindkey -M vicmd "^V" edit-command-line
 bindkey -M vicmd "/" history-incremental-search-backward
 bindkey -M vicmd "?" history-incremental-search-forward
+## buffer stack
+setopt noflowcontrol # unbind "^S" and "^Q"
+show_buffer_stack() {
+    POSTDISPLAY="
+stack: $LBUFFER"
+    zle push-line-or-edit
+}
+zle -N show_buffer_stack
+bindkey "^Q" show_buffer_stack
 #}}}
 
 # prompt {{{
@@ -166,13 +174,10 @@ alias la='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 alias vima='vim -u ~/dotfiles/vimrc_alt'
-
-# set envs just once.
-# should be in ~/.profile or something. but I want to be portable.
-if [ -z "${DOTFILES_ENV_SET+1}" ]; then
-    export DOTFILES_ENV_SET=1
-    export PATH=$PATH:$HOME/dotfiles/scripts
-fi
+alias gis='git status'
+alias gid='git diff'
+alias gia='git add'
+alias gic='git commit'
 
 # Plugins
 ## zsh-syntax-highlighting

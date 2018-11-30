@@ -284,6 +284,12 @@ endif
 """ Plugins {{{
 source $VIMRUNTIME/macros/matchit.vim
 
+"" YouCompleteMe {{{
+let g:ycm_global_ycm_extra_conf = '~/dotfiles/ycm_extra_conf.py'
+highlight YcmErrorSign ctermfg=15 ctermbg=1
+highlight YcmErrorSection ctermfg=15 ctermbg=1
+"}}}
+
 "" CtrlP {{{
 let g:ctrlp_map = '<c-j>'
 let g:ctrlp_working_path_mode = 'ra'
