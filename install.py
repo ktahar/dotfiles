@@ -111,7 +111,8 @@ def set_git_global_config():
             ("core.editor", "vim"),
             ("user.name", "Kosuke Tahara"),
             ("user.email", "ksk.tahara@gmail.com"),
-            ("push.default", "simple")]
+            ("push.default", "simple"),
+            ("credential.helper", "store")]
 
     for k, v in configs:
         subprocess.run(['git', 'config', '--global', k, v])
