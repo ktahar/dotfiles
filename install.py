@@ -121,19 +121,49 @@ def install_apt_packages():
             "ncurses-term", "silversearcher-ag",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global",
+            "python-pip", "python3-pip",
             # to build YouCompleteMe
             "build-essential", "cmake", "python3-dev",
-            # python things
-            "python-numpy", "python-matplotlib", "python-scipy",
-            "python-pip", "python-pandas", "ipython",
-            "python3-numpy", "python3-matplotlib", "python3-scipy",
-            "python3-pip", "python3-pandas", "ipython3",
             ]
 
     if shutil.which('proxy.sh') is not None:
         subprocess.run(['proxy.sh', 'sudo', '-E', 'apt', 'install'] + pkgs)
     else:
         subprocess.run(['sudo', 'apt', 'install'] + pkgs)
+
+def remove_apt_py_packages():
+    """remove apt python packages which I install from pip.
+
+    For ROS, I can't remove "python-numpy" and "python-matplotlib".
+    """
+
+    pkgs = [
+            "python-scipy", "python-pandas", "ipython",
+            "python3-numpy", "python3-matplotlib",
+            "python3-scipy", "python3-pandas", "ipython3",
+            ]
+
+    subprocess.run(['sudo', 'apt', 'remove'] + pkgs)
+    subprocess.run(['sudo', 'apt', 'autoremove'])
+
+def install_pip_packages():
+    """install python packages using pip.
+
+    Because this will install with --user option,
+    installed packages will be located in ~/.local.
+    """
+
+    pkgs = [
+            "pip", "numpy", "matplotlib",
+            "scipy", "pandas", "ipython",
+            ]
+
+    if shutil.which('proxy.sh') is not None:
+        subprocess.run(['proxy.sh', 'pip2', 'install', '--user', '-U'] + pkgs)
+        subprocess.run(['proxy.sh', 'pip3', 'install', '--user', '-U'] + pkgs)
+    else:
+        subprocess.run(['pip2', 'install', '--user', '-U'] + pkgs)
+        subprocess.run(['pip3', 'install', '--user', '-U'] + pkgs)
 
 def main_windows():
     """make directories and symbolic links for windows.
@@ -253,8 +283,11 @@ def main_posix():
     copy_vimrc_local(home)
     clone_git_repos(home, True)
     set_git_global_config()
-    install_apt_packages()
     setup_shell(home)
+    install_apt_packages()
+    if prompt('clean apt packages and install (upgrade) pip packages?', default='n'):
+        remove_apt_py_packages()
+        install_pip_packages()
     setup_vim(home, True)
 
 if __name__ == '__main__':
