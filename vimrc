@@ -293,6 +293,7 @@ highlight YcmErrorSection ctermfg=15 ctermbg=1
 "" CtrlP {{{
 let g:ctrlp_map = '<c-j>'
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_lazy_update = 1
 " let g:ctrlp_max_files = 10000
 let g:ctrlp_prompt_mappings = {
             \ 'AcceptSelection("t")': ['<c-t>'],
@@ -309,7 +310,7 @@ if executable('ag')
     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup -g ""'
 endif
 let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_clear_cache_on_exit = 0
 nnoremap <Leader>j :<C-u>CtrlPBuffer<CR>
 "}}}
 
