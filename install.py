@@ -120,14 +120,14 @@ def install_apt_packages():
     pkgs = [
             "ncurses-term", "silversearcher-ag",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "exuberant-ctags", "global",
+            "exuberant-ctags", "global", "ttf-mscorefonts-installer",
             # to build YouCompleteMe
             "build-essential", "cmake", "python3-dev",
             # python things
             "python-numpy", "python-matplotlib", "python-scipy",
-            "python-pip", "python-pandas", "ipython",
+            "python-pip", "python-pandas",
             "python3-numpy", "python3-matplotlib", "python3-scipy",
-            "python3-pip", "python3-pandas", "ipython3",
+            "python3-pip", "python3-pandas",
             ]
 
     if shutil.which('proxy.sh') is not None:
