@@ -111,7 +111,8 @@ def set_git_global_config():
             ("core.editor", "vim"),
             ("user.name", "Kosuke Tahara"),
             ("user.email", "ksk.tahara@gmail.com"),
-            ("push.default", "simple")]
+            ("push.default", "simple"),
+            ("credential.helper", "cache")]
 
     for k, v in configs:
         subprocess.run(['git', 'config', '--global', k, v])
@@ -120,7 +121,7 @@ def install_apt_packages():
     pkgs = [
             "ncurses-term", "silversearcher-ag",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "exuberant-ctags", "global",
+            "exuberant-ctags", "global", "ttf-mscorefonts-installer",
             "python-pip", "python3-pip",
             # to build YouCompleteMe
             "build-essential", "cmake", "python3-dev",

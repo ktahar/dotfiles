@@ -21,7 +21,7 @@ endfunction
 " command! -buffer Exec call <SID>ExecPy()
 nnoremap <silent><buffer> <Leader>e :call <SID>ExecPy()<CR>
 
-" Execute current file (python3 -> python, interactive): <Leader>E
+" Execute current file (python3 -> python, interactive): <Leader>i
 function! s:ExecPy_i()
     lcd %:h
     if executable('python3')
@@ -30,22 +30,22 @@ function! s:ExecPy_i()
         !python -i %
     endif
 endfunction
-nnoremap <silent><buffer> <Leader>E :call <SID>ExecPy_i()<CR>
+nnoremap <silent><buffer> <Leader>i :call <SID>ExecPy_i()<CR>
 
-" Execute current file (python2): <Leader>x
+" Execute current file (python2): <Leader>E
 function! s:ExecPy2()
     lcd %:h
     if executable('python')
         !python %
     endif
 endfunction
-nnoremap <silent><buffer> <Leader>x :call <SID>ExecPy2()<CR>
+nnoremap <silent><buffer> <Leader>E :call <SID>ExecPy2()<CR>
 
-" Execute current file (python2, interactive): <Leader>X
+" Execute current file (python2, interactive): <Leader>I
 function! s:ExecPy2_i()
     lcd %:h
     if executable('python')
         !python -i %
     endif
 endfunction
-nnoremap <silent><buffer> <Leader>X :call <SID>ExecPy2_i()<CR>
+nnoremap <silent><buffer> <Leader>I :call <SID>ExecPy2_i()<CR>
