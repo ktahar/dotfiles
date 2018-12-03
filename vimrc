@@ -295,7 +295,9 @@ let g:ctrlp_map = '<c-j>'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_max_files = 10000
 let g:ctrlp_prompt_mappings = {
-            \ 'AcceptSelection("t")': ['<c-g>', '<c-t>'],
+            \ 'AcceptSelection("t")': ['<c-t>'],
+            \ 'AcceptSelection("h")': ['<c-g>'],
+            \ 'AcceptSelection("v")': ['<c-v>'],
             \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-j>'],
             \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
             \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
