@@ -159,10 +159,16 @@ def install_pip_packages():
 
     Because this will install with --user option,
     installed packages will be located in ~/.local.
+
+    Matplotlib and pandas depend on python-dateutil,
+    but pandas needs newer version.
+    (And not automatically upgraded to that version.)
+    So, upgrade python-dateutil explicitly.
+
     """
 
     pkgs = [
-            "pip", "numpy", "matplotlib",
+            "pip", "numpy", "matplotlib", "python-dateutil",
             "scipy", "pandas", "ipython",
             ]
 
