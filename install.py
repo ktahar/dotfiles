@@ -299,7 +299,7 @@ def main_posix():
     set_git_global_config()
     setup_shell(home)
     install_apt_packages()
-    if prompt('clean apt packages and install (upgrade) pip packages?', default='n'):
+    if prompt('clean apt packages and install (upgrade) pip packages?'):
         remove_apt_py_packages()
         install_pip_packages()
     setup_vim(home, True)
