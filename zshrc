@@ -7,7 +7,7 @@ setopt extended_glob nomatch print_eight_bit
 unsetopt beep notify correct
 
 ## history
-setopt histignorealldups sharehistory
+setopt histignorealldups sharehistory histignorespace
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
