@@ -163,12 +163,12 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # commands, aliases, envs
 chpwd () {
-    ls --color=auto;
+    ls --color=auto -BC;
 }
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias l='ls -Ch'
+alias l='ls -BC'
 alias ll='ls -Bltrh'
 alias la='ls -altrh'
 alias less='less -R'
