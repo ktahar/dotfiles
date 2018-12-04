@@ -122,7 +122,10 @@ def install_apt_packages():
             "ncurses-term", "silversearcher-ag",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "ttf-mscorefonts-installer",
+            # python libs
             "python-pip", "python3-pip",
+            "python-numpy", "python3-numpy",
+            "python-matplotlib", "python3-matplotlib",
             # to build YouCompleteMe
             "build-essential", "cmake", "python3-dev",
             ]
@@ -136,11 +139,12 @@ def remove_apt_py_packages():
     """remove apt python packages which I install from pip.
 
     For ROS, I can't remove "python-numpy" and "python-matplotlib".
+    Other libraries may dependent on "python3-numpy" and "python3-matplotlib",
+    so we won't remove these either.
     """
 
     pkgs = [
             "python-scipy", "python-pandas", "ipython",
-            "python3-numpy", "python3-matplotlib",
             "python3-scipy", "python3-pandas", "ipython3",
             ]
 
