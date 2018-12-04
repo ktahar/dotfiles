@@ -88,11 +88,14 @@ def setup_shell(home):
             subprocess.run(['chsh', '-s', '/bin/zsh'])
 
 def setup_vim(home, posix):
-    print('Installing vim Plugins...')
-    if shutil.which('proxy.sh') is not None:
-        subprocess.run(['proxy.sh', 'vim', '-c', 'VundleInstall', '-c', ':qa'])
+    if prompt('Vim Plugins. Update (Y) or just Install missing (N)'):
+        vundle = 'VundleUpdate'
     else:
-        subprocess.run(['vim', '-c', 'VundleInstall', '-c', ':qa'])
+        vundle = 'VundleInstall'
+    if shutil.which('proxy.sh') is not None:
+        subprocess.run(['proxy.sh', 'vim', '-c', vundle, '-c', ':qa'])
+    else:
+        subprocess.run(['vim', '-c', vundle, '-c', ':qa'])
 
     if not prompt('Build YouCompleteMe?', default='n'):
         return
