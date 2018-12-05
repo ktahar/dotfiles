@@ -331,6 +331,7 @@ let g:tagbar_type_tex = {
             \ 'ctagstype' : 'latex',
             \ 'kinds' : [
             \ 'l:labels',
+            \ 'c:chapters',
             \ 's:sections',
             \ 't:subsections',
             \ 'u:subsubsections',
