@@ -6,8 +6,10 @@ bind '"\C-j": vi-movement-mode'
 set -o ignoreeof
 
 alias l='ls -Ch'
-alias ll='ls -Bltrh'
-alias la='ls -altrh'
+alias ll='ls -Blh'
+alias la='ls -alh'
+alias lt='ls -Bltrh'
+alias lta='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
 
