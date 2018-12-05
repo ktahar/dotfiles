@@ -28,7 +28,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
 "Plugin 'mzlogin/vim-markdown-toc'
-Plugin 'kannokanno/previm'
+Plugin 'previm/previm'
 Plugin 'tyru/open-browser.vim'
 
 " Snippets
