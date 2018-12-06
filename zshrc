@@ -180,6 +180,7 @@ alias gis='git status'
 alias gid='git diff'
 alias gia='git add'
 alias gic='git commit'
+alias gil='git log'
 
 # Plugins
 ## zsh-syntax-highlighting
