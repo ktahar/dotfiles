@@ -122,7 +122,7 @@ def set_git_global_config():
 
 def install_apt_packages():
     pkgs = [
-            "ncurses-term", "silversearcher-ag",
+            "ncurses-term", "silversearcher-ag", "htop",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "ttf-mscorefonts-installer",
             # python libs
