@@ -136,7 +136,7 @@ def install_apt_packages():
     if shutil.which('proxy.sh') is not None:
         subprocess.run(['proxy.sh', 'sudo', '-E', 'apt', 'install'] + pkgs)
     else:
-        subprocess.run(['sudo', 'apt', 'install'] + pkgs)
+        subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
 
 def remove_apt_py_packages():
     """remove apt python packages which I install from pip.
