@@ -164,23 +164,49 @@ nnoremap sp gT
 "}}}
 
 """ Commands (grep, diff etc.) {{{
-"" grep related (TODO: define function etc.?)
-nnoremap <Leader>v :<C-u>vim  `git ls-files`<Home><Right><Right><Right><Right>
+function! s:get_git_root()
+    let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+    return v:shell_error ? '' : root
+endfunction
+
+"" grep
 if executable('ag')
     set grepprg=ag\ --vimgrep\ $*
     set grepformat=%f:%l:%c:%m
-    nnoremap <Leader>a :<C-u>sil gr  `git ls-files`<Home><Right><Right><Right><Right><Right><Right><Right>
 endif
+
+function! s:git_vimgrep(pattern)
+    let root = s:get_git_root()
+    if empty(root)
+        echo "Not in git repository"
+        return
+    endif
+    let l:fls = substitute(system('git ls-files ' . root), '\n', ' ', 'g')
+    execute 'silent vimgrep' a:pattern l:fls
+endfunction
+command -nargs=1 GitVim call s:git_vimgrep(<f-args>)
+nnoremap <Leader>v :<C-u>GitVim<Space>
+
+function! s:git_grep(pattern)
+    let root = s:get_git_root()
+    if empty(root)
+        echo "Not in git repository"
+        return
+    endif
+    let l:fls = substitute(system('git ls-files ' . root), '\n', ' ', 'g')
+    execute 'silent grep' a:pattern l:fls
+endfunction
+command -nargs=1 GitGrep call s:git_grep(<f-args>)
+nnoremap <Leader>g :<C-u>GitGrep<Space>
+
+"" grep to quickfix
+autocmd QuickFixCmdPost *grep* cwindow
 
 "" DiffOrig from vimrc_example.vim
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
                 \ | wincmd p | diffthis
 endif
-
-"" grep to quickfix
-autocmd QuickFixCmdPost *grep* cwindow
-
 "}}}
 
 """ Fileformat and Filetype {{{
@@ -309,10 +335,7 @@ function! s:shortpath()
     let slash = (s:is_win && !&shellslash) ? '\' : '/'
     return empty(short) ? '~'.slash : short . (short =~ escape(slash, '\').'$' ? '' : slash)
 endfunction
-function! s:get_git_root()
-    let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
-    return v:shell_error ? '' : root
-endfunction
+
 function! s:fzf_file(bang, ...) abort
     let hidden = get(a:, 1, 0)
     let root = s:get_git_root()
