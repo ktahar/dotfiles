@@ -11,5 +11,8 @@ if [ -d ~/.local/bin ]; then
 fi
 
 export EDITOR=vim
+
+# fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
 export FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
+export FZF_COMPLETION_TRIGGER='~~'

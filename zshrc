@@ -175,7 +175,7 @@ alias lt='ls -Bltrh'
 alias lta='ls -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
-alias vima='vim -u ~/dotfiles/vimrc.alt'
+alias via='vim -u ~/dotfiles/vimrc.alt'
 alias gis='git status'
 alias gid='git diff'
 alias gia='git add'
@@ -183,8 +183,11 @@ alias gic='git commit'
 alias gil='git log'
 alias gig='git graph'
 
-# Plugins
+# Plugins & Extensions
 ## zsh-syntax-highlighting
 if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+## fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

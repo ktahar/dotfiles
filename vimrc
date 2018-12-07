@@ -71,6 +71,7 @@ filetype plugin indent on    " required
 set nocompatible
 set noim
 set nopaste
+set hidden
 
 """ Back up
 set backup
@@ -292,12 +293,47 @@ highlight YcmErrorSection ctermfg=15 ctermbg=1
 
 "" fzf {{{
 set rtp+=~/.fzf
-nnoremap <silent> <c-j> :<C-u>FZF<CR>
-command! FZFBuf call fzf#run(fzf#wrap(
+let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-g': 'split',
+    \ 'ctrl-v': 'vsplit' }
+
+" file search (see ~/.fzf/plugin/fzf.vim)
+let s:is_win = has('win32') || has('win64')
+function! s:shortpath()
+    let short = fnamemodify(getcwd(), ':~:.')
+    if !has('win32unix')
+        let short = pathshorten(short)
+    endif
+    let slash = (s:is_win && !&shellslash) ? '\' : '/'
+    return empty(short) ? '~'.slash : short . (short =~ escape(slash, '\').'$' ? '' : slash)
+endfunction
+function! s:get_git_root()
+    let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+    return v:shell_error ? '' : root
+endfunction
+function! s:fzf_file()
+    let root = s:get_git_root()
+    let opts = {}
+    if empty(root)
+        let prompt = s:shortpath()
+    else
+        let opts.dir = root
+        let slash = (s:is_win && !&shellslash) ? '\' : '/'
+        let prompt = opts.dir . slash
+    endif
+    let opts.options = ['--prompt', prompt]
+    call fzf#run(fzf#wrap('file', opts))
+endfunction
+command! FZFfile call s:fzf_file()
+nnoremap <c-j> :<C-u>FZFfile<CR>
+
+" buffer search
+command! FZFbuf call fzf#run(fzf#wrap('buffer',
             \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
-            \ 'options': ['--prompt', 'Buf> ']
+            \ 'options': ['--prompt', 'buf> ']
             \ }))
-nnoremap <silent> <Leader>j :<C-u>FZFBuf<CR>
+nnoremap <Leader>j :<C-u>FZFbuf<CR>
 "}}}
 
 "" CtrlP {{{

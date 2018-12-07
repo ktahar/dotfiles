@@ -5,6 +5,11 @@ import os
 import shutil
 import subprocess
 
+if os.name == 'nt':
+    home = os.environ.get('USERPROFILE')
+else:
+    home = os.environ.get('HOME')
+
 def prompt(msg, default='y'):
     if sys.version_info.major == 2: inp = raw_input
     else: inp = input
@@ -24,7 +29,7 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
-def copy_vimrc_local(home):
+def copy_vimrc_local():
     vimrc_local = os.path.join(home, "dotfiles", "vimrc.local")
     vimrc_local_example = os.path.join(home, "dotfiles", "vimrc.local.example")
     if os.path.exists(vimrc_local):
@@ -34,7 +39,16 @@ def copy_vimrc_local(home):
         print("Made file ~/dotfiles/vimrc.local.")
         print("[WARN] Don't forget to edit this later.")
 
-def clone_git_repos(home, posix):
+def install_from_github(posix):
+    def check_proxy(cmd):
+        if shutil.which('proxy.sh') is not None:
+            return ['proxy.sh'] + cmd
+        elif shutil.which('proxy.bat') is not None:
+            return ['proxy.bat'] + cmd
+        else:
+            return cmd
+
+    update = prompt('Programs from github. Update (Y) or just Install missing (N)')
     git_repos = [
             ("https://github.com/VundleVim/Vundle.vim.git",
                 ".vim/bundle/Vundle.vim" if posix else r"vimfiles\bundle\Vundle.vim")
@@ -50,26 +64,25 @@ def clone_git_repos(home, posix):
     for repo, path in git_repos:
         path = os.path.join(home, path)
         if os.path.exists(path):
-            print(r"[INFO] already exists: %s" % path)
-        else:
-            if shutil.which('proxy.sh') is not None:
-                subprocess.run(['proxy.sh', 'git', 'clone', repo, path])
-            elif shutil.which('proxy.bat') is not None:
-                subprocess.run(['proxy.bat', 'git', 'clone', repo, path])
+            if not update:
+                print(r"[INFO] already exists: %s" % path)
             else:
-                subprocess.run(['git', 'clone', repo, path])
+                subprocess.run(check_proxy(['git', 'pull']), cwd=path)
+        else:
+            subprocess.run(check_proxy(['git', 'clone', repo, path]))
 
     if posix:
-        if os.path.exists(os.path.join(home, '.fzf.zsh')):
-            print('[INFO] fzf already setup.')
+        fzf_install = [os.path.join(home, '.fzf/install'),
+                '--key-bindings',
+                '--completion',
+                '--no-update-rc',
+                '--no-bash']
+        if shutil.which('proxy.sh') is not None:
+            subprocess.run(['proxy.sh'] + fzf_install)
         else:
-            fzf_install = os.path.join(home, '.fzf/install')
-            if shutil.which('proxy.sh') is not None:
-                subprocess.run(['proxy.sh', fzf_install])
-            else:
-                subprocess.run([fzf_install])
+            subprocess.run(fzf_install)
 
-def setup_shell(home):
+def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
             '.zshrc': "source $HOME/dotfiles/zshrc\n",
             '.zshenv': "source $HOME/dotfiles/zshenv\n"}
@@ -101,7 +114,7 @@ def setup_shell(home):
         if prompt('Change default shell to /bin/zsh?'):
             subprocess.run(['chsh', '-s', '/bin/zsh'])
 
-def setup_vim(home, posix):
+def setup_vim(posix):
     if prompt('Vim Plugins. Update (Y) or just Install missing (N)'):
         vundle = 'VundleUpdate'
     else:
@@ -205,7 +218,6 @@ def main_windows():
 
     import ctypes
 
-    home = os.environ.get('USERPROFILE')
     kdll = ctypes.windll.LoadLibrary("kernel32.dll")
     shdll = ctypes.windll.LoadLibrary("Shell32.dll")
 
@@ -264,8 +276,8 @@ def main_windows():
                 print("created junction %s" % ln)
 
     # additional things
-    copy_vimrc_local(home)
-    clone_git_repos(home, False)
+    copy_vimrc_local()
+    install_from_github(False)
 
 def main_posix():
     home = os.environ.get('HOME')
@@ -310,15 +322,15 @@ def main_posix():
             print("created sym link %s" % ln)
 
     # additional things
-    copy_vimrc_local(home)
-    clone_git_repos(home, True)
+    copy_vimrc_local()
+    install_from_github(True)
     set_git_global_config()
-    setup_shell(home)
+    setup_shell()
     install_apt_packages()
     if prompt('clean apt packages and install (upgrade) pip packages?'):
         remove_apt_py_packages()
         install_pip_packages()
-    setup_vim(home, True)
+    setup_vim(True)
 
 if __name__ == '__main__':
     if os.name == 'nt':
