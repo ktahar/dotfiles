@@ -191,3 +191,26 @@ fi
 
 ## fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf commands (ref. https://github.com/junegunn/fzf/wiki/Examples)
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+fe() {
+    local files
+    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi -0 -1))
+    [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}
+# fo [FUZZY PATTERN] - Open the selected file with xdg-open (for images etc.)
+fo() {
+    local files
+    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi -0 -1))
+    if [ -n "$files" ]; then
+        for f in $files; do
+            xdg-open $f &
+        done
+    fi
+}
+# vg [REGEX PATTERN] - fuzzy grep open via ag
+vg() {
+    local file
+    file="$(ag --nobreak --noheading $@ | fzf-tmux -0 -1 | awk -F: '{print $1}')"
+    [[ -n $file ]] && ${EDITOR:-vim} "$file"
+}
