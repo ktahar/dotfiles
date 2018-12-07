@@ -313,7 +313,7 @@ function! s:get_git_root()
     let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
     return v:shell_error ? '' : root
 endfunction
-function! s:fzf_file(bang, ...)
+function! s:fzf_file(bang, ...) abort
     let hidden = get(a:, 1, 0)
     let root = s:get_git_root()
     let opts = {}
@@ -335,10 +335,13 @@ nnoremap <c-j> :<C-u>FZFfile<CR>
 nnoremap <c-h> :<C-u>FZFfile 1<CR>
 
 " buffer search
-command! -bang FZFbuf call fzf#run(fzf#wrap('buffer',
+function! s:fzf_buffer(bang) abort
+    call fzf#run(fzf#wrap('buffer',
             \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
             \ 'options': ['--prompt', 'buf> ']
-            \ }, <bang>0))
+            \ }, a:bang))
+endfunction
+command! -bang FZFbuf call s:fzf_buffer(<bang>0)
 nnoremap <Leader>j :<C-u>FZFbuf<CR>
 "}}}
 
