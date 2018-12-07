@@ -115,7 +115,9 @@ def set_git_global_config():
             ("user.name", "Kosuke Tahara"),
             ("user.email", "ksk.tahara@gmail.com"),
             ("push.default", "simple"),
-            ("credential.helper", "cache")]
+            ("credential.helper", "cache"),
+            ("alias.graph", "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"),
+            ]
 
     for k, v in configs:
         subprocess.run(['git', 'config', '--global', k, v])
