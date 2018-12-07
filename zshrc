@@ -210,10 +210,10 @@ fo() {
 }
 # vg [REGEX PATTERN] - fuzzy grep open via ag
 vg() {
-    local out
-    out=${(z)$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')}
+    local file line
+    read file line <<< $(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')
 
-    if [[ -n $out[1] ]]; then
-        vim $out[1] +$out[2]
+    if [[ -n $file ]]; then
+        vim $file +$line
     fi
 }
