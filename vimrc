@@ -24,14 +24,18 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Completion
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
+
+" Fuzzy finder
+Plugin 'junegunn/fzf.vim'
+"Plugin 'ctrlpvim/ctrlp.vim'
 
 " Markdown
+Plugin 'previm/previm'
+Plugin 'tyru/open-browser.vim'
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
 "Plugin 'mzlogin/vim-markdown-toc'
-Plugin 'previm/previm'
-Plugin 'tyru/open-browser.vim'
 
 " Snippets
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -47,19 +51,14 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
-" Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'itchyny/lightline.vim'
-" Plugin 'thinca/vim-quickrun'
+"Plugin 'itchyny/lightline.vim'
+"Plugin 'thinca/vim-quickrun'
 
 " On windows I use gVim.
 if s:is_win
     Plugin 'thinca/vim-fontzoom'
-
     " Color scheme
     Plugin 'nanotech/jellybeans.vim'
-    " Plugin 'w0ng/vim-hybrid'
-    " Plugin 'jnurmine/Zenburn'
-    " Plugin 'vim-scripts/Wombat'
 endif
 
 " All of your Plugins must be added before the following line
@@ -186,7 +185,7 @@ function! s:git_vimgrep(pattern)
     execute 'silent vimgrep' a:pattern l:fls
 endfunction
 command -nargs=1 GitVim call s:git_vimgrep(<f-args>)
-nnoremap <Leader>v :<C-u>GitVim<Space>
+nnoremap <Leader>V :<C-u>GitVim<Space>
 
 function! s:git_grep(pattern)
     let root = s:get_git_root()
@@ -198,7 +197,7 @@ function! s:git_grep(pattern)
     execute 'silent grep' a:pattern l:fls
 endfunction
 command -nargs=1 GitGrep call s:git_grep(<f-args>)
-nnoremap <Leader>g :<C-u>GitGrep<Space>
+nnoremap <Leader>v :<C-u>GitGrep<Space>
 
 "" grep to quickfix
 autocmd QuickFixCmdPost *grep* cwindow
@@ -327,7 +326,7 @@ let g:fzf_action = {
     \ 'ctrl-g': 'split',
     \ 'ctrl-v': 'vsplit' }
 
-" file search (see ~/.fzf/plugin/fzf.vim)
+" utils
 function! s:shortpath()
     let short = fnamemodify(getcwd(), ':~:.')
     if !has('win32unix')
@@ -337,36 +336,34 @@ function! s:shortpath()
     return empty(short) ? '~'.slash : short . (short =~ escape(slash, '\').'$' ? '' : slash)
 endfunction
 
+" file searcher. (ref. ~/.fzf/plugin/fzf.vim)
+" if inside git repository, search from project root.
+" if not, use default FZF behaviour (search from current).
 function! s:fzf_file(bang, ...) abort
-    let hidden = get(a:, 1, 0)
-    let root = s:get_git_root()
-    let opts = {}
+    let l:hidden = get(a:, 1, 0)
+    let l:root = s:get_git_root()
+    let l:opts = {}
     if hidden
-        let opts.source = 'ag --nocolor --nogroup --hidden -g ""'
+        let l:opts.source = 'ag --nocolor --nogroup --hidden -g ""'
     endif
-    if empty(root)
-        let prompt = s:shortpath()
+    if empty(l:root)
+        let l:prompt = s:shortpath()
     else
-        let opts.dir = root
-        let slash = (s:is_win && !&shellslash) ? '\' : '/'
-        let prompt = opts.dir . slash
+        let l:opts.dir = l:root
+        let l:slash = (s:is_win && !&shellslash) ? '\' : '/'
+        let l:prompt = l:opts.dir . l:slash
     endif
-    let opts.options = ['--prompt', prompt]
-    call fzf#run(fzf#wrap('file', opts, a:bang))
+    let l:opts.options = ['--prompt', l:prompt]
+    call fzf#run(fzf#wrap('file', l:opts, a:bang))
 endfunction
 command! -nargs=? -bang FZFfile call s:fzf_file(<bang>0, <f-args>)
 nnoremap <c-j> :<C-u>FZFfile<CR>
 nnoremap <c-h> :<C-u>FZFfile 1<CR>
 
-" buffer search
-function! s:fzf_buffer(bang) abort
-    call fzf#run(fzf#wrap('buffer',
-            \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
-            \ 'options': ['--prompt', 'buf> ']
-            \ }, a:bang))
-endfunction
-command! -bang FZFbuf call s:fzf_buffer(<bang>0)
-nnoremap <Leader>j :<C-u>FZFbuf<CR>
+" buffer search (using fzf.vim)
+nnoremap <Leader>j :<C-u>Buffers<CR>
+" grep and fuzzy search  (using fzf.vim)
+nnoremap <Leader>a :<C-u>Ag<space>
 "}}}
 
 "" CtrlP {{{
