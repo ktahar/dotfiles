@@ -133,6 +133,7 @@ nnoremap ZQ <Nop>
 nnoremap Q <Nop>
 
 inoremap <C-j> <ESC>
+cnoremap <C-j> <C-u><ESC>
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
