@@ -4,12 +4,14 @@ if filereadable(expand('~/dotfiles/vimrc.local'))
     source ~/dotfiles/vimrc.local
 endif
 
+let s:is_win = has('win32') || has('win64')
+
 """ Vundle {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-if (has('win32') || has('win64'))
+if s:is_win
     set rtp+=~/vimfiles/bundle/Vundle.vim
     call vundle#begin('$USERPROFILE/vimfiles/bundle/')
 else
@@ -50,7 +52,7 @@ Plugin 'ryanoasis/vim-devicons'
 " Plugin 'thinca/vim-quickrun'
 
 " On windows I use gVim.
-if (has('win32') || has('win64'))
+if s:is_win
     Plugin 'thinca/vim-fontzoom'
 
     " Color scheme
@@ -188,7 +190,7 @@ set tabstop=8 expandtab shiftwidth=4 softtabstop=4
 set foldmethod=marker
 
 "" Python skeleton
-if (has('win32') || has('win64'))
+if s:is_win
     autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
 else
     autocmd BufNewFile *.py 0r ~/.vim/skeleton.py
@@ -299,7 +301,6 @@ let g:fzf_action = {
     \ 'ctrl-v': 'vsplit' }
 
 " file search (see ~/.fzf/plugin/fzf.vim)
-let s:is_win = has('win32') || has('win64')
 function! s:shortpath()
     let short = fnamemodify(getcwd(), ':~:.')
     if !has('win32unix')
@@ -312,9 +313,13 @@ function! s:get_git_root()
     let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
     return v:shell_error ? '' : root
 endfunction
-function! s:fzf_file()
+function! s:fzf_file(bang, ...)
+    let hidden = get(a:, 1, 0)
     let root = s:get_git_root()
     let opts = {}
+    if hidden
+        let opts.source = 'ag --nocolor --nogroup --hidden -g ""'
+    endif
     if empty(root)
         let prompt = s:shortpath()
     else
@@ -323,16 +328,17 @@ function! s:fzf_file()
         let prompt = opts.dir . slash
     endif
     let opts.options = ['--prompt', prompt]
-    call fzf#run(fzf#wrap('file', opts))
+    call fzf#run(fzf#wrap('file', opts, a:bang))
 endfunction
-command! FZFfile call s:fzf_file()
+command! -nargs=? -bang FZFfile call s:fzf_file(<bang>0, <f-args>)
 nnoremap <c-j> :<C-u>FZFfile<CR>
+nnoremap <c-h> :<C-u>FZFfile 1<CR>
 
 " buffer search
-command! FZFbuf call fzf#run(fzf#wrap('buffer',
+command! -bang FZFbuf call fzf#run(fzf#wrap('buffer',
             \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
             \ 'options': ['--prompt', 'buf> ']
-            \ }))
+            \ }, <bang>0))
 nnoremap <Leader>j :<C-u>FZFbuf<CR>
 "}}}
 
