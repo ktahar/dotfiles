@@ -1,7 +1,12 @@
 *~
 .git
 .hg
-HTML
 *.o
 *.lo
 *.vcproj
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+HTML
+tags

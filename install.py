@@ -40,14 +40,6 @@ def copy_vimrc_local():
         print("[WARN] Don't forget to edit this later.")
 
 def install_from_github(posix):
-    def check_proxy(cmd):
-        if shutil.which('proxy.sh') is not None:
-            return ['proxy.sh'] + cmd
-        elif shutil.which('proxy.bat') is not None:
-            return ['proxy.bat'] + cmd
-        else:
-            return cmd
-
     update = prompt('Programs from github. Update (Y) or just Install missing (N)')
     git_repos = [
             ("https://github.com/VundleVim/Vundle.vim.git",
@@ -67,9 +59,9 @@ def install_from_github(posix):
             if not update:
                 print(r"[INFO] already exists: %s" % path)
             else:
-                subprocess.run(check_proxy(['git', 'pull']), cwd=path)
+                subprocess.run(['git', 'pull'], cwd=path)
         else:
-            subprocess.run(check_proxy(['git', 'clone', repo, path]))
+            subprocess.run(['git', 'clone', '--depth', '1', repo, path])
 
     if posix:
         fzf_install = [os.path.join(home, '.fzf/install'),
@@ -77,10 +69,7 @@ def install_from_github(posix):
                 '--completion',
                 '--no-update-rc',
                 '--no-bash']
-        if shutil.which('proxy.sh') is not None:
-            subprocess.run(['proxy.sh'] + fzf_install)
-        else:
-            subprocess.run(fzf_install)
+        subprocess.run(fzf_install)
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -119,22 +108,15 @@ def setup_vim(posix):
         vundle = 'VundleUpdate'
     else:
         vundle = 'VundleInstall'
-    if shutil.which('proxy.sh') is not None:
-        subprocess.run(['proxy.sh', 'vim', '-c', vundle, '-c', ':qa'])
-    else:
-        subprocess.run(['vim', '-c', vundle, '-c', ':qa'])
+    subprocess.run(['vim', '-c', vundle, '-c', ':qa'])
 
     if not prompt('Build YouCompleteMe?', default='n'):
         return
     print('Building YouCompleteMe...')
     ycm = ".vim/bundle/YouCompleteMe" if posix else r"vimfiles\bundle\YouCompleteMe"
     ycm = os.path.join(home, ycm)
-    if shutil.which('proxy.sh') is not None:
-        subprocess.run(['proxy.sh', 'python3',
-            './install.py', '--clang-completer'], cwd=ycm)
-    else:
-        subprocess.run(['python3',
-            './install.py', '--clang-completer'], cwd=ycm)
+    subprocess.run(['python3',
+        './install.py', '--clang-completer'], cwd=ycm)
 
 def set_git_global_config():
     configs = [("core.excludesfile", "~/.gitignore_global"),
@@ -162,10 +144,7 @@ def install_apt_packages():
             "build-essential", "cmake", "python3-dev",
             ]
 
-    if shutil.which('proxy.sh') is not None:
-        subprocess.run(['proxy.sh', 'sudo', '-E', 'apt', 'install'] + pkgs)
-    else:
-        subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
+    subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
 
 def remove_apt_py_packages():
     """remove apt python packages which I install from pip.
@@ -201,12 +180,8 @@ def install_pip_packages():
             "scipy", "pandas", "ipython",
             ]
 
-    if shutil.which('proxy.sh') is not None:
-        subprocess.run(['proxy.sh', 'pip2', 'install', '--user', '-U'] + pkgs)
-        subprocess.run(['proxy.sh', 'pip3', 'install', '--user', '-U'] + pkgs)
-    else:
-        subprocess.run(['pip2', 'install', '--user', '-U'] + pkgs)
-        subprocess.run(['pip3', 'install', '--user', '-U'] + pkgs)
+    subprocess.run(['pip2', 'install', '--user', '-U'] + pkgs)
+    subprocess.run(['pip3', 'install', '--user', '-U'] + pkgs)
 
 def main_windows():
     """make directories and symbolic links for windows.
