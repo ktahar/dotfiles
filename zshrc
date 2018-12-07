@@ -211,7 +211,7 @@ fo() {
 # vg [REGEX PATTERN] - fuzzy grep open via ag
 vg() {
     local file line
-    read file line <<< $(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')
+    read -r file line <<< "$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
 
     if [[ -n $file ]]; then
         vim $file +$line
