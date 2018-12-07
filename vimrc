@@ -394,6 +394,10 @@ imap <C-f> <Esc>a<Plug>snipMateNextOrTrigger
 smap <C-f> <Plug>snipMateNextOrTrigger
 "}}}
 
+"" NERDCommenter {{{
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+"}}}
 "" NERDTree {{{
 nnoremap <Leader>t :<C-u>NERDTreeToggle<CR>
 "}}}
