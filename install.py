@@ -41,7 +41,11 @@ def clone_git_repos(home, posix):
             ]
 
     if posix:
-        git_repos.append(("https://github.com/tmux-plugins/tmux-resurrect", ".tmux/plugins/tmux-resurrect"))
+        git_repos.extend([
+            ("https://github.com/tmux-plugins/tmux-resurrect",
+            ".tmux/plugins/tmux-resurrect"),
+            ("https://github.com/junegunn/fzf.git", ".fzf"),
+            ])
 
     for repo, path in git_repos:
         path = os.path.join(home, path)
@@ -54,6 +58,16 @@ def clone_git_repos(home, posix):
                 subprocess.run(['proxy.bat', 'git', 'clone', repo, path])
             else:
                 subprocess.run(['git', 'clone', repo, path])
+
+    if posix:
+        if os.path.exists(os.path.join(home, '.fzf.zsh')):
+            print('[INFO] fzf already setup.')
+        else:
+            fzf_install = os.path.join(home, '.fzf/install')
+            if shutil.which('proxy.sh') is not None:
+                subprocess.run(['proxy.sh', fzf_install])
+            else:
+                subprocess.run([fzf_install])
 
 def setup_shell(home):
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",

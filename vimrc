@@ -40,12 +40,12 @@ Plugin 'honza/vim-snippets'
 " Other Utils
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-obsession'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'ryanoasis/vim-devicons'
+" Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'itchyny/lightline.vim'
 " Plugin 'thinca/vim-quickrun'
 
@@ -290,28 +290,37 @@ highlight YcmErrorSign ctermfg=15 ctermbg=1
 highlight YcmErrorSection ctermfg=15 ctermbg=1
 "}}}
 
+"" fzf {{{
+set rtp+=~/.fzf
+nnoremap <silent> <c-j> :<C-u>FZF<CR>
+command! FZFBuf call fzf#run(fzf#wrap(
+            \ {'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
+            \ 'options': ['--prompt', 'Buf> ']
+            \ }))
+nnoremap <silent> <Leader>j :<C-u>FZFBuf<CR>
+"}}}
+
 "" CtrlP {{{
-let g:ctrlp_map = '<c-j>'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_lazy_update = 1
-" let g:ctrlp_max_files = 10000
-let g:ctrlp_prompt_mappings = {
-            \ 'AcceptSelection("t")': ['<c-t>'],
-            \ 'AcceptSelection("h")': ['<c-g>'],
-            \ 'AcceptSelection("v")': ['<c-v>'],
-            \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-j>'],
-            \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-            \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
-            \ 'PrtHistory(-1)':       ['<down>'],
-            \ 'PrtHistory(1)':        ['<up>'],
-            \ }
-if executable('ag')
-    let g:ctrlp_regexp = 1
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup -g ""'
-endif
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
-nnoremap <Leader>j :<C-u>CtrlPBuffer<CR>
+"let g:ctrlp_map = '<c-j>'
+"let g:ctrlp_working_path_mode = 'ra'
+"let g:ctrlp_lazy_update = 1
+"let g:ctrlp_prompt_mappings = {
+            "\ 'AcceptSelection("t")': ['<c-t>'],
+            "\ 'AcceptSelection("h")': ['<c-g>'],
+            "\ 'AcceptSelection("v")': ['<c-v>'],
+            "\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-j>'],
+            "\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+            "\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+            "\ 'PrtHistory(-1)':       ['<down>'],
+            "\ 'PrtHistory(1)':        ['<up>'],
+            "\ }
+"if executable('ag')
+    "let g:ctrlp_regexp = 1
+    "let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup -g ""'
+"endif
+"let g:ctrlp_use_caching = 1
+"let g:ctrlp_clear_cache_on_exit = 0
+"nnoremap <Leader>j :<C-u>CtrlPBuffer<CR>
 "}}}
 
 "" snipmate {{{

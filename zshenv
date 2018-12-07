@@ -11,3 +11,5 @@ if [ -d ~/.local/bin ]; then
 fi
 
 export EDITOR=vim
+export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
+export FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
