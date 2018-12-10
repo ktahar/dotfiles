@@ -179,9 +179,11 @@ def install_pip_packages():
             "pip", "numpy", "matplotlib", "python-dateutil",
             "scipy", "pandas", "ipython",
             ]
+    pkgs_2 = []
+    pkgs_3 = ["rospkg"]
 
-    subprocess.run(['pip2', 'install', '--user', '-U'] + pkgs)
-    subprocess.run(['pip3', 'install', '--user', '-U'] + pkgs)
+    subprocess.run(['pip2', 'install', '--user', '-U'] + pkgs + pkgs_2)
+    subprocess.run(['pip3', 'install', '--user', '-U'] + pkgs + pkgs_3)
 
 def main_windows():
     """make directories and symbolic links for windows.
