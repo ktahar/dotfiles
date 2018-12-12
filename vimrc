@@ -327,8 +327,8 @@ let g:fzf_action = {
     \ 'ctrl-v': 'vsplit' }
 
 " utils
-function! s:shortpath()
-    let short = fnamemodify(getcwd(), ':~:.')
+function! s:shortpath(path)
+    let short = fnamemodify(a:path, ':~:.')
     if !has('win32unix')
         let short = pathshorten(short)
     endif
@@ -347,11 +347,10 @@ function! s:fzf_file(bang, ...) abort
         let l:opts.source = 'ag --nocolor --nogroup --hidden -g ""'
     endif
     if empty(l:root)
-        let l:prompt = s:shortpath()
+        let l:prompt = s:shortpath(getcwd())
     else
         let l:opts.dir = l:root
-        let l:slash = (s:is_win && !&shellslash) ? '\' : '/'
-        let l:prompt = l:opts.dir . l:slash
+        let l:prompt = s:shortpath(l:opts.dir)
     endif
     let l:opts.options = ['--prompt', l:prompt]
     call fzf#run(fzf#wrap('file', l:opts, a:bang))
