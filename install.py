@@ -175,6 +175,10 @@ def install_pip_packages():
 
     """
 
+    opts = ['install', '--user']
+    if prompt('pip packages. Update (Y) or just Install missing (N)'):
+        opts.append('-U')
+
     pkgs = [
             "pip", "numpy", "matplotlib", "python-dateutil",
             "scipy", "pandas", "ipython",
@@ -182,8 +186,8 @@ def install_pip_packages():
     pkgs_2 = []
     pkgs_3 = ["rospkg"]
 
-    subprocess.run(['pip2', 'install', '--user', '-U'] + pkgs + pkgs_2)
-    subprocess.run(['pip3', 'install', '--user', '-U'] + pkgs + pkgs_3)
+    subprocess.run(['pip2'] + opts + pkgs + pkgs_2)
+    subprocess.run(['pip3'] + opts + pkgs + pkgs_3)
 
 def main_windows():
     """make directories and symbolic links for windows.
