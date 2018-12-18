@@ -202,7 +202,7 @@ fe() {
 # fo [FUZZY PATTERN] - Open the selected file with xdg-open (for images etc.)
 fo() {
     local files
-    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi -0 -1))
+    IFS=$'\n' files=($(ag --nocolor --nogroup -a -g "" | fzf-tmux --query="$1" --multi -0 -1))
     if [ -n "$files" ]; then
         for f in $files; do
             xdg-open $f &
