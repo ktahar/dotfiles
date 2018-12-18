@@ -182,6 +182,7 @@ alias gia='git add'
 alias gic='git commit'
 alias gil='git log'
 alias gig='git graph'
+alias t='tmux'
 alias tk='tmux kill-server'
 
 # Plugins & Extensions
