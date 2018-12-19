@@ -10,6 +10,10 @@ if [ -d ~/.local/bin ]; then
     path=(~/.local/bin $path)
 fi
 
+if [ -d ~/opt/MATLAB ]; then
+    path=($path ~/opt/MATLAB/*/bin)
+fi
+
 export EDITOR=vim
 
 # fzf
