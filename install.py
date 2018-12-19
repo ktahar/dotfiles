@@ -278,6 +278,7 @@ def main_posix():
 
     files = [(r".vimrc", r"vimrc"),
             (r".gvimrc", r"gvimrc"),
+            (r".ideavimrc", r"ideavimrc"),
             (r".tmux.conf", r"tmux.conf"),
             (r".ctags", r"ctags"),
             (r".gitignore_global", r"gitignore_global"),
