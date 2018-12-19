@@ -1,5 +1,13 @@
-nnoremap <Space> <Nop>
-let mapleader = "\<Space>"
+" ktaha's ideavimrc
+
+" standard maps
+
+" Don't change mapleader to space,
+" because of following bug.
+" - key input of <some-key> remains after entering <leader><some-key>.
+" nnoremap <Space> <Nop>
+" let mapleader = " "
+
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -9,7 +17,7 @@ cnoremap <C-j> <C-u><ESC>
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
-nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
+" nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
@@ -34,3 +42,8 @@ nnoremap <silent> s<Bar> :<C-u>vsp<CR>
 nnoremap <silent> s- :<C-u>sp<CR>
 nnoremap sn gt
 nnoremap sp gT
+
+" ideavim specific
+" surround.vim emulation
+set surround
+nnoremap <leader>d :<C-u>action GotoDeclaration<CR>
