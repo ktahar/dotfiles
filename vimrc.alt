@@ -1,7 +1,0 @@
-" vimrc to add following alternative settings.
-" - disable YouCompleteMe.
-
-let g:loaded_youcompleteme = 1
-if filereadable(expand('~/dotfiles/vimrc'))
-    source ~/dotfiles/vimrc
-endif
