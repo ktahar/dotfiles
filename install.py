@@ -199,6 +199,7 @@ def main_windows(args):
             (r"vimfiles\after", r"vim\after"),
             (r"vimfiles\plugin", r"vim\plugin"),
             (r"vimfiles\indent", r"vim\indent"),
+            (r"vimfiles\pack", r"vim\pack"),
             ]
 
     for f in files:
