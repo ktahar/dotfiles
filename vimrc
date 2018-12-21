@@ -333,10 +333,6 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 "}}}
 
-"" NERDTree {{{
-nnoremap <Leader>t :<C-u>NERDTreeToggle<CR>
-"}}}
-
 "" Tagbar {{{
 nnoremap <silent> <Leader>b :<C-u>TagbarToggle<CR>
 let g:tagbar_map_togglesort = "r"

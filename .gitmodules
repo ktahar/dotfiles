@@ -28,9 +28,6 @@
 [submodule "vim/pack/my/start/nerdcommenter"]
 	path = vim/pack/my/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter
-[submodule "vim/pack/my/start/nerdtree"]
-	path = vim/pack/my/start/nerdtree
-	url = https://github.com/scrooloose/nerdtree
 [submodule "vim/pack/my/start/tagbar"]
 	path = vim/pack/my/start/tagbar
 	url = https://github.com/majutsushi/tagbar
