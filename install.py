@@ -4,6 +4,7 @@ import sys
 import os
 import shutil
 import subprocess
+import argparse
 
 if os.name == 'nt':
     home = os.environ.get('USERPROFILE')
@@ -37,7 +38,6 @@ def copy_vimrc_local():
     else:
         shutil.copy(vimrc_local_example, vimrc_local)
         print("Made file ~/dotfiles/vimrc.local.")
-        print("[WARN] Don't forget to edit this later.")
 
 def setup_apps():
     fzf_install = [os.path.join(home, '.fzf/install'),
@@ -105,7 +105,11 @@ def set_git_global_config():
     for k, v in configs:
         subprocess.run(['git', 'config', '--global', k, v])
 
-def install_apt_packages():
+def install_apt_packages(upgrade):
+    if upgrade:
+        subprocess.run(['sudo', '-E', 'apt', 'update'])
+        subprocess.run(['sudo', '-E', 'apt', 'upgrade'])
+
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
@@ -114,33 +118,20 @@ def install_apt_packages():
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
-            # Build things
+            # Build tools
             "build-essential", "cmake",
-            # vim
+            # deps to build vim
             "git", "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "python3-dev", # to enable python3 interpreter in vim.
             "clang-tools-6.0", # to use clangd-6.0 from vim-lsp.
             ]
 
-    subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
+    res = subprocess.run(['dpkg-query', '-W'] + pkgs,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if res.returncode:
+        subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
 
-def remove_apt_py_packages():
-    """remove apt python packages which I install from pip.
-
-    For ROS, I can't remove "python-numpy" and "python-matplotlib".
-    Other libraries may dependent on "python3-numpy" and "python3-matplotlib",
-    so we won't remove these either.
-    """
-
-    pkgs = [
-            "python-scipy", "python-pandas", "ipython",
-            "python3-scipy", "python3-pandas", "ipython3",
-            ]
-
-    subprocess.run(['sudo', 'apt', 'remove'] + pkgs)
-    subprocess.run(['sudo', 'apt', 'autoremove'])
-
-def install_pip_packages():
+def install_pip_packages(upgrade):
     """install python packages using pip.
 
     Because this will install with --user option,
@@ -154,7 +145,7 @@ def install_pip_packages():
     """
 
     opts = ['install', '--user']
-    if prompt('pip packages. Update (Y) or just Install missing (N)'):
+    if upgrade:
         opts.append('-U')
 
     pkgs = [
@@ -169,7 +160,7 @@ def install_pip_packages():
     subprocess.run(['pip2'] + opts + pkgs + pkgs_2)
     subprocess.run(['pip3'] + opts + pkgs + pkgs_3)
 
-def main_windows():
+def main_windows(args):
     """make directories and symbolic links for windows.
 
     Note that you should run this script with Administrator privilege.
@@ -239,7 +230,7 @@ def main_windows():
     # additional things
     copy_vimrc_local()
 
-def main_posix():
+def main_posix(args):
     home = os.environ.get('HOME')
 
     dirs = [r".vim", r".tmux", r".config/matplotlib",
@@ -288,20 +279,26 @@ def main_posix():
     # additional things
     copy_vimrc_local()
     set_git_global_config()
-    install_apt_packages()
+    install_apt_packages(args.upgrade)
+    install_pip_packages(args.upgrade)
 
     setup_apps()
     setup_shell()
 
-    if prompt('clean apt packages and install (upgrade) pip packages?'):
-        remove_apt_py_packages()
-        install_pip_packages()
+def parse_args():
+    parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
+    parser.add_argument('-u', '--upgrade', action='store_true',
+            help='Upgrade packages etc.')
+
+    return parser.parse_args()
 
 if __name__ == '__main__':
+    args = parse_args()
+
     if os.name == 'nt':
-        main_windows()
+        main_windows(args)
     elif os.name == 'posix':
-        main_posix()
+        main_posix(args)
     else:
         raise NotImplementedError("OS name %s is not supported." % os.name)
 
