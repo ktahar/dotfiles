@@ -39,20 +39,14 @@ def copy_vimrc_local():
         print("Made file ~/dotfiles/vimrc.local.")
         print("[WARN] Don't forget to edit this later.")
 
-def install_from_github(posix):
+def install_from_github():
     update = prompt('Programs from github. Update (Y) or just Install missing (N)')
     git_repos = [
-            ("https://github.com/VundleVim/Vundle.vim.git",
-                ".vim/bundle/Vundle.vim" if posix else r"vimfiles\bundle\Vundle.vim")
-            ]
-
-    if posix:
-        git_repos.extend([
             ("https://github.com/tmux-plugins/tmux-resurrect",
-            ".tmux/plugins/tmux-resurrect"),
+                ".tmux/plugins/tmux-resurrect"),
             ("https://github.com/junegunn/fzf.git", ".fzf"),
             ("https://github.com/vim/vim.git", "dotfiles/vim-build"),
-            ])
+        ]
 
     for repo, path in git_repos:
         path = os.path.join(home, path)
@@ -64,25 +58,24 @@ def install_from_github(posix):
         else:
             subprocess.run(['git', 'clone', '--depth', '1', repo, path])
 
-    if posix:
-        fzf_install = [os.path.join(home, '.fzf/install'),
-                '--key-bindings',
-                '--completion',
-                '--no-update-rc',
-                '--no-bash']
-        subprocess.run(fzf_install)
+    fzf_install = [os.path.join(home, '.fzf/install'),
+            '--key-bindings',
+            '--completion',
+            '--no-update-rc',
+            '--no-bash']
+    subprocess.run(fzf_install)
 
-        if prompt('build vim?'):
-            vim_conf = ['./configure',
-                    '--prefix={}/.local'.format(home),
-                    '--with-features=huge',
-                    '--enable-python3interp',
-                    '--enable-fail-if-missing',
-                    ]
-            subprocess.run(vim_conf,
-                    cwd=os.path.join(home, "dotfiles/vim-build/src"))
-            subprocess.run(["make", "install"],
-                    cwd=os.path.join(home, "dotfiles/vim-build/src"))
+    if prompt('build vim?'):
+        vim_conf = ['./configure',
+                '--prefix={}/.local'.format(home),
+                '--with-features=huge',
+                '--enable-python3interp',
+                '--enable-fail-if-missing',
+                ]
+        subprocess.run(vim_conf,
+                cwd=os.path.join(home, "dotfiles/vim-build/src"))
+        subprocess.run(["make", "install"],
+                cwd=os.path.join(home, "dotfiles/vim-build/src"))
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -116,21 +109,6 @@ def setup_shell():
         if prompt('Change default shell to /bin/zsh?'):
             subprocess.run(['chsh', '-s', '/bin/zsh'])
 
-def setup_vim(posix):
-    if prompt('Vim Plugins. Update (Y) or just Install missing (N)'):
-        vundle = 'VundleUpdate'
-    else:
-        vundle = 'VundleInstall'
-    subprocess.run(['vim', '-c', vundle, '-c', ':qa'])
-
-    if not prompt('Build YouCompleteMe?', default='n'):
-        return
-    print('Building YouCompleteMe...')
-    ycm = ".vim/bundle/YouCompleteMe" if posix else r"vimfiles\bundle\YouCompleteMe"
-    ycm = os.path.join(home, ycm)
-    subprocess.run(['python3',
-        './install.py', '--clang-completer'], cwd=ycm)
-
 def set_git_global_config():
     configs = [("core.excludesfile", "~/.gitignore_global"),
             ("core.editor", "vim"),
@@ -154,12 +132,11 @@ def install_apt_packages():
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
             # Build things
-            "build-essential",
-            # YouCompleteMe
-            "build-essential", "cmake", "python3-dev",
+            "build-essential", "cmake",
             # vim
             "git", "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
-            # "python3-dev", # to enable python3 interpreter in vim.
+            "python3-dev", # to enable python3 interpreter in vim.
+            "clang-tools-6.0", # to use clangd-6.0 from vim-lsp.
             ]
 
     subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
@@ -202,7 +179,9 @@ def install_pip_packages():
             "scipy", "pandas", "ipython",
             ]
     pkgs_2 = []
-    pkgs_3 = ["rospkg"]
+    pkgs_3 = ["rospkg",
+            "python-language-server", # to use pyls from vim-lsp.
+            ]
 
     subprocess.run(['pip2'] + opts + pkgs + pkgs_2)
     subprocess.run(['pip3'] + opts + pkgs + pkgs_3)
@@ -276,7 +255,6 @@ def main_windows():
 
     # additional things
     copy_vimrc_local()
-    install_from_github(False)
 
 def main_posix():
     home = os.environ.get('HOME')
@@ -326,13 +304,12 @@ def main_posix():
     copy_vimrc_local()
     set_git_global_config()
     install_apt_packages()
-    install_from_github(True)
+    install_from_github()
 
     setup_shell()
     if prompt('clean apt packages and install (upgrade) pip packages?'):
         remove_apt_py_packages()
         install_pip_packages()
-    setup_vim(True)
 
 if __name__ == '__main__':
     if os.name == 'nt':

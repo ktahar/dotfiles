@@ -253,10 +253,28 @@ endif
 """ Plugins {{{
 source $VIMRUNTIME/macros/matchit.vim
 
-"" YouCompleteMe {{{
-let g:ycm_global_ycm_extra_conf = '~/dotfiles/ycm_extra_conf.py'
-highlight YcmErrorSign ctermfg=15 ctermbg=1
-highlight YcmErrorSection ctermfg=15 ctermbg=1
+"" vim-lsp {{{
+" diagnostic option
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/vim-lsp.log')
+
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+       \ 'name': 'pyls',
+       \ 'cmd': {server_info->['pyls']},
+       \ 'whitelist': ['python'],
+       \ })
+    " au FileType python setl omnifunc=lsp#complete
+endif
+if executable('clangd-6.0')
+    " sudo apt install clang-tools-6.0
+    au User lsp_setup call lsp#register_server({
+       \ 'name': 'clangd-6.0',
+       \ 'cmd': {server_info->['clangd-6.0']},
+       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+       \ })
+endif
 "}}}
 
 "" fzf {{{
@@ -305,29 +323,6 @@ nnoremap <Leader>j :<C-u>Buffers<CR>
 nnoremap <Leader>a :<C-u>Ag<space>
 "}}}
 
-"" CtrlP {{{
-"let g:ctrlp_map = '<c-j>'
-"let g:ctrlp_working_path_mode = 'ra'
-"let g:ctrlp_lazy_update = 1
-"let g:ctrlp_prompt_mappings = {
-            "\ 'AcceptSelection("t")': ['<c-t>'],
-            "\ 'AcceptSelection("h")': ['<c-g>'],
-            "\ 'AcceptSelection("v")': ['<c-v>'],
-            "\ 'PrtExit()':            ['<esc>', '<c-c>', '<c-j>'],
-            "\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-            "\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
-            "\ 'PrtHistory(-1)':       ['<down>'],
-            "\ 'PrtHistory(1)':        ['<up>'],
-            "\ }
-"if executable('ag')
-    "let g:ctrlp_regexp = 1
-    "let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup -g ""'
-"endif
-"let g:ctrlp_use_caching = 1
-"let g:ctrlp_clear_cache_on_exit = 0
-"nnoremap <Leader>j :<C-u>CtrlPBuffer<CR>
-"}}}
-
 "" snipmate {{{
 imap <C-f> <Esc>a<Plug>snipMateNextOrTrigger
 smap <C-f> <Plug>snipMateNextOrTrigger
@@ -337,6 +332,7 @@ smap <C-f> <Plug>snipMateNextOrTrigger
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 "}}}
+
 "" NERDTree {{{
 nnoremap <Leader>t :<C-u>NERDTreeToggle<CR>
 "}}}

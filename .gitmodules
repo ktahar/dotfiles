@@ -40,3 +40,15 @@
 [submodule "vim/pack/my/start/vim-devicons"]
 	path = vim/pack/my/start/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons
+[submodule "vim/pack/my/start/async.vim"]
+	path = vim/pack/my/start/async.vim
+	url = https://github.com/prabirshrestha/async.vim
+[submodule "vim/pack/my/start/vim-lsp"]
+	path = vim/pack/my/start/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp
+[submodule "vim/pack/my/start/asyncomplete.vim"]
+	path = vim/pack/my/start/asyncomplete.vim
+	url = https://github.com/prabirshrestha/asyncomplete.vim
+[submodule "vim/pack/my/start/asyncomplete-lsp.vim"]
+	path = vim/pack/my/start/asyncomplete-lsp.vim
+	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
