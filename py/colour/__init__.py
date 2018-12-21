@@ -36,8 +36,7 @@ def col(text, fg=None, bg=None, bold=False, uline=False):
     code = bold + uline + fg + bg
     if not code: # no modification made.
         return text
-    code = code[:-1] + "m"
-    return '\033[{}{}\033[0m'.format(code, text)
+    return '\033[{}m{}\033[0m'.format(code[:-1], text)
 
 def printc(text, fg=None, bg=None, bold=False, uline=False, **keyw):
     print(col(text, fg, bg, bold, uline), **keyw)
