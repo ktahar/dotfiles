@@ -23,4 +23,5 @@ fi
 if [ -z "${DOTFILES_ENV_SET+1}" ]; then
     export DOTFILES_ENV_SET=1
     export PATH=$PATH:$HOME/dotfiles/scripts
+    export PYTHONPATH=$PATH:$HOME/dotfiles/py
 fi

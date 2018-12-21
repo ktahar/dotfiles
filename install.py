@@ -11,6 +11,11 @@ if os.name == 'nt':
 else:
     home = os.environ.get('HOME')
 
+p = os.path.join(home, 'dotfiles', 'py')
+if p not in sys.path:
+    sys.path.append(p)
+from colour import printc
+
 def prompt(msg, default='y'):
     if sys.version_info.major == 2: inp = raw_input
     else: inp = input
@@ -238,6 +243,7 @@ def main_posix(args):
             r".ipython/profile_default/startup", r"tmp",
             r".config/gtk-3.0"]
 
+    printc('[create dirs]', 'b')
     for d in dirs:
         dn = os.path.join(home, d)
 
@@ -267,6 +273,7 @@ def main_posix(args):
             (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
             ]
 
+    printc('[create links]', 'b')
     for f in files:
         ln = os.path.join(home, f[0])
         tgt = os.path.join(home, 'dotfiles', f[1])
@@ -278,12 +285,18 @@ def main_posix(args):
             print("created sym link %s" % ln)
 
     # additional things
+    printc('[vimrc local]', 'b')
     copy_vimrc_local()
+    printc('[git global config]', 'b')
     set_git_global_config()
+    printc('[apt packages]', 'b')
     install_apt_packages(args.upgrade)
+    printc('[pip packages]', 'b')
     install_pip_packages(args.upgrade)
 
+    printc('[apps]', 'b')
     setup_apps()
+    printc('[shell]', 'b')
     setup_shell()
 
 def parse_args():

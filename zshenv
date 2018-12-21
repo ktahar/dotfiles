@@ -14,6 +14,11 @@ if [ -d ~/opt/MATLAB ]; then
     path=($path ~/opt/MATLAB/*/bin)
 fi
 
+typeset -T PYTHONPATH pythonpath
+typeset -U pythonpath
+
+pythonpath=($pythonpath ~/dotfiles/py)
+
 export EDITOR=vim
 
 # fzf
