@@ -1,5 +1,6 @@
 # ktaha's zshenv
 
+## PATH
 typeset -U path
 path=($path ~/dotfiles/scripts)
 
@@ -14,10 +15,11 @@ if [ -d ~/opt/MATLAB ]; then
     path=($path ~/opt/MATLAB/*/bin)
 fi
 
+## PYTHONPATH
 typeset -T PYTHONPATH pythonpath
 typeset -U pythonpath
-
 pythonpath=($pythonpath ~/dotfiles/py)
+export PYTHONPATH
 
 export EDITOR=vim
 
