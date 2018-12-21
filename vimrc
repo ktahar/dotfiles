@@ -6,66 +6,6 @@ endif
 
 let s:is_win = has('win32') || has('win64')
 
-""" Vundle {{{
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-if s:is_win
-    set rtp+=~/vimfiles/bundle/Vundle.vim
-    call vundle#begin('$USERPROFILE/vimfiles/bundle/')
-else
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-endif
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" Completion
-Plugin 'Valloric/YouCompleteMe'
-"Plugin 'davidhalter/jedi-vim'
-
-" Fuzzy finder
-Plugin 'junegunn/fzf.vim'
-"Plugin 'ctrlpvim/ctrlp.vim'
-
-" Markdown
-Plugin 'previm/previm'
-Plugin 'tyru/open-browser.vim'
-"Plugin 'godlygeek/tabular'
-"Plugin 'plasticboy/vim-markdown'
-"Plugin 'mzlogin/vim-markdown-toc'
-
-" Snippets
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-
-" Other Utils
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-obsession'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'ryanoasis/vim-devicons'
-"Plugin 'itchyny/lightline.vim'
-"Plugin 'thinca/vim-quickrun'
-
-" On windows I use gVim.
-if s:is_win
-    Plugin 'thinca/vim-fontzoom'
-    " Color scheme
-    Plugin 'nanotech/jellybeans.vim'
-endif
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-"""}}}
-
 """ Basic settings {{{
 
 """ important

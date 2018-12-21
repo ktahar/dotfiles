@@ -1,0 +1,42 @@
+[submodule "vim/pack/my/start/fzf.vim"]
+	path = vim/pack/my/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "vim/pack/my/start/previm"]
+	path = vim/pack/my/start/previm
+	url = https://github.com/previm/previm
+[submodule "vim/pack/my/start/open-browser.vim"]
+	path = vim/pack/my/start/open-browser.vim
+	url = https://github.com/tyru/open-browser.vim
+[submodule "vim/pack/my/start/vim-addon-mw-utils"]
+	path = vim/pack/my/start/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils
+[submodule "vim/pack/my/start/tlib_vim"]
+	path = vim/pack/my/start/tlib_vim
+	url = https://github.com/tomtom/tlib_vim
+[submodule "vim/pack/my/start/vim-snipmate"]
+	path = vim/pack/my/start/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate
+[submodule "vim/pack/my/start/vim-snippets"]
+	path = vim/pack/my/start/vim-snippets
+	url = https://github.com/honza/vim-snippets
+[submodule "vim/pack/my/start/vim-surround"]
+	path = vim/pack/my/start/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "vim/pack/my/start/vim-obsession"]
+	path = vim/pack/my/start/vim-obsession
+	url = https://github.com/tpope/vim-obsession
+[submodule "vim/pack/my/start/nerdcommenter"]
+	path = vim/pack/my/start/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter
+[submodule "vim/pack/my/start/nerdtree"]
+	path = vim/pack/my/start/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "vim/pack/my/start/tagbar"]
+	path = vim/pack/my/start/tagbar
+	url = https://github.com/majutsushi/tagbar
+[submodule "vim/pack/my/start/editorconfig-vim"]
+	path = vim/pack/my/start/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim
+[submodule "vim/pack/my/start/vim-devicons"]
+	path = vim/pack/my/start/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons

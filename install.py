@@ -308,6 +308,7 @@ def main_posix():
             (r".vim/after", r"vim/after"),
             (r".vim/plugin", r"vim/plugin"),
             (r".vim/indent", r"vim/indent"),
+            (r".vim/pack", r"vim/pack"),
             (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
             ]
 
