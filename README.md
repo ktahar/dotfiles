@@ -17,9 +17,9 @@ except for things that strongly depends on environment.
 Using git submodule to get apps/plugins from github.
 See following directories.
 
-* apps: applications, vim and fzf.
-* vim/pack: plugins for vim.
-* tmux/plugins: plugins for tmux.
+* [apps](apps): applications, vim and fzf.
+* [vim/pack](vim/pack): plugins for vim.
+* [tmux/plugins](tmux/plugins): plugins for tmux.
 
 ### Commands for submodule manipulation
 To sync with submodules:
@@ -36,14 +36,15 @@ cd ~/dotfiles/ && git submodule foreach git pull origin master
 
 See following scripts as well.
 
-* add\_vimpack.zsh
-* rm\_vimpack.zsh
-* upgrade\_submodule.zsh
+* [add\_vimpack.zsh](add\_vimpack.zsh)
+* [rm\_vimpack.zsh](rm\_vimpack.zsh)
+* [upgrade\_submodule.zsh](upgrade\_submodule.zsh)
 
-## GNOME
-For linux desktop (GNOME), see gnome directory.
+## Environment Specific
+### GNOME
+For linux desktop (GNOME), see [gnome](gnome) directory.
 
-### TopIcons Redux extension
+#### Extension: TopIcons Redux
 Visit [here](https://extensions.gnome.org/extension/1497/topicons-redux/) and
 download proper version.
 Import (downloaded zip file) from Tweak Tool's Extensions menu.
@@ -54,8 +55,8 @@ To check gnome shell version:
 gnome-shell --version
 ```
 
-## Windows
-For windows, see windows directory.
+### Windows
+For windows, see [windows](windows) directory.
 
-### TeraTerm
+#### TeraTerm
 Copy TERATERM.INI to TeraTerm's directory or just load settings from TeraTerm.
