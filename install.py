@@ -184,7 +184,7 @@ def main_windows(args):
         if not prompt('Install anyway?', 'n'):
             return
 
-    dirs = [r"vimfiles", r".config\matplotlib", r".ipython\profile_default\startup"]
+    dirs = [r".config\matplotlib", r".ipython\profile_default\startup"]
 
     for d in dirs:
         dn = os.path.join(home, d)
@@ -200,11 +200,7 @@ def main_windows(args):
             (r".latexmkrc", r"latexmkrc"),
             (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
             (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
-            (r"vimfiles\skeleton.py", r"vim\skeleton.py"),
-            (r"vimfiles\after", r"vim\after"),
-            (r"vimfiles\plugin", r"vim\plugin"),
-            (r"vimfiles\indent", r"vim\indent"),
-            (r"vimfiles\pack", r"vim\pack"),
+            (r"vimfiles", r"vim"),
             ]
 
     for f in files:
@@ -239,7 +235,7 @@ def main_windows(args):
 def main_posix(args):
     home = os.environ.get('HOME')
 
-    dirs = [r".vim", r".tmux", r".config/matplotlib",
+    dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r"tmp",
             r".config/gtk-3.0"]
 
@@ -251,10 +247,12 @@ def main_posix(args):
             print("[INFO] already exists: %s" % dn)
         else:
             os.makedirs(dn)
-            print("created dir %s" % dn)
+            printc("created dir %s" % dn, 'g')
 
-    files = [(r".vimrc", r"vimrc"),
+    files = [
+            (r".vimrc", r"vimrc"),
             (r".gvimrc", r"gvimrc"),
+            (r".vim", r"vim"),
             (r".ideavimrc", r"ideavimrc"),
             (r".tmux.conf", r"tmux.conf"),
             (r".tmux/plugins", r"tmux/plugins"),
@@ -265,11 +263,6 @@ def main_posix(args):
             (r".latexmkrc", r"latexmkrc"),
             (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
             (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
-            (r".vim/skeleton.py", r"vim/skeleton.py"),
-            (r".vim/after", r"vim/after"),
-            (r".vim/plugin", r"vim/plugin"),
-            (r".vim/indent", r"vim/indent"),
-            (r".vim/pack", r"vim/pack"),
             (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
             ]
 
@@ -282,7 +275,7 @@ def main_posix(args):
             print("[INFO] already exists: %s" % ln)
         else:
             os.symlink(tgt, ln)
-            print("created sym link %s" % ln)
+            printc("created sym link %s" % ln, 'g')
 
     # additional things
     printc('[vimrc local]', 'b')
@@ -294,10 +287,10 @@ def main_posix(args):
     printc('[pip packages]', 'b')
     install_pip_packages(args.upgrade)
 
-    printc('[apps]', 'b')
-    setup_apps()
     printc('[shell]', 'b')
     setup_shell()
+    printc('[apps]', 'b')
+    setup_apps()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
