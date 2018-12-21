@@ -1,8 +1,44 @@
 # dotfiles
 just for me 😉
 
+## Install
+
+```bash
+cd ~
+git clone --recursive https://ksktahara@github.com/ksktahara/dotfiles
+cd dotfiles/
+./install.py
+```
+
 The install.py will do setups,
 except for things that strongly depends on environment.
+
+## Submodule
+Using git submodule to get apps/plugins from github.
+See following directories.
+
+* apps: applications, vim and fzf.
+* vim/pack: plugins for vim.
+* tmux/plugins: plugins for tmux.
+
+### Commands for submodule manipulation
+To sync with submodules:
+
+```bash
+cd ~/dotfiles/ && git submodule update -i
+```
+
+To upgrade submodules:
+
+```bash
+cd ~/dotfiles/ && git submodule foreach git pull origin master
+```
+
+See following scripts as well.
+
+* add\_vimpack.zsh
+* rm\_vimpack.zsh
+* upgrade\_submodule.zsh
 
 ## GNOME
 For linux desktop (GNOME), see gnome directory.
