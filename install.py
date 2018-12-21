@@ -39,25 +39,7 @@ def copy_vimrc_local():
         print("Made file ~/dotfiles/vimrc.local.")
         print("[WARN] Don't forget to edit this later.")
 
-def install_from_github():
-    update = prompt('Programs from github. Update (Y) or just Install missing (N)')
-    git_repos = [
-            ("https://github.com/tmux-plugins/tmux-resurrect",
-                ".tmux/plugins/tmux-resurrect"),
-            ("https://github.com/junegunn/fzf.git", ".fzf"),
-            ("https://github.com/vim/vim.git", "dotfiles/vim-build"),
-        ]
-
-    for repo, path in git_repos:
-        path = os.path.join(home, path)
-        if os.path.exists(path):
-            if not update:
-                print(r"[INFO] already exists: %s" % path)
-            else:
-                subprocess.run(['git', 'pull'], cwd=path)
-        else:
-            subprocess.run(['git', 'clone', '--depth', '1', repo, path])
-
+def setup_apps():
     fzf_install = [os.path.join(home, '.fzf/install'),
             '--key-bindings',
             '--completion',
@@ -65,7 +47,7 @@ def install_from_github():
             '--no-bash']
     subprocess.run(fzf_install)
 
-    if prompt('build vim?'):
+    if prompt('Build Vim?'):
         vim_conf = ['./configure',
                 '--prefix={}/.local'.format(home),
                 '--with-features=huge',
@@ -73,9 +55,9 @@ def install_from_github():
                 '--enable-fail-if-missing',
                 ]
         subprocess.run(vim_conf,
-                cwd=os.path.join(home, "dotfiles/vim-build/src"))
+                cwd=os.path.join(home, "dotfiles/apps/vim/src"))
         subprocess.run(["make", "install"],
-                cwd=os.path.join(home, "dotfiles/vim-build/src"))
+                cwd=os.path.join(home, "dotfiles/apps/vim/src"))
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -259,7 +241,7 @@ def main_windows():
 def main_posix():
     home = os.environ.get('HOME')
 
-    dirs = [r".vim", r".config/matplotlib",
+    dirs = [r".vim", r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r"tmp",
             r".config/gtk-3.0"]
 
@@ -276,6 +258,8 @@ def main_posix():
             (r".gvimrc", r"gvimrc"),
             (r".ideavimrc", r"ideavimrc"),
             (r".tmux.conf", r"tmux.conf"),
+            (r".tmux/plugins", r"tmux/plugins"),
+            (r".fzf", r"apps/fzf"),
             (r".ctags", r"ctags"),
             (r".gitignore_global", r"gitignore_global"),
             (r".agignore", r"agignore"),
@@ -304,9 +288,10 @@ def main_posix():
     copy_vimrc_local()
     set_git_global_config()
     install_apt_packages()
-    install_from_github()
 
+    setup_apps()
     setup_shell()
+
     if prompt('clean apt packages and install (upgrade) pip packages?'):
         remove_apt_py_packages()
         install_pip_packages()

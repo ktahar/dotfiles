@@ -52,3 +52,12 @@
 [submodule "vim/pack/my/start/asyncomplete-lsp.vim"]
 	path = vim/pack/my/start/asyncomplete-lsp.vim
 	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
+[submodule "apps/vim"]
+	path = apps/vim
+	url = https://github.com/vim/vim
+[submodule "tmux/plugins/tmux-resurrect"]
+	path = tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect
+[submodule "apps/fzf"]
+	path = apps/fzf
+	url = https://github.com/junegunn/fzf
