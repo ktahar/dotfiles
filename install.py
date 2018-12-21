@@ -51,6 +51,7 @@ def setup_apps():
         vim_conf = ['./configure',
                 '--prefix={}/.local'.format(home),
                 '--with-features=huge',
+                '--enable-gui=no',
                 '--enable-python3interp',
                 '--enable-fail-if-missing',
                 ]
