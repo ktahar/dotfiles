@@ -183,6 +183,9 @@ alias gil='git log'
 alias gig='git graph'
 alias t='tmux'
 alias tk='tmux kill-server'
+alias ipy='ipython3'
+alias ipy3='ipython3'
+alias ipy2='ipython2'
 
 # Plugins & Extensions
 ## zsh-syntax-highlighting
