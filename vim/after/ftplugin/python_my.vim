@@ -7,7 +7,6 @@ setl fileencoding=utf-8
 setl foldmethod=indent
 
 " setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-" setl omnifunc=jedi#completions "this is done automatically
 
 " Execute current file (python3 -> python): <Leader>e
 function! s:ExecPy()
