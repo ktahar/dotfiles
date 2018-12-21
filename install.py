@@ -51,6 +51,7 @@ def install_from_github(posix):
             ("https://github.com/tmux-plugins/tmux-resurrect",
             ".tmux/plugins/tmux-resurrect"),
             ("https://github.com/junegunn/fzf.git", ".fzf"),
+            ("https://github.com/vim/vim.git", "dotfiles/vim-build"),
             ])
 
     for repo, path in git_repos:
@@ -70,6 +71,18 @@ def install_from_github(posix):
                 '--no-update-rc',
                 '--no-bash']
         subprocess.run(fzf_install)
+
+        if prompt('build vim?'):
+            vim_conf = ['./configure',
+                    '--prefix={}/.local'.format(home),
+                    '--with-features=huge',
+                    '--enable-python3interp',
+                    '--enable-fail-if-missing',
+                    ]
+            subprocess.run(vim_conf,
+                    cwd=os.path.join(home, "dotfiles/vim-build/src"))
+            subprocess.run(["make", "install"],
+                    cwd=os.path.join(home, "dotfiles/vim-build/src"))
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -140,8 +153,13 @@ def install_apt_packages():
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
-            # to build YouCompleteMe
+            # Build things
+            "build-essential",
+            # YouCompleteMe
             "build-essential", "cmake", "python3-dev",
+            # vim
+            "git", "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
+            # "python3-dev", # to enable python3 interpreter in vim.
             ]
 
     subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
@@ -305,10 +323,11 @@ def main_posix():
 
     # additional things
     copy_vimrc_local()
-    install_from_github(True)
     set_git_global_config()
-    setup_shell()
     install_apt_packages()
+    install_from_github(True)
+
+    setup_shell()
     if prompt('clean apt packages and install (upgrade) pip packages?'):
         remove_apt_py_packages()
         install_pip_packages()
