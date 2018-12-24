@@ -1,5 +1,4 @@
 vimrc.local
-vim-build
 __pycache__
 *.pyc
 *~
