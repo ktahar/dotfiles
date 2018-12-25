@@ -6,6 +6,8 @@ let b:did_ftplugin_python_my = 1
 setl fileencoding=utf-8
 setl foldmethod=indent
 
+" LSP mappings
+nnoremap <Leader>d :<C-u>LspDefinition<CR>
 " setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 " Execute current file (python3 -> python): <Leader>e
