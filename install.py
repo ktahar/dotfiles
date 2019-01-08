@@ -118,7 +118,8 @@ def install_apt_packages(upgrade):
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree",
             "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "exuberant-ctags", "global", "ttf-mscorefonts-installer",
+            "exuberant-ctags", "global", "pandoc",
+            "ttf-mscorefonts-installer",
             # python libs
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
@@ -160,6 +161,7 @@ def install_pip_packages(upgrade):
     pkgs_2 = []
     pkgs_3 = ["rospkg",
             "python-language-server", # to use pyls from vim-lsp.
+            "panflute",
             ]
 
     subprocess.run(['pip2'] + opts + pkgs + pkgs_2)
