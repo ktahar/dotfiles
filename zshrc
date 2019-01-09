@@ -166,6 +166,7 @@ chpwd () {
     ls --color=auto -BC;
 }
 
+alias q='exit'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls -BC'
