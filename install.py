@@ -111,8 +111,9 @@ def set_git_global_config():
         subprocess.run(['git', 'config', '--global', k, v])
 
 def install_apt_packages(upgrade):
+    subprocess.run(['sudo', '-E', 'apt', 'update'])
+
     if upgrade:
-        subprocess.run(['sudo', '-E', 'apt', 'update'])
         subprocess.run(['sudo', '-E', 'apt', 'upgrade'])
 
     pkgs = [
