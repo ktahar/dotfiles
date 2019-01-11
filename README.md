@@ -36,9 +36,10 @@ cd ~/dotfiles/ && git submodule foreach git pull origin master
 
 See following scripts as well.
 
-* [add\_vimpack.zsh](add\_vimpack.zsh)
-* [rm\_vimpack.zsh](rm\_vimpack.zsh)
-* [upgrade\_submodule.zsh](upgrade\_submodule.zsh)
+* [submod/update.zsh](submod/update.zsh)
+* [submod/upgrade.zsh](submod/upgrade.zsh)
+* [submod/add\_vimpack.zsh](submod/add\_vimpack.zsh)
+* [submod/rm\_vimpack.zsh](submod/rm\_vimpack.zsh)
 
 ## Environment Specific
 ### GNOME
