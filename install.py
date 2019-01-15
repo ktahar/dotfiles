@@ -151,6 +151,13 @@ def install_pip_packages(upgrade):
 
     """
 
+    # upgrade pip first
+    subprocess.run(['pip2', 'install', '--user', '-U', 'pip'])
+    subprocess.run(['pip3', 'install', '--user', '-U', 'pip'])
+
+    # use pip at ~/.local/bin
+    local_bin = os.path.join(home, '.local', 'bin')
+
     opts = ['install', '--user']
     if upgrade:
         opts.append('-U')
@@ -160,13 +167,13 @@ def install_pip_packages(upgrade):
             "scipy", "pandas", "ipython",
             ]
     pkgs_2 = []
-    pkgs_3 = ["rospkg",
-            "python-language-server", # to use pyls from vim-lsp.
+    pkgs_3 = ["python-language-server", # to use pyls from vim-lsp.
+            "rospkg",
             "panflute",
             ]
 
-    subprocess.run(['pip2'] + opts + pkgs + pkgs_2)
-    subprocess.run(['pip3'] + opts + pkgs + pkgs_3)
+    subprocess.run([os.path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
+    subprocess.run([os.path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
 
 def main_windows(args):
     """make directories and symbolic links for windows.
@@ -297,7 +304,7 @@ def main_posix(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
-    parser.add_argument('-u', '--upgrade', action='store_true',
+    parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
 
     return parser.parse_args()

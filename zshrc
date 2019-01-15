@@ -166,7 +166,6 @@ chpwd () {
     ls --color=auto -BC;
 }
 
-alias q='exit'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls -BC'
@@ -183,7 +182,9 @@ alias gic='git commit'
 alias gil='git log'
 alias gig='git graph'
 alias t='tmux'
+alias q='exit'
 alias tk='tmux kill-server'
+alias qa='tmux kill-server'
 alias ipy='ipython3'
 alias ipy3='ipython3'
 alias ipy2='ipython2'
