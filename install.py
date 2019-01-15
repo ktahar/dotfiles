@@ -122,6 +122,7 @@ def install_apt_packages(upgrade):
             "exuberant-ctags", "global", "pandoc", "unison",
             "ttf-mscorefonts-installer",
             # python libs
+            "python-dev", "python3-dev",
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
@@ -129,7 +130,6 @@ def install_apt_packages(upgrade):
             "build-essential", "cmake",
             # deps to build vim
             "git", "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
-            "python3-dev", # to enable python3 interpreter in vim.
             "clang-tools-6.0", # to use clangd-6.0 from vim-lsp.
             ]
 
