@@ -151,12 +151,16 @@ def install_pip_packages(upgrade):
 
     """
 
-    # upgrade pip first
-    subprocess.run(['pip2', 'install', '--user', '-U', 'pip'])
-    subprocess.run(['pip3', 'install', '--user', '-U', 'pip'])
-
-    # use pip at ~/.local/bin
+    # prefer pip at ~/.local/bin
     local_bin = os.path.join(home, '.local', 'bin')
+
+    # install/upgrade pip first
+    for pip in ('pip2', 'pip3'):
+        local_pip = os.path.join(local_bin, pip)
+        if os.path.exists(local_pip):
+            subprocess.run([local_pip, 'install', '--user', '-U', 'pip'])
+        else:
+            subprocess.run([pip, 'install', '--user', '-U', 'pip'])
 
     opts = ['install', '--user']
     if upgrade:
