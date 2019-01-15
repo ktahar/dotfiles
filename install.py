@@ -292,10 +292,12 @@ def main_posix(args):
     copy_vimrc_local()
     printc('[git global config]', 'b')
     set_git_global_config()
-    printc('[apt packages]', 'b')
-    install_apt_packages(args.upgrade)
-    printc('[pip packages]', 'b')
-    install_pip_packages(args.upgrade)
+    if not args.no_apt:
+        printc('[apt packages]', 'b')
+        install_apt_packages(args.upgrade)
+    if not args.no_pip:
+        printc('[pip packages]', 'b')
+        install_pip_packages(args.upgrade)
 
     printc('[shell]', 'b')
     setup_shell()
@@ -306,6 +308,10 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
+    parser.add_argument('-A', '--no-apt', action='store_true',
+            help='Skip installing apt packages.')
+    parser.add_argument('-P', '--no-pip', action='store_true',
+            help='Skip installing pip packages.')
 
     return parser.parse_args()
 
