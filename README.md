@@ -34,12 +34,7 @@ To upgrade submodules:
 cd ~/dotfiles/ && git submodule foreach git pull origin master
 ```
 
-See following scripts as well.
-
-* [submod/update.zsh](submod/update.zsh)
-* [submod/upgrade.zsh](submod/upgrade.zsh)
-* [submod/add\_vimpack.zsh](submod/add\_vimpack.zsh)
-* [submod/rm\_vimpack.zsh](submod/rm\_vimpack.zsh)
+See scripts in [submod](submod) for shortcuts.
 
 ## Environment Specific
 ### GNOME
