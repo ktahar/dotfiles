@@ -1,6 +1,9 @@
-vimrc.local
-__pycache__
-*.pyc
 *~
 *.swp
+__pycache__
+*.pyc
+
+vimrc.local
+vim/.netrwhist
+
 !/.editorconfig
