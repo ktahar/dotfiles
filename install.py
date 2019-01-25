@@ -117,7 +117,7 @@ def install_apt_packages(upgrade):
         subprocess.run(['sudo', '-E', 'apt', 'upgrade'])
 
     pkgs = [
-            "ncurses-term", "silversearcher-ag", "htop", "tree",
+            "ncurses-term", "silversearcher-ag", "htop", "tree", "curl",
             "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer",
