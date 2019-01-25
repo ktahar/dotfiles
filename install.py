@@ -119,7 +119,7 @@ def install_apt_packages(upgrade):
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree",
             "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "exuberant-ctags", "global", "pandoc", "unison",
+            "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer",
             # python libs
             "python-dev", "python3-dev",
