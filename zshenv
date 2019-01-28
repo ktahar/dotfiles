@@ -1,19 +1,27 @@
 # ktaha's zshenv
 
+## GOPATH
+if [ -d ~/go ]; then
+    export GOPATH=~/go
+fi
+
 ## PATH
 typeset -U path
-path=($path ~/dotfiles/scripts)
+## dirs to put at head.
+directories=(/usr/local/go/bin ~/bin ~/.local/bin)
+for dir in $directories; do
+    if [ -d $dir ]; then
+        path=($dir $path)
+    fi
+done
 
-if [ -d ~/bin ]; then
-    path=(~/bin $path)
-fi
-if [ -d ~/.local/bin ]; then
-    path=(~/.local/bin $path)
-fi
-
-if [ -d ~/opt/MATLAB ]; then
-    path=($path ~/opt/MATLAB/*/bin)
-fi
+## dirs to put at tail.
+directories=($GOPATH/bin ~/dotfiles/scripts ~/opt/node/bin ~/opt/matlab/bin)
+for dir in $directories; do
+    if [ -d $dir ]; then
+        path=($path $dir)
+    fi
+done
 
 ## PYTHONPATH
 typeset -T PYTHONPATH pythonpath
