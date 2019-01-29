@@ -40,13 +40,6 @@ See scripts in [submod](submod) for shortcuts.
 ### Linux (GNOME)
 For linux desktop (GNOME), see [gnome](gnome) directory.
 
-#### Caps to Ctrl
-For Debian or Ubuntu, `svim /etc/default/keyboard` and add / modify following:
-
-```
-XKBOPTIONS=ctrl:nocaps
-```
-
 #### Extension: TopIcons Redux
 Visit [here](https://extensions.gnome.org/extension/1497/topicons-redux/) and
 download proper version.

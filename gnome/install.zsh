@@ -8,6 +8,15 @@ if [ $(lsb_release -cs) = 'bionic' ]; then
     sudo -E apt install vanilla-gnome-desktop
 fi
 
+# caps to ctrl.
+grep "ctrl:nocaps" /etc/default/keyboard > /dev/null
+if [ $? = 0 ]; then
+    echo "Caps to Ctrl is already done."
+else
+    sudo su -c "sed -iE 's/^XKBOPTIONS/#XKBOPTIONS/' /etc/default/keyboard"
+    sudo su -c "echo XKBOPTIONS=ctrl:nocaps >> /etc/default/keyboard"
+fi
+
 # install Cica font.
 fc-list | grep Cica > /dev/null
 if [ $? = 0 ]; then
