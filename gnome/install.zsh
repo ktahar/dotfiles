@@ -8,6 +8,25 @@ if [ $(lsb_release -cs) = 'bionic' ]; then
     sudo -E apt install vanilla-gnome-desktop
 fi
 
+# install Cica font.
+fc-list | grep Cica > /dev/null
+if [ $? = 0 ]; then
+    echo "Cica font is already installed."
+else
+    local cica_v=v4.1.1
+    local cica_fn=Cica-${cica_v}.zip
+    local cica_dir=Cica-${cica_v}
+
+    echo "Download and install Cica ${cica_v}..."
+
+    curl -SL https://github.com/miiton/Cica/releases/download/${cica_v}/${cica_fn} -o ${cica_fn}
+    unzip ${cica_fn} -d ${cica_dir}
+    mkdir -p ~/.local/share/fonts
+    mv ${cica_dir}/Cica*.ttf ~/.local/share/fonts/
+    fc-cache -fv
+    rm -r ${cica_fn} ${cica_dir}
+fi
+
 # Set launcher icon.
 local target=${HOME}/.local/share/applications/matlab.desktop
 local matlabs=(${HOME}/opt/MATLAB/*)
