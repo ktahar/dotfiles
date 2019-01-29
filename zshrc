@@ -188,6 +188,7 @@ alias qa='tmux kill-server'
 alias ipy='ipython3'
 alias ipy3='ipython3'
 alias ipy2='ipython2'
+alias svim='sudo vim --noplugin'
 
 # Plugins & Extensions
 ## zsh-syntax-highlighting
