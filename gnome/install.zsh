@@ -38,19 +38,10 @@ fi
 
 # Set launcher icon.
 local target=${HOME}/.local/share/applications/matlab.desktop
-local matlabs=(${HOME}/opt/MATLAB/*)
-if [ $? = 0 ]; then
-    if [ $#matlabs = 1 ]; then
-        echo $matlabs[1]
-        local p=${matlabs[1]}
-    else
-        echo $matlabs
-        read version\?"select version (like R2018b):"
-        local p=${HOME}/opt/MATLAB/${version}
-        echo $p
-    fi
-    sed "s@<PATH>@${p}@g" matlab.desktop > $target
+local matlab=${HOME}/opt/matlab
+if [ -d ${matlab} ]; then
+    sed "s@<HOME>@${HOME}@g" matlab.desktop > $target
     chmod u+x $target
 else
-    echo "no MATLAB found"
+    echo "no MATLAB directory (${matlab}) found"
 fi

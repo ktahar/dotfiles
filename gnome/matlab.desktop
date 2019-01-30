@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=MATLAB
-Exec=<PATH>/bin/glnxa64/MATLAB -desktop
+Exec=<HOME>/opt/matlab/bin/glnxa64/MATLAB -desktop
 Terminal=false
 Categories=Control;MATLAB;
