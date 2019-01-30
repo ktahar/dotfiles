@@ -189,6 +189,8 @@ alias ipy='ipython3'
 alias ipy3='ipython3'
 alias ipy2='ipython2'
 alias svim='sudo vim --noplugin'
+alias docker_rm_all='docker rm -f $(docker ps -aq)'
+alias docker_rmi_all='docker rmi -f $(docker images -q)'
 
 # Plugins & Extensions
 ## zsh-syntax-highlighting
