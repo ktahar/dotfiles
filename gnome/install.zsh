@@ -1,16 +1,26 @@
 #!/bin/zsh
 
+# gnome-settings
+gsettings set org.gnome.desktop.interface enable-animations false
+gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+
 # install language support.
-sudo -E apt install $(check-language-support)
+local langsup=$(check-language-support)
+if [ -n "$langsp" ]; then
+    sudo -E apt install $langsp
+fi
 
 # install vanilla gnome. (For Ubuntu 18.04 (bionic))
 if [ $(lsb_release -cs) = 'bionic' ]; then
-    sudo -E apt install vanilla-gnome-desktop
+    dpkg-query -W vanilla-gnome-desktop > /dev/null
+    if [ "$?" != 0 ]; then
+        sudo -E apt install vanilla-gnome-desktop
+    fi
 fi
 
 # caps to ctrl.
 grep "ctrl:nocaps" /etc/default/keyboard > /dev/null
-if [ $? = 0 ]; then
+if [ "$?" = 0 ]; then
     echo "Caps to Ctrl is already done."
 else
     sudo su -c "sed -iE 's/^XKBOPTIONS/#XKBOPTIONS/' /etc/default/keyboard"
@@ -19,7 +29,7 @@ fi
 
 # install Cica font.
 fc-list | grep Cica > /dev/null
-if [ $? = 0 ]; then
+if [ "$?" = 0 ]; then
     echo "Cica font is already installed."
 else
     local cica_v=v4.1.1
