@@ -121,6 +121,9 @@ def install_apt_packages(upgrade):
             "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer",
+            # I personally use vim built from source instead of this one.
+            # But install apt-pack vim here for root or other users.
+            "vim",
             # python libs
             "python-dev", "python3-dev",
             "python-pip", "python3-pip",
