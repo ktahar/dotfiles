@@ -18,12 +18,18 @@
 # this program; if not, write to the Free Software Foundation, Inc., 51 Franklin
 # Street, Fifth Floor, Boston, MA  02110-1301, USA
 
+# modified by Kosuke Tahara in 2019
+# + use ewmh to get focus of Evince when performing forward search.
+
 from gi.repository import GLib, Gio
 import dbus
 import argparse
 import pathlib
 import traceback
 import urllib.parse
+
+import ewmh
+wm = ewmh.EWMH()
 
 class EvinceForwardSearch:
     def parse_args(self):
@@ -32,6 +38,24 @@ class EvinceForwardSearch:
         parser.add_argument('line', nargs=1, type=int, help='Line')
         parser.add_argument('tex', nargs=1, help='TeX file')
         return parser.parse_args()
+
+    def get_window(self, name):
+        for win in wm.getClientList():
+            if win.get_wm_name() == name:
+                return win
+        return None
+
+    def show(self, name):
+        active_win = wm.getActiveWindow()
+        evince_win = self.get_window(name)
+
+        if evince_win is None:
+            return
+
+        wm.setActiveWindow(evince_win)
+        wm.display.flush()
+        wm.setActiveWindow(active_win)
+        wm.display.flush()
 
     def run(self):
         args = self.parse_args()
@@ -46,6 +70,9 @@ class EvinceForwardSearch:
             dbus_name = dbus_name.unpack()[0]
             window = Gio.DBusProxy.new_sync(bus, 0, None, dbus_name, '/org/gnome/evince/Window/0', 'org.gnome.evince.Window', None)
             window.call_sync('SyncView', GLib.Variant('(s(ii)u)', (tex, (line, 1), 0)), Gio.DBusSignalFlags.NONE, -1, None)
+
+            self.show(args.pdf[0])
+
         except Exception:
             traceback.print_exc()
 

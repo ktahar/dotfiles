@@ -10,7 +10,6 @@ if os.name == 'nt':
     home = os.environ.get('USERPROFILE')
 else:
     home = os.environ.get('HOME')
-
 p = os.path.join(home, 'dotfiles', 'py')
 if p not in sys.path:
     sys.path.append(p)
@@ -177,6 +176,7 @@ def install_pip_packages(upgrade):
     pkgs_3 = ["python-language-server", # to use pyls from vim-lsp.
             "rospkg",
             "panflute",
+            "ewmh", # for window focus control in fwdevince
             ]
 
     subprocess.run([os.path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
