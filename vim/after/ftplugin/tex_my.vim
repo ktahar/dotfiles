@@ -7,6 +7,9 @@ setl fileencoding=utf-8
 setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 setl iskeyword+=:
 
+" mathzone align from amsmath.sty.
+call TexNewMathZone("N", "align", 0)
+
 " Script below from TeXWiki/Vim/tex.vim.
 " Modified to use local variables, mappings and command definitions.
 
