@@ -44,6 +44,19 @@ def copy_vimrc_local():
         print("Made file ~/dotfiles/vimrc.local.")
 
 def setup_apps():
+    """setup applications.
+
+    [vim]
+    On linux desktop, option +clipboard (+X11) turns on with configure --with-features=huge.
+    However, configuration of X fails sometimes (which result in -clipboard (-X11)).
+    Maybe Ubuntu 18's Wayland-or-X things are problematic.
+    Proper build is confirmed after installing vanilla-gnome-desktop and logged in with 'GNOME on Xorg'.
+    When you changed X config / situations,
+    try following to remove config cache (vim/src/auto/config.cache) and then configure & make again.
+    cd ~/dotfiles/apps/vim/src && make distclean
+
+    """
+
     fzf_install = [os.path.join(home, '.fzf/install'),
             '--key-bindings',
             '--completion',
@@ -56,6 +69,7 @@ def setup_apps():
                 '--prefix={}/.local'.format(home),
                 '--with-features=huge',
                 '--enable-gui=no',
+                #  '--with-x=yes', # enabled implicitly.
                 '--enable-python3interp',
                 '--enable-fail-if-missing',
                 ]
