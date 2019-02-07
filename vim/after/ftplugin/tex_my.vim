@@ -262,7 +262,7 @@ function! s:PdfLaTeX(type)
   return ''
 endfunction
 
-function! s:Latexmk(type, silent)
+function! s:Latexmk(type, silent, clean)
   if &ft != 'tex'
     echo "calling Latexmk from a non-tex file"
     return ''
@@ -273,11 +273,17 @@ function! s:Latexmk(type, silent)
   let masterDir = expand("%:p:h")
   let masterTeXFile = s:master
   let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
-  if a:type == 'default'
-    let latexmk = 'latexmk -gg' . ' "' . masterTeXFile . '"'
-  elseif a:type == 'xelatex'
-    let latexmk = 'latexmk -gg -xelatex' . ' "' . masterTeXFile . '"'
+
+  let l:opts = ''
+  if a:type == 'xelatex'
+      let l:opts = l:opts . ' -xelatex'
   endif
+
+  if a:clean
+      let l:opts = l:opts . ' -gg'
+  endif
+
+  let latexmk = 'latexmk' . l:opts . ' "' . masterTeXFile . '"'
 
   if has('win32') || has('win64')
     if s:viewer == 'acroread'
@@ -565,10 +571,10 @@ command! -nargs=1 -buffer Typeset :call <SID>SetTypeset(<f-args>)
 command! -nargs=1 -buffer Viewer :call <SID>SetViewer(<f-args>)
 command! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
-nnoremap <expr><silent><buffer> <Leader>e <SID>Latexmk('default', 1)
-nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('default', 0)
-nnoremap <expr><silent><buffer> <Leader>x <SID>Latexmk('xelatex', 1)
-nnoremap <expr><silent><buffer> <Leader>X <SID>Latexmk('xelatex', 0)
+nnoremap <expr><silent><buffer> <Leader>e <SID>Latexmk('default', 1, 0)
+nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('default', 0, 1)
+nnoremap <expr><silent><buffer> <Leader>x <SID>Latexmk('xelatex', 1, 0)
+nnoremap <expr><silent><buffer> <Leader>X <SID>Latexmk('xelatex', 0, 1)
 "nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
 nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
 nnoremap <expr><silent><buffer> <Leader>r <SID>SetTeXmasterCurrent()
