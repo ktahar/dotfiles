@@ -275,8 +275,8 @@ function! s:Latexmk(type, silent, clean)
   let masterBaseName = fnamemodify(masterTeXFile, ":t:r")
 
   let l:opts = ''
-  if a:type == 'xelatex'
-      let l:opts = l:opts . ' -xelatex'
+  if a:type == 'pdf'
+      let l:opts = l:opts . ' -pdf'
   endif
 
   if a:clean
@@ -573,8 +573,8 @@ command! -nargs=1 -buffer TeXmaster :call <SID>SetTeXmaster(<f-args>)
 
 nnoremap <expr><silent><buffer> <Leader>e <SID>Latexmk('default', 1, 0)
 nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('default', 0, 1)
-nnoremap <expr><silent><buffer> <Leader>x <SID>Latexmk('xelatex', 1, 0)
-nnoremap <expr><silent><buffer> <Leader>X <SID>Latexmk('xelatex', 0, 1)
+nnoremap <expr><silent><buffer> <Leader>x <SID>Latexmk('pdf', 1, 0)
+nnoremap <expr><silent><buffer> <Leader>X <SID>Latexmk('pdf', 0, 1)
 "nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
 nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
 nnoremap <expr><silent><buffer> <Leader>r <SID>SetTeXmasterCurrent()
