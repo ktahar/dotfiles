@@ -139,6 +139,13 @@ endfunction
 command -nargs=1 GitGrep call s:git_grep(<f-args>)
 nnoremap <Leader>v :<C-u>GitGrep<Space>
 
+function! s:make_ctags()
+    execute 'silent! !ctags -R'
+    redraw!
+endfunction
+command MakeCtags call s:make_ctags()
+nnoremap <Leader>t :<C-u>MakeCtags<CR>
+
 "" grep to quickfix
 autocmd QuickFixCmdPost *grep* cwindow
 
