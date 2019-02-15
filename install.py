@@ -267,6 +267,11 @@ def main_windows(args):
 def main_posix(args):
     home = os.environ.get('HOME')
 
+    if args.apps_only:
+        printc('[apps]', 'b')
+        setup_apps()
+        return
+
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r"tmp",
             r".config/gtk-3.0"]
@@ -334,6 +339,8 @@ def parse_args():
             help='Skip installing apt packages.')
     parser.add_argument('-P', '--no-pip', action='store_true',
             help='Skip installing pip packages.')
+    parser.add_argument('-a', '--apps-only', action='store_true',
+            help='Setup apps only.')
 
     return parser.parse_args()
 
