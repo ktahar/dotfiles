@@ -37,6 +37,8 @@ class EvinceForwardSearch:
         parser.add_argument('pdf', nargs=1, help='PDF file')
         parser.add_argument('line', nargs=1, type=int, help='Line')
         parser.add_argument('tex', nargs=1, help='TeX file')
+        parser.add_argument('-r', '--return-focus',
+                action='store_true', help='Return window focus to caller')
         return parser.parse_args()
 
     def get_window(self, name):
@@ -45,7 +47,7 @@ class EvinceForwardSearch:
                 return win
         return None
 
-    def show(self, name):
+    def show(self, name, return_focus):
         active_win = wm.getActiveWindow()
         evince_win = self.get_window(name)
 
@@ -54,8 +56,10 @@ class EvinceForwardSearch:
 
         wm.setActiveWindow(evince_win)
         wm.display.flush()
-        wm.setActiveWindow(active_win)
-        wm.display.flush()
+
+        if return_focus:
+            wm.setActiveWindow(active_win)
+            wm.display.flush()
 
     def run(self):
         args = self.parse_args()
@@ -71,7 +75,7 @@ class EvinceForwardSearch:
             window = Gio.DBusProxy.new_sync(bus, 0, None, dbus_name, '/org/gnome/evince/Window/0', 'org.gnome.evince.Window', None)
             window.call_sync('SyncView', GLib.Variant('(s(ii)u)', (tex, (line, 1), 0)), Gio.DBusSignalFlags.NONE, -1, None)
 
-            self.show(args.pdf[0])
+            self.show(args.pdf[0], args.return_focus)
 
         except Exception:
             traceback.print_exc()

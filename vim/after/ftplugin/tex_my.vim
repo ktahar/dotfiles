@@ -55,7 +55,7 @@ function! s:TypesetFile()
   return ''
 endfunction
 
-function! s:ViewFile()
+function! s:ViewFile(returnfocus)
   if &ft != 'tex'
     echo "calling TeXworks from a non-tex file"
     return ''
@@ -76,7 +76,7 @@ function! s:ViewFile()
   elseif s:viewer == 'evince'
     call s:Evince()
   elseif s:viewer == 'fwdevince'
-    call s:FwdEvince()
+    call s:FwdEvince(a:returnfocus)
   elseif s:viewer == 'okular'
     call s:Okular()
   elseif s:viewer == 'zathura'
@@ -459,7 +459,7 @@ function! s:Evince()
   return ''
 endfunction
 
-function! s:FwdEvince()
+function! s:FwdEvince(returnfocus)
   if &ft != 'tex'
     echo "calling FwdEvince from a non-tex file"
     return ''
@@ -470,7 +470,12 @@ function! s:FwdEvince()
   let masterTeXFile = s:master
   let masterPDFFile = fnamemodify(masterTeXFile, ":t:r") . '.pdf'
   let viewer = 'fwdevince'
-  let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" ' . line(".") . ' "' . currentTeXFile . '" &'
+  let execString = 'cd ' . masterDir . ' && ' . viewer . ' "' . masterPDFFile . '" ' . line(".") . ' "' . currentTeXFile . '" '
+  if a:returnfocus
+      let execString = execString . '-r '
+  else
+  endif
+  let execString = execString . '&'
 
   execute 'lcd ' . masterDir
   execute 'silent! !' execString
@@ -576,7 +581,8 @@ nnoremap <expr><silent><buffer> <Leader>E <SID>Latexmk('default', 0, 1)
 nnoremap <expr><silent><buffer> <Leader>x <SID>Latexmk('pdf', 1, 0)
 nnoremap <expr><silent><buffer> <Leader>X <SID>Latexmk('pdf', 0, 1)
 "nnoremap <expr><silent><buffer> <Leader>e <SID>TypesetFile()
-nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile()
+nnoremap <expr><silent><buffer> <Leader>c <SID>ViewFile(1)
+nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile(0)
 nnoremap <expr><silent><buffer> <Leader>r <SID>SetTeXmasterCurrent()
 nnoremap <expr><silent><buffer> <Leader>R <SID>EchoTeXmaster()
 
