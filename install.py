@@ -199,11 +199,12 @@ def install_pip_packages(upgrade):
         opts.append('-U')
 
     pkgs = [
-            "pip", "numpy", "matplotlib", "python-dateutil",
+            "pip", "python-dateutil", "numpy", "matplotlib",
             "scipy", "pandas", "ipython",
             ]
     pkgs_2 = []
-    pkgs_3 = ["python-language-server", # to use pyls from vim-lsp.
+    pkgs_3 = [
+            "jedi", "python-language-server", # to use pyls from vim-lsp.
             "rospkg",
             "panflute",
             "ewmh", # for window focus control in fwdevince
