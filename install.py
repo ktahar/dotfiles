@@ -64,12 +64,25 @@ def setup_apps():
             '--no-bash']
     subprocess.run(fzf_install)
 
-    if prompt('Build Vim?'):
+    # check commit hash of HEAD
+    head = os.path.join(home, "dotfiles/apps/vim.HEAD")
+    if os.path.exists(head):
+        with open(head) as f:
+            hlast = f.readline()
+    else:
+        hlast = None
+
+    res = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'],
+            cwd=os.path.join(home, "dotfiles/apps/vim"),
+            stdout=subprocess.PIPE)
+    hnow = res.stdout.decode()
+
+    if hnow != hlast and prompt('Build Vim?'):
         vim_conf = ['./configure',
                 '--prefix={}/.local'.format(home),
                 '--with-features=huge',
                 '--enable-gui=no',
-                #  '--with-x=yes', # enabled implicitly.
+                #  '--with-x=yes', # seems enabled implicitly.
                 '--enable-python3interp',
                 '--enable-fail-if-missing',
                 ]
@@ -77,6 +90,9 @@ def setup_apps():
                 cwd=os.path.join(home, "dotfiles/apps/vim/src"))
         subprocess.run(["make", "install"],
                 cwd=os.path.join(home, "dotfiles/apps/vim/src"))
+
+        with open(head, 'w') as f:
+            f.write(hnow)
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
