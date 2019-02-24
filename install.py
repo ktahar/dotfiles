@@ -282,8 +282,6 @@ def main_windows(args):
     copy_vimrc_local()
 
 def main_posix(args):
-    home = os.environ.get('HOME')
-
     if args.apps_only:
         printc('[apps]', 'b')
         setup_apps()
