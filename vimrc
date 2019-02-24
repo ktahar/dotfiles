@@ -107,10 +107,14 @@ nnoremap <C-p> :<C-u>cp<CR>
 " nnoremap s<C-j> <C-W>J
 " nnoremap s<C-k> <C-W>K
 " nnoremap s<C-l> <C-W>L
-nnoremap <C-w>H 6<C-W><
-nnoremap <C-w>J 3<C-W>+
-nnoremap <C-w>K 3<C-W>-
-nnoremap <C-w>L 6<C-W>>
+nnoremap <C-w><C-h> <C-w>H
+nnoremap <C-w><C-j> <C-w>J
+nnoremap <C-w><C-k> <C-w>K
+nnoremap <C-w><C-l> <C-w>L
+nnoremap <C-w>H 6<C-w><
+nnoremap <C-w>J 3<C-w>+
+nnoremap <C-w>K 3<C-w>-
+nnoremap <C-w>L 6<C-w>>
 nnoremap <silent> <C-w>\ :<C-u>vsp<CR>
 nnoremap <silent> <C-w><Bar> :<C-u>vsp<CR>
 nnoremap <silent> <C-w>- :<C-u>sp<CR>
