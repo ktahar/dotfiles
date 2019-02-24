@@ -62,6 +62,8 @@ highlight StatusLine cterm=NONE ctermfg=0 ctermbg=2
 highlight StatusLineNC cterm=NONE ctermfg=2 ctermbg=0
 highlight Search ctermfg=0 ctermbg=11
 highlight Folded ctermfg=4 ctermbg=8
+highlight SpellBad ctermbg=1
+highlight SpellRare ctermbg=9
 "}}}
 
 """ map{{{
@@ -360,6 +362,21 @@ let g:tagbar_type_tex = {
 " let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gb <Plug>(openbrowser-smart-search)
 vmap gb <Plug>(openbrowser-smart-search)
+"}}}
+
+"" vim-grammarous {{{
+let g:grammarous#show_first_error = 1
+" let g:grammarous#use_location_list = 1
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs) abort
+    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
+endfunction
+
+function! g:grammarous#hooks.on_reset(errs) abort
+    nnoremap <buffer><C-n> :<C-u>cn<CR>
+    nnoremap <buffer><C-p> :<C-u>cp<CR>
+endfunction
 "}}}
 
 "}}}

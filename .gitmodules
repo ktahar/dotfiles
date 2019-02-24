@@ -55,3 +55,6 @@
 [submodule "apps/fzf"]
 	path = apps/fzf
 	url = https://github.com/junegunn/fzf
+[submodule "vim/pack/my/start/vim-grammarous"]
+	path = vim/pack/my/start/vim-grammarous
+	url = https://github.com/rhysd/vim-grammarous
