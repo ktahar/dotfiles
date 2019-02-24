@@ -83,26 +83,37 @@ nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
 
-nnoremap s <Nop>
-nnoremap sh <C-W>h
-nnoremap sj <C-W>j
-nnoremap sk <C-W>k
-nnoremap sl <C-W>l
-nnoremap s<C-h> <C-W>H
-nnoremap s<C-j> <C-W>J
-nnoremap s<C-k> <C-W>K
-nnoremap s<C-l> <C-W>L
-nnoremap sH 6<C-W><
-nnoremap sJ 3<C-W>+
-nnoremap sK 3<C-W>-
-nnoremap sL 6<C-W>>
-nnoremap so <C-W>o
-nnoremap sc <C-W>c
-nnoremap <silent> s\ :<C-u>vsp<CR>
-nnoremap <silent> s<Bar> :<C-u>vsp<CR>
-nnoremap <silent> s- :<C-u>sp<CR>
-nnoremap sn gt
-nnoremap sp gT
+" nnoremap s <Nop>
+" nnoremap sh <C-W>h
+" nnoremap sj <C-W>j
+" nnoremap sk <C-W>k
+" nnoremap sl <C-W>l
+" nnoremap s<C-h> <C-W>H
+" nnoremap s<C-j> <C-W>J
+" nnoremap s<C-k> <C-W>K
+" nnoremap s<C-l> <C-W>L
+" nnoremap sH 6<C-W><
+" nnoremap sJ 3<C-W>+
+" nnoremap sK 3<C-W>-
+" nnoremap sL 6<C-W>>
+" nnoremap so <C-W>o
+" nnoremap sc <C-W>c
+" nnoremap <silent> s\ :<C-u>vsp<CR>
+" nnoremap <silent> s<Bar> :<C-u>vsp<CR>
+" nnoremap <silent> s- :<C-u>sp<CR>
+" nnoremap sn gt
+" nnoremap sp gT
+" nnoremap s<C-h> <C-W>H
+" nnoremap s<C-j> <C-W>J
+" nnoremap s<C-k> <C-W>K
+" nnoremap s<C-l> <C-W>L
+nnoremap <C-w>H 6<C-W><
+nnoremap <C-w>J 3<C-W>+
+nnoremap <C-w>K 3<C-W>-
+nnoremap <C-w>L 6<C-W>>
+nnoremap <silent> <C-w>\ :<C-u>vsp<CR>
+nnoremap <silent> <C-w><Bar> :<C-u>vsp<CR>
+nnoremap <silent> <C-w>- :<C-u>sp<CR>
 "}}}
 
 """ Commands (grep, diff etc.) {{{
