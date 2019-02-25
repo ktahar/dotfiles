@@ -86,8 +86,7 @@ nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
-nnoremap <silent> <Leader>s :<C-u>set spell<CR>
-nnoremap <silent> <Leader>S :<C-u>set nospell<CR>
+nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
 
 " nnoremap s <Nop>
 " nnoremap sh <C-W>h
