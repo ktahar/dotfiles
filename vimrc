@@ -57,13 +57,17 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,l
 """ Skip loading mswin.vim
 "let g:skip_loading_mswin=1
 
+""" Spell
+set nospell
+set spelllang=en,cjk
+
 """ Highlights
 highlight StatusLine cterm=NONE ctermfg=0 ctermbg=2
 highlight StatusLineNC cterm=NONE ctermfg=2 ctermbg=0
 highlight Search ctermfg=0 ctermbg=11
 highlight Folded ctermfg=4 ctermbg=8
-highlight SpellBad ctermbg=1
-highlight SpellRare ctermbg=9
+highlight SpellBad ctermfg=15 ctermbg=1
+highlight SpellRare ctermfg=15 ctermbg=9
 "}}}
 
 """ map{{{
@@ -82,6 +86,8 @@ nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
+nnoremap <silent> <Leader>s :<C-u>set spell<CR>
+nnoremap <silent> <Leader>S :<C-u>set nospell<CR>
 
 " nnoremap s <Nop>
 " nnoremap sh <C-W>h
