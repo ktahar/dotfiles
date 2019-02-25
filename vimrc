@@ -123,6 +123,10 @@ nnoremap <silent> <C-w>- :<C-u>sp<CR>
 "}}}
 
 """ Commands (grep, diff etc.) {{{
+if executable('eiji')
+    nnoremap <Leader>w :<C-u>!eiji <cword><CR>
+endif
+
 function! s:get_git_root()
     let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
     return v:shell_error ? '' : root
