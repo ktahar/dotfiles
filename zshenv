@@ -8,7 +8,7 @@ fi
 ## PATH
 typeset -U path
 ## dirs to put at head.
-directories=(/usr/local/go/bin ~/bin ~/.local/bin)
+directories=(~/gems/bin /usr/local/go/bin ~/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
@@ -30,6 +30,9 @@ pythonpath=($pythonpath ~/dotfiles/py)
 export PYTHONPATH
 
 export EDITOR=vim
+
+## Ruby and gem
+export GEM_HOME=$HOME/gems
 
 # fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'

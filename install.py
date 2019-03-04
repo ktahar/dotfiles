@@ -163,6 +163,8 @@ def install_apt_packages(upgrade):
             # deps to build vim
             "git", "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "clang-tools-6.0", # to use clangd-6.0 from vim-lsp.
+            # Ruby and Jekyll
+            "ruby-full", "zlib1g-dev",
             ]
 
     res = subprocess.run(['dpkg-query', '-W'] + pkgs,
