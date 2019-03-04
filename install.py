@@ -215,6 +215,17 @@ def install_pip_packages(upgrade):
     subprocess.run([os.path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
     subprocess.run([os.path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
 
+def install_gem_packages():
+    """install ruby packages using gem.
+
+    """
+
+    pkgs = [
+            "jekyll", "bundler",
+            ]
+
+    subprocess.run(['gem', 'install'] + pkgs)
+
 def main_windows(args):
     """make directories and symbolic links for windows.
 
@@ -342,6 +353,9 @@ def main_posix(args):
     if not args.no_pip:
         printc('[pip packages]', 'b')
         install_pip_packages(args.upgrade)
+    if not args.no_gem:
+        printc('[gem packages]', 'b')
+        install_gem_packages()
 
     printc('[shell]', 'b')
     setup_shell()
@@ -356,6 +370,8 @@ def parse_args():
             help='Skip installing apt packages.')
     parser.add_argument('-P', '--no-pip', action='store_true',
             help='Skip installing pip packages.')
+    parser.add_argument('-G', '--no-gem', action='store_true',
+            help='Skip installing gem packages.')
     parser.add_argument('-a', '--apps-only', action='store_true',
             help='Setup apps only.')
 
