@@ -206,6 +206,7 @@ def install_pip_packages(upgrade):
             ]
     pkgs_2 = []
     pkgs_3 = [
+            "pipenv",
             "jedi", "python-language-server", # to use pyls from vim-lsp.
             "rospkg",
             "panflute",

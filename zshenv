@@ -28,6 +28,7 @@ typeset -T PYTHONPATH pythonpath
 typeset -U pythonpath
 pythonpath=($pythonpath ~/dotfiles/py)
 export PYTHONPATH
+export PIPENV_VENV_IN_PROJECT=1
 
 export EDITOR=vim
 
