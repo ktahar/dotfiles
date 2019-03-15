@@ -235,7 +235,7 @@ def install_opam_packages():
     """
 
     pkgs = [
-            "merlin",
+            "merlin", "utop",
             ]
 
     subprocess.run(['opam', 'install'] + pkgs)
