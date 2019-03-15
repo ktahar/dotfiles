@@ -4,3 +4,5 @@ let () =
   with Not_found -> ()
 ;;
 
+#require "utop";;
+#utop_prompt_simple;;

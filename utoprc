@@ -1,0 +1,16 @@
+identifier.foreground:    none
+module.foreground:        x-palegreen
+comment.foreground:       x-chocolate1
+doc.foreground:           x-light-salmon
+constant.foreground:      x-aquamarine
+keyword.foreground:       green
+symbol.foreground:        6
+string.foreground:        x-light-salmon
+char.foreground:          x-light-salmon
+quotation.foreground:     x-purple
+error.foreground:         red
+directive.foreground:     x-lightsteelblue
+parenthesis.background:   8
+
+! uncomment the next line to disable autoload files
+! autoload: false

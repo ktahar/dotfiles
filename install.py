@@ -351,6 +351,7 @@ def dirs_and_links_linux(args):
             (r".agignore", r"agignore"),
             (r".latexmkrc", r"latexmkrc"),
             (r".ocamlinit", r"ocamlinit"),
+            (r".utoprc", r"utoprc"),
             (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
             (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
             (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
