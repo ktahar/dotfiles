@@ -6,6 +6,7 @@ tags
 
 vimrc.local
 vim/.netrwhist
+vim/pack/my/start/merlin
 apps/vim.HEAD
 
 !/.editorconfig
