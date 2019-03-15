@@ -72,7 +72,8 @@ highlight SpellRare ctermfg=15 ctermbg=9
 
 """ map{{{
 nnoremap <Space> <Nop>
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
+let g:maplocalleader = "\<Space>"
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q <Nop>
@@ -187,6 +188,10 @@ let g:tex_flavor = "latex"
 "" ROS extension
 autocmd BufNewFile,BufRead *.launch set filetype=xml
 
+"" OCaml
+" prevent maps by default ocaml.vim
+let no_ocaml_maps = 1
+
 "" Binary {{{
 " vim -b : edit binary using xxd-format!
 augroup Binary
@@ -285,11 +290,6 @@ if executable('clangd-6.0')
        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
        \ })
 endif
-"}}}
-
-"" merlin {{{
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
 "}}}
 
 "" fzf {{{

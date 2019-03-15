@@ -240,9 +240,19 @@ def install_opam_packages():
 
     subprocess.run(['opam', 'install'] + pkgs)
 
-    # generate helptags for merlin.
+    # setup merlin.
     ret = subprocess.run(['opam', 'config', 'var', 'share'], stdout=subprocess.PIPE)
-    doc_path = os.path.join(ret.stdout.decode().strip(), 'merlin', 'vim', 'doc')
+    opam_share = ret.stdout.decode().strip()
+    merlin_path = os.path.join(opam_share, 'merlin', 'vim')
+    doc_path = os.path.join(merlin_path, 'doc')
+
+    ## create symlink for merlin as vim pack.
+    pack_path = os.path.join(home, 'dotfiles', 'vim', 'pack', 'my', 'start', 'merlin')
+    if not os.path.exists(pack_path):
+        os.symlink(merlin_path, pack_path)
+        printc("created sym link %s" % pack_path, 'g')
+
+    ## generate helptags for merlin.
     subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
 
 def main_windows(args):
