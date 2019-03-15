@@ -147,7 +147,7 @@ function! s:make_ctags()
     redraw!
 endfunction
 command MakeCtags call s:make_ctags()
-nnoremap <Leader>t :<C-u>MakeCtags<CR>
+nnoremap <Leader>T :<C-u>MakeCtags<CR>
 
 "" grep to quickfix
 autocmd QuickFixCmdPost *grep* cwindow
