@@ -165,6 +165,8 @@ def install_apt_packages(upgrade):
             "clang-tools-6.0", # to use clangd-6.0 from vim-lsp.
             # Ruby and Jekyll
             "ruby-full", "zlib1g-dev",
+            # Ocaml
+            "ocaml", "opam",
             ]
 
     res = subprocess.run(['dpkg-query', '-W'] + pkgs,
@@ -226,6 +228,17 @@ def install_gem_packages():
             ]
 
     subprocess.run(['gem', 'install'] + pkgs)
+
+def install_opam_packages():
+    """install OCaml packages using opam.
+
+    """
+
+    pkgs = [
+            "merlin",
+            ]
+
+    subprocess.run(['opam', 'install'] + pkgs)
 
 def main_windows(args):
     """make directories and symbolic links for windows.
@@ -295,12 +308,7 @@ def main_windows(args):
     # additional things
     copy_vimrc_local()
 
-def main_posix(args):
-    if args.apps_only:
-        printc('[apps]', 'b')
-        setup_apps()
-        return
-
+def dirs_and_links_linux(args):
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r"tmp",
             r".config/gtk-3.0"]
@@ -327,6 +335,7 @@ def main_posix(args):
             (r".gitignore_global", r"gitignore_global"),
             (r".agignore", r"agignore"),
             (r".latexmkrc", r"latexmkrc"),
+            (r".ocamlinit", r"ocamlinit"),
             (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
             (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
             (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
@@ -343,21 +352,28 @@ def main_posix(args):
             os.symlink(tgt, ln)
             printc("created sym link %s" % ln, 'g')
 
-    # additional things
+def main_linux(args):
+    printc('[dirs and links]', 'b')
+    dirs_and_links_linux(args)
     printc('[vimrc local]', 'b')
     copy_vimrc_local()
     printc('[git global config]', 'b')
     set_git_global_config()
-    if not args.no_apt:
+
+    if args.all or args.apt:
         printc('[apt packages]', 'b')
         install_apt_packages(args.upgrade)
-    if not args.no_pip:
+    if args.all or args.pip:
         printc('[pip packages]', 'b')
         install_pip_packages(args.upgrade)
-    if not args.no_gem:
+    if args.all or args.gem:
         printc('[gem packages]', 'b')
         install_gem_packages()
+    if args.all or args.opam:
+        printc('[opam packages]', 'b')
+        install_opam_packages()
 
+    # shell and apps should be later than apt.
     printc('[shell]', 'b')
     setup_shell()
     printc('[apps]', 'b')
@@ -367,14 +383,16 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
-    parser.add_argument('-A', '--no-apt', action='store_true',
-            help='Skip installing apt packages.')
-    parser.add_argument('-P', '--no-pip', action='store_true',
-            help='Skip installing pip packages.')
-    parser.add_argument('-G', '--no-gem', action='store_true',
-            help='Skip installing gem packages.')
-    parser.add_argument('-a', '--apps-only', action='store_true',
-            help='Setup apps only.')
+    parser.add_argument('-A', '--all', action='store_true',
+            help='Install packages from all package managers.')
+    parser.add_argument('-a', '--apt', action='store_true',
+            help='Install apt packages.')
+    parser.add_argument('-p', '--pip', action='store_true',
+            help='Install pip packages.')
+    parser.add_argument('-g', '--gem', action='store_true',
+            help='Install gem packages.')
+    parser.add_argument('-o', '--opam', action='store_true',
+            help='Installing opam packages.')
 
     return parser.parse_args()
 
@@ -384,7 +402,7 @@ if __name__ == '__main__':
     if os.name == 'nt':
         main_windows(args)
     elif os.name == 'posix':
-        main_posix(args)
+        main_linux(args)
     else:
         raise NotImplementedError("OS name %s is not supported." % os.name)
 

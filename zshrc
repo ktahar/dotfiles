@@ -191,7 +191,12 @@ alias svim='sudo vim --noplugin'
 alias docker_rm_all='docker rm -f $(docker ps -aq)'
 alias docker_rmi_all='docker rmi -f $(docker images -q)'
 
-# Plugins & Extensions
+# Tools, Plugins and Extensions
+## OPAM
+if [ -f ${HOME}/.opam/opam-init/init.zsh ]; then
+    . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi
+
 ## zsh-syntax-highlighting
 if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
