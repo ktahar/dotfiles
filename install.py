@@ -240,6 +240,11 @@ def install_opam_packages():
 
     subprocess.run(['opam', 'install'] + pkgs)
 
+    # generate helptags for merlin.
+    ret = subprocess.run(['opam', 'config', 'var', 'share'], stdout=subprocess.PIPE)
+    doc_path = os.path.join(ret.stdout.decode().strip(), 'merlin', 'vim', 'doc')
+    subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
+
 def main_windows(args):
     """make directories and symbolic links for windows.
 
