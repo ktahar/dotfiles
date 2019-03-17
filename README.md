@@ -5,7 +5,7 @@ just for me 😉
 
 ```bash
 cd ~
-git clone --recursive https://ksktahara@github.com/ksktahara/dotfiles
+git clone --recursive https://ktahar@github.com/ktahar/dotfiles
 cd dotfiles/
 ./install.py
 ```
