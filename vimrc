@@ -61,16 +61,22 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,l
 set nospell
 set spelllang=en,cjk
 
-""" Highlights
+""" Highlights and Styling
+" vertical split with │ (unicode char U+2502) instead of default |
+" fold with ─ (unicode char U+2500) instead of default -
+set fillchars=vert:│,fold:─
 highlight StatusLine cterm=NONE ctermfg=0 ctermbg=2
 highlight StatusLineNC cterm=NONE ctermfg=2 ctermbg=0
+highlight StatusLineTerm cterm=NONE ctermfg=0 ctermbg=2
+highlight StatusLineTermNC cterm=NONE ctermfg=2 ctermbg=0
+highlight VertSplit cterm=NONE ctermfg=7 ctermbg=NONE
 highlight Search ctermfg=0 ctermbg=11
 highlight Folded ctermfg=4 ctermbg=8
 highlight SpellBad ctermfg=15 ctermbg=1
 highlight SpellRare ctermfg=15 ctermbg=9
 "}}}
 
-""" map{{{
+""" map {{{
 nnoremap <Space> <Nop>
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
