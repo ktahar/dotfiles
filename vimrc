@@ -401,5 +401,9 @@ function! g:grammarous#hooks.on_reset(errs) abort
 endfunction
 "}}}
 
+"" tmux-navigator {{{
+let g:tmux_navigator_no_mappings = 1
+"}}}
+
 "}}}
 
