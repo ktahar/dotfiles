@@ -94,19 +94,30 @@ nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
-nnoremap <Leader>m :<C-u>vert rightb term<CR>
+nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
 
-nnoremap <C-w><C-h> <C-w>H
-nnoremap <C-w><C-j> <C-w>J
-nnoremap <C-w><C-k> <C-w>K
-nnoremap <C-w><C-l> <C-w>L
-nnoremap <C-w>H 6<C-w><
-nnoremap <C-w>J 3<C-w>+
-nnoremap <C-w>K 3<C-w>-
-nnoremap <C-w>L 6<C-w>>
-nnoremap <silent> <C-w>\ :<C-u>vsp<CR>
-nnoremap <silent> <C-w><Bar> :<C-u>vsp<CR>
-nnoremap <silent> <C-w>- :<C-u>sp<CR>
+set termwinkey=<C-k>
+tnoremap <C-k>[ <C-k>N
+tnoremap <silent> <C-k>h <C-k>:<C-u>TmuxNavigateLeft<CR>
+tnoremap <silent> <C-k>j <C-k>:<C-u>TmuxNavigateDown<CR>
+tnoremap <silent> <C-k>k <C-k>:<C-u>TmuxNavigateUp<CR>
+tnoremap <silent> <C-k>l <C-k>:<C-u>TmuxNavigateRight<CR>
+nnoremap <silent> <C-k>h :<C-u>TmuxNavigateLeft<CR>
+nnoremap <silent> <C-k>j :<C-u>TmuxNavigateDown<CR>
+nnoremap <silent> <C-k>k :<C-u>TmuxNavigateUp<CR>
+nnoremap <silent> <C-k>l :<C-u>TmuxNavigateRight<CR>
+nnoremap <C-k><C-h> <C-w>H
+nnoremap <C-k><C-j> <C-w>J
+nnoremap <C-k><C-k> <C-w>K
+nnoremap <C-k><C-l> <C-w>L
+nnoremap <C-k>H 6<C-w><
+nnoremap <C-k>J 3<C-w>+
+nnoremap <C-k>K 3<C-w>-
+nnoremap <C-k>L 6<C-w>>
+nnoremap <silent> <C-k>\ :<C-u>vsp<CR>
+nnoremap <silent> <C-k><Bar> :<C-u>vsp<CR>
+nnoremap <silent> <C-k>- :<C-u>sp<CR>
+nnoremap <C-k> <C-w>
 "}}}
 
 """ Commands (grep, diff etc.) {{{
