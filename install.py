@@ -218,10 +218,13 @@ def install_pip_packages(upgrade):
     subprocess.run([os.path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
     subprocess.run([os.path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
 
-def install_gem_packages():
+def install_gem_packages(upgrade):
     """install ruby packages using gem.
 
     """
+
+    if upgrade:
+        subprocess.run(['gem', 'update'])
 
     pkgs = [
             "jekyll", "bundler",
@@ -229,7 +232,7 @@ def install_gem_packages():
 
     subprocess.run(['gem', 'install'] + pkgs)
 
-def install_opam_packages():
+def install_opam_packages(upgrade):
     """install OCaml packages using opam.
 
     """
@@ -238,6 +241,10 @@ def install_opam_packages():
         subprocess.run(['opam', 'init'])
         printc("[WARN] opam init is done but opam install is skipped. restart the shell and run install.py again.", 'y')
         return
+
+    subprocess.run(['opam', 'update'])
+    if upgrade:
+        subprocess.run(['opam', 'upgrade'])
 
     pkgs = [
             "merlin", "utop",
@@ -382,18 +389,11 @@ def main_linux(args):
     printc('[git global config]', 'b')
     set_git_global_config()
 
-    if args.all or args.apt:
-        printc('[apt packages]', 'b')
-        install_apt_packages(args.upgrade)
-    if args.all or args.pip:
-        printc('[pip packages]', 'b')
-        install_pip_packages(args.upgrade)
-    if args.all or args.gem:
-        printc('[gem packages]', 'b')
-        install_gem_packages()
-    if args.all or args.opam:
-        printc('[opam packages]', 'b')
-        install_opam_packages()
+    import __main__
+    for pack in ('apt', 'pip', 'gem', 'opam'):
+        if args.all or getattr(args, pack):
+            printc('[{} packages]'.format(pack), 'b')
+            getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
 
     # shell and apps should be later than apt.
     printc('[shell]', 'b')
