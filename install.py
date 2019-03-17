@@ -234,6 +234,11 @@ def install_opam_packages():
 
     """
 
+    if not os.path.exists(os.path.join(home, '.opam'):
+        subprocess.run(['opam', 'init'])
+        printc("[WARN] opam init is done but opam install is skipped. restart the shell and run install.py again.", 'y')
+        return
+
     pkgs = [
             "merlin", "utop",
             ]
