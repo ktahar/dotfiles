@@ -14,6 +14,7 @@ ipython.magic('load_ext autoreload')
 ipython.magic('autoreload 1')
 
 plt.ion()
+q = exit
 
 if "SUMO_HOME" in os.environ:
     if os.path.join(os.environ["SUMO_HOME"], "tools") not in sys.path:
