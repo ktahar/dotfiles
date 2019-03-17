@@ -234,7 +234,7 @@ def install_opam_packages():
 
     """
 
-    if not os.path.exists(os.path.join(home, '.opam'):
+    if not os.path.exists(os.path.join(home, '.opam')):
         subprocess.run(['opam', 'init'])
         printc("[WARN] opam init is done but opam install is skipped. restart the shell and run install.py again.", 'y')
         return
@@ -357,6 +357,7 @@ def dirs_and_links_linux(args):
             (r".latexmkrc", r"latexmkrc"),
             (r".ocamlinit", r"ocamlinit"),
             (r".utoprc", r"utoprc"),
+            (r".lambda-term-inputrc", r"lambda-term-inputrc"),
             (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
             (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
             (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),

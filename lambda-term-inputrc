@@ -1,0 +1,5 @@
+[read-line]
+C-p: history-prev
+C-n: history-next
+M-p: prev-line
+M-n: next-line
