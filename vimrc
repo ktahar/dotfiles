@@ -96,6 +96,34 @@ nnoremap <C-p> :<C-u>cp<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
 nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
 
+"" tmux window selection. cf. vim-tmux-navigation. {{{
+function! s:TmuxSocket()
+    " The socket path is the first value in the comma-separated list of $TMUX.
+    return split($TMUX, ',')[0]
+endfunction
+
+function! s:TmuxCommand(args)
+    let cmd = 'tmux -S ' . s:TmuxSocket() . ' ' . a:args
+    return system(cmd)
+endfunction
+
+function! s:TmuxWindow(dir)
+    let args = 'select-window -' . a:dir
+    silent call s:TmuxCommand(args)
+endfunction
+
+if empty($TMUX)
+    " unmap to avoid confusing behaviour
+    nnoremap <C-k>p <Nop>
+    nnoremap <C-k>n <Nop>
+else
+    command! TmuxWindowPrevious call s:TmuxWindow('p')
+    command! TmuxWindowNext call s:TmuxWindow('n')
+    nnoremap <silent> <C-k>p :<C-u>TmuxWindowPrevious<CR>
+    nnoremap <silent> <C-k>n :<C-u>TmuxWindowNext<CR>
+endif
+"}}}
+
 set termwinkey=<C-k>
 tnoremap <C-k>[ <C-k>N
 tnoremap <silent> <C-k>h <C-k>:<C-u>TmuxNavigateLeft<CR>
