@@ -124,12 +124,14 @@ else
 endif
 "}}}
 
-set termwinkey=<C-k>
-tnoremap <C-k>[ <C-k>N
-tnoremap <silent> <C-k>h <C-k>:<C-u>TmuxNavigateLeft<CR>
-tnoremap <silent> <C-k>j <C-k>:<C-u>TmuxNavigateDown<CR>
-tnoremap <silent> <C-k>k <C-k>:<C-u>TmuxNavigateUp<CR>
-tnoremap <silent> <C-k>l <C-k>:<C-u>TmuxNavigateRight<CR>
+if has('terminal')
+    set termwinkey=<C-k>
+    tnoremap <C-k>[ <C-k>N
+    tnoremap <silent> <C-k>h <C-k>:<C-u>TmuxNavigateLeft<CR>
+    tnoremap <silent> <C-k>j <C-k>:<C-u>TmuxNavigateDown<CR>
+    tnoremap <silent> <C-k>k <C-k>:<C-u>TmuxNavigateUp<CR>
+    tnoremap <silent> <C-k>l <C-k>:<C-u>TmuxNavigateRight<CR>
+endif
 nnoremap <silent> <C-k>h :<C-u>TmuxNavigateLeft<CR>
 nnoremap <silent> <C-k>j :<C-u>TmuxNavigateDown<CR>
 nnoremap <silent> <C-k>k :<C-u>TmuxNavigateUp<CR>
