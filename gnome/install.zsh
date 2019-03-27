@@ -55,3 +55,6 @@ if [ -d ${matlab} ]; then
 else
     echo "no MATLAB directory (${matlab}) found"
 fi
+
+# load gnome-terminal settings
+./gnome-term-load.sh
