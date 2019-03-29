@@ -13,6 +13,14 @@ cd dotfiles/
 The install.py will do setups,
 except for things that strongly depends on environment.
 
+## Uninstall
+
+```bash
+./install.py --uninstall
+```
+
+For now, just remove symlinks.
+
 ## Submodule
 Using git submodule to get apps/plugins from github.
 See following directories.
