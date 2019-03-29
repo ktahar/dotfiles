@@ -4,10 +4,8 @@ just for me 😉
 ## Install
 
 ```bash
-cd ~
-git clone --recursive https://ktahar@github.com/ktahar/dotfiles
-cd dotfiles/
-./install.py
+cd && git clone --recursive https://ktahar@github.com/ktahar/dotfiles
+cd dotfiles/ && ./install.py
 ```
 
 The install.py will do setups,
@@ -16,7 +14,7 @@ except for things that strongly depends on environment.
 ## Uninstall
 
 ```bash
-./install.py --uninstall
+cd dotfiles/ && ./install.py --uninstall
 ```
 
 For now, just remove symlinks.
