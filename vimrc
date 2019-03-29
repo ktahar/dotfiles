@@ -116,11 +116,19 @@ if empty($TMUX)
     " unmap to avoid confusing behaviour
     nnoremap <C-k>p <Nop>
     nnoremap <C-k>n <Nop>
+    if has('terminal')
+        tnoremap <C-k>p <Nop>
+        tnoremap <C-k>n <Nop>
+    endif
 else
     command! TmuxWindowPrevious call s:TmuxWindow('p')
     command! TmuxWindowNext call s:TmuxWindow('n')
     nnoremap <silent> <C-k>p :<C-u>TmuxWindowPrevious<CR>
     nnoremap <silent> <C-k>n :<C-u>TmuxWindowNext<CR>
+    if has('terminal')
+        tnoremap <silent> <C-k>p <C-k>:<C-u>TmuxWindowPrevious<CR>
+        tnoremap <silent> <C-k>n <C-k>:<C-u>TmuxWindowNext<CR>
+    endif
 endif
 "}}}
 
