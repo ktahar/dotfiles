@@ -168,6 +168,8 @@ def install_apt_packages(upgrade):
             "ruby-full", "zlib1g-dev",
             # Ocaml
             "ocaml", "opam",
+            # Common Lisp
+            "sbcl",
             ]
 
     res = subprocess.run(['dpkg-query', '-W'] + pkgs,
