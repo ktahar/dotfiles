@@ -336,12 +336,41 @@ def main_windows(args):
     # additional things
     copy_vimrc_local()
 
-def dirs_and_links_linux(args):
+files_linux = [
+        (r".vimrc", r"vimrc"),
+        (r".gvimrc", r"gvimrc"),
+        (r".vim", r"vim"),
+        (r".ideavimrc", r"ideavimrc"),
+        (r".tmux.conf", r"tmux.conf"),
+        (r".tmux/plugins", r"tmux/plugins"),
+        (r".fzf", r"apps/fzf"),
+        (r".ctags", r"ctags"),
+        (r".gitignore_global", r"gitignore_global"),
+        (r".agignore", r"agignore"),
+        (r".latexmkrc", r"latexmkrc"),
+        (r".ocamlinit", r"ocamlinit"),
+        (r".utoprc", r"utoprc"),
+        (r".lambda-term-inputrc", r"lambda-term-inputrc"),
+        (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
+        (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
+        (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
+        ]
+
+def unlink_linux():
+    for f in files_linux:
+        ln = os.path.join(home, f[0])
+        if os.path.islink(ln):
+            os.remove(ln)
+            printc("[WARN] removed {}".format(ln), 'y')
+        else:
+            print("[INFO] {} doesn't exist".format(ln))
+
+def link_linux(args):
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r"tmp",
             r".config/gtk-3.0"]
 
-    printc('[create dirs]', 'b')
+    printc('[dirs]', 'b')
     for d in dirs:
         dn = os.path.join(home, d)
 
@@ -351,28 +380,8 @@ def dirs_and_links_linux(args):
             os.makedirs(dn)
             printc("created dir %s" % dn, 'g')
 
-    files = [
-            (r".vimrc", r"vimrc"),
-            (r".gvimrc", r"gvimrc"),
-            (r".vim", r"vim"),
-            (r".ideavimrc", r"ideavimrc"),
-            (r".tmux.conf", r"tmux.conf"),
-            (r".tmux/plugins", r"tmux/plugins"),
-            (r".fzf", r"apps/fzf"),
-            (r".ctags", r"ctags"),
-            (r".gitignore_global", r"gitignore_global"),
-            (r".agignore", r"agignore"),
-            (r".latexmkrc", r"latexmkrc"),
-            (r".ocamlinit", r"ocamlinit"),
-            (r".utoprc", r"utoprc"),
-            (r".lambda-term-inputrc", r"lambda-term-inputrc"),
-            (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
-            (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
-            (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
-            ]
-
-    printc('[create links]', 'b')
-    for f in files:
+    printc('[links]', 'b')
+    for f in files_linux:
         ln = os.path.join(home, f[0])
         tgt = os.path.join(home, 'dotfiles', f[1])
 
@@ -383,8 +392,13 @@ def dirs_and_links_linux(args):
             printc("created sym link %s" % ln, 'g')
 
 def main_linux(args):
-    printc('[dirs and links]', 'b')
-    dirs_and_links_linux(args)
+    if args.uninstall:
+        printc('[remove links]', 'r')
+        unlink_linux()
+        return
+
+    printc('[make dirs and links]', 'b')
+    link_linux(args)
     printc('[vimrc local]', 'b')
     copy_vimrc_local()
     printc('[git global config]', 'b')
@@ -404,6 +418,8 @@ def main_linux(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
+    parser.add_argument('--uninstall', action='store_true',
+            help='Uninstall by removing links. Other options are ignored.')
     parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
     parser.add_argument('-A', '--all', action='store_true',
