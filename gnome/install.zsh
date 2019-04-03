@@ -32,9 +32,9 @@ fc-list | grep Cica > /dev/null
 if [ "$?" = 0 ]; then
     echo "Cica font is already installed."
 else
-    local cica_v=v4.1.1
-    local cica_fn=Cica-${cica_v}.zip
-    local cica_dir=Cica-${cica_v}
+    local cica_v=v4.1.2
+    local cica_fn=Cica_${cica_v}.zip
+    local cica_dir=Cica_${cica_v}
 
     echo "Download and install Cica ${cica_v}..."
 
