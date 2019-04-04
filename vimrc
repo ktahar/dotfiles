@@ -16,11 +16,11 @@ set hidden
 
 """ Back up
 set backup
-set backupdir=.,~/tmp
+set backupdir=.,~/.local/tmp,~/tmp
 set swapfile
-set directory=~/tmp,.
+set directory=~/.local/tmp,~/tmp,.
 set undofile
-set undodir=~/tmp,.
+set undodir=~/.local/tmp,~/tmp,.
 
 """ UI
 set visualbell t_vb=

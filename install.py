@@ -369,7 +369,7 @@ def unlink_linux():
 
 def link_linux(args):
     dirs = [r".tmux", r".config/matplotlib",
-            r".ipython/profile_default/startup", r"tmp",
+            r".ipython/profile_default/startup", r".local/tmp",
             r".config/gtk-3.0"]
 
     printc('[dirs]', 'b')
