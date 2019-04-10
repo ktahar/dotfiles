@@ -216,6 +216,7 @@ def install_pip_packages(upgrade):
             "jedi", "python-language-server", # to use pyls from vim-lsp.
             "rospkg",
             "panflute",
+            "requests",
             "ewmh", # for window focus control in fwdevince
             ]
 
@@ -270,6 +271,27 @@ def install_opam_packages(upgrade):
 
     ## generate helptags for merlin.
     subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
+
+def install_node():
+    """install node.js to ~/opt/node.
+
+    """
+
+    node_dir = os.path.join(home, 'opt', 'node')
+    if os.path.exists(node_dir):
+        return
+
+    import io, tarfile, requests
+    major, minor, patch = 10, 15, 3
+    name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
+    print("Downloading", name)
+    url = "https://nodejs.org/download/release/latest-v{}.x/{}.tar.xz".format(
+            major, name)
+    res = requests.get(url)
+    stream = io.BytesIO(res.content)
+    with tarfile.open(fileobj=stream, mode='r:xz') as tar:
+        tar.extractall(path=os.path.join(home, 'opt'))
+    os.symlink(os.path.join(home, 'opt', name), node_dir)
 
 def main_windows(args):
     """make directories and symbolic links for windows.
@@ -412,6 +434,9 @@ def main_linux(args):
         if args.all or getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
+    if args.all or args.node:
+        printc('[node.js]', 'b')
+        install_node()
 
     # shell and apps should be later than apt.
     printc('[shell]', 'b')
@@ -426,7 +451,7 @@ def parse_args():
     parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
     parser.add_argument('-A', '--all', action='store_true',
-            help='Install packages from all package managers.')
+            help='Install all extra things. e.g. packages.')
     parser.add_argument('-a', '--apt', action='store_true',
             help='Install apt packages.')
     parser.add_argument('-p', '--pip', action='store_true',
@@ -434,7 +459,9 @@ def parse_args():
     parser.add_argument('-g', '--gem', action='store_true',
             help='Install gem packages.')
     parser.add_argument('-o', '--opam', action='store_true',
-            help='Installing opam packages.')
+            help='Install opam packages.')
+    parser.add_argument('-n', '--node', action='store_true',
+            help='Install node.js.')
 
     return parser.parse_args()
 
