@@ -166,6 +166,8 @@ chpwd () {
     ls --color=auto -BC;
 }
 
+alias s='sudo -E'
+alias svim='sudo vim --noplugin'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls -BC'
@@ -187,9 +189,15 @@ alias qa='~/.tmux/plugins/tmux-resurrect/scripts/save.sh && tmux kill-server'
 alias ipy='ipython3'
 alias ipy3='ipython3'
 alias ipy2='ipython2'
-alias svim='sudo vim --noplugin'
 alias docker_rm_all='docker rm -f $(docker ps -aq)'
 alias docker_rmi_all='docker rmi -f $(docker images -q)'
+alias pip2i='pip2 install --user'
+alias pip3i='pip3 install --user'
+alias pip2u='pip2 install --user -U'
+alias pip3u='pip3 install --user -U'
+alias marp='npx marp'
+alias marpw='npx marp -w'
+alias marpp='npx marp --allow-local-files --pdf'
 
 # Tools, Plugins and Extensions
 ## OPAM
