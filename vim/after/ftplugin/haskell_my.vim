@@ -4,5 +4,5 @@ endif
 let b:did_ftplugin_haskell_my = 1
 
 setl fileencoding=utf-8
-" setl smartindent
+setl smartindent
 

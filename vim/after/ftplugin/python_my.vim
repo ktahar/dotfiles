@@ -8,7 +8,6 @@ setl foldmethod=indent
 
 " LSP mappings
 nnoremap <Leader>d :<C-u>LspDefinition<CR>
-" setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 " Execute current file (python3 -> python): <Leader>e
 function! s:ExecPy()
