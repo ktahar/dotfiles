@@ -206,7 +206,7 @@ def install_pip_packages(upgrade):
         opts.append('-U')
 
     pkgs = [
-            "pip", "setuptools", "python-dateutil", "numpy", "matplotlib",
+            "pip", "setuptools", "testresources", "python-dateutil", "numpy", "matplotlib",
             "scipy", "pandas", "ipython",
             ]
     pkgs_2 = []
