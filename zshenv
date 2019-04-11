@@ -8,7 +8,7 @@ fi
 ## PATH
 typeset -U path
 ## dirs to put at head.
-directories=(~/gems/bin /usr/local/go/bin ~/bin ~/.local/bin)
+directories=(~/gems/bin ~/opt/node/bin /usr/local/go/bin ~/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
@@ -16,7 +16,7 @@ for dir in $directories; do
 done
 
 ## dirs to put at tail.
-directories=($GOPATH/bin ~/dotfiles/scripts ~/opt/node/bin ~/opt/matlab/bin)
+directories=($GOPATH/bin ~/dotfiles/scripts)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($path $dir)

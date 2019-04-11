@@ -1,3 +1,6 @@
+# note: this bashrc is not well maintained.
+# use zsh (see zshrc / zshenv).
+
 set -o vi
 bind '"\C-p": history-search-backward'
 bind '"\C-n": history-search-forward'
