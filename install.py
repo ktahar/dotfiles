@@ -252,24 +252,27 @@ def install_opam_packages(upgrade):
         subprocess.run(['opam', 'upgrade'])
 
     pkgs = [
-            "merlin", "utop",
+            "merlin", "utop", "ocp-indent",
             ]
 
     subprocess.run(['opam', 'install'] + pkgs)
 
-    # setup merlin.
+    # setup merlin and ocp-indent.
     ret = subprocess.run(['opam', 'config', 'var', 'share'], stdout=subprocess.PIPE)
-    opam_share = ret.stdout.decode().strip()
-    merlin_path = os.path.join(opam_share, 'merlin', 'vim')
-    doc_path = os.path.join(merlin_path, 'doc')
 
-    ## create symlink for merlin as vim pack.
-    pack_path = os.path.join(home, 'dotfiles', 'vim', 'pack', 'my', 'start', 'merlin')
-    if not os.path.exists(pack_path):
-        os.symlink(merlin_path, pack_path)
-        printc("created sym link %s" % pack_path, 'g')
+    opam_share = ret.stdout.decode().strip()
+
+    ## create symlink for `pkg` as vim pack.
+    for pkg in ('merlin', 'ocp-indent'):
+        pkg_path = os.path.join(opam_share, pkg, 'vim')
+        pack_path = os.path.join(home, 'dotfiles',
+                'vim', 'pack', 'my', 'start', pkg)
+        if not os.path.exists(pack_path):
+            os.symlink(pkg_path, pack_path)
+            printc("created sym link %s" % pack_path, 'g')
 
     ## generate helptags for merlin.
+    doc_path = os.path.join(opam_share, 'merlin', 'vim', 'doc')
     subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
 
 def install_node():
