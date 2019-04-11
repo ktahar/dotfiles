@@ -3,3 +3,4 @@ C-p: history-prev
 C-n: history-next
 M-p: prev-line
 M-n: next-line
+C-w: kill-prev-word
