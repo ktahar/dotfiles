@@ -14,7 +14,7 @@ except for things that strongly depends on environment.
 ## Uninstall
 
 ```bash
-cd dotfiles/ && ./install.py --uninstall
+cd ~/dotfiles/ && ./install.py --uninstall
 ```
 
 For now, just remove symlinks.
