@@ -149,7 +149,7 @@ def install_apt_packages(upgrade):
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl",
             "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
-            "ttf-mscorefonts-installer",
+            "ttf-mscorefonts-installer", "rlwrap",
             # I personally use vim built from source instead of this one.
             # But install apt-pack vim here for root or other users.
             "vim",
@@ -369,6 +369,7 @@ files_linux = [
         (r".gvimrc", r"gvimrc"),
         (r".vim", r"vim"),
         (r".ideavimrc", r"ideavimrc"),
+        (r".inputrc", r"inputrc"),
         (r".tmux.conf", r"tmux.conf"),
         (r".tmux/plugins", r"tmux/plugins"),
         (r".fzf", r"apps/fzf"),
