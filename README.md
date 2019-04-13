@@ -46,17 +46,6 @@ See scripts in [submod](submod) for shortcuts.
 ### Linux (GNOME)
 For linux desktop (GNOME), see [gnome](gnome) directory.
 
-#### Extension: TopIcons Redux
-Visit [here](https://extensions.gnome.org/extension/1497/topicons-redux/) and
-download proper version.
-Import (downloaded zip file) from Tweak Tool's Extensions menu.
-
-To check gnome shell version:
-
-```bash
-gnome-shell --version
-```
-
 ### Windows
 For windows, see [windows](windows) directory.
 
