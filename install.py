@@ -381,6 +381,7 @@ files_linux = [
         (r".utoprc", r"utoprc"),
         (r".lambda-term-inputrc", r"lambda-term-inputrc"),
         (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
+        (r".ipython/profile_default/ipython_config.py", r"ipython_config.py"),
         (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
         (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
         ]

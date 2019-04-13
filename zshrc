@@ -168,6 +168,8 @@ chpwd () {
 
 alias s='sudo -E'
 alias svim='sudo vim --noplugin'
+alias v='vim'
+alias vi='vim'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls -BC'
@@ -198,6 +200,8 @@ alias pip3u='pip3 install --user -U'
 alias marp='npx marp'
 alias marpw='npx marp -w'
 alias marpp='npx marp --allow-local-files --pdf'
+alias utop='utop -init ~/dotfiles/ocamlinit_utop'
+alias caml='rlwrap ocaml'
 
 # Tools, Plugins and Extensions
 ## OPAM

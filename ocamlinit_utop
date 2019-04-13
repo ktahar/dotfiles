@@ -3,3 +3,6 @@ let () =
   try Topdirs.dir_directory (Sys.getenv "OCAML_TOPLEVEL_PATH")
   with Not_found -> ()
 ;;
+
+#require "utop";;
+#utop_prompt_simple;;
