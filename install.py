@@ -147,7 +147,7 @@ def install_apt_packages(upgrade):
 
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl",
-            "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
+            "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer", "rlwrap",
             # I personally use vim built from source instead of this one.
@@ -158,18 +158,18 @@ def install_apt_packages(upgrade):
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
-            # Build tools
+            # languages
+            "ruby-full", "ocaml", "opam", "sbcl",
+            # build tools
             "build-essential", "cmake",
-            # deps to build/use vim
-            "git", "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
-            "xorg-dev",
-            "clang-tools-6.0", # to use clangd-6.0 from vim-lsp.
-            # Ruby and Jekyll
-            "ruby-full", "zlib1g-dev",
-            # Ocaml
-            "ocaml", "opam",
-            # Common Lisp
-            "sbcl",
+            # dev libs
+            ## for vim build
+            "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
+            "xorg-dev", ## to enable +clipboard +X11
+            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
+            "zlib1g-dev", ## for gem package jekyll
+            "libssl-dev", ## for gem package openssl
+            "m4", ## for opam package conf-m4
             ]
 
     res = subprocess.run(['dpkg-query', '-W'] + pkgs,
