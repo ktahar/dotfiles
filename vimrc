@@ -134,7 +134,9 @@ endif
 
 if has('terminal')
     set termwinkey=<C-k>
+    tnoremap <C-k><C-J> <C-k>N
     tnoremap <C-k>[ <C-k>N
+    tnoremap <C-k><C-[> <C-k>N
     tnoremap <silent> <C-k>h <C-k>:<C-u>TmuxNavigateLeft<CR>
     tnoremap <silent> <C-k>j <C-k>:<C-u>TmuxNavigateDown<CR>
     tnoremap <silent> <C-k>k <C-k>:<C-u>TmuxNavigateUp<CR>
