@@ -201,7 +201,8 @@ alias marp='npx marp'
 alias marpw='npx marp -w'
 alias marpp='npx marp --allow-local-files --pdf'
 alias utop='utop -init ~/dotfiles/ocamlinit_utop'
-alias caml='rlwrap ocaml'
+alias ml='rlwrap ocaml'
+alias oct='octave --no-gui'
 
 # Tools, Plugins and Extensions
 ## OPAM
