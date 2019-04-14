@@ -95,6 +95,7 @@ nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
 nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
+nnoremap <silent> <Leader>M :<C-u>rightb term<CR>
 
 "" tmux window selection. cf. vim-tmux-navigation. {{{
 function! s:TmuxSocket()
