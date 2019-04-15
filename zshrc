@@ -206,9 +206,7 @@ alias oct='octave --no-gui'
 
 # Tools, Plugins and Extensions
 ## OPAM
-if [ -f ${HOME}/.opam/opam-init/init.zsh ]; then
-    . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-fi
+test -r ${HOME}/.opam/opam-init/init.zsh && . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 ## zsh-syntax-highlighting
 if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then

@@ -147,7 +147,8 @@ def install_apt_packages(upgrade):
 
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl",
-            "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
+            "git", "mercurial", "darcs", # VCS are required by some pack managers
+            "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer", "rlwrap",
             # I personally use vim built from source instead of this one.
@@ -242,23 +243,46 @@ def install_opam_packages(upgrade):
 
     """
 
+    def install_opam(opam):
+        """install opam itself to ~/.local/bin.
+
+        """
+
+        import requests, hashlib
+        version = "2.0.4"
+        h = "e6b7e5657b1692c351c29a952960d1a0c3ea3df0fb0311744a35c9b518987d4978fed963d4b3f04d2fac2348a914834f7ce464fda766efa854556554c56a33b6"
+        name = "opam-{}-x86_64-linux".format(version)
+        print("Downloading", name)
+        url = "https://github.com/ocaml/opam/releases/download/{}/{}".format(
+                version, name)
+        res = requests.get(url)
+        if hashlib.sha512(res.content).hexdigest() != h:
+            raise RuntimeError("SHA512 hash of opam binary doesn't match!")
+        with open(opam, 'wb') as f:
+            f.write(res.content)
+        os.chmod(opam, 0o755)
+
+    opam = os.path.join(home, ".local", "bin", "opam")
+    if not os.path.exists(opam):
+        install_opam(opam)
+
     if not os.path.exists(os.path.join(home, '.opam')):
-        subprocess.run(['opam', 'init'])
-        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam config env), and run install.py again.", 'y')
+        subprocess.run([opam, 'init'])
+        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run install.py -o again.", 'y')
         return
 
-    subprocess.run(['opam', 'update'])
+    subprocess.run([opam, 'update'])
     if upgrade:
-        subprocess.run(['opam', 'upgrade'])
+        subprocess.run([opam, 'upgrade'])
 
     pkgs = [
             "merlin", "utop", "ocp-indent",
             ]
 
-    subprocess.run(['opam', 'install'] + pkgs)
+    subprocess.run([opam, 'install'] + pkgs)
 
     # setup merlin and ocp-indent.
-    ret = subprocess.run(['opam', 'config', 'var', 'share'], stdout=subprocess.PIPE)
+    ret = subprocess.run([opam, 'config', 'var', 'share'], stdout=subprocess.PIPE)
 
     opam_share = ret.stdout.decode().strip()
 
