@@ -1,5 +1,7 @@
 # GNOME desktop
 
+To be more specific, Ubuntu (LTS) desktop.
+
 ## 日本語入力
 ### ibus-mozc (Recommended for Ubuntu 18.04)
 1. install (`sudo apt install ibus-mozc`) and restart X session
@@ -23,3 +25,14 @@ To check gnome shell version:
 gnome-shell --version
 ```
 
+## X keymap (/etc/default/keyboard -> XKBOPTIONS)
+See `man keyboard` and `/usr/share/X11/xkb/rules/xorg.lst`.
+
+"Caps to Ctrl", i.e. `XKBOPTIONS=ctrl:nocaps` is set by `install.zsh`.
+
+Other options like `altwin:swap_lalt_lwin` may be useful for some keyboards,
+but setting `XKBOPTIONS="ctrl:nocaps,altwin:swap_lalt_lwin"` doesn't work sometimes.
+In this situation, try gsettings instead:
+```
+gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps','altwin:swap_lalt_lwin']"
+```
