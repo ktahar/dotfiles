@@ -43,11 +43,8 @@ cd ~/dotfiles/ && git submodule foreach git pull origin master
 See scripts in [submod](submod) for shortcuts.
 
 ## Environment Specific
-### Linux (GNOME)
-For linux desktop (GNOME), see [gnome](gnome) directory.
+### Linux desktop (GNOME)
+See [gnome](gnome) directory.
 
 ### Windows
-For windows, see [windows](windows) directory.
-
-#### TeraTerm
-Copy TERATERM.INI to TeraTerm's directory or just load settings from TeraTerm.
+See [windows](windows) directory.
