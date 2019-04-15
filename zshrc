@@ -206,7 +206,9 @@ alias oct='octave --no-gui'
 alias oe='eval $(opam env)'
 os () {
     opam switch $1
-    eval $(opam env)
+    if [ -n "$1" ]; then
+        eval $(opam env)
+    fi
 }
 
 # Tools, Plugins and Extensions
