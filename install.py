@@ -160,7 +160,7 @@ def install_apt_packages(upgrade):
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
             # languages
-            "ruby-full", "ocaml", "opam", "sbcl",
+            "ruby-full", "ocaml", "sbcl",
             # build tools
             "build-essential", "cmake",
             # dev libs

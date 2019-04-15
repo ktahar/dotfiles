@@ -203,6 +203,11 @@ alias marpp='npx marp --allow-local-files --pdf'
 alias utop='utop -init ~/dotfiles/ocamlinit_utop'
 alias ml='rlwrap ocaml'
 alias oct='octave --no-gui'
+alias oe='eval $(opam env)'
+os () {
+    opam switch $1
+    eval $(opam env)
+}
 
 # Tools, Plugins and Extensions
 ## OPAM
