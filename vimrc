@@ -249,6 +249,7 @@ autocmd BufNewFile,BufRead *.launch set filetype=xml
 "" OCaml
 " prevent maps by default ocaml.vim
 let no_ocaml_maps = 1
+autocmd BufNewFile,BufRead ocamlinit* set filetype=ocaml
 
 "" Binary {{{
 " vim -b : edit binary using xxd-format!
