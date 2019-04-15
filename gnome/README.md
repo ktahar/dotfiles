@@ -36,3 +36,5 @@ In this situation, try gsettings instead:
 ```
 gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps','altwin:swap_lalt_lwin']"
 ```
+
+Current option can be queried by `setxkbmap -query`.
