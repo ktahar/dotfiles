@@ -542,7 +542,7 @@ def main_linux(args):
             printc('[{}]'.format(lang), 'b')
             getattr(__main__, 'install_{}'.format(lang))()
 
-    if args.vim:
+    if args.all or args.vim:
         printc('[vim]', 'b')
         setup_vim()
 
