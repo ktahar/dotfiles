@@ -3,6 +3,7 @@
 import sys
 import os
 from os import path
+import glob
 import shutil
 import subprocess
 import argparse
@@ -52,15 +53,6 @@ def copy_vimrc_local():
 def setup_apps():
     """setup applications.
 
-    [vim]
-    On linux desktop, option +clipboard (+X11) turns on with configure --with-features=huge.
-    However, configuration of X fails sometimes (which result in -clipboard (-X11)).
-    Maybe Ubuntu 18's Wayland-or-X things are problematic.
-    Proper build is confirmed after installing vanilla-gnome-desktop and logged in with 'GNOME on Xorg'.
-    When you changed X config / situations,
-    try following to remove config cache (vim/src/auto/config.cache) and then configure & make again.
-    cd ~/dotfiles/apps/vim/src && make distclean
-
     [bubblewrap]
     required by OPAM 2.0.
     While Ubuntu 18.04+ has apt package for this,
@@ -86,7 +78,21 @@ def setup_apps():
         subprocess.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
                 cwd=wd)
 
-    # vim
+def setup_vim():
+    """setup vim
+
+    Note:
+    On linux desktop, option +clipboard (+X11) turns on with configure --with-features=huge.
+    However, configuration of X fails sometimes (which result in -clipboard (-X11)).
+    Maybe Ubuntu 18's Wayland-or-X things are problematic.
+    Proper build is confirmed after installing vanilla-gnome-desktop and logged in with 'GNOME on Xorg'.
+    When you changed X config / situations,
+    try following to remove config cache (vim/src/auto/config.cache) and then configure & make again.
+    cd ~/dotfiles/apps/vim/src && make distclean
+
+    """
+
+    # Build
     ## check commit hash of HEAD
     head = path.join(home, "dotfiles/apps/vim.HEAD")
     if path.exists(head):
@@ -116,6 +122,15 @@ def setup_apps():
 
         with open(head, 'w') as f:
             f.write(hnow)
+
+    # Generate helptags
+    docs = path.join(home, "dotfiles", "vim", "pack", "my", "start", "*", "doc")
+    ## Don't pass many commands to vim like -c helptags p0 -c helptags p1 ...
+    ## since there's upper limit of accepted number of commands
+    ## (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
+    vim = path.join(home, ".local", "bin", "vim")
+    for p in glob.glob(docs):
+        subprocess.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -327,10 +342,6 @@ def install_opam_packages(upgrade):
             os.symlink(pkg_path, pack_path)
             printc("created sym link %s" % pack_path, 'g')
 
-    ## generate helptags for merlin.
-    doc_path = path.join(opam_share, 'merlin', 'vim', 'doc')
-    subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
-
 def install_node():
     """install Node.js to ~/opt/node.
 
@@ -531,12 +542,18 @@ def main_linux(args):
             printc('[{}]'.format(lang), 'b')
             getattr(__main__, 'install_{}'.format(lang))()
 
+    if args.vim:
+        printc('[vim]', 'b')
+        setup_vim()
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('--uninstall', action='store_true',
             help='Uninstall by removing links. Other options are ignored.')
     parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
+    parser.add_argument('-v', '--vim', action='store_true',
+            help='Build vim and generate helptags for plugins.')
     parser.add_argument('-A', '--all', action='store_true',
             help='Install all extra things. e.g. packages.')
     parser.add_argument('-a', '--apt', action='store_true',
