@@ -67,3 +67,9 @@
 [submodule "apps/pyenv"]
 	path = apps/pyenv
 	url = https://github.com/pyenv/pyenv
+[submodule "vim/pack/my/start/vim-markdown"]
+	path = vim/pack/my/start/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown
+[submodule "vim/pack/my/start/tabular"]
+	path = vim/pack/my/start/tabular
+	url = https://github.com/godlygeek/tabular
