@@ -6,12 +6,12 @@ if [ -d ~/go ]; then
 fi
 
 ## pyenv
-export PYENV_ROOT=$HOME/.pyenv
+export PYENV_ROOT=~/.pyenv
 
 ## PATH
 typeset -U path
 ## dirs to put at head.
-directories=($PYENV_ROOT/bin ~/gems/bin ~/opt/node/bin /usr/local/go/bin ~/bin ~/.local/bin)
+directories=($PYENV_ROOT/bin ~/gems/bin ~/opt/node/bin ~/opt/go/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
@@ -36,7 +36,7 @@ export PIPENV_VENV_IN_PROJECT=1
 export EDITOR=vim
 
 ## Ruby and gem
-export GEM_HOME=$HOME/gems
+export GEM_HOME=~/gems
 
 ## fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'

@@ -331,7 +331,7 @@ def install_opam_packages(upgrade):
     subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
 
 def install_node():
-    """install node.js to ~/opt/node.
+    """install Node.js to ~/opt/node.
 
     """
 
@@ -350,6 +350,25 @@ def install_node():
     with tarfile.open(fileobj=stream, mode='r:xz') as tar:
         tar.extractall(path=os.path.join(home, 'opt'))
     os.symlink(os.path.join(home, 'opt', name), node_dir)
+
+def install_go():
+    """install Golang to ~/opt/go.
+
+    """
+
+    go_dir = os.path.join(home, 'opt', 'go')
+    if os.path.exists(go_dir):
+        return
+
+    import io, tarfile, requests
+    major, minor, patch = 1, 12, 4
+    name = "go{}.{}.{}.linux-amd64".format(major, minor, patch)
+    print("Downloading", name)
+    url = "https://dl.google.com/go/{}.tar.gz".format(name)
+    res = requests.get(url)
+    stream = io.BytesIO(res.content)
+    with tarfile.open(fileobj=stream, mode='r:gz') as tar:
+        tar.extractall(path=os.path.join(home, 'opt'))
 
 def main_windows(args):
     """make directories and symbolic links for windows.
@@ -506,10 +525,10 @@ def main_linux(args):
         if args.all or getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
-    if args.all or args.node:
-        printc('[node.js]', 'b')
-        install_node()
-
+    for lang in ('node', 'go'):
+        if args.all or getattr(args, lang):
+            printc('[{}]'.format(lang), 'b')
+            getattr(__main__, 'install_{}'.format(lang))()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
@@ -527,8 +546,10 @@ def parse_args():
             help='Install gem packages.')
     parser.add_argument('-o', '--opam', action='store_true',
             help='Install opam packages.')
+    parser.add_argument('-G', '--go', action='store_true',
+            help='Install Golang.')
     parser.add_argument('-n', '--node', action='store_true',
-            help='Install node.js.')
+            help='Install Node.js.')
 
     return parser.parse_args()
 
