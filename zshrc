@@ -193,16 +193,25 @@ alias ipy3='ipython3'
 alias ipy2='ipython2'
 alias docker_rm_all='docker rm -f $(docker ps -aq)'
 alias docker_rmi_all='docker rmi -f $(docker images -q)'
-alias pip2i='pip2 install --user'
-alias pip3i='pip3 install --user'
-alias pip2u='pip2 install --user -U'
-alias pip3u='pip3 install --user -U'
 alias marp='npx marp'
 alias marpw='npx marp -w'
 alias marpp='npx marp --allow-local-files --pdf'
 alias utop='utop -init ~/dotfiles/ocamlinit_utop'
 alias ml='rlwrap ocaml'
 alias oct='octave --no-gui'
+
+# Always use system python for global and managing things in ~/.local.
+# And use `pipenv` in project-directory to use different version of python.
+# Here are aliases to avoid calling other versions of pip through pyenv.
+# (May happen when calling pip after
+# `pyenv global 3.x.x`, which should never be done.)
+alias pip2="~/.local/bin/pip2"
+alias pip2i="~/.local/bin/pip2 install --user"
+alias pip2u="~/.local/bin/pip2 install --user -U"
+alias pip3="~/.local/bin/pip3"
+alias pip3i="~/.local/bin/pip3 install --user"
+alias pip3u="~/.local/bin/pip3 install --user -U"
+alias pip="~/.local/bin/pip"
 
 # Tools, Plugins and Extensions
 ## OPAM
@@ -241,3 +250,9 @@ vg() {
         vim $file +$line
     fi
 }
+
+## pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    pyenv global system # always fix global python to system
+fi

@@ -168,11 +168,13 @@ def install_apt_packages(upgrade):
         subprocess.run(['sudo', '-E', 'apt', 'upgrade'])
 
     pkgs = [
-            "ncurses-term", "silversearcher-ag", "htop", "tree", "curl",
+            "ncurses-term", "silversearcher-ag", "htop", "tree", "curl", "wget",
             "git", "mercurial", "darcs", # for some package managers
             "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer", "rlwrap",
+            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
+            "m4", ## for opam package conf-m4
             # I personally use vim built from source instead of this one.
             # But install apt-pack vim here for root or other users.
             "vim",
@@ -184,16 +186,17 @@ def install_apt_packages(upgrade):
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
             # build tools
-            "build-essential", "cmake",
+            "build-essential", "cmake", "llvm",
             # dev libs
+            ## to build python
+            "libssl-dev", ## also for ruby gem package openssl
+            "zlib1g-dev", ## also for ruby gem package jekyll
+            "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
+            "libncurses5-dev", "xz-utils", "tk-dev",
+            "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
             ## to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "xorg-dev", ## to enable +clipboard +X11
-            ## to build vim
-            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
-            "zlib1g-dev", ## for gem package jekyll
-            "libssl-dev", ## for gem package openssl
-            "m4", ## for opam package conf-m4
             ]
 
     if distid == 'xenial':
@@ -425,6 +428,7 @@ files_linux = [
         (r".tmux.conf", r"tmux.conf"),
         (r".tmux/plugins", r"tmux/plugins"),
         (r".fzf", r"apps/fzf"),
+        (r".pyenv", r"apps/pyenv"),
         (r".ctags", r"ctags"),
         (r".gitignore_global", r"gitignore_global"),
         (r".agignore", r"agignore"),

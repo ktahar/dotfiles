@@ -5,10 +5,13 @@ if [ -d ~/go ]; then
     export GOPATH=~/go
 fi
 
+## pyenv
+export PYENV_ROOT=$HOME/.pyenv
+
 ## PATH
 typeset -U path
 ## dirs to put at head.
-directories=(~/gems/bin ~/opt/node/bin /usr/local/go/bin ~/bin ~/.local/bin)
+directories=($PYENV_ROOT/bin ~/gems/bin ~/opt/node/bin /usr/local/go/bin ~/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)

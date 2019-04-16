@@ -64,3 +64,6 @@
 [submodule "apps/bubblewrap"]
 	path = apps/bubblewrap
 	url = https://github.com/projectatomic/bubblewrap
+[submodule "apps/pyenv"]
+	path = apps/pyenv
+	url = https://github.com/pyenv/pyenv
