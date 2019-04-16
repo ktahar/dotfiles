@@ -5,11 +5,16 @@ import os
 import shutil
 import subprocess
 import argparse
+import platform
 
-if os.name == 'nt':
+osname = platform.system()
+if osname == 'Windows':
     home = os.environ.get('USERPROFILE')
 else:
     home = os.environ.get('HOME')
+if osname == 'Linux':
+    distname, distversion, distid = platform.linux_distribution()
+
 p = os.path.join(home, 'dotfiles', 'py')
 if p not in sys.path:
     sys.path.append(p)
@@ -55,8 +60,14 @@ def setup_apps():
     try following to remove config cache (vim/src/auto/config.cache) and then configure & make again.
     cd ~/dotfiles/apps/vim/src && make distclean
 
+    [bubblewrap]
+    required by OPAM 2.0.
+    While Ubuntu 18.04+ has apt package for this,
+    Ubuntu 16.04 doesn't. So, build from source.
+
     """
 
+    # fzf
     fzf_install = [os.path.join(home, '.fzf/install'),
             '--key-bindings',
             '--completion',
@@ -64,7 +75,18 @@ def setup_apps():
             '--no-bash']
     subprocess.run(fzf_install)
 
-    # check commit hash of HEAD
+    # bubblewrap
+    e_local_bwrap = os.path.exists(os.path.join(home, ".local", "bin", "bwrap"))
+    if osname == 'Linux' and distid == 'xenial' and not e_local_bwrap:
+        wd = os.path.join(home, "dotfiles", "apps", "bubblewrap")
+        subprocess.run(['./autogen.sh'], cwd=wd)
+        subprocess.run(['./configure', '--prefix={}/.local'.format(home)], cwd=wd)
+        subprocess.run(['make'], cwd=wd)
+        subprocess.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
+                cwd=wd)
+
+    # vim
+    ## check commit hash of HEAD
     head = os.path.join(home, "dotfiles/apps/vim.HEAD")
     if os.path.exists(head):
         with open(head) as f:
@@ -147,31 +169,37 @@ def install_apt_packages(upgrade):
 
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl",
-            "git", "mercurial", "darcs", # VCS are required by some pack managers
+            "git", "mercurial", "darcs", # for some package managers
             "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "ttf-mscorefonts-installer", "rlwrap",
             # I personally use vim built from source instead of this one.
             # But install apt-pack vim here for root or other users.
             "vim",
-            # python libs
+            # languages
+            "ruby-full", "sbcl",
+            ## python libs
             "python-dev", "python3-dev",
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
-            # languages
-            "ruby-full", "ocaml", "sbcl",
             # build tools
             "build-essential", "cmake",
             # dev libs
-            ## for vim build
+            ## to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "xorg-dev", ## to enable +clipboard +X11
+            ## to build vim
             "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
             "zlib1g-dev", ## for gem package jekyll
             "libssl-dev", ## for gem package openssl
             "m4", ## for opam package conf-m4
             ]
+
+    if distid == 'xenial':
+        pkgs.append("libcap-dev") # to build bubblewrap for opam
+    else:
+        pkgs.append("bubblewrap") # for opam
 
     res = subprocess.run(['dpkg-query', '-W'] + pkgs,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -458,8 +486,19 @@ def main_linux(args):
     printc('[git global config]', 'b')
     set_git_global_config()
 
+    if args.all or args.apt:
+        printc('[apt packages]', 'b')
+        install_apt_packages(args.upgrade)
+
+    # shell and apps should be later than apt.
+    printc('[shell]', 'b')
+    setup_shell()
+    printc('[apps]', 'b')
+    setup_apps()
+
+    # language package managers
     import __main__
-    for pack in ('apt', 'pip', 'gem', 'opam'):
+    for pack in ('pip', 'gem', 'opam'):
         if args.all or getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
@@ -467,11 +506,6 @@ def main_linux(args):
         printc('[node.js]', 'b')
         install_node()
 
-    # shell and apps should be later than apt.
-    printc('[shell]', 'b')
-    setup_shell()
-    printc('[apps]', 'b')
-    setup_apps()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
@@ -497,10 +531,10 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
 
-    if os.name == 'nt':
+    if osname == 'Windows':
         main_windows(args)
-    elif os.name == 'posix':
+    elif osname == 'Linux' and distname == 'Ubuntu' or distname == 'Debian':
         main_linux(args)
     else:
-        raise NotImplementedError("OS name %s is not supported." % os.name)
+        raise NotImplementedError("OS %s is not supported." % osname)
 
