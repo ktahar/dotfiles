@@ -23,7 +23,7 @@ For now, just remove symlinks.
 Using git submodule to get apps/plugins from github.
 See following directories.
 
-* [apps](apps): applications, vim and fzf.
+* [apps](apps): applications, vim, fzf, pyenv etc.
 * [vim/pack](vim/pack): plugins for vim.
 * [tmux/plugins](tmux/plugins): plugins for tmux.
 

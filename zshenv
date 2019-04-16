@@ -38,7 +38,7 @@ export EDITOR=vim
 ## Ruby and gem
 export GEM_HOME=$HOME/gems
 
-# fzf
+## fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
 export FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
 export FZF_COMPLETION_TRIGGER='~~'
