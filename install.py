@@ -2,6 +2,7 @@
 
 import sys
 import os
+from os import path
 import shutil
 import subprocess
 import argparse
@@ -15,9 +16,9 @@ else:
 if osname == 'Linux':
     distname, distversion, distid = platform.linux_distribution()
 
-p = os.path.join(home, 'dotfiles', 'py')
-if p not in sys.path:
-    sys.path.append(p)
+py = path.join(home, 'dotfiles', 'py')
+if py not in sys.path:
+    sys.path.append(py)
 from colour import printc
 
 def prompt(msg, default='y'):
@@ -40,9 +41,9 @@ def prompt(msg, default='y'):
                 return False
 
 def copy_vimrc_local():
-    vimrc_local = os.path.join(home, "dotfiles", "vimrc.local")
-    vimrc_local_example = os.path.join(home, "dotfiles", "vimrc.local.example")
-    if os.path.exists(vimrc_local):
+    vimrc_local = path.join(home, "dotfiles", "vimrc.local")
+    vimrc_local_example = path.join(home, "dotfiles", "vimrc.local.example")
+    if path.exists(vimrc_local):
         print(r"[INFO] already exists: %s" % vimrc_local)
     else:
         shutil.copy(vimrc_local_example, vimrc_local)
@@ -68,7 +69,7 @@ def setup_apps():
     """
 
     # fzf
-    fzf_install = [os.path.join(home, '.fzf/install'),
+    fzf_install = [path.join(home, '.fzf/install'),
             '--key-bindings',
             '--completion',
             '--no-update-rc',
@@ -76,9 +77,9 @@ def setup_apps():
     subprocess.run(fzf_install)
 
     # bubblewrap
-    e_local_bwrap = os.path.exists(os.path.join(home, ".local", "bin", "bwrap"))
+    e_local_bwrap = path.exists(path.join(home, ".local", "bin", "bwrap"))
     if osname == 'Linux' and distid == 'xenial' and not e_local_bwrap:
-        wd = os.path.join(home, "dotfiles", "apps", "bubblewrap")
+        wd = path.join(home, "dotfiles", "apps", "bubblewrap")
         subprocess.run(['./autogen.sh'], cwd=wd)
         subprocess.run(['./configure', '--prefix={}/.local'.format(home)], cwd=wd)
         subprocess.run(['make'], cwd=wd)
@@ -87,15 +88,15 @@ def setup_apps():
 
     # vim
     ## check commit hash of HEAD
-    head = os.path.join(home, "dotfiles/apps/vim.HEAD")
-    if os.path.exists(head):
+    head = path.join(home, "dotfiles/apps/vim.HEAD")
+    if path.exists(head):
         with open(head) as f:
             hlast = f.readline()
     else:
         hlast = None
 
     res = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'],
-            cwd=os.path.join(home, "dotfiles/apps/vim"),
+            cwd=path.join(home, "dotfiles/apps/vim"),
             stdout=subprocess.PIPE)
     hnow = res.stdout.decode()
 
@@ -109,9 +110,9 @@ def setup_apps():
                 '--enable-fail-if-missing',
                 ]
         subprocess.run(vim_conf,
-                cwd=os.path.join(home, "dotfiles/apps/vim/src"))
+                cwd=path.join(home, "dotfiles/apps/vim/src"))
         subprocess.run(["make", "install"],
-                cwd=os.path.join(home, "dotfiles/apps/vim/src"))
+                cwd=path.join(home, "dotfiles/apps/vim/src"))
 
         with open(head, 'w') as f:
             f.write(hnow)
@@ -121,9 +122,9 @@ def setup_shell():
             '.zshrc': "source $HOME/dotfiles/zshrc\n",
             '.zshenv': "source $HOME/dotfiles/zshenv\n"}
     for fn in contents:
-        p = os.path.join(home, fn)
+        p = path.join(home, fn)
 
-        if not os.path.exists(p):
+        if not path.exists(p):
             print('Writing following contents to %s.' % p)
             print(contents[fn])
             if prompt('OK?'):
@@ -223,12 +224,12 @@ def install_pip_packages(upgrade):
     """
 
     # prefer pip at ~/.local/bin
-    local_bin = os.path.join(home, '.local', 'bin')
+    local_bin = path.join(home, '.local', 'bin')
 
     # install/upgrade pip first
     for pip in ('pip2', 'pip3'):
-        local_pip = os.path.join(local_bin, pip)
-        if os.path.exists(local_pip):
+        local_pip = path.join(local_bin, pip)
+        if path.exists(local_pip):
             subprocess.run([local_pip, 'install', '--user', '-U', 'pip'])
         else:
             subprocess.run([pip, 'install', '--user', '-U', 'pip'])
@@ -252,8 +253,8 @@ def install_pip_packages(upgrade):
             "ewmh", # for window focus control in fwdevince
             ]
 
-    subprocess.run([os.path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
-    subprocess.run([os.path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
+    subprocess.run([path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
+    subprocess.run([path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
 
 def install_gem_packages(upgrade):
     """install ruby packages using gem.
@@ -293,11 +294,11 @@ def install_opam_packages(upgrade):
             f.write(res.content)
         os.chmod(opam, 0o755)
 
-    opam = os.path.join(home, ".local", "bin", "opam")
-    if not os.path.exists(opam):
+    opam = path.join(home, ".local", "bin", "opam")
+    if not path.exists(opam):
         install_opam(opam)
 
-    if not os.path.exists(os.path.join(home, '.opam')):
+    if not path.exists(path.join(home, '.opam')):
         subprocess.run([opam, 'init'])
         printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run install.py -o again.", 'y')
         return
@@ -319,15 +320,15 @@ def install_opam_packages(upgrade):
 
     ## create symlink for `pkg` as vim pack.
     for pkg in ('merlin', 'ocp-indent'):
-        pkg_path = os.path.join(opam_share, pkg, 'vim')
-        pack_path = os.path.join(home, 'dotfiles',
+        pkg_path = path.join(opam_share, pkg, 'vim')
+        pack_path = path.join(home, 'dotfiles',
                 'vim', 'pack', 'my', 'start', pkg)
-        if not os.path.exists(pack_path):
+        if not path.exists(pack_path):
             os.symlink(pkg_path, pack_path)
             printc("created sym link %s" % pack_path, 'g')
 
     ## generate helptags for merlin.
-    doc_path = os.path.join(opam_share, 'merlin', 'vim', 'doc')
+    doc_path = path.join(opam_share, 'merlin', 'vim', 'doc')
     subprocess.run(['vim', '-c', 'helptags ' + doc_path, '-c', 'quit'])
 
 def install_node():
@@ -335,8 +336,8 @@ def install_node():
 
     """
 
-    node_dir = os.path.join(home, 'opt', 'node')
-    if os.path.exists(node_dir):
+    node_dir = path.join(home, 'opt', 'node')
+    if path.exists(node_dir):
         return
 
     import io, tarfile, requests
@@ -348,16 +349,16 @@ def install_node():
     res = requests.get(url)
     stream = io.BytesIO(res.content)
     with tarfile.open(fileobj=stream, mode='r:xz') as tar:
-        tar.extractall(path=os.path.join(home, 'opt'))
-    os.symlink(os.path.join(home, 'opt', name), node_dir)
+        tar.extractall(path=path.join(home, 'opt'))
+    os.symlink(path.join(home, 'opt', name), node_dir)
 
 def install_go():
     """install Golang to ~/opt/go.
 
     """
 
-    go_dir = os.path.join(home, 'opt', 'go')
-    if os.path.exists(go_dir):
+    go_dir = path.join(home, 'opt', 'go')
+    if path.exists(go_dir):
         return
 
     import io, tarfile, requests
@@ -368,7 +369,7 @@ def install_go():
     res = requests.get(url)
     stream = io.BytesIO(res.content)
     with tarfile.open(fileobj=stream, mode='r:gz') as tar:
-        tar.extractall(path=os.path.join(home, 'opt'))
+        tar.extractall(path=path.join(home, 'opt'))
 
 def main_windows(args):
     """make directories and symbolic links for windows.
@@ -392,9 +393,9 @@ def main_windows(args):
     dirs = [r".config\matplotlib", r".ipython\profile_default\startup"]
 
     for d in dirs:
-        dn = os.path.join(home, d)
+        dn = path.join(home, d)
 
-        if os.path.exists(dn):
+        if path.exists(dn):
             print("[INFO] already exists: %s" % dn)
         else:
             os.makedirs(dn)
@@ -410,13 +411,13 @@ def main_windows(args):
             ]
 
     for f in files:
-        ln = os.path.join(home, f[0])
-        tgt = os.path.join(home, 'dotfiles', f[1])
+        ln = path.join(home, f[0])
+        tgt = path.join(home, 'dotfiles', f[1])
 
-        if os.path.exists(ln):
+        if path.exists(ln):
             print("[INFO] already exists: %s" % ln)
         else:
-            isdir = 1 if os.path.isdir(tgt) else 0
+            isdir = 1 if path.isdir(tgt) else 0
             if admin:
                 ret = kdll.CreateSymbolicLinkW(ln, tgt, isdir)
                 if ret == 1:
@@ -463,8 +464,8 @@ files_linux = [
 
 def unlink_linux():
     for f in files_linux:
-        ln = os.path.join(home, f[0])
-        if os.path.islink(ln):
+        ln = path.join(home, f[0])
+        if path.islink(ln):
             os.remove(ln)
             printc("[WARN] removed {}".format(ln), 'y')
         else:
@@ -477,9 +478,9 @@ def link_linux(args):
 
     printc('[dirs]', 'b')
     for d in dirs:
-        dn = os.path.join(home, d)
+        dn = path.join(home, d)
 
-        if os.path.exists(dn):
+        if path.exists(dn):
             print("[INFO] already exists: %s" % dn)
         else:
             os.makedirs(dn)
@@ -487,10 +488,10 @@ def link_linux(args):
 
     printc('[links]', 'b')
     for f in files_linux:
-        ln = os.path.join(home, f[0])
-        tgt = os.path.join(home, 'dotfiles', f[1])
+        ln = path.join(home, f[0])
+        tgt = path.join(home, 'dotfiles', f[1])
 
-        if os.path.exists(ln):
+        if path.exists(ln):
             print("[INFO] already exists: %s" % ln)
         else:
             os.symlink(tgt, ln)
