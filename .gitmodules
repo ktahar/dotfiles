@@ -73,3 +73,6 @@
 [submodule "vim/pack/my/start/tabular"]
 	path = vim/pack/my/start/tabular
 	url = https://github.com/godlygeek/tabular
+[submodule "vim/pack/my/start/jellybeans.vim"]
+	path = vim/pack/my/start/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim

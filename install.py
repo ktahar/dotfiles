@@ -41,14 +41,70 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
-def copy_vimrc_local():
-    vimrc_local = path.join(home, "dotfiles", "vimrc.local")
-    vimrc_local_example = path.join(home, "dotfiles", "vimrc.local.example")
-    if path.exists(vimrc_local):
-        print(r"[INFO] already exists: %s" % vimrc_local)
-    else:
-        shutil.copy(vimrc_local_example, vimrc_local)
-        print("Made file ~/dotfiles/vimrc.local.")
+def main_windows(args):
+    """make directories and symbolic links for windows.
+
+    Note that you should run this script with Administrator privilege.
+    Creates hardlinks and junctions if executed without Admin. priv.
+
+    """
+
+    import ctypes
+
+    kdll = ctypes.windll.LoadLibrary("kernel32.dll")
+    shdll = ctypes.windll.LoadLibrary("Shell32.dll")
+
+    admin = shdll.IsUserAnAdmin()
+    if not admin:
+        print("You don't have Administrator priviledge. If you can get it, I recommend to install with it.")
+        if not prompt('Install anyway?', 'n'):
+            return
+
+    dirs = [r".config\matplotlib", r".ipython\profile_default\startup"]
+
+    for d in dirs:
+        dn = path.join(home, d)
+
+        if path.exists(dn):
+            print("[INFO] already exists: %s" % dn)
+        else:
+            os.makedirs(dn)
+            print("created dir %s" % dn)
+
+    files = [(r"_vimrc", r"vimrc"),
+            (r"_gvimrc", r"gvimrc"),
+            (r".latexmkrc", r"latexmkrc"),
+            (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
+            (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
+            (r"vimfiles", r"vim"),
+            (r".minttyrc", r"windows\minttyrc"),
+            ]
+
+    for f in files:
+        ln = path.join(home, f[0])
+        tgt = path.join(home, 'dotfiles', f[1])
+
+        if path.exists(ln):
+            print("[INFO] already exists: %s" % ln)
+        else:
+            isdir = 1 if path.isdir(tgt) else 0
+            if admin:
+                ret = kdll.CreateSymbolicLinkW(ln, tgt, isdir)
+                if ret == 1:
+                    print("created sym link %s" % ln)
+                else:
+                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
+                    print("[ERROR] be sure to run as Administrator")
+            elif not isdir:
+                ret = kdll.CreateHardLinkW(ln, tgt, None)
+                if ret:
+                    print("created hard link %s" % ln)
+                else:
+                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
+            else:
+                # create junction to the directory (no win api?)
+                subprocess.run(['mklink', '/J', ln, tgt], shell=True)
+                print("created junction %s" % ln)
 
 def setup_apps():
     """setup applications.
@@ -382,74 +438,6 @@ def install_go():
     with tarfile.open(fileobj=stream, mode='r:gz') as tar:
         tar.extractall(path=path.join(home, 'opt'))
 
-def main_windows(args):
-    """make directories and symbolic links for windows.
-
-    Note that you should run this script with Administrator privilege.
-    Creates hardlinks and junctions if executed without Admin. priv.
-
-    """
-
-    import ctypes
-
-    kdll = ctypes.windll.LoadLibrary("kernel32.dll")
-    shdll = ctypes.windll.LoadLibrary("Shell32.dll")
-
-    admin = shdll.IsUserAnAdmin()
-    if not admin:
-        print("You don't have Administrator priviledge. If you can get it, I recommend to install with it.")
-        if not prompt('Install anyway?', 'n'):
-            return
-
-    dirs = [r".config\matplotlib", r".ipython\profile_default\startup"]
-
-    for d in dirs:
-        dn = path.join(home, d)
-
-        if path.exists(dn):
-            print("[INFO] already exists: %s" % dn)
-        else:
-            os.makedirs(dn)
-            print("created dir %s" % dn)
-
-    files = [(r"_vimrc", r"vimrc"),
-            (r"_gvimrc", r"gvimrc"),
-            (r".latexmkrc", r"latexmkrc"),
-            (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
-            (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
-            (r"vimfiles", r"vim"),
-            (r".minttyrc", r"windows\minttyrc"),
-            ]
-
-    for f in files:
-        ln = path.join(home, f[0])
-        tgt = path.join(home, 'dotfiles', f[1])
-
-        if path.exists(ln):
-            print("[INFO] already exists: %s" % ln)
-        else:
-            isdir = 1 if path.isdir(tgt) else 0
-            if admin:
-                ret = kdll.CreateSymbolicLinkW(ln, tgt, isdir)
-                if ret == 1:
-                    print("created sym link %s" % ln)
-                else:
-                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
-                    print("[ERROR] be sure to run as Administrator")
-            elif not isdir:
-                ret = kdll.CreateHardLinkW(ln, tgt, None)
-                if ret:
-                    print("created hard link %s" % ln)
-                else:
-                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
-            else:
-                # create junction to the directory (no win api?)
-                subprocess.run(['mklink', '/J', ln, tgt], shell=True)
-                print("created junction %s" % ln)
-
-    # additional things
-    copy_vimrc_local()
-
 files_linux = [
         (r".vimrc", r"vimrc"),
         (r".gvimrc", r"gvimrc"),
@@ -516,8 +504,6 @@ def main_linux(args):
 
     printc('[make dirs and links]', 'b')
     link_linux(args)
-    printc('[vimrc local]', 'b')
-    copy_vimrc_local()
     printc('[git global config]', 'b')
     set_git_global_config()
 

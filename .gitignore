@@ -4,7 +4,6 @@ __pycache__
 *.pyc
 tags
 
-vimrc.local
 vim/.netrwhist
 vim/pack/my/start/merlin
 vim/pack/my/start/ocp-indent

@@ -1,9 +1,5 @@
 """ ktaha's vimrc
 
-if filereadable(expand('~/dotfiles/vimrc.local'))
-    source ~/dotfiles/vimrc.local
-endif
-
 let s:is_win = has('win32') || has('win64')
 
 """ Basic settings {{{
