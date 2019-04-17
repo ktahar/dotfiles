@@ -106,17 +106,11 @@ def main_windows(args):
                 subprocess.run(['mklink', '/J', ln, tgt], shell=True)
                 print("created junction %s" % ln)
 
-def setup_apps():
-    """setup applications.
-
-    [bubblewrap]
-    required by OPAM 2.0.
-    While Ubuntu 18.04+ has apt package for this,
-    Ubuntu 16.04 doesn't. So, build from source.
+def setup_fzf():
+    """setup fzf.
 
     """
 
-    # fzf
     fzf_install = [path.join(home, '.fzf/install'),
             '--key-bindings',
             '--completion',
@@ -124,20 +118,8 @@ def setup_apps():
             '--no-bash']
     subprocess.run(fzf_install)
 
-    # bubblewrap
-    e_local_bwrap = path.exists(path.join(home, ".local", "bin", "bwrap"))
-    if osname == 'Linux' and distid == 'xenial' and not e_local_bwrap:
-        wd = path.join(home, "dotfiles", "apps", "bubblewrap")
-        subprocess.run(['./autogen.sh'], cwd=wd)
-        subprocess.run(['./configure', '--prefix={}/.local'.format(home),
-            '--disable-man'], cwd=wd)
-        subprocess.run(['make', 'clean'], cwd=wd)
-        subprocess.run(['make'], cwd=wd)
-        subprocess.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
-                cwd=wd)
-
 def setup_vim():
-    """setup vim
+    """setup vim.
 
     Note:
     On linux desktop, option +clipboard (+X11) turns on with configure --with-features=huge.
@@ -346,7 +328,27 @@ def install_gem_packages(upgrade):
 def install_opam_packages(upgrade):
     """install OCaml packages using opam.
 
+    [bubblewrap]
+    required by OPAM 2.0.
+    While Ubuntu 18.04+ has apt package for this,
+    Ubuntu 16.04 doesn't. So, build from source.
+
     """
+
+    def install_bwrap():
+        if not (osname == 'Linux' and distid == 'xenial'):
+            msg = "You don't have to build bwrap on platform other than Ubuntu 16.04."
+            msg += "\nYou can install it from apt (run ./install.py -a)."
+            raise RuntimeError(msg)
+
+        wd = path.join(home, "dotfiles", "apps", "bubblewrap")
+        subprocess.run(['./autogen.sh'], cwd=wd)
+        subprocess.run(['./configure', '--prefix={}/.local'.format(home),
+            '--disable-man'], cwd=wd)
+        subprocess.run(['make', 'clean'], cwd=wd)
+        subprocess.run(['make'], cwd=wd)
+        subprocess.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
+                cwd=wd)
 
     def install_opam(opam):
         """install opam itself to ~/.local/bin.
@@ -367,13 +369,16 @@ def install_opam_packages(upgrade):
             f.write(res.content)
         os.chmod(opam, 0o755)
 
+    if not shutil.which("bwrap"):
+        install_bwrap()
+
     opam = path.join(home, ".local", "bin", "opam")
     if not path.exists(opam):
         install_opam(opam)
 
     if not path.exists(path.join(home, '.opam')):
         subprocess.run([opam, 'init'])
-        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run install.py -o again.", 'y')
+        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run ./install.py -o again.", 'y')
         return
 
     subprocess.run([opam, 'update'])
@@ -513,11 +518,11 @@ def main_linux(args):
         printc('[apt packages]', 'b')
         install_apt_packages(args.upgrade)
 
-    # shell and apps should be later than apt.
+    # shell and fzf should be later than apt.
     printc('[shell]', 'b')
     setup_shell()
-    printc('[apps]', 'b')
-    setup_apps()
+    printc('[fzf]', 'b')
+    setup_fzf()
 
     # language package managers
     import __main__
@@ -525,11 +530,15 @@ def main_linux(args):
         if args.all or getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
+
+    # languages
     for lang in ('node', 'go'):
         if args.all or getattr(args, lang):
             printc('[{}]'.format(lang), 'b')
             getattr(__main__, 'install_{}'.format(lang))()
 
+    # vim should be last because some package manager installs vim plugin.
+    # e.g. merlin by opam.
     if args.all or args.vim:
         printc('[vim]', 'b')
         setup_vim()
