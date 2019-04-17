@@ -129,7 +129,9 @@ def setup_apps():
     if osname == 'Linux' and distid == 'xenial' and not e_local_bwrap:
         wd = path.join(home, "dotfiles", "apps", "bubblewrap")
         subprocess.run(['./autogen.sh'], cwd=wd)
-        subprocess.run(['./configure', '--prefix={}/.local'.format(home)], cwd=wd)
+        subprocess.run(['./configure', '--prefix={}/.local'.format(home),
+            '--disable-man'], cwd=wd)
+        subprocess.run(['make', 'clean'], cwd=wd)
         subprocess.run(['make'], cwd=wd)
         subprocess.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
                 cwd=wd)
