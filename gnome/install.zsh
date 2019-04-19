@@ -51,7 +51,7 @@ local target=${HOME}/.local/share/applications/matlab.desktop
 local matlab=${HOME}/opt/matlab
 if [ -d ${matlab} ]; then
     sed "s@<HOME>@${HOME}@g" matlab.desktop > $target
-    chmod u+x $target
+    # chmod u+x $target
 else
     echo "no MATLAB directory (${matlab}) found"
 fi
