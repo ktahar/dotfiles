@@ -60,7 +60,10 @@ set spelllang=en,cjk
 """ Highlights and Styling
 " vertical split with │ (unicode char U+2502) instead of default |
 " fold with ─ (unicode char U+2500) instead of default -
-set fillchars=vert:│,fold:─
+" aiming only gnome terminal.
+if !s:is_win && !has("gui_running")
+    set fillchars=vert:│,fold:─
+endif
 highlight StatusLine cterm=NONE ctermfg=0 ctermbg=2
 highlight StatusLineNC cterm=NONE ctermfg=2 ctermbg=0
 highlight StatusLineTerm cterm=NONE ctermfg=0 ctermbg=2
