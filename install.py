@@ -253,6 +253,8 @@ def install_apt_packages(upgrade):
             ## to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "xorg-dev", ## to enable +clipboard +X11
+            ## i3wm and things on it
+            "i3", "rxvt-unicode",
             ]
 
     if distid == 'xenial':
@@ -466,6 +468,8 @@ files_linux = [
         (r".ipython/profile_default/ipython_config.py", r"ipython_config.py"),
         (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
         (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
+        (r".config/i3/config", r"i3config"),
+        (r".Xresources", r"Xresources"),
         ]
 
 def unlink_linux():
@@ -480,7 +484,9 @@ def unlink_linux():
 def link_linux(args):
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r".local/tmp",
-            r".config/gtk-3.0"]
+            r".config/gtk-3.0",
+            r".config/i3",
+            ]
 
     printc('[dirs]', 'b')
     for d in dirs:
