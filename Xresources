@@ -1,6 +1,7 @@
 !! Xresources
 
-URxvt.font:    xft:Cica-14
+URxvt.font:    xft:Cica-16
+URxvt.scrollBar: false
 
 ! special
 URxvt.foreground:   #f1ebeb

@@ -175,7 +175,9 @@ def setup_vim():
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
             '.zshrc': "source $HOME/dotfiles/zshrc\n",
-            '.zshenv': "source $HOME/dotfiles/zshenv\n"}
+            '.zshenv': "source $HOME/dotfiles/zshenv\n",
+            '.profile': "source $HOME/dotfiles/profile\n",
+            }
     for fn in contents:
         p = path.join(home, fn)
 
