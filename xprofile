@@ -1,0 +1,7 @@
+# use fcitx for i3wm
+if [ $XDG_SESSION_DESKTOP == "i3" ]; then
+    export DefaultImModule=fcitx
+    export GTK_IM_MODULE=fcitx
+    export QT_IM_MODULE=fcitx
+    export XMODIFIERS="@im=fcitx"
+fi

@@ -176,7 +176,6 @@ def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
             '.zshrc': "source $HOME/dotfiles/zshrc\n",
             '.zshenv': "source $HOME/dotfiles/zshenv\n",
-            '.profile': "source $HOME/dotfiles/profile\n",
             }
     for fn in contents:
         p = path.join(home, fn)
@@ -472,6 +471,7 @@ files_linux = [
         (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
         (r".config/i3/config", r"i3config"),
         (r".Xresources", r"Xresources"),
+        (r".xprofile", r"xprofile"),
         ]
 
 def unlink_linux():
