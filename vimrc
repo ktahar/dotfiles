@@ -1,6 +1,12 @@
 """ ktaha's vimrc
 
 let s:is_win = has('win32') || has('win64')
+if executable('lsb_release')
+    let s:distro = system('lsb_release -sc')
+else
+    let s:distro = ""
+endif
+let s:session = $XDG_SESSION_DESKTOP
 
 """ Basic settings {{{
 
@@ -284,7 +290,9 @@ if has("unix")
 endif
 
 "" Linux Input Methods {{{
-if executable('fcitx-remote')
+" for GNOME session, im depends on the distro version.
+" xenial -> fcitx, later -> ibus
+if s:session == "i3" || s:distro == "xenial" "executable('fcitx-remote')
     let g:input_toggle = 0
     function! DeactivateFcitx()
         let s:input_status = system('fcitx-remote')
