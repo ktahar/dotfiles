@@ -13,3 +13,7 @@ if [ -z "${MY_SESSION_XRDP+1}" ]; then
     xrandr --output DP-2 --auto --output VGA-1 --right-of DP-2
 fi
 ```
+
+## fcitx-mozc
+To enter Japanese, install fcitx-mozc with `sudo apt install fcitx-mozc`,
+(reboot ?,) and then open `fcitx-configtool` to add mozc.
