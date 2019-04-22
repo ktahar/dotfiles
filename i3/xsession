@@ -1,4 +1,6 @@
 #!/bin/bash
 export XDG_SESSION_DESKTOP=i3
+export MY_SESSION_XRDP=1
 source ~/.xprofile
 /usr/bin/i3
+unset MY_SESSION_XRDP
