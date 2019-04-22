@@ -255,8 +255,8 @@ def install_apt_packages(upgrade):
             ## to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "xorg-dev", ## to enable +clipboard +X11
-            ## i3wm and things on it
-            "i3", "rxvt-unicode-256color",
+            ## i3wm and things to use with that
+            "i3", "rxvt-unicode-256color", "feh",
             ]
 
     if distid == 'xenial':
