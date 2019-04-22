@@ -42,9 +42,7 @@ cd ~/dotfiles/ && git submodule foreach git pull origin master
 
 See scripts in [submod](submod) for shortcuts.
 
-## Environment Specific
-### Linux desktop (GNOME)
-See [gnome](gnome) directory.
-
-### Windows
-See [windows](windows) directory.
+## Environment specific
+* [i3](i3)
+* [gnome](gnome)
+* [windows](windows)
