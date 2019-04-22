@@ -5,7 +5,7 @@ import os
 from os import path
 import glob
 import shutil
-import subprocess
+import subprocess as subproc
 import argparse
 import platform
 
@@ -103,7 +103,7 @@ def main_windows(args):
                     print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
             else:
                 # create junction to the directory (no win api?)
-                subprocess.run(['mklink', '/J', ln, tgt], shell=True)
+                subproc.run(['mklink', '/J', ln, tgt], shell=True)
                 print("created junction %s" % ln)
 
 def setup_fzf():
@@ -116,7 +116,7 @@ def setup_fzf():
             '--completion',
             '--no-update-rc',
             '--no-bash']
-    subprocess.run(fzf_install)
+    subproc.run(fzf_install)
 
 def setup_vim():
     """setup vim.
@@ -141,9 +141,9 @@ def setup_vim():
     else:
         hlast = None
 
-    res = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'],
+    res = subproc.run(['git', 'rev-parse', '--short', 'HEAD'],
             cwd=path.join(home, "dotfiles/apps/vim"),
-            stdout=subprocess.PIPE)
+            stdout=subproc.PIPE)
     hnow = res.stdout.decode()
 
     if hnow != hlast and prompt('Build Vim?'):
@@ -155,9 +155,9 @@ def setup_vim():
                 '--enable-python3interp',
                 '--enable-fail-if-missing',
                 ]
-        subprocess.run(vim_conf,
+        subproc.run(vim_conf,
                 cwd=path.join(home, "dotfiles/apps/vim/src"))
-        subprocess.run(["make", "install"],
+        subproc.run(["make", "install"],
                 cwd=path.join(home, "dotfiles/apps/vim/src"))
 
         with open(head, 'w') as f:
@@ -170,7 +170,7 @@ def setup_vim():
     ## (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
     vim = path.join(home, ".local", "bin", "vim")
     for p in glob.glob(docs):
-        subprocess.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
+        subproc.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
 
 def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -208,7 +208,7 @@ def setup_shell():
             printc("[WARN] You can install with ./install.py -a", 'y')
             return
         if prompt('Change default shell to /bin/zsh?'):
-            subprocess.run(['chsh', '-s', '/bin/zsh'])
+            subproc.run(['chsh', '-s', '/bin/zsh'])
 
 def set_git_global_config():
     configs = [("core.excludesfile", "~/.gitignore_global"),
@@ -221,13 +221,13 @@ def set_git_global_config():
             ]
 
     for k, v in configs:
-        subprocess.run(['git', 'config', '--global', k, v])
+        subproc.run(['git', 'config', '--global', k, v])
 
 def install_apt_packages(args):
-    subprocess.run(['sudo', '-E', 'apt', 'update'])
+    subproc.run(['sudo', '-E', 'apt', 'update'])
 
     if args.upgrade:
-        subprocess.run(['sudo', '-E', 'apt', 'upgrade'])
+        subproc.run(['sudo', '-E', 'apt', 'upgrade'])
 
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl", "wget",
@@ -286,10 +286,10 @@ def install_apt_packages(args):
 
     printc("[INFO] apt pkgs attempting to install", "g")
     printc(" ".join(pkgs), "g")
-    res = subprocess.run(['dpkg-query', '-W'] + pkgs,
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    res = subproc.run(['dpkg-query', '-W'] + pkgs,
+            stdout=subproc.DEVNULL, stderr=subproc.DEVNULL)
     if res.returncode:
-        subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
+        subproc.run(['sudo', '-E', 'apt', 'install'] + pkgs)
     else:
         print("[INFO] all pkgs are already installed.")
 
@@ -313,9 +313,9 @@ def install_pip_packages(upgrade):
     for pip in ('pip2', 'pip3'):
         local_pip = path.join(local_bin, pip)
         if path.exists(local_pip):
-            subprocess.run([local_pip, 'install', '--user', '-U', 'pip'])
+            subproc.run([local_pip, 'install', '--user', '-U', 'pip'])
         else:
-            subprocess.run([pip, 'install', '--user', '-U', 'pip'])
+            subproc.run([pip, 'install', '--user', '-U', 'pip'])
 
     opts = ['install', '--user']
     if upgrade:
@@ -336,8 +336,8 @@ def install_pip_packages(upgrade):
             "ewmh", # for window focus control in fwdevince
             ]
 
-    subprocess.run([path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
-    subprocess.run([path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
+    subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
+    subproc.run([path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
 
 def install_gem_packages(upgrade):
     """install ruby packages using gem.
@@ -345,13 +345,13 @@ def install_gem_packages(upgrade):
     """
 
     if upgrade:
-        subprocess.run(['gem', 'update'])
+        subproc.run(['gem', 'update'])
 
     pkgs = [
             "jekyll", "bundler",
             ]
 
-    subprocess.run(['gem', 'install'] + pkgs)
+    subproc.run(['gem', 'install'] + pkgs)
 
 def install_opam_packages(upgrade):
     """install OCaml packages using opam.
@@ -370,12 +370,12 @@ def install_opam_packages(upgrade):
             raise RuntimeError(msg)
 
         wd = path.join(home, "dotfiles", "apps", "bubblewrap")
-        subprocess.run(['./autogen.sh'], cwd=wd)
-        subprocess.run(['./configure', '--prefix={}/.local'.format(home),
+        subproc.run(['./autogen.sh'], cwd=wd)
+        subproc.run(['./configure', '--prefix={}/.local'.format(home),
             '--disable-man'], cwd=wd)
-        subprocess.run(['make', 'clean'], cwd=wd)
-        subprocess.run(['make'], cwd=wd)
-        subprocess.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
+        subproc.run(['make', 'clean'], cwd=wd)
+        subproc.run(['make'], cwd=wd)
+        subproc.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
                 cwd=wd)
 
     def install_opam(opam):
@@ -405,22 +405,22 @@ def install_opam_packages(upgrade):
         install_opam(opam)
 
     if not path.exists(path.join(home, '.opam')):
-        subprocess.run([opam, 'init'])
+        subproc.run([opam, 'init'])
         printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run ./install.py -o again.", 'y')
         return
 
-    subprocess.run([opam, 'update'])
+    subproc.run([opam, 'update'])
     if upgrade:
-        subprocess.run([opam, 'upgrade'])
+        subproc.run([opam, 'upgrade'])
 
     pkgs = [
             "merlin", "utop", "ocp-indent",
             ]
 
-    subprocess.run([opam, 'install'] + pkgs)
+    subproc.run([opam, 'install'] + pkgs)
 
     # setup merlin and ocp-indent.
-    ret = subprocess.run([opam, 'config', 'var', 'share'], stdout=subprocess.PIPE)
+    ret = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
 
     opam_share = ret.stdout.decode().strip()
 
@@ -557,7 +557,7 @@ def main_linux(args):
     setup_fzf()
     if args.all or args.desktop:
         printc('[desktop]', 'b')
-        subprocess.run(['./install_linux_desktop'])
+        subproc.run(['./install_linux_desktop'])
 
     # language package managers
     import __main__
