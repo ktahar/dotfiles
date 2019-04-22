@@ -2,6 +2,8 @@
 
 URxvt.font:    xft:Cica-16
 URxvt.scrollBar: false
+URxvt.fading: 30
+URxvt.pointerBlank: true
 
 ! special
 URxvt.foreground:   #f1ebeb
