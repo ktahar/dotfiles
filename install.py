@@ -176,6 +176,7 @@ def setup_shell():
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
             '.zshrc': "source $HOME/dotfiles/zshrc\n",
             '.zshenv': "source $HOME/dotfiles/zshenv\n",
+            '.xprofile': "source $HOME/dotfiles/xprofile\n",
             }
     for fn in contents:
         p = path.join(home, fn)
@@ -255,7 +256,7 @@ def install_apt_packages(upgrade):
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
             "xorg-dev", ## to enable +clipboard +X11
             ## i3wm and things on it
-            "i3", "rxvt-unicode",
+            "i3", "rxvt-unicode-256color",
             ]
 
     if distid == 'xenial':
@@ -471,7 +472,6 @@ files_linux = [
         (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
         (r".config/i3/config", r"i3config"),
         (r".Xresources", r"Xresources"),
-        (r".xprofile", r"xprofile"),
         ]
 
 def unlink_linux():
