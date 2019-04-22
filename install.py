@@ -203,6 +203,10 @@ def setup_shell():
     if 'SHELL' in os.environ and os.environ['SHELL'] == '/bin/zsh':
         print('[INFO] Already using zsh.')
     else:
+        if not path.exists("/bin/zsh"):
+            printc("[WARN] Cannot change shell to zsh because it is not installed.", 'y')
+            printc("[WARN] You can install with ./install.py -a", 'y')
+            return
         if prompt('Change default shell to /bin/zsh?'):
             subprocess.run(['chsh', '-s', '/bin/zsh'])
 
@@ -219,55 +223,75 @@ def set_git_global_config():
     for k, v in configs:
         subprocess.run(['git', 'config', '--global', k, v])
 
-def install_apt_packages(upgrade):
+def install_apt_packages(args):
     subprocess.run(['sudo', '-E', 'apt', 'update'])
 
-    if upgrade:
+    if args.upgrade:
         subprocess.run(['sudo', '-E', 'apt', 'upgrade'])
 
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl", "wget",
-            "git", "mercurial", "darcs", # for some package managers
-            "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
+            "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
-            "ttf-mscorefonts-installer", "rlwrap",
-            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
-            "m4", ## for opam package conf-m4
-            # I personally use vim built from source instead of this one.
+            "rlwrap", "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
+            # build tools
+            "build-essential", "cmake", "llvm",
+            # I personally use vim built from source.
             # But install apt-pack vim here for root or other users.
             "vim",
-            # languages
-            "ruby-full", "sbcl",
-            ## python libs
+            ## libs to build vim
+            "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
+            "xorg-dev", ## to enable +clipboard +X11
+            ]
+
+    ex_pkgs = {}
+    ex_pkgs["desktop"] = [
+            ## i3wm and things to use with that
+            "i3", "rxvt-unicode-256color", "feh",
+            ## Microsoft fonts (Arial etc.)
+            "ttf-mscorefonts-installer",
+            ]
+
+    ex_pkgs["gem"] = ["ruby-full",
+            "libssl-dev", ## for gem package openssl
+            "zlib1g-dev", ## for gem package jekyll
+            ]
+
+    ex_pkgs["pip"] = [
+            ## basic python libs
             "python-dev", "python3-dev",
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
-            # build tools
-            "build-essential", "cmake", "llvm",
-            # dev libs
-            ## to build python
+            ## libs to build python
             "libssl-dev", ## also for ruby gem package openssl
             "zlib1g-dev", ## also for ruby gem package jekyll
             "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
             "libncurses5-dev", "xz-utils", "tk-dev",
             "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
-            ## to build vim
-            "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
-            "xorg-dev", ## to enable +clipboard +X11
-            ## i3wm and things to use with that
-            "i3", "rxvt-unicode-256color", "feh",
+            ]
+
+    ex_pkgs["opam"] = ["mercurial", "darcs",
+            "m4", ## for opam package conf-m4
             ]
 
     if distid == 'xenial':
-        pkgs.append("libcap-dev") # to build bubblewrap for opam
+        ex_pkgs["opam"].append("libcap-dev") # to build bubblewrap for opam
     else:
-        pkgs.append("bubblewrap") # for opam
+        ex_pkgs["opam"].append("bubblewrap") # for opam
 
+    for k, l in ex_pkgs.items():
+        if args.all or getattr(args, k):
+            pkgs.extend(l)
+
+    printc("[INFO] apt pkgs attempting to install", "g")
+    printc(" ".join(pkgs), "g")
     res = subprocess.run(['dpkg-query', '-W'] + pkgs,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if res.returncode:
         subprocess.run(['sudo', '-E', 'apt', 'install'] + pkgs)
+    else:
+        print("[INFO] all pkgs are already installed.")
 
 def install_pip_packages(upgrade):
     """install python packages using pip.
@@ -522,9 +546,9 @@ def main_linux(args):
     printc('[git global config]', 'b')
     set_git_global_config()
 
-    if args.all or args.apt:
+    if args.all or any((args.apt, args.desktop, args.pip, args.gem, args.opam)):
         printc('[apt packages]', 'b')
-        install_apt_packages(args.upgrade)
+        install_apt_packages(args)
 
     # shell and fzf should be later than apt.
     printc('[shell]', 'b')
@@ -563,6 +587,8 @@ def parse_args():
             help='Install all extra things. e.g. packages.')
     parser.add_argument('-a', '--apt', action='store_true',
             help='Install apt packages.')
+    parser.add_argument('-d', '--desktop', action='store_true',
+            help='Install apt packages for desktop.')
     parser.add_argument('-p', '--pip', action='store_true',
             help='Install pip packages.')
     parser.add_argument('-g', '--gem', action='store_true',
