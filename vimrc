@@ -26,7 +26,7 @@ set undodir=~/.local/tmp,~/tmp,.
 
 """ UI
 set visualbell t_vb=
-set title
+set notitle
 set noruler
 set number
 set wrap
