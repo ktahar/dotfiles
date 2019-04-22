@@ -1,3 +1,4 @@
 # i3
 ## xrdp
-copy [startwm.sh](startwm.sh) to /etc/xrdp/ to use i3 via xrdp.
+[install.bash](install.bash) setups [xsession](xsession) file
+to use i3 from xrdp session.

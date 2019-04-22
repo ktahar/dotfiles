@@ -1,0 +1,4 @@
+#!/bin/bash
+export XDG_SESSION_DESKTOP=i3
+source ~/.xprofile
+/usr/bin/i3
