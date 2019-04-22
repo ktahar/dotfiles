@@ -555,6 +555,9 @@ def main_linux(args):
     setup_shell()
     printc('[fzf]', 'b')
     setup_fzf()
+    if args.all or args.desktop:
+        printc('[desktop]', 'b')
+        subprocess.run(['./install_linux_desktop'])
 
     # language package managers
     import __main__
@@ -588,7 +591,7 @@ def parse_args():
     parser.add_argument('-a', '--apt', action='store_true',
             help='Install apt packages.')
     parser.add_argument('-d', '--desktop', action='store_true',
-            help='Install apt packages for desktop.')
+            help='Install packages, settings and fonts for desktop.')
     parser.add_argument('-p', '--pip', action='store_true',
             help='Install pip packages.')
     parser.add_argument('-g', '--gem', action='store_true',
