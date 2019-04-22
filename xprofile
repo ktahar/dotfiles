@@ -1,4 +1,4 @@
-if [ $XDG_SESSION_DESKTOP == "i3" ]; then
+if [ "$XDG_SESSION_DESKTOP" == "i3" ]; then
     # envs for i3 session.
     ## use fcitx
     export DefaultImModule=fcitx

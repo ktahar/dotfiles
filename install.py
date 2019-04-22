@@ -470,7 +470,7 @@ files_linux = [
         (r".ipython/profile_default/ipython_config.py", r"ipython_config.py"),
         (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
         (r".config/gtk-3.0/gtk.css", r"gnome/gtk.css"),
-        (r".config/i3/config", r"i3config"),
+        (r".config/i3/config", r"i3/config"),
         (r".Xresources", r"Xresources"),
         ]
 
