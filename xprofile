@@ -1,7 +1,11 @@
-# use fcitx for i3wm
 if [ $XDG_SESSION_DESKTOP == "i3" ]; then
+    # envs for i3 session.
+    ## use fcitx
     export DefaultImModule=fcitx
     export GTK_IM_MODULE=fcitx
     export QT_IM_MODULE=fcitx
     export XMODIFIERS="@im=fcitx"
+
+    ## fzf (to filter dmenu)
+    export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
 fi
