@@ -205,7 +205,7 @@ def setup_shell():
     else:
         if not path.exists("/bin/zsh"):
             printc("[WARN] Cannot change shell to zsh because it is not installed.", 'y')
-            printc("[WARN] You can install with ./install.py -a", 'y')
+            printc("[WARN] You can install with ./install -a", 'y')
             return
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
@@ -366,7 +366,7 @@ def install_opam_packages(upgrade):
     def install_bwrap():
         if not (osname == 'Linux' and distid == 'xenial'):
             msg = "You don't have to build bwrap on platform other than Ubuntu 16.04."
-            msg += "\nYou can install it from apt (run ./install.py -a)."
+            msg += "\nYou can install it from apt (run ./install -a)."
             raise RuntimeError(msg)
 
         wd = path.join(home, "dotfiles", "apps", "bubblewrap")
@@ -406,7 +406,7 @@ def install_opam_packages(upgrade):
 
     if not path.exists(path.join(home, '.opam')):
         subproc.run([opam, 'init'])
-        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run ./install.py -o again.", 'y')
+        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run ./install -o again.", 'y')
         return
 
     subproc.run([opam, 'update'])
