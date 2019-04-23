@@ -1,6 +1,6 @@
 !! Xresources
 
-URxvt.font:    xft:Cica-16
+URxvt.font: xft:Cica:size=16,xft:DejaVu Sans Mono,xft:Noto Emoji
 URxvt.scrollBar: false
 URxvt.fading: 30
 URxvt.pointerBlank: true
