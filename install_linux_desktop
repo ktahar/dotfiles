@@ -32,3 +32,16 @@ else
     fc-cache -fv
     rm -r ${cica_fn} ${cica_dir}
 fi
+
+# make scripts/urxvt_local
+fpath=./scripts/urxvt_local
+if [ -e $fpath ]; then
+    echo "${fpath} is already there."
+else
+    cat << EOS > ${fpath}
+#!/bin/bash
+# you can put some options for local machine, since this file is git-ignored.
+urxvt_auto
+EOS
+    chmod +x ${fpath}
+fi
