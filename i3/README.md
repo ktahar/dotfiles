@@ -16,6 +16,6 @@ Here, if checks existence of an env to exclude xrdp session.
 
 ```bash
 if [ -z "${MY_SESSION_XRDP+1}" ]; then
-    xrandr --output DP-2 --auto --output VGA-1 --right-of DP-2
+    xrandr --output DP-2 --auto --primary --output VGA-1 --right-of DP-2
 fi
 ```
