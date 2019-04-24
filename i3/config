@@ -144,7 +144,8 @@ mode "$mode_system" {
     bindsym $mod+j mode "default"
 }
 
-bindsym $mod+Shift+z mode "$mode_system"
+bindsym $mod+Shift+z exec --no-startup-id $Locker
+bindsym $mod+Shift+x mode "$mode_system"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
