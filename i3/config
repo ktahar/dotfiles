@@ -181,3 +181,4 @@ bar {
 }
 
 exec --no-startup-id fcitx
+exec --no-startup-id pasystray
