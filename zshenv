@@ -19,7 +19,7 @@ for dir in $directories; do
 done
 
 ## dirs to put at tail.
-directories=($GOPATH/bin ~/dotfiles/scripts)
+directories=($GOPATH/bin ~/dotfiles/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($path $dir)

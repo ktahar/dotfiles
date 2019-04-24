@@ -1,0 +1,3 @@
+#!/bin/bash
+# you can put some options for local machine, since this file is git-ignored.
+urxvt_auto

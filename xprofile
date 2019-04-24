@@ -8,5 +8,5 @@ if [ "$XDG_SESSION_DESKTOP" == "i3" ]; then
 
     ## fzf (to filter dmenu)
     export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
-    export PATH=$HOME/dotfiles/scripts:$HOME/.fzf/bin:$PATH
+    export PATH=$HOME/dotfiles/bin:$HOME/.fzf/bin:$PATH
 fi

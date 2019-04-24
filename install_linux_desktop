@@ -33,8 +33,8 @@ else
     rm -r ${cica_fn} ${cica_dir}
 fi
 
-# make scripts/urxvt_local
-fpath=./scripts/urxvt_local
+# make bin/urxvt_local
+fpath=./bin/urxvt_local
 if [ -e $fpath ]; then
     echo "${fpath} is already there."
 else

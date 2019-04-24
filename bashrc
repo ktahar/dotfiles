@@ -25,6 +25,6 @@ fi
 # should be in ~/.profile or something. but I want to be portable.
 if [ -z "${DOTFILES_ENV_SET+1}" ]; then
     export DOTFILES_ENV_SET=1
-    export PATH=$PATH:$HOME/dotfiles/scripts
+    export PATH=$PATH:$HOME/dotfiles/bin
     export PYTHONPATH=$PATH:$HOME/dotfiles/py
 fi
