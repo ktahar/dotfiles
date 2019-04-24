@@ -224,11 +224,6 @@ def set_git_global_config():
         subproc.run(['git', 'config', '--global', k, v])
 
 def install_apt_packages(args):
-    subproc.run(['sudo', '-E', 'apt', 'update'])
-
-    if args.upgrade:
-        subproc.run(['sudo', '-E', 'apt', 'upgrade'])
-
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl", "wget",
             "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
@@ -287,12 +282,21 @@ def install_apt_packages(args):
 
     printc("[INFO] apt pkgs attempting to install", "g")
     printc(" ".join(pkgs), "g")
+
     res = subproc.run(['dpkg-query', '-W'] + pkgs,
             stdout=subproc.DEVNULL, stderr=subproc.DEVNULL)
-    if res.returncode:
-        subproc.run(['sudo', '-E', 'apt', 'install'] + pkgs)
-    else:
+    needs_install = res.returncode
+    if not needs_install:
         print("[INFO] all pkgs are already installed.")
+        if not args.upgrade:
+            return
+
+    subproc.run(['sudo', '-E', 'apt', 'update'])
+
+    if args.upgrade:
+        subproc.run(['sudo', '-E', 'apt', 'upgrade'])
+    if needs_install:
+        subproc.run(['sudo', '-E', 'apt', 'install'] + pkgs)
 
 def install_pip_packages(upgrade):
     """install python packages using pip.
