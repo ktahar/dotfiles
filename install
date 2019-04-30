@@ -60,7 +60,11 @@ def main_windows(args):
         if not prompt('Install anyway?', 'n'):
             return
 
-    dirs = [r".config\matplotlib", r".ipython\profile_default\startup"]
+    dirs = [
+            r".config\matplotlib",
+            r".ipython\profile_default\startup",
+            r".local\tmp"
+            ]
 
     for d in dirs:
         dn = path.join(home, d)
@@ -71,12 +75,16 @@ def main_windows(args):
             os.makedirs(dn)
             print("created dir %s" % dn)
 
-    files = [(r"_vimrc", r"vimrc"),
+    files = [
+            (r"_vimrc", r"vimrc"),
             (r"_gvimrc", r"gvimrc"),
+            (r".vimrc", r"vimrc"),
+            (r".gvimrc", r"gvimrc"),
             (r".latexmkrc", r"latexmkrc"),
             (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
             (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
             (r"vimfiles", r"vim"),
+            (r".vim", r"vim"),
             (r".minttyrc", r"windows\minttyrc"),
             ]
 
@@ -105,6 +113,10 @@ def main_windows(args):
                 # create junction to the directory (no win api?)
                 subproc.run(['mklink', '/J', ln, tgt], shell=True)
                 print("created junction %s" % ln)
+
+    # additional
+    print('[git global config]')
+    set_git_global_config()
 
 def setup_fzf():
     """setup fzf.
@@ -216,9 +228,11 @@ def set_git_global_config():
             ("user.name", "Kosuke Tahara"),
             ("user.email", "ksk.tahara@gmail.com"),
             ("push.default", "simple"),
-            ("credential.helper", "cache"),
             ("alias.graph", "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"),
             ]
+
+    if osname == 'Linux':
+        configs.append(("credential.helper", "cache"))
 
     for k, v in configs:
         subproc.run(['git', 'config', '--global', k, v])
