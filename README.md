@@ -12,7 +12,7 @@ The install script will do setups,
 except for things that strongly depends on environment.
 
 ### Full Install
-for full install to Linux (Ubuntu) desktop from scratch,
+For full installation to Ubuntu desktop,
 first try `./install -d`, restart the X session, and then `./install -A`.
 
 ## Uninstall
