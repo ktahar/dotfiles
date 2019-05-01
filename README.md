@@ -5,16 +5,16 @@ just for me 😉
 
 ```bash
 cd && git clone --recursive https://ktahar@github.com/ktahar/dotfiles
-cd dotfiles/ && ./install.py
+cd dotfiles/ && ./install
 ```
 
-The install.py will do setups,
+The install script will do setups,
 except for things that strongly depends on environment.
 
 ## Uninstall
 
 ```bash
-cd ~/dotfiles/ && ./install.py --uninstall
+cd ~/dotfiles/ && ./install --uninstall
 ```
 
 For now, just remove symlinks.
