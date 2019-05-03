@@ -433,7 +433,7 @@ def install_opam_packages(upgrade):
         subproc.run([opam, 'upgrade'])
 
     pkgs = [
-            "merlin", "utop", "ocp-indent",
+            "merlin", "utop", "ocp-indent", "labltk",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
