@@ -257,7 +257,7 @@ def install_apt_packages(args):
     ex_pkgs["desktop"] = [
             ## i3wm and things to use with that
             "i3", "rxvt-unicode-256color", "feh",
-            "pulseaudio", "pavucontrol", "pasystray",
+            "dunst", "pulseaudio", "pavucontrol", "pasystray",
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
