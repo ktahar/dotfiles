@@ -1,16 +1,16 @@
 identifier.foreground:    none
-module.foreground:        x-palegreen
-comment.foreground:       x-chocolate1
+module.foreground:        4
+comment.foreground:       7
 doc.foreground:           x-light-salmon
-constant.foreground:      x-aquamarine
-keyword.foreground:       green
-symbol.foreground:        6
-string.foreground:        x-light-salmon
-char.foreground:          x-light-salmon
+constant.foreground:      203
+keyword.foreground:       105
+symbol.foreground:        105
+string.foreground:        2
+char.foreground:          2
 quotation.foreground:     x-purple
-error.foreground:         red
-directive.foreground:     x-lightsteelblue
-parenthesis.background:   8
+error.foreground:         9
+directive.foreground:     4
+parenthesis.background:   0
 
 ! uncomment the next line to disable autoload files
 ! autoload: false
