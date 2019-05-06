@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# To avoid nautilus hang-up on i3 session (occurs on Ubuntu 16.04)
+gsettings set org.gnome.desktop.background show-desktop-icons false
+
 # xsession for xrdp
 if [ ! -e ~/.xsession ]; then
     ln -s ~/dotfiles/i3/xsession ~/.xsession
