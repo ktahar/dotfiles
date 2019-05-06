@@ -1,8 +1,10 @@
 !! Xresources
+!! To load changes on current session,
+!! xrdb -merge ~/.Xresources
 
 URxvt.font: xft:Cica:size=16,xft:DejaVu Sans Mono,xft:Noto Emoji
 URxvt.scrollBar: false
-URxvt.fading: 30
+URxvt.fading: 20
 URxvt.pointerBlank: true
 
 ! special
