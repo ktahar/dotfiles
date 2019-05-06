@@ -76,3 +76,6 @@
 [submodule "vim/pack/my/start/jellybeans.vim"]
 	path = vim/pack/my/start/jellybeans.vim
 	url = https://github.com/nanotech/jellybeans.vim
+[submodule "urxvt/resize-font"]
+	path = urxvt/resize-font
+	url = https://github.com/simmel/urxvt-resize-font
