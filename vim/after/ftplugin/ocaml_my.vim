@@ -4,6 +4,7 @@ endif
 let b:did_ftplugin_ocaml_my = 1
 
 setl fileencoding=utf-8
+set tabstop=8 expandtab shiftwidth=2 softtabstop=2
 
 nnoremap <LocalLeader>d :<C-u>MerlinTypeOf<CR>
 
@@ -17,3 +18,13 @@ augroup ocaml_fmt
     autocmd!
     autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_fmt()
 augroup END
+
+" Execute current file as a script <Leader>e
+function! s:ExecOcaml()
+    lcd %:h
+    if executable('ocaml')
+        !ocaml %
+    endif
+endfunction
+" command! -buffer Exec call <SID>ExecOcaml()
+nnoremap <silent><buffer> <Leader>e :call <SID>ExecOcaml()<CR>
