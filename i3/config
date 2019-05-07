@@ -41,6 +41,10 @@ bindsym $mod+apostrophe exec dmenu_run
 bindsym $mod+semicolon exec urxvt -title "fzf-launch" -e i3-dmenu-desktop --dmenu=fzf
 for_window [title="fzf-launch"] floating enable
 
+## direct exec bind for frequently used apps
+bindsym $mod+b exec qutebrowser
+bindsym $mod+n exec chromium-browser
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down

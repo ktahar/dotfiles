@@ -260,8 +260,9 @@ def install_apt_packages(args):
             "dunst", "pulseaudio", "pavucontrol", "pasystray",
             ## lightdm instead of gdm3
             "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
-            ## qutebrowser deps
-            "asciidoc",
+            ## web browsers
+            "chromium-browser",
+            "asciidoc", # for qutebrowser docs
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
