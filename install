@@ -273,10 +273,13 @@ def install_apt_packages(args):
 
     ex_pkgs["pip"] = [
             ## basic python libs
+            ## Though we will install user-local libs using pip,
+            ## sometimes it's better to have system-wide installation.
             "python-dev", "python3-dev",
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
+            "python3-pygments", # doc generation for qutebrowser
             ## libs to build python
             "libssl-dev", ## also for ruby gem package openssl
             "zlib1g-dev", ## also for ruby gem package jekyll
