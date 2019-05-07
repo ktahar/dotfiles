@@ -3,6 +3,7 @@
 # Install essential things for linux desktop
 # - caps to ctrl
 # - monospace font (Cica)
+# - urxvt launcher at ./bin/urxvt_local
 # for more enrivonment-specific things, see directories `gnome` and `i3`.
 
 # caps to ctrl
@@ -34,7 +35,7 @@ else
 fi
 
 # make bin/urxvt_local
-fpath=./bin/urxvt_local
+fpath=~/dotfiles/bin/urxvt_local
 if [ -e $fpath ]; then
     echo "${fpath} is already there."
 else
@@ -44,4 +45,15 @@ else
 urxvt_auto
 EOS
     chmod +x ${fpath}
+fi
+
+# syncthing
+dpkg-query -W syncthing &> /dev/null
+if [ "$?" == 0 ]; then
+    echo "syncthing is already installed"
+else
+    curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
+    echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+    sudo apt update
+    sudo apt install syncthing
 fi
