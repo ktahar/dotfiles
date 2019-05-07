@@ -19,3 +19,13 @@ if [ -z "${MY_SESSION_XRDP+1}" ]; then
     xrandr --output DP-2 --auto --primary --output VGA-1 --right-of DP-2
 fi
 ```
+
+## lightdm
+The root install script installs `lightdm-gtk-greeter`,
+which can be configured on GUI by `sudo lightdm-gtk-greeter-settings`.
+
+Following settings look nice for me.
+* Theme -> Adwaita
+* Icons -> default
+
+TODO: setting by commands or files ?
