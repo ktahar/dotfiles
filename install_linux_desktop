@@ -3,6 +3,7 @@
 # Install essential things for linux desktop
 # - caps to ctrl
 # - monospace font (Cica)
+# - urxvt launcher at ./bin/urxvt_local
 # for more enrivonment-specific things, see directories `gnome` and `i3`.
 
 # caps to ctrl
@@ -34,7 +35,7 @@ else
 fi
 
 # make bin/urxvt_local
-fpath=./bin/urxvt_local
+fpath=~/dotfiles/bin/urxvt_local
 if [ -e $fpath ]; then
     echo "${fpath} is already there."
 else
