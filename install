@@ -316,7 +316,7 @@ def install_apt_packages(args):
     if needs_install:
         subproc.run(['sudo', '-E', 'apt', 'install'] + pkgs)
 
-def install_pip_packages(upgrade):
+def install_pip_packages(args):
     """install python packages using pip.
 
     Because this will install with --user option,
@@ -341,15 +341,17 @@ def install_pip_packages(upgrade):
             subproc.run([pip, 'install', '--user', '-U', 'pip'])
 
     opts = ['install', '--user']
-    if upgrade:
+    if args.upgrade:
         opts.append('-U')
 
     pkgs = [
-            "pip", "setuptools", "testresources", "python-dateutil", "numpy", "matplotlib",
-            "scipy", "pandas", "ipython",
+            "pip", "setuptools", "testresources", "python-dateutil", "numpy",
+            "matplotlib", "scipy", "pandas", "ipython",
             ]
-    pkgs_2 = []
-    pkgs_3 = [
+
+    subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs)
+
+    pkgs.extend([ # pkgs for python3, not for python2
             "pipenv",
             "cvxopt",
             "jedi", "python-language-server", # to use pyls from vim-lsp.
@@ -357,11 +359,18 @@ def install_pip_packages(upgrade):
             "panflute",
             "requests",
             "ewmh", # for window focus control in fwdevince
-            "tox" # for qutebrowser.
+            ])
+
+    ex_pkgs = {}
+    ex_pkgs["desktop"] = [
+            "tox", "PyQt5", "PyQtWebEngine", # for qutebrowser.
             ]
 
-    subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
-    subproc.run([path.join(local_bin, 'pip3')] + opts + pkgs + pkgs_3)
+    for k, l in ex_pkgs.items():
+        if args.all or getattr(args, k):
+            pkgs.extend(l)
+
+    subproc.run([path.join(local_bin, 'pip3')] + opts + pkgs)
 
 def install_gem_packages(upgrade):
     """install ruby packages using gem.
@@ -511,7 +520,7 @@ def install_qutebrowser():
     tag='v1.6.2'
     subproc.run(['git', 'clone', 'https://github.com/qutebrowser/qutebrowser',
         '-b', tag, '--depth', '1'], cwd=path.join(home, 'opt'))
-    subproc.run(['git', 'checkout', '-b', tag], cwd=path.join(home, 'opt'))
+    subproc.run(['git', 'checkout', '-b', tag], cwd=qb_dir)
     subproc.run(['tox', '-e', 'mkvenv'], cwd=qb_dir)
     subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
 
@@ -594,6 +603,9 @@ def main_linux(args):
     if args.all or any((args.apt, args.desktop, args.pip, args.gem, args.opam)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
+    if args.all or any((args.desktop, args.pip)):
+        printc('[pip packages]', 'b')
+        install_pip_packages(args)
 
     # shell and fzf should be later than apt.
     printc('[shell]', 'b')
@@ -606,7 +618,7 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('pip', 'gem', 'opam'):
+    for pack in ('gem', 'opam'):
         if args.all or getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
