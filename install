@@ -523,6 +523,16 @@ def install_qutebrowser():
     subproc.run(['git', 'checkout', '-b', tag], cwd=qb_dir)
     subproc.run(['tox', '-e', 'mkvenv'], cwd=qb_dir)
     subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
+    entry_contents = """[Desktop Entry]
+Version={}
+Terminal=false
+Type=Application
+Name=qutebrowser
+Exec={}/dotfiles/bin/qutebrowser
+""".format(tag, home)
+    entry_file = path.join(home, ".local", "share", "applications", "qutebrowser.desktop")
+    with open(entry_file, 'w') as f:
+        f.write(entry_contents)
 
 files_linux = [
         (r".vimrc", r"vimrc"),

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Version=1.6.2
+Terminal=false
+Type=Application
+Name=qutebrowser
+Exec=<HOME>/dotfiles/bin/qutebrowser
