@@ -1,0 +1,5 @@
+#!/bin/bash
+vpy=~/opt/qutebrowser/.venv/bin/python3
+if [ -e $vpy ]; then
+    $vpy -m qutebrowser "$@"
+fi

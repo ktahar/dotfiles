@@ -260,6 +260,8 @@ def install_apt_packages(args):
             "dunst", "pulseaudio", "pavucontrol", "pasystray",
             ## lightdm instead of gdm3
             "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
+            ## qutebrowser deps
+            "asciidoc",
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
@@ -355,6 +357,7 @@ def install_pip_packages(upgrade):
             "panflute",
             "requests",
             "ewmh", # for window focus control in fwdevince
+            "tox" # for qutebrowser.
             ]
 
     subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs + pkgs_2)
@@ -496,6 +499,22 @@ def install_go():
     with tarfile.open(fileobj=stream, mode='r:gz') as tar:
         tar.extractall(path=path.join(home, 'opt'))
 
+def install_qutebrowser():
+    """install qutebrowser to ~/opt/qutebrowser.
+
+    """
+
+    qb_dir = path.join(home, 'opt', 'qutebrowser')
+    if path.exists(qb_dir):
+        return
+
+    tag='v1.6.2'
+    subproc.run(['git', 'clone', 'https://github.com/qutebrowser/qutebrowser',
+        '-b', tag, '--depth', '1'], cwd=path.join(home, 'opt'))
+    subproc.run(['git', 'checkout', '-b', tag], cwd=path.join(home, 'opt'))
+    subproc.run(['tox', '-e', 'mkvenv'], cwd=qb_dir)
+    subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
+
 files_linux = [
         (r".vimrc", r"vimrc"),
         (r".gvimrc", r"gvimrc"),
@@ -598,7 +617,12 @@ def main_linux(args):
             printc('[{}]'.format(lang), 'b')
             getattr(__main__, 'install_{}'.format(lang))()
 
-    # vim should be last because some package manager installs vim plugin.
+    # qutebrowser should be after pip because it needs tox.
+    if args.all or args.desktop:
+        printc('[desktop (qutebrowser)]', 'b')
+        install_qutebrowser()
+
+    # vim should be the last because some package managers install vim plugins.
     # e.g. merlin by opam.
     if args.all or args.vim:
         printc('[vim]', 'b')
