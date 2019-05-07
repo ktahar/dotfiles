@@ -1474,7 +1474,7 @@ c.bindings.key_mappings = {'<Shift-Enter>': '<Return>', '<Ctrl-[>': '<Escape>', 
 ## Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 ## for a blank page.
 ## Type: FuzzyUrl
-# c.url.default_page = 'https://start.duckduckgo.com/'
+c.url.default_page = 'https://www.google.co.jp/'
 
 ## URL segments where `:navigate increment/decrement` will search for a
 ## number.
@@ -1509,7 +1509,7 @@ c.url.searchengines = {
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
-# c.url.start_pages = ['https://start.duckduckgo.com']
+c.url.start_pages = ['https://www.google.co.jp/']
 
 ## URL parameters to strip with `:yank url`.
 ## Type: List of String
