@@ -1,10 +1,10 @@
 if [ "$XDG_SESSION_DESKTOP" == "i3" ]; then
     # envs for i3 session.
-    ## use fcitx
-    export DefaultImModule=fcitx
-    export GTK_IM_MODULE=fcitx
-    export QT_IM_MODULE=fcitx
-    export XMODIFIERS="@im=fcitx"
+    ## use ibus
+    export DefaultImModule=ibus
+    export GTK_IM_MODULE=ibus
+    export QT_IM_MODULE=ibus
+    export XMODIFIERS="@im=ibus"
 
     ## fzf (to filter dmenu)
     export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'

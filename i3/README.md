@@ -5,9 +5,9 @@
 ### xrdp
 [xsession](xsession) file to use i3 from xrdp session.
 
-### fcitx-mozc
-To enter Japanese, install fcitx-mozc, (reboot necessary ?),
-and then open `fcitx-configtool` to add mozc.
+### ibus-mozc
+To enter Japanese, install ibus-mozc,
+and then open `ibus-setup` to add mozc.
 
 ## xrandr
 To configure display resolution and rotation, add setting in `~/.xprofile` like below.

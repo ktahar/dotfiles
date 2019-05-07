@@ -8,8 +8,8 @@ if [ ! -e ~/.xsession ]; then
     ln -s ~/dotfiles/i3/xsession ~/.xsession
 fi
 
-# install fcitx-mozc
-dpkg-query -W fcitx-mozc &> /dev/null
+# install ibus-mozc
+dpkg-query -W ibus-mozc &> /dev/null
 if [ "$?" != 0 ]; then
-    sudo -E apt install fcitx-mozc
+    sudo -E apt install ibus-mozc
 fi

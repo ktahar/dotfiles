@@ -290,9 +290,8 @@ if has("unix")
 endif
 
 "" Linux Input Methods {{{
-" for GNOME session, im depends on the distro version.
-" xenial -> fcitx, later -> ibus
-if s:session == "i3" || s:distro == "xenial" "executable('fcitx-remote')
+" Using fcitx on GNOME session on Ubuntu xenial, otherwise ibus.
+if s:session == "gnome" && s:distro == "xenial" "executable('fcitx-remote')
     let g:input_toggle = 0
     function! DeactivateFcitx()
         let s:input_status = system('fcitx-remote')
