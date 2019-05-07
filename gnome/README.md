@@ -6,11 +6,17 @@ To be more specific, Ubuntu (LTS) desktop.
 ### ibus-mozc (Recommended for Ubuntu 18.04)
 1. install (`sudo apt install ibus-mozc`) and restart X session
 1. Language Support: confirm "Keyboard input method system" is "IBus"
-1. Settings -> Region & Language -> Input methods: press + and select Japanese (mozc)
-1. Settings -> Devices -> Keyboard -> Typing: change "Switch to next input source" to "Ctrl+Space"
+1. GNOME's settings
+    * Settings -> Region & Language -> Input methods: press + and select Japanese (mozc)
+    * Settings -> Devices -> Keyboard -> Typing: change "Switch to next input source" to "Shift+Space"
+1. `ibus-setup`
+    * add Japanese -> mozc
+    * next input source to "Shift+Space"
+    * may configure to use custom font
 1. cp mozc/config1.db to ~/.mozc and reboot
     * or manually add entries at mozc -> Tools -> Properties -> Keymap -> Customize...
-    * "Direct input", "Shift Space", "Activate IME"
+    * "Direct input", "Ctrl Space", "Activate IME"
+    * "Precommit", "Ctrl Space", "Deactivate IME"
     * "Converion", "Ctrl n", "Select next candidate"
     * "Converion", "Ctrl p", "Select previous candidate"
 
