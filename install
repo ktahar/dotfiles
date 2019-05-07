@@ -551,7 +551,7 @@ def install_quickmark():
         return
     subproc.run(['git', 'clone', 'https://ktahar@github.com/ktahar/quickmarks'],
             cwd=path.join(home, 'opt'))
-    subproc.run(['./install', cwd=qm_dir)
+    subproc.run(['./install'], cwd=qm_dir)
 
 files_linux = [
         (r".vimrc", r"vimrc"),
