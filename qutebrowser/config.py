@@ -1549,6 +1549,7 @@ c.url.start_pages = ['https://www.google.co.jp/']
 # config.bind('/', 'set-cmd-text /')
 ##! swap ; and : in normal mode
 config.bind(';', 'set-cmd-text :')
+config.unbind(':')
 config.bind(':I', 'hint images tab')
 config.bind(':O', 'hint links fill :open -t -r {hint-url}')
 config.bind(':R', 'hint --rapid links window')
