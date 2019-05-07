@@ -533,9 +533,25 @@ Type=Application
 Name=qutebrowser
 Exec={}/dotfiles/bin/qutebrowser
 """.format(tag, home)
-    entry_file = path.join(home, ".local", "share", "applications", "qutebrowser.desktop")
+    entry_file = path.join(home, ".local", "share",
+            "applications", "qutebrowser.desktop")
     with open(entry_file, 'w') as f:
         f.write(entry_contents)
+
+def install_quickmark():
+    """install qutebrowser's quickmark to ~/opt/quickmark.
+
+    Since URLs may contain private access tokens,
+    quickmarks repo is private (not included in dotfiles).
+
+    """
+
+    qm_dir = path.join(home, 'opt', 'quickmarks')
+    if path.exists(qm_dir):
+        return
+    subproc.run(['git', 'clone', 'https://ktahar@github.com/ktahar/quickmarks'],
+            cwd=path.join(home, 'opt'))
+    subproc.run(['./install', cwd=qm_dir)
 
 files_linux = [
         (r".vimrc", r"vimrc"),
@@ -648,6 +664,7 @@ def main_linux(args):
     if args.all or args.desktop:
         printc('[desktop (qutebrowser)]', 'b')
         install_qutebrowser()
+        install_quickmark()
 
     # vim should be the last because some package managers install vim plugins.
     # e.g. merlin by opam.
