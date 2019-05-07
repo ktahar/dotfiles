@@ -1,18 +1,18 @@
-#!/bin/zsh
+#!/bin/bash
 
 # gnome-settings
 gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
 
 # install language support
-local langsup=$(check-language-support)
+langsup=$(check-language-support)
 if [ -n "$langsp" ]; then
     sudo -E apt install $langsp
 fi
 
 # set launcher icon for matlab
-local target=${HOME}/.local/share/applications/matlab.desktop
-local matlab=${HOME}/opt/matlab
+target=${HOME}/.local/share/applications/matlab.desktop
+matlab=${HOME}/opt/matlab
 if [ -d ${matlab} ]; then
     sed "s@<HOME>@${HOME}@g" matlab.desktop > $target
     # chmod u+x $target
