@@ -1501,7 +1501,11 @@ c.bindings.key_mappings = {'<Shift-Enter>': '<Return>', '<Ctrl-[>': '<Escape>', 
 ## used by prepending the search engine name to the search term, e.g.
 ## `:open google qutebrowser`.
 ## Type: Dict
-# c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}'}
+c.url.searchengines = {
+        'google': 'https://www.google.co.jp/search?q={}',
+        'ddg': 'https://duckduckgo.com/?q={}',
+        'DEFAULT': 'https://www.google.co.jp/search?q={}'
+        }
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
