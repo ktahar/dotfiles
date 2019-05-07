@@ -538,8 +538,8 @@ Exec={}/dotfiles/bin/qutebrowser
     with open(entry_file, 'w') as f:
         f.write(entry_contents)
 
-def install_quickmark():
-    """install qutebrowser's quickmark to ~/opt/quickmark.
+def install_quickmarks():
+    """install qutebrowser's quickmarks to ~/opt/quickmarks.
 
     Since URLs may contain private access tokens,
     quickmarks repo is private (not included in dotfiles).
@@ -664,7 +664,7 @@ def main_linux(args):
     if args.all or args.desktop:
         printc('[desktop (qutebrowser)]', 'b')
         install_qutebrowser()
-        install_quickmark()
+        install_quickmarks()
 
     # vim should be the last because some package managers install vim plugins.
     # e.g. merlin by opam.
