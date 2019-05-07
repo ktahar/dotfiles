@@ -181,7 +181,7 @@ bar {
         tray_output primary
 }
 
-# exec --no-startup-id ibus # I don't need this seemingly.
+# exec --no-startup-id ibus-daemon # I don't need this seemingly.
 exec --no-startup-id dunst
 exec --no-startup-id pasystray
 exec --no-startup-id nm-applet
