@@ -1,12 +1,6 @@
 """ ktaha's vimrc
 
 let s:is_win = has('win32') || has('win64')
-if executable('lsb_release')
-    let s:distro = system('lsb_release -sc')
-else
-    let s:distro = ""
-endif
-let s:session = $XDG_SESSION_DESKTOP
 
 """ Basic settings {{{
 
@@ -290,28 +284,7 @@ if has("unix")
 endif
 
 "" Linux Input Methods {{{
-" Using fcitx on GNOME session on Ubuntu xenial, otherwise ibus.
-if s:session == "gnome" && s:distro == "xenial" "executable('fcitx-remote')
-    let g:input_toggle = 0
-    function! DeactivateFcitx()
-        let s:input_status = system('fcitx-remote')
-        if s:input_status == 2
-            let g:input_toggle = 1
-            let l:a = system('fcitx-remote -c')
-        endif
-    endfunction
-    function! ActivateFcitx()
-        let s:input_status = system('fcitx-remote')
-        if s:input_status != 2 && g:input_toggle == 1
-            let l:a = system('fcitx-remote -o')
-            let g:input_toggle = 0
-        endif
-    endfunction
-
-    autocmd InsertLeave * call DeactivateFcitx()
-    autocmd InsertEnter * call ActivateFcitx()
-
-elseif executable('ibus')
+if executable('ibus')
     let g:input_toggle = 0
     function! DeactivateIbusMozc()
         let g:input_status = system('ibus engine')

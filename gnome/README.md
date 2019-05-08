@@ -9,7 +9,7 @@ To be more specific, Ubuntu (LTS) desktop.
 1. GNOME's settings
     * Settings -> Region & Language -> Input methods: press + and select Japanese (mozc)
     * Settings -> Devices -> Keyboard -> Typing: change "Switch to next input source" to "Shift+Space"
-1. `ibus-setup`
+1. `ibus-setup` (This one doesn't work on GNOME sesson)
     * add Japanese -> mozc
     * next input source to "Shift+Space"
     * may configure to use custom font

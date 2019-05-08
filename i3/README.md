@@ -25,9 +25,11 @@ fi
 ## lightdm
 The root install script installs `lightdm-gtk-greeter`,
 which can be configured on GUI by `sudo lightdm-gtk-greeter-settings`.
+Sometimes lightdm is not configured and gdm starts,
+in this case `sudo dpkg-reconfigure lightdm` and select lightdm.
 
 Following settings look nice for me.
-* Theme -> Adwaita
+* Theme -> Adwaita (-dark version if it exists)
 * Icons -> default
 
 TODO: setting by commands or files ?
