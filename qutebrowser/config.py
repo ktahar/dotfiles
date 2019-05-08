@@ -724,7 +724,7 @@ c.bindings.key_mappings = {'<Shift-Enter>': '<Return>', '<Ctrl-[>': '<Escape>', 
 ## Valid values:
 ##   - system: Use the system wide proxy.
 ##   - none: Don't use any proxy
-# c.content.proxy = 'system'
+c.content.proxy = 'system'
 
 ## Send DNS requests over the configured proxy.
 ## Type: Bool
