@@ -8,9 +8,10 @@ URxvt.fading: 20
 URxvt.pointerBlank: true
 URxvt.iso14755: false
 URxvt.iso14755_52: false
-URxvt.perl-ext-common: default,resize-font,xim-onthespot
+URxvt.perl-ext-common: default,resize-font
+! URxvt.perl-ext-common: default,resize-font,xim-onthespot
+! URxvt.preeditType: OnTheSpot
 URxvt.inputMethod: ibus
-URxvt.preeditType: OnTheSpot
 
 ! special
 URxvt.foreground:   #f1ebeb
