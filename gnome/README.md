@@ -2,8 +2,7 @@
 
 To be more specific, Ubuntu (LTS) desktop.
 
-## 日本語入力
-### ibus-mozc (Recommended for Ubuntu 18.04)
+## ibus-mozc
 1. install (`sudo apt install ibus-mozc`) and restart X session
 1. Language Support: confirm "Keyboard input method system" is "IBus"
 1. GNOME's settings

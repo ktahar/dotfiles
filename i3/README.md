@@ -7,7 +7,7 @@
 
 ### ibus-mozc
 To enter Japanese, install ibus-mozc, and open `ibus-setup` to add mozc.
-If ibus is not launched on i3 session, login on Ubuntu (GNOME) session,
+If ibus is not launched on i3 session, try to login on Ubuntu (GNOME) session,
 check open up "Language Support" and select "IBus" for IM.
 See [gnome/README](../gnome/README.md) as well.
 
