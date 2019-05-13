@@ -280,7 +280,7 @@ def install_apt_packages(args):
             "python-pip", "python3-pip",
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
-            "python3-pygments", # doc generation for qutebrowser
+            "python-pygments", "python3-pygments", # doc generation for qutebrowser
             ## libs to build python
             "libssl-dev", ## also for ruby gem package openssl
             "zlib1g-dev", ## also for ruby gem package jekyll
@@ -301,6 +301,10 @@ def install_apt_packages(args):
     for k, l in ex_pkgs.items():
         if args.all or getattr(args, k):
             pkgs.extend(l)
+
+    # FIXME: temporary dirty logic for dependency resolution...
+    if args.desktop and not args.pip:
+        pkgs.extend(ex_pkgs["pip"])
 
     printc("[INFO] apt pkgs attempting to install", "g")
     printc(" ".join(pkgs), "g")
@@ -472,12 +476,19 @@ def install_opam_packages(upgrade):
             os.symlink(pkg_path, pack_path)
             printc("created sym link %s" % pack_path, 'g')
 
+def make_opt_dir():
+    opt = path.join(home, 'opt')
+    if not os.path.exists(opt):
+        os.mkdir(opt)
+
+    return opt
+
 def install_node():
     """install Node.js to ~/opt/node.
 
     """
 
-    node_dir = path.join(home, 'opt', 'node')
+    node_dir = path.join(make_opt_dir(), 'node')
     if path.exists(node_dir):
         return
 
@@ -498,7 +509,7 @@ def install_go():
 
     """
 
-    go_dir = path.join(home, 'opt', 'go')
+    go_dir = path.join(make_opt_dir(), 'go')
     if path.exists(go_dir):
         return
 
@@ -517,7 +528,7 @@ def install_qutebrowser():
 
     """
 
-    qb_dir = path.join(home, 'opt', 'qutebrowser')
+    qb_dir = path.join(make_opt_dir(), 'qutebrowser')
     if path.exists(qb_dir):
         return
 
