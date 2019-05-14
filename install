@@ -533,10 +533,12 @@ def install_qutebrowser():
         return
 
     tag='v1.6.2'
+    # in case of bootstrap install, where ~/.local/bin is not in $PATH.
+    tox = path.join(home, '.local', 'bin', 'tox')
     subproc.run(['git', 'clone', 'https://github.com/qutebrowser/qutebrowser',
         '-b', tag, '--depth', '1'], cwd=path.join(home, 'opt'))
     subproc.run(['git', 'checkout', '-b', tag], cwd=qb_dir)
-    subproc.run(['tox', '-e', 'mkvenv'], cwd=qb_dir)
+    subproc.run([tox, '-e', 'mkvenv'], cwd=qb_dir)
     subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
     entry_contents = """[Desktop Entry]
 Version={}
