@@ -253,6 +253,10 @@ def install_apt_packages(args):
             "xorg-dev", ## to enable +clipboard +X11
             ]
 
+    if distid != 'xenial':
+        # just for fun. this is not on xenial.
+        pkgs.append("neofetch")
+
     ex_pkgs = {}
     ex_pkgs["desktop"] = [
             ## i3wm and things to use with that
