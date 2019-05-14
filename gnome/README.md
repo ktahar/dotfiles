@@ -12,8 +12,9 @@ To be more specific, Ubuntu (LTS) desktop.
     * add Japanese -> mozc
     * next input source to "Shift+Space"
     * may configure to use custom font
-1. load keymap at dotfiles/mozc/keymap.txt. mozc -> Tools -> Properties -> Keymap -> Customize... -> Edit -> Import from file
+1. load keymap at dotfiles/mozc/keymap.txt. Properties -> Keymap -> Customize... -> Edit -> Import from file
     * "Ctrl+Space" is mapped to Activate / Deactivate IME.
+1. load dict at dotfiles/mozc/dict.txt. Properties -> Dictionary -> Edit user dictionary -> Import to this dictionary
 
 ## Extension: TopIcons Redux (Recommended for Ubuntu 16.04)
 Visit [here](https://extensions.gnome.org/extension/1497/topicons-redux/) and
