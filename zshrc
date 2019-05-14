@@ -166,6 +166,28 @@ chpwd () {
     ls --color=auto -BC;
 }
 
+wq () {
+    if ! tmux info &> /dev/null; then
+        return 1 # tmux server is not running.
+    fi
+    while true; do
+        read ans\?'Save status and kill tmux server? [y/N]:'
+        case $ans in
+            [Yy]* )
+                ~/.tmux/plugins/tmux-resurrect/scripts/save.sh
+                tmux kill-server
+                break;
+                ;;
+            '' | [Nn]* )
+                break;
+                ;;
+            * )
+                ;;
+        esac
+    done
+}
+alias wqa='wq'
+
 alias s='sudo -E'
 alias svim='sudo vim --noplugin'
 alias v='vim'
@@ -187,7 +209,7 @@ alias gil='git log'
 alias gig='git graph'
 alias t='tmux'
 alias q='exit'
-alias qa='~/.tmux/plugins/tmux-resurrect/scripts/save.sh && tmux kill-server'
+alias qa!='tmux kill-server'
 alias ipy='ipython3'
 alias ipy3='ipython3'
 alias ipy2='ipython2'
