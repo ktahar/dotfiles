@@ -170,21 +170,12 @@ wq () {
     if ! tmux info &> /dev/null; then
         return 1 # tmux server is not running.
     fi
-    while true; do
-        read ans\?'Save status and kill tmux server? [y/N]:'
-        case $ans in
-            [Yy]* )
-                ~/.tmux/plugins/tmux-resurrect/scripts/save.sh
-                tmux kill-server
-                break;
-                ;;
-            '' | [Nn]* )
-                break;
-                ;;
-            * )
-                ;;
-        esac
-    done
+    read -q ans\?'Save status and kill tmux server? [y/N]:'
+    echo
+    if [ $ans = 'y' ]; then
+        ~/.tmux/plugins/tmux-resurrect/scripts/save.sh
+        tmux kill-server
+    fi
 }
 alias wqa='wq'
 
