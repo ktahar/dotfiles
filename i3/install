@@ -3,12 +3,6 @@
 # To avoid nautilus hang-up on i3 session (occurs on Ubuntu 16.04)
 gsettings set org.gnome.desktop.background show-desktop-icons false
 
-# install language support
-langsup=$(check-language-support)
-if [ -n "$langsp" ]; then
-    sudo -E apt install $langsp
-fi
-
 # install ibus-mozc
 dpkg-query -W ibus-mozc &> /dev/null
 if [ "$?" != 0 ]; then

@@ -6,8 +6,8 @@ gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize
 
 # install language support
 langsup=$(check-language-support)
-if [ -n "$langsp" ]; then
-    sudo -E apt install $langsp
+if [ -n "$langsup" ]; then
+    sudo -E apt install $langsup
 fi
 
 # set launcher icon for matlab
