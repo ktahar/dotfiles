@@ -457,6 +457,9 @@ def install_opam_packages(upgrade):
         install_bwrap()
     if not path.exists(path.join(home, ".local", "lib", "libopenblas.so")):
         install_openblas()
+        # may need to reload env vals (zshenv)
+        printc("[WARN] OpenBLAS is built but opam install is skipped. type 'source ~/.zshenv' and run ./install -o again.", 'y')
+        return
 
     opam = path.join(home, ".local", "bin", "opam")
     if not path.exists(opam):
@@ -464,7 +467,7 @@ def install_opam_packages(upgrade):
 
     if not path.exists(path.join(home, '.opam')):
         subproc.run([opam, 'init'])
-        printc("[WARN] opam init is done but opam install is skipped. type eval $(opam env), and run ./install -o again.", 'y')
+        printc("[WARN] opam init is done but opam install is skipped. type 'eval $(opam env)' and run ./install -o again.", 'y')
         return
 
     subproc.run([opam, 'update'])
@@ -738,7 +741,7 @@ def parse_args():
     parser.add_argument('-v', '--vim', action='store_true',
             help='Build vim and generate helptags for plugins.')
     parser.add_argument('-A', '--all', action='store_true',
-            help='Install all extra things. e.g. packages.')
+            help='Install all extra things.')
     parser.add_argument('-a', '--apt', action='store_true',
             help='Install apt packages.')
     parser.add_argument('-d', '--desktop', action='store_true',
