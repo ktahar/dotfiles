@@ -26,6 +26,32 @@ for dir in $directories; do
     fi
 done
 
+## CPATH
+typeset -T CPATH cpath
+typeset -U cpath
+directories=(~/.local/include)
+for dir in $directories; do
+    if [ -d $dir ]; then
+        cpath=($dir $cpath)
+    fi
+done
+export CPATH
+
+## LIBRARY_PATH and LD_LIBRARY_PATH
+typeset -T LIBRARY_PATH library_path
+typeset -U library_path
+typeset -T LD_LIBRARY_PATH ld_library_path
+typeset -U ld_library_path
+directories=(~/.local/lib)
+for dir in $directories; do
+    if [ -d $dir ]; then
+        library_path=($dir $ld_library_path)
+        ld_library_path=($dir $ld_library_path)
+    fi
+done
+export LIBRARY_PATH
+export LD_LIBRARY_PATH
+
 ## PYTHONPATH
 typeset -T PYTHONPATH pythonpath
 typeset -U pythonpath

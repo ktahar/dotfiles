@@ -295,6 +295,7 @@ def install_apt_packages(args):
 
     ex_pkgs["opam"] = ["mercurial", "darcs",
             "m4", ## for opam package conf-m4
+            "gfortran", ## to build OpenBLAS for Owl
             ]
 
     if distid == 'xenial':
@@ -406,6 +407,11 @@ def install_opam_packages(upgrade):
     While Ubuntu 18.04+ has apt package for this,
     Ubuntu 16.04 doesn't. So, build from source.
 
+    [OpenBLAS]
+    required by Owl.
+    Since libopenblas-dev in apt package lacks something,
+    build from source.
+
     """
 
     def install_bwrap():
@@ -422,6 +428,11 @@ def install_opam_packages(upgrade):
         subproc.run(['make'], cwd=wd)
         subproc.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
                 cwd=wd)
+
+    def install_openblas():
+        wd = path.join(home, "dotfiles", "apps", "OpenBLAS")
+        subproc.run(['make'], cwd=wd)
+        subproc.run(['make', 'PREFIX={}/.local'.format(home), 'install'], cwd=wd)
 
     def install_opam(opam):
         """install opam itself to ~/.local/bin.
@@ -444,6 +455,8 @@ def install_opam_packages(upgrade):
 
     if not shutil.which("bwrap"):
         install_bwrap()
+    if not path.exists(path.join(home, ".local", "lib", "libopenblas.so")):
+        install_openblas()
 
     opam = path.join(home, ".local", "bin", "opam")
     if not path.exists(opam):
@@ -462,6 +475,8 @@ def install_opam_packages(upgrade):
             "merlin", "utop", "ocp-indent", "ocamlfind", "labltk",
             # standard libs by janestreet
             "base", "stdio",
+            # owl
+            "owl-top",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
