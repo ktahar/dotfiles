@@ -2,23 +2,6 @@
 
 export EDITOR=vim
 
-## PATH
-typeset -U path
-### dirs to put at head.
-directories=($PYENV_ROOT/bin ~/gems/bin ~/opt/node/bin ~/opt/go/bin ~/.local/bin)
-for dir in $directories; do
-    if [ -d $dir ]; then
-        path=($dir $path)
-    fi
-done
-### dirs to put at tail.
-directories=($GOPATH/bin ~/dotfiles/bin)
-for dir in $directories; do
-    if [ -d $dir ]; then
-        path=($path $dir)
-    fi
-done
-
 ## C headers and libs
 ### CPATH
 typeset -T CPATH cpath
@@ -45,23 +28,41 @@ done
 export LIBRARY_PATH
 export LD_LIBRARY_PATH
 
-## pyenv
+## Python
+### pyenv and pipenv
 export PYENV_ROOT=~/.pyenv
+export PIPENV_VENV_IN_PROJECT=1
 
-## PYTHONPATH
+### PYTHONPATH
 typeset -T PYTHONPATH pythonpath
 typeset -U pythonpath
 pythonpath=($pythonpath ~/dotfiles/py)
 export PYTHONPATH
-export PIPENV_VENV_IN_PROJECT=1
 
-## GOPATH
+## Golang
 if [ -d ~/go ]; then
     export GOPATH=~/go
 fi
 
 ## Ruby and gem
 export GEM_HOME=~/gems
+
+## PATH
+typeset -U path
+### dirs to put at head.
+directories=($PYENV_ROOT/bin $GEM_HOME/bin ~/opt/node/bin ~/opt/go/bin ~/.local/bin)
+for dir in $directories; do
+    if [ -d $dir ]; then
+        path=($dir $path)
+    fi
+done
+### dirs to put at tail.
+directories=($GOPATH/bin ~/dotfiles/bin)
+for dir in $directories; do
+    if [ -d $dir ]; then
+        path=($path $dir)
+    fi
+done
 
 ## fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
