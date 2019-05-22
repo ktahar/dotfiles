@@ -1,24 +1,17 @@
 # ktaha's zshenv
 
-## GOPATH
-if [ -d ~/go ]; then
-    export GOPATH=~/go
-fi
-
-## pyenv
-export PYENV_ROOT=~/.pyenv
+export EDITOR=vim
 
 ## PATH
 typeset -U path
-## dirs to put at head.
+### dirs to put at head.
 directories=($PYENV_ROOT/bin ~/gems/bin ~/opt/node/bin ~/opt/go/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
     fi
 done
-
-## dirs to put at tail.
+### dirs to put at tail.
 directories=($GOPATH/bin ~/dotfiles/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
@@ -26,7 +19,8 @@ for dir in $directories; do
     fi
 done
 
-## CPATH
+## C headers and libs
+### CPATH
 typeset -T CPATH cpath
 typeset -U cpath
 directories=(~/.local/include)
@@ -36,8 +30,7 @@ for dir in $directories; do
     fi
 done
 export CPATH
-
-## LIBRARY_PATH and LD_LIBRARY_PATH
+### LIBRARY_PATH and LD_LIBRARY_PATH
 typeset -T LIBRARY_PATH library_path
 typeset -U library_path
 typeset -T LD_LIBRARY_PATH ld_library_path
@@ -45,12 +38,15 @@ typeset -U ld_library_path
 directories=(~/.local/lib)
 for dir in $directories; do
     if [ -d $dir ]; then
-        library_path=($dir $ld_library_path)
+        library_path=($dir $library_path)
         ld_library_path=($dir $ld_library_path)
     fi
 done
 export LIBRARY_PATH
 export LD_LIBRARY_PATH
+
+## pyenv
+export PYENV_ROOT=~/.pyenv
 
 ## PYTHONPATH
 typeset -T PYTHONPATH pythonpath
@@ -59,7 +55,10 @@ pythonpath=($pythonpath ~/dotfiles/py)
 export PYTHONPATH
 export PIPENV_VENV_IN_PROJECT=1
 
-export EDITOR=vim
+## GOPATH
+if [ -d ~/go ]; then
+    export GOPATH=~/go
+fi
 
 ## Ruby and gem
 export GEM_HOME=~/gems
