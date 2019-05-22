@@ -571,6 +571,28 @@ Exec={}/dotfiles/bin/qutebrowser
     with open(entry_file, 'w') as f:
         f.write(entry_contents)
 
+def setup_matlab():
+    """make desktop entry for MATLAB (~/opt/matlab).
+
+    """
+
+    matlab = path.join(home, "opt", "matlab", "bin", "glnxa64", "MATLAB")
+    if not path.exists(matlab):
+        return
+
+    entry_contents = """[Desktop Entry]
+Terminal=false
+Type=Application
+Name=MATLAB
+Exec={} -desktop
+Categories=Control;MATLAB;
+""".format(matlab)
+
+    entry_file = path.join(home, ".local", "share",
+            "applications", "matlab.desktop")
+    with open(entry_file, 'w') as f:
+        f.write(entry_contents)
+
 def install_quickmarks():
     """install qutebrowser's quickmarks to ~/opt/quickmarks.
 
@@ -698,6 +720,8 @@ def main_linux(args):
         printc('[desktop (qutebrowser)]', 'b')
         install_qutebrowser()
         install_quickmarks()
+        printc('[desktop (matlab)]', 'b')
+        setup_matlab()
 
     # vim should be the last because some package managers install vim plugins.
     # e.g. merlin by opam.

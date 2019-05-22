@@ -1,17 +1,16 @@
-# GNOME desktop
+# gnome
 
 To be more specific, Ubuntu (LTS) desktop.
 
 ## ibus-mozc
-1. install (`sudo apt install ibus-mozc`) and restart X session
+ibus-mozc is installed as Japanese IM
+in the [script](../install_linux_desktop).
+Follow procedures below to complete setup.
+
 1. Language Support: confirm "Keyboard input method system" is "IBus"
-1. GNOME's settings
+1. GNOME's settings (not that `ibus-setup` doesn't take effect for gnome)
     * Settings -> Region & Language -> Input methods: press + and select Japanese (mozc)
     * Settings -> Devices -> Keyboard -> Typing: change "Switch to next input source" to "Shift+Space"
-1. `ibus-setup` (This one doesn't work on GNOME sesson)
-    * add Japanese -> mozc
-    * next input source to "Shift+Space"
-    * may configure to use custom font
 1. load keymap at dotfiles/mozc/keymap.txt. Properties -> Keymap -> Customize... -> Edit -> Import from file
     * "Ctrl+Space" is mapped to Activate / Deactivate IME.
 1. load dict at dotfiles/mozc/dict.txt. Properties -> Dictionary -> Edit user dictionary -> Import to this dictionary

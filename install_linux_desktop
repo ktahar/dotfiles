@@ -1,12 +1,9 @@
-#!/bin/bash
+#!/bin/zsh
 
-# Install essential things for linux desktop
-# - caps to ctrl
-# - monospace font (Cica)
-# - urxvt launcher at ./bin/urxvt_local
-# for more enrivonment-specific things, see directories `gnome` and `i3`.
+# Install things for Linux desktop
 
-# caps to ctrl
+# Common things
+## XKBOPTIONS for caps to ctrl
 grep "ctrl:nocaps" /etc/default/keyboard > /dev/null
 if [ "$?" = 0 ]; then
     echo "Caps to Ctrl is already done."
@@ -15,7 +12,7 @@ else
     sudo su -c "echo XKBOPTIONS=ctrl:nocaps >> /etc/default/keyboard"
 fi
 
-# install Cica font
+## install Cica font
 fc-list | grep Cica > /dev/null
 if [ "$?" = 0 ]; then
     echo "Cica font is already installed."
@@ -34,7 +31,7 @@ else
     rm -r ${cica_fn} ${cica_dir}
 fi
 
-# make bin/urxvt_local
+## make bin/urxvt_local
 fpath=~/dotfiles/bin/urxvt_local
 if [ -e $fpath ]; then
     echo "${fpath} is already there."
@@ -45,4 +42,37 @@ else
 urxvt_auto
 EOS
     chmod +x ${fpath}
+fi
+
+# gnome
+## basic settings
+gsettings set org.gnome.desktop.interface enable-animations false
+gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+
+## install language support
+langsup=$(check-language-support)
+if [ -n "$langsup" ]; then
+    read -q ans\?'Install language support? (may not necessary) [y/N]:'
+    echo
+    if [ $ans = 'y' ]; then
+        sudo -E apt install $langsup
+    fi
+fi
+
+## load gnome-terminal settings
+cd ./gnome && ./gnome-term-load.sh && cd ..
+
+# i3
+## To avoid nautilus hang-up on i3 session (occurs on Ubuntu 16.04)
+gsettings set org.gnome.desktop.background show-desktop-icons false
+
+## install ibus-mozc
+dpkg-query -W ibus-mozc &> /dev/null
+if [ "$?" != 0 ]; then
+    sudo -E apt install ibus-mozc
+fi
+
+## xsession for xrdp
+if [ ! -e ~/.xsession ]; then
+    ln -s ~/dotfiles/i3/xsession ~/.xsession
 fi

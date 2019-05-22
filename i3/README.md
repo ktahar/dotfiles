@@ -1,14 +1,23 @@
 # i3
-## install
-[install](install) script helps to install following things.
 
-### xrdp
-[xsession](xsession) file to use i3 from xrdp session.
+## xrdp
+[xsession](xsession) file is used to use i3 from xrdp session.
 
-### ibus-mozc
-To enter Japanese, install ibus-mozc, and open `ibus-setup` to add mozc.
-If ibus is not launched on i3 session, try to login on Ubuntu (GNOME) session,
-check open up "Language Support" and select "IBus" for IM.
+## ibus-mozc
+ibus-mozc is installed as Japanese IM
+in the [script](../install_linux_desktop).
+Follow procedures below to complete setup.
+
+1. run `ibus-setup`
+    * add Japanese -> mozc
+    * next input source to "Shift+Space"
+    * may configure to use custom font
+1. load keymap at dotfiles/mozc/keymap.txt. Properties -> Keymap -> Customize... -> Edit -> Import from file
+    * "Ctrl+Space" is mapped to Activate / Deactivate IME.
+1. load dict at dotfiles/mozc/dict.txt. Properties -> Dictionary -> Edit user dictionary -> Import to this dictionary
+
+If ibus is not working properly, try to login on Ubuntu (GNOME) session,
+and check "Language Support" or something.
 See [gnome/README](../gnome/README.md) as well.
 
 ## xrandr
