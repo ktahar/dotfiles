@@ -216,8 +216,7 @@ def setup_shell():
         print('[INFO] Already using zsh.')
     else:
         if not path.exists("/bin/zsh"):
-            printc("[WARN] Cannot change shell to zsh because it is not installed.", 'y')
-            printc("[WARN] You can install with ./install -a", 'y')
+            printc("[ERROR] Cannot change shell to zsh because it is not installed.", 'r')
             return
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
@@ -304,7 +303,7 @@ def install_apt_packages(args):
         ex_pkgs["opam"].append("bubblewrap") # for opam
 
     for k, l in ex_pkgs.items():
-        if args.all or getattr(args, k):
+        if getattr(args, k):
             pkgs.extend(l)
 
     # FIXME: temporary dirty logic for dependency resolution...
@@ -380,7 +379,7 @@ def install_pip_packages(args):
             ]
 
     for k, l in ex_pkgs.items():
-        if args.all or getattr(args, k):
+        if getattr(args, k):
             pkgs.extend(l)
 
     subproc.run([path.join(local_bin, 'pip3')] + opts + pkgs)
@@ -432,7 +431,10 @@ def install_opam_packages(upgrade):
     def install_openblas():
         wd = path.join(home, "dotfiles", "apps", "OpenBLAS")
         subproc.run(['make'], cwd=wd)
-        subproc.run(['make', 'PREFIX={}/.local'.format(home), 'install'], cwd=wd)
+        res = subproc.run(['make', 'PREFIX={}/.local'.format(home), 'install'],
+                cwd=wd, stdout=subproc.PIPE)
+        print(res.stdout.decode())
+        return res.returncode == 0
 
     def install_opam(opam):
         """install opam itself to ~/.local/bin.
@@ -456,9 +458,11 @@ def install_opam_packages(upgrade):
     if not shutil.which("bwrap"):
         install_bwrap()
     if not path.exists(path.join(home, ".local", "lib", "libopenblas.so")):
-        install_openblas()
-        # may need to reload env vals (zshenv)
-        printc("[WARN] OpenBLAS is built but opam install is skipped. type 'source ~/.zshenv' and run ./install -o again.", 'y')
+        built = install_openblas()
+        if built:
+            printc("[WARN] OpenBLAS is built but opam install is skipped. type 'source ~/.zshenv' and run ./install -o again.", 'y')
+        else:
+            printc("[ERROR] OpenBLAS build is failed. Try 'git submodule update -i' to update the source.", 'r')
         return
 
     opam = path.join(home, ".local", "bin", "opam")
@@ -485,9 +489,9 @@ def install_opam_packages(upgrade):
     subproc.run([opam, 'install'] + pkgs)
 
     # setup merlin and ocp-indent.
-    ret = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
+    res = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
 
-    opam_share = ret.stdout.decode().strip()
+    opam_share = res.stdout.decode().strip()
 
     ## create symlink for `pkg` as vim pack.
     for pkg in ('merlin', 'ocp-indent'):
@@ -689,37 +693,41 @@ def main_linux(args):
     printc('[git global config]', 'b')
     set_git_global_config()
 
-    if args.all or any((args.apt, args.desktop, args.pip, args.gem, args.opam)):
+    # check absence of zsh to detect whether the install is first time.
+    # if so, install apt packages because it's required to setup shell and fzf.
+    no_zsh = not path.exists("/bin/zsh")
+    if any((no_zsh, args.apt, args.desktop, args.pip, args.gem, args.opam)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
-    if args.all or any((args.desktop, args.pip)):
+    if any((args.desktop, args.pip)):
         printc('[pip packages]', 'b')
         install_pip_packages(args)
 
-    # shell and fzf should be later than apt.
+    # shell and fzf should be after apt (require zsh).
     printc('[shell]', 'b')
     setup_shell()
     printc('[fzf]', 'b')
     setup_fzf()
-    if args.all or args.desktop:
+
+    if args.desktop:
         printc('[desktop]', 'b')
         subproc.run(['./install_linux_desktop'])
 
     # language package managers
     import __main__
     for pack in ('gem', 'opam'):
-        if args.all or getattr(args, pack):
+        if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
 
     # languages
     for lang in ('node', 'go'):
-        if args.all or getattr(args, lang):
+        if getattr(args, lang):
             printc('[{}]'.format(lang), 'b')
             getattr(__main__, 'install_{}'.format(lang))()
 
-    # qutebrowser should be after pip because it needs tox.
-    if args.all or args.desktop:
+    # qutebrowser should be after pip (requires tox).
+    if args.desktop:
         printc('[desktop (qutebrowser)]', 'b')
         install_qutebrowser()
         install_quickmarks()
@@ -728,7 +736,7 @@ def main_linux(args):
 
     # vim should be the last because some package managers install vim plugins.
     # e.g. merlin by opam.
-    if args.all or args.vim:
+    if args.vim:
         printc('[vim]', 'b')
         setup_vim()
 
@@ -757,7 +765,12 @@ def parse_args():
     parser.add_argument('-n', '--node', action='store_true',
             help='Install Node.js.')
 
-    return parser.parse_args()
+    args =  parser.parse_args()
+    if args.all:
+        for a in ('vim', 'apt', 'desktop', 'pip', 'gem', 'opam', 'go', 'node'):
+            setattr(args, a, True)
+
+    return args
 
 if __name__ == '__main__':
     args = parse_args()
