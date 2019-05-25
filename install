@@ -261,6 +261,7 @@ def install_apt_packages(args):
             ## i3wm and things to use with that
             "i3", "rxvt-unicode-256color", "feh",
             "dunst", "pulseaudio", "pavucontrol", "pasystray",
+            "mpd", "mpc", "ncmpc",
             ## lightdm instead of gdm3
             "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
             ## web browsers
