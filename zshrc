@@ -100,6 +100,22 @@ my_prompt_precmd () {
     else
         my_rprompt=""
     fi
+
+    # set window title
+    local title="${USER}@${HOST}"
+    case $TERM in
+        screen*)
+            print -Pn "\ePtmux;\e\e]0;tmux $title\a\e\\"
+            ;;
+        xterm*)
+            print -Pn "\e]0;xterm $title\a"
+            ;;
+        rxvt-unicode*)
+            print -Pn "\e]0;urxvt $title\a"
+            ;;
+        *)
+            ;;
+    esac
 }
 
 autoload -Uz add-zsh-hook
