@@ -60,7 +60,7 @@ set spelllang=en,cjk
 """ Highlights and Styling
 " vertical split with │ (unicode char U+2502) instead of default |
 " fold with ─ (unicode char U+2500) instead of default -
-" aiming only gnome terminal.
+" aiming only Linux terminal.
 if !s:is_win && !has("gui_running")
     set fillchars=vert:│,fold:─
 endif
@@ -285,19 +285,19 @@ endif
 
 "" Linux Input Methods {{{
 if executable('ibus')
-    let g:input_toggle = 0
+    " let g:input_toggle = 0
     function! DeactivateIbusMozc()
         let g:input_status = system('ibus engine')
         if g:input_status =~ '^mozc-jp'
-            let g:input_toggle = 1
+            " let g:input_toggle = 1
             let l:a = system('ibus engine xkb:us::eng')
         endif
     endfunction
     function! ActivateIbusMozc()
         let g:input_status = system('ibus engine')
-        if g:input_status !~ '^mozc-jp' && g:input_toggle == 1
+        if g:input_status !~ '^mozc-jp' " && g:input_toggle == 1
             let l:a = system('ibus engine mozc-jp')
-            let g:input_toggle = 0
+            " let g:input_toggle = 0
         endif
     endfunction
 
