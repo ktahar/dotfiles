@@ -1,6 +1,18 @@
 #!/bin/zsh
 
-# Install things for Linux desktop
+local -A opthash
+zparseopts -D -M -A opthash -- h -help=h l -lang=l
+
+if [[ -n "${opthash[(i)-h]}" ]]; then
+    cat << EOS
+Install things for Linux desktop
+options:
+-h --help: show this message
+-l --lang: install language support
+EOS
+    exit 0
+fi
+
 
 # Common things
 ## XKBOPTIONS for caps to ctrl
@@ -50,11 +62,9 @@ gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
 
 ## install language support
-langsup=$(check-language-support)
-if [ -n "$langsup" ]; then
-    read -q ans\?'Install language support? (may not necessary) [y/N]:'
-    echo
-    if [ $ans = 'y' ]; then
+if [[ -n "${opthash[(i)-l]}" ]]; then
+    langsup=$(check-language-support)
+    if [[ -n "$langsup" ]]; then
         sudo -E apt install $langsup
     fi
 fi
