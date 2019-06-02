@@ -41,6 +41,45 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
+def set_git_global_config():
+    configs = [("core.excludesfile", "~/.gitignore_global"),
+            ("core.editor", "vim"),
+            ("user.name", "Kosuke Tahara"),
+            ("user.email", "ksk.tahara@gmail.com"),
+            ("push.default", "simple"),
+            ("alias.graph", "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"),
+            ]
+
+    if osname == 'Linux':
+        configs.append(("credential.helper", "cache"))
+
+    for k, v in configs:
+        subproc.run(['git', 'config', '--global', k, v])
+
+def install_pip_packages_windows(args):
+    """install python packages using pip.
+
+    Assuming only Python3 is installed and pip is equivalent to pip3.
+
+    """
+
+    # install/upgrade pip first
+    subproc.run(['pip', 'install', '-U', 'pip'])
+
+    opts = ['install']
+    if args.upgrade:
+        opts.append('-U')
+
+    pkgs = [
+            "setuptools", "testresources", "python-dateutil",
+            "numpy", "matplotlib", "scipy", "pandas", "ipython",
+            "pipenv", "cvxopt",
+            "jedi", "python-language-server", # to use pyls from vim-lsp.
+            "panflute", "requests",
+            ]
+
+    subproc.run(['pip'] + opts + pkgs)
+
 files_windows = [
         (r"_vimrc", r"vimrc"),
         (r"_gvimrc", r"gvimrc"),
@@ -135,6 +174,9 @@ def main_windows(args):
     link_windows(args)
     printc('[git global config]', 'b')
     set_git_global_config()
+    if args.pip:
+        printc('[pip]', 'b')
+        install_pip_packages_windows(args)
 
 def setup_fzf():
     """setup fzf.
@@ -238,21 +280,6 @@ def setup_shell():
             return
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
-
-def set_git_global_config():
-    configs = [("core.excludesfile", "~/.gitignore_global"),
-            ("core.editor", "vim"),
-            ("user.name", "Kosuke Tahara"),
-            ("user.email", "ksk.tahara@gmail.com"),
-            ("push.default", "simple"),
-            ("alias.graph", "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"),
-            ]
-
-    if osname == 'Linux':
-        configs.append(("credential.helper", "cache"))
-
-    for k, v in configs:
-        subproc.run(['git', 'config', '--global', k, v])
 
 def install_apt_packages(args):
     pkgs = [
