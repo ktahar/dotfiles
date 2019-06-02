@@ -41,7 +41,29 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
-def main_windows(args):
+files_windows = [
+        (r"_vimrc", r"vimrc"),
+        (r"_gvimrc", r"gvimrc"),
+        (r".vimrc", r"vimrc"),
+        (r".gvimrc", r"gvimrc"),
+        (r".latexmkrc", r"latexmkrc"),
+        (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
+        (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
+        (r"vimfiles", r"vim"),
+        (r".vim", r"vim"),
+        (r".minttyrc", r"windows\minttyrc"),
+        ]
+
+def unlink_windows():
+    for f in files_windows:
+        ln = path.join(home, f[0])
+        if path.islink(ln):
+            os.remove(ln)
+            printc("[WARN] removed {}".format(ln), 'y')
+        else:
+            print("[INFO] {} doesn't exist".format(ln))
+
+def link_windows(args):
     """make directories and symbolic links for windows.
 
     Note that you should run this script with Administrator privilege.
@@ -66,6 +88,7 @@ def main_windows(args):
             r".local\tmp"
             ]
 
+    printc('[dirs]', 'b')
     for d in dirs:
         dn = path.join(home, d)
 
@@ -75,20 +98,8 @@ def main_windows(args):
             os.makedirs(dn)
             print("created dir %s" % dn)
 
-    files = [
-            (r"_vimrc", r"vimrc"),
-            (r"_gvimrc", r"gvimrc"),
-            (r".vimrc", r"vimrc"),
-            (r".gvimrc", r"gvimrc"),
-            (r".latexmkrc", r"latexmkrc"),
-            (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
-            (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
-            (r"vimfiles", r"vim"),
-            (r".vim", r"vim"),
-            (r".minttyrc", r"windows\minttyrc"),
-            ]
-
-    for f in files:
+    printc('[links]', 'b')
+    for f in files_windows:
         ln = path.join(home, f[0])
         tgt = path.join(home, 'dotfiles', f[1])
 
@@ -99,23 +110,30 @@ def main_windows(args):
             if admin:
                 ret = kdll.CreateSymbolicLinkW(ln, tgt, isdir)
                 if ret == 1:
-                    print("created sym link %s" % ln)
+                    printc("created sym link %s" % ln, 'g')
                 else:
-                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
-                    print("[ERROR] be sure to run as Administrator")
+                    printc("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret), 'r')
+                    printc("[ERROR] be sure to run as Administrator", 'r')
             elif not isdir:
                 ret = kdll.CreateHardLinkW(ln, tgt, None)
                 if ret:
-                    print("created hard link %s" % ln)
+                    printc("created hard link %s" % ln, 'g')
                 else:
-                    print("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret))
+                    printc("[ERROR] maybe failed to create link %s (ret code: %d)" % (ln, ret), 'r')
             else:
                 # create junction to the directory (no win api?)
                 subproc.run(['mklink', '/J', ln, tgt], shell=True)
-                print("created junction %s" % ln)
+                printc("created junction %s" % ln, 'g')
 
-    # additional
-    print('[git global config]')
+def main_windows(args):
+    if args.uninstall:
+        printc('[remove links]', 'r')
+        unlink_windows()
+        return
+
+    printc('[make dirs and links]', 'b')
+    link_windows(args)
+    printc('[git global config]', 'b')
     set_git_global_config()
 
 def setup_fzf():
