@@ -56,6 +56,48 @@ def set_git_global_config():
     for k, v in configs:
         subproc.run(['git', 'config', '--global', k, v])
 
+def setup_shell(files=None):
+    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
+            '.zshrc': "source $HOME/dotfiles/zshrc\n",
+            '.zshenv': "source $HOME/dotfiles/zshenv\n",
+            '.xprofile': "source $HOME/dotfiles/xprofile\n",
+            }
+    if files is None:
+        files = contents.keys()
+    for fn in files:
+        p = path.join(home, fn)
+
+        if not path.exists(p):
+            print('Writing following contents to %s.' % p)
+            print(contents[fn])
+            if prompt('OK?'):
+                with open(p, 'w') as f:
+                    f.write(contents[fn])
+            continue
+
+        with open(p) as f:
+            if contents[fn] in f.read():
+                print('[INFO] %s has already been set up.' % p)
+                continue
+
+        print('Appending following contents to %s.' % p)
+        print(contents[fn])
+        if prompt('OK?'):
+            with open(p, 'a') as f:
+                f.write(contents[fn])
+
+    if osname == 'Windows':
+        return
+
+    if 'SHELL' in os.environ and os.environ['SHELL'] == '/bin/zsh':
+        print('[INFO] Already using zsh.')
+    else:
+        if not path.exists("/bin/zsh"):
+            printc("[ERROR] Cannot change shell to zsh because it is not installed.", 'r')
+            return
+        if prompt('Change default shell to /bin/zsh?'):
+            subproc.run(['chsh', '-s', '/bin/zsh'])
+
 def install_pip_packages_windows(args):
     """install python packages using pip.
 
@@ -182,6 +224,8 @@ def main_windows(args):
     if args.pip:
         printc('[pip]', 'b')
         install_pip_packages_windows(args)
+    printc('[shell]', 'b')
+    setup_shell(files=['.bashrc'])
 
 def setup_fzf():
     """setup fzf.
@@ -248,43 +292,6 @@ def setup_vim():
     vim = path.join(home, ".local", "bin", "vim")
     for p in glob.glob(docs):
         subproc.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
-
-def setup_shell():
-    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
-            '.zshrc': "source $HOME/dotfiles/zshrc\n",
-            '.zshenv': "source $HOME/dotfiles/zshenv\n",
-            '.xprofile': "source $HOME/dotfiles/xprofile\n",
-            }
-    for fn in contents:
-        p = path.join(home, fn)
-
-        if not path.exists(p):
-            print('Writing following contents to %s.' % p)
-            print(contents[fn])
-            if prompt('OK?'):
-                with open(p, 'w') as f:
-                    f.write(contents[fn])
-            continue
-
-        with open(p) as f:
-            if contents[fn] in f.read():
-                print('[INFO] %s has already been set up.' % p)
-                continue
-
-        print('Appending following contents to %s.' % p)
-        print(contents[fn])
-        if prompt('OK?'):
-            with open(p, 'a') as f:
-                f.write(contents[fn])
-
-    if 'SHELL' in os.environ and os.environ['SHELL'] == '/bin/zsh':
-        print('[INFO] Already using zsh.')
-    else:
-        if not path.exists("/bin/zsh"):
-            printc("[ERROR] Cannot change shell to zsh because it is not installed.", 'r')
-            return
-        if prompt('Change default shell to /bin/zsh?'):
-            subproc.run(['chsh', '-s', '/bin/zsh'])
 
 def install_apt_packages(args):
     pkgs = [
