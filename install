@@ -99,7 +99,7 @@ def setup_shell(files=None):
             subproc.run(['chsh', '-s', '/bin/zsh'])
 
 def install_pip_packages_windows(args):
-    """install python packages using pip.
+    r"""install python packages using pip.
 
     Assuming only Python3 is installed and pip is equivalent to pip3.
 
