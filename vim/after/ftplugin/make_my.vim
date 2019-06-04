@@ -3,5 +3,4 @@ if exists('b:did_ftplugin_make_my')
 endif
 let b:did_ftplugin_make_my = 1
 
-set tabstop=4 noexpandtab shiftwidth=4 softtabstop=0
-
+setl tabstop=4 noexpandtab shiftwidth=4 softtabstop=0
