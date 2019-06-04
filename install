@@ -368,6 +368,8 @@ def install_apt_packages(args):
     if args.desktop and not args.pip:
         pkgs.extend(ex_pkgs["pip"])
 
+    pkgs = list(set(pkgs))
+
     printc("[INFO] apt pkgs attempting to install", "g")
     printc(" ".join(pkgs), "g")
 
