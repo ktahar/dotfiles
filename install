@@ -712,7 +712,7 @@ def unlink_linux():
         else:
             print("[INFO] {} doesn't exist".format(ln))
 
-def link_linux(args):
+def link_linux():
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r".local/tmp",
             r".config/gtk-3.0",
@@ -742,6 +742,26 @@ def link_linux(args):
             os.symlink(tgt, ln)
             printc("created sym link %s" % ln, 'g')
 
+def main_linux_minimum(args):
+    """Minimum installation for Linux.
+
+    Intended for use in servers where I cannot sudo.
+
+    """
+
+    if args.uninstall:
+        printc('[remove links]', 'r')
+        unlink_linux()
+        return
+
+    printc('[make dirs and links]', 'b')
+    link_linux()
+    printc('[git global config]', 'b')
+    set_git_global_config()
+
+    printc('[shell]', 'b')
+    setup_shell()
+
 def main_linux(args):
     if args.uninstall:
         printc('[remove links]', 'r')
@@ -749,7 +769,7 @@ def main_linux(args):
         return
 
     printc('[make dirs and links]', 'b')
-    link_linux(args)
+    link_linux()
     printc('[git global config]', 'b')
     set_git_global_config()
 
@@ -804,6 +824,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('--uninstall', action='store_true',
             help='Uninstall by removing links. Other options are ignored.')
+    parser.add_argument('-m', '--minimum', action='store_true',
+            help='Perform minimum installation (for servers etc.).')
     parser.add_argument('-U', '--upgrade', action='store_true',
             help='Upgrade packages etc.')
     parser.add_argument('-v', '--vim', action='store_true',
@@ -837,6 +859,8 @@ if __name__ == '__main__':
 
     if osname == 'Windows':
         main_windows(args)
+    elif osname == 'Linux' and args.minimum:
+        main_linux_minimum(args)
     elif osname == 'Linux' and distname == 'Ubuntu' or distname == 'Debian':
         main_linux(args)
     else:
