@@ -224,7 +224,7 @@ endif
 """ Fileformat and Filetype {{{
 syntax on
 filetype plugin indent on
-set tabstop=8 expandtab shiftwidth=4 softtabstop=4
+set tabstop=4 expandtab shiftwidth=4 softtabstop=4
 set foldmethod=marker
 
 "" Python skeleton
@@ -437,5 +437,5 @@ let g:vim_markdown_frontmatter = 1
 "}}}
 
 """ Colorscheme {{{
-colorscheme jellybeans
+silent! colorscheme jellybeans
 "}}}

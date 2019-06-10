@@ -1,6 +1,7 @@
 # NOTE: this bashrc is intended to be used on Windows (Git Bash).
 # use zsh (see zshrc / zshenv) on Linux.
 
+PS1="\[\033[32m\]\u@\h\[\[\033[00m\] \[\033[34m\]\w\[\[\033[00m\] \$ "
 set -o vi
 bind '"\C-p": history-search-backward'
 bind '"\C-n": history-search-forward'

@@ -4,7 +4,7 @@ endif
 let b:did_ftplugin_ocaml_my = 1
 
 setl fileencoding=utf-8
-set tabstop=8 expandtab shiftwidth=2 softtabstop=2
+setl tabstop=8 expandtab shiftwidth=2 softtabstop=2
 
 nnoremap <LocalLeader>d :<C-u>MerlinTypeOf<CR>
 
