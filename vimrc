@@ -437,5 +437,5 @@ let g:vim_markdown_frontmatter = 1
 "}}}
 
 """ Colorscheme {{{
-colorscheme jellybeans
+silent! colorscheme jellybeans
 "}}}
