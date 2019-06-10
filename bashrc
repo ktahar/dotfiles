@@ -1,7 +1,24 @@
 # NOTE: this bashrc is intended to be used on Windows (Git Bash).
 # use zsh (see zshrc / zshenv) on Linux.
 
-PS1="\[\033[32m\]\u@\h\[\[\033[00m\] \[\033[34m\]\w\[\[\033[00m\] \$ "
+PS1="\[\e[32m\]\u@\h\[\[\e[00m\] \[\e[1;34m\]\w\[\[\e[00m\] \$ "
+
+_title="${USER}@${HOSTNAME}"
+case $TERM in
+    screen*)
+        _title="\ePtmux;\e\e]0;tmux $_title\a\e\\"
+        ;;
+    xterm*)
+        _title="\e]0;xterm $_title\a"
+        ;;
+    rxvt-unicode*)
+        _title="\e]0;urxvt $_title\a"
+        ;;
+    *)
+        _title="\e]0;$_title\a"
+        ;;
+esac
+export PROMPT_COMMAND='echo -ne $_title'
 set -o vi
 bind '"\C-p": history-search-backward'
 bind '"\C-n": history-search-forward'
