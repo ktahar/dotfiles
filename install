@@ -54,9 +54,7 @@ def set_git_global_config():
         configs.append(("credential.helper", "cache"))
 
     for k, v in configs:
-        subproc.call(['git', 'config', '--global', k, v])
-        #  for old server with Python 3.4...
-        #  subproc.run(['git', 'config', '--global', k, v])
+        subproc.run(['git', 'config', '--global', k, v])
 
 def setup_shell(files=None):
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -98,9 +96,7 @@ def setup_shell(files=None):
             printc("[ERROR] Cannot change shell to zsh because it is not installed.", 'r')
             return
         if prompt('Change default shell to /bin/zsh?'):
-            subproc.call(['chsh', '-s', '/bin/zsh'])
-            #  for old server with Python 3.4...
-            #  subproc.run(['chsh', '-s', '/bin/zsh'])
+            subproc.run(['chsh', '-s', '/bin/zsh'])
 
 def install_pip_packages_windows(args):
     r"""install python packages using pip.
