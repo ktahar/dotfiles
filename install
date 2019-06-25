@@ -539,9 +539,12 @@ def install_opam_packages(upgrade):
         subproc.run([opam, 'upgrade'])
 
     pkgs = [
-            "merlin", "utop", "ocp-indent", "ocamlfind", "labltk",
-            # standard libs by janestreet
-            "base", "stdio",
+            # dev tools
+            "utop", "merlin", "ocp-indent",
+            # build tools
+            "ocamlfind", "dune", "alcotest",
+            # basic libs
+            "base", "stdio", "labltk",
             # owl
             "owl-top",
             ]
