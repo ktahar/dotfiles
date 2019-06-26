@@ -316,7 +316,7 @@ def install_apt_packages(args):
     ex_pkgs = {}
     ex_pkgs["desktop"] = [
             ## i3wm and things to use with that
-            "i3", "rxvt-unicode-256color", "feh",
+            "i3", "rxvt-unicode-256color", "feh", "xsel",
             "dunst", "pulseaudio", "pavucontrol", "pasystray",
             "mpd", "mpc", "ncmpc",
             ## lightdm instead of gdm3
