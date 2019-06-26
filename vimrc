@@ -333,6 +333,14 @@ if executable('clangd-6.0')
        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
        \ })
 endif
+if executable('ocaml-language-server')
+    " npm install -g ocaml-language-server
+    au User lsp_setup call lsp#register_server({
+       \ 'name': 'ocaml-language-server',
+       \ 'cmd': {server_info->[&shell, &shellcmdflag, 'ocaml-language-server --stdio']},
+       \ 'whitelist': ['ocaml'],
+       \ })
+endif
 "}}}
 
 "" fzf {{{
