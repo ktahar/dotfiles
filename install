@@ -572,45 +572,67 @@ def make_opt_dir():
 
     return opt
 
-def install_node():
-    """install Node.js to ~/opt/node.
+def install_npm_packages(upgrade):
+    """install npm packages.
 
     """
+
+    def install_node():
+        """install Node.js to ~/opt/node.
+
+        """
+
+        import io, tarfile, requests
+        major, minor, patch = 10, 15, 3
+        name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
+        print("Downloading", name)
+        url = "https://nodejs.org/download/release/latest-v{}.x/{}.tar.xz".format(
+                major, name)
+        res = requests.get(url)
+        stream = io.BytesIO(res.content)
+        with tarfile.open(fileobj=stream, mode='r:xz') as tar:
+            tar.extractall(path=path.join(home, 'opt'))
+        os.symlink(path.join(home, 'opt', name), node_dir)
 
     node_dir = path.join(make_opt_dir(), 'node')
-    if path.exists(node_dir):
-        return
+    if not path.exists(node_dir):
+        install_node()
 
-    import io, tarfile, requests
-    major, minor, patch = 10, 15, 3
-    name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
-    print("Downloading", name)
-    url = "https://nodejs.org/download/release/latest-v{}.x/{}.tar.xz".format(
-            major, name)
-    res = requests.get(url)
-    stream = io.BytesIO(res.content)
-    with tarfile.open(fileobj=stream, mode='r:xz') as tar:
-        tar.extractall(path=path.join(home, 'opt'))
-    os.symlink(path.join(home, 'opt', name), node_dir)
+    npm = path.join(node_dir, 'bin', 'npm')
+    print(npm)
 
-def install_go():
-    """install Golang to ~/opt/go.
+    pkgs = ['ocaml-language-server']
 
-    """
+    if upgrade:
+        subproc.run([npm, 'upgrade', '-g'])
+
+    subproc.run([npm, 'install', '-g'] + pkgs)
+
+def install_go_packages(upgrade):
+    def install_go():
+        """install Golang to ~/opt/go.
+
+        """
+
+        import io, tarfile, requests
+        major, minor, patch = 1, 12, 4
+        name = "go{}.{}.{}.linux-amd64".format(major, minor, patch)
+        print("Downloading", name)
+        url = "https://dl.google.com/go/{}.tar.gz".format(name)
+        res = requests.get(url)
+        stream = io.BytesIO(res.content)
+        with tarfile.open(fileobj=stream, mode='r:gz') as tar:
+            tar.extractall(path=path.join(home, 'opt'))
 
     go_dir = path.join(make_opt_dir(), 'go')
-    if path.exists(go_dir):
-        return
+    if not path.exists(go_dir):
+        install_go()
 
-    import io, tarfile, requests
-    major, minor, patch = 1, 12, 4
-    name = "go{}.{}.{}.linux-amd64".format(major, minor, patch)
-    print("Downloading", name)
-    url = "https://dl.google.com/go/{}.tar.gz".format(name)
-    res = requests.get(url)
-    stream = io.BytesIO(res.content)
-    with tarfile.open(fileobj=stream, mode='r:gz') as tar:
-        tar.extractall(path=path.join(home, 'opt'))
+    go = path.join(go_dir, 'bin', 'go')
+
+    pkgs = ['github.com/laurent22/massren']
+
+    subproc.run([go, 'get', '-u'] + pkgs)
 
 def install_qutebrowser():
     """install qutebrowser to ~/opt/qutebrowser.
@@ -798,16 +820,10 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('gem', 'opam'):
+    for pack in ('gem', 'opam', 'npm', 'go'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
-
-    # languages
-    for lang in ('node', 'go'):
-        if getattr(args, lang):
-            printc('[{}]'.format(lang), 'b')
-            getattr(__main__, 'install_{}'.format(lang))()
 
     # qutebrowser should be after pip (requires tox).
     if args.desktop:
@@ -846,9 +862,9 @@ def parse_args():
     parser.add_argument('-o', '--opam', action='store_true',
             help='Install opam packages.')
     parser.add_argument('-G', '--go', action='store_true',
-            help='Install Golang.')
-    parser.add_argument('-n', '--node', action='store_true',
-            help='Install Node.js.')
+            help='Install go packages.')
+    parser.add_argument('-n', '--npm', action='store_true',
+            help='Install npm packages.')
 
     args =  parser.parse_args()
     if args.all:
