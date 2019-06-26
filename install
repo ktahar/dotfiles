@@ -118,11 +118,12 @@ def install_pip_packages_windows(args):
         opts.append('-U')
 
     pkgs = [
-            "setuptools", "testresources", "python-dateutil",
             "numpy", "matplotlib", "scipy", "pandas", "ipython",
             "pipenv", "cvxopt",
-            "jedi", "python-language-server", # to use pyls from vim-lsp.
+            "python-language-server", # to use pyls from vim-lsp.
             "panflute", "requests",
+            # testing to remove dep. packages
+            # "jedi", "setuptools", "testresources", "python-dateutil",
             ]
 
     subproc.run(['pip'] + opts + pkgs)
@@ -417,20 +418,19 @@ def install_pip_packages(args):
         opts.append('-U')
 
     pkgs = [
-            "pip", "setuptools", "testresources", "python-dateutil", "numpy",
-            "matplotlib", "scipy", "pandas", "ipython",
+            "numpy", "matplotlib", "scipy", "pandas", "ipython",
+            # testing to remove dep. packages
+            # "pip", "setuptools", "testresources", "python-dateutil",
             ]
 
     subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs)
 
     pkgs.extend([ # pkgs for python3, not for python2
-            "pipenv",
-            "cvxopt",
-            "jedi", "python-language-server", # to use pyls from vim-lsp.
-            "rospkg",
-            "panflute",
-            "requests",
+            "pipenv", "cvxopt",
+            "python-language-server", # to use pyls from vim-lsp.
+            "rospkg", "panflute", "requests",
             "ewmh", # for window focus control in fwdevince
+            # "jedi",
             ])
 
     ex_pkgs = {}
@@ -868,7 +868,7 @@ def parse_args():
 
     args =  parser.parse_args()
     if args.all:
-        for a in ('vim', 'apt', 'desktop', 'pip', 'gem', 'opam', 'go', 'node'):
+        for a in ('vim', 'apt', 'desktop', 'pip', 'gem', 'opam', 'go', 'npm'):
             setattr(args, a, True)
 
     return args
