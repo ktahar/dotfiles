@@ -430,6 +430,7 @@ def install_pip_packages(args):
             "python-language-server", # to use pyls from vim-lsp.
             "rospkg", "panflute", "requests",
             "ewmh", # for window focus control in fwdevince
+            "compiledb",
             # "jedi",
             ])
 
