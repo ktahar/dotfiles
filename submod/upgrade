@@ -1,3 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
-git submodule foreach git pull origin master
+import os
+import platform
+import subprocess as subproc
+
+osname = platform.system()
+if osname == 'Windows':
+    home = os.environ.get('USERPROFILE')
+else:
+    home = os.environ.get('HOME')
+
+ret = subproc.run(['git', 'submodule', 'foreach', '--quiet', "echo $name"],
+        stdout=subproc.PIPE)
+
+paths = ret.stdout.decode().strip().split('\n')
+
+for path in paths:
+    p = os.path.join(home, 'dotfiles', path)
+    ret = subproc.run(['git', 'name-rev', '--name-only', 'HEAD'],
+            stdout=subproc.PIPE, cwd=p)
+    name = ret.stdout.decode().strip()
+
+    if not ("remotes/origin/HEAD" in name or "master" in name):
+        # not following master (detached at some tag).
+        print("Skipping {} @ {}".format(path, name))
+        continue
+
+    print("Pulling {} @ {}".format(path, name))
+    subproc.run(['git', 'pull', 'origin', 'master'], cwd=p)
