@@ -250,8 +250,9 @@ let g:tex_flavor = "latex"
 autocmd BufNewFile,BufRead *.launch set filetype=xml
 
 "" OCaml
-" prevent maps by default ocaml.vim
+" prevent maps by default ocaml.vim and merlin.vim
 let no_ocaml_maps = 1
+let g:merlin_disable_default_keybindings = 1
 autocmd BufNewFile,BufRead ocamlinit* set filetype=ocaml
 autocmd BufNewFile,BufRead dune set filetype=dune
 
