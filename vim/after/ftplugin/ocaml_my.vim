@@ -6,7 +6,9 @@ let b:did_ftplugin_ocaml_my = 1
 setl fileencoding=utf-8
 setl tabstop=8 expandtab shiftwidth=2 softtabstop=2
 
-nnoremap <LocalLeader>d :<C-u>MerlinTypeOf<CR>
+nnoremap <LocalLeader>f :<C-u>MerlinTypeOf<CR>
+nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
+nnoremap <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 
 function! s:ocaml_fmt()
     let now_line = line('.')
