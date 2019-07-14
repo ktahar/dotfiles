@@ -644,7 +644,7 @@ def install_qutebrowser():
     if path.exists(qb_dir):
         return
 
-    tag='v1.6.2'
+    tag='v1.6.3'
     # in case of bootstrap install, where ~/.local/bin is not in $PATH.
     tox = path.join(home, '.local', 'bin', 'tox')
     subproc.run(['git', 'clone', 'https://github.com/qutebrowser/qutebrowser',
