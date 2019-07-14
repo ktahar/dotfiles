@@ -503,8 +503,15 @@ def install_opam_packages(upgrade):
         """
 
         import requests, hashlib
-        version = "2.0.4"
-        h = "e6b7e5657b1692c351c29a952960d1a0c3ea3df0fb0311744a35c9b518987d4978fed963d4b3f04d2fac2348a914834f7ce464fda766efa854556554c56a33b6"
+        version = "2.0.5"
+        h = "df994c53792cad806287f56717fb515524a9e7d074e6f782c8e6d3b364930ac2c891e40b1c0adb81449a2324088f0ce0b66c863124ddacaead88fad282c080a8"
+
+        if path.exists(opam):
+            res = subproc.run([opam, "--version"], stdout=subproc.PIPE)
+            v = res.stdout.decode().strip()
+            if not upgrade or v == version:
+                return
+
         name = "opam-{}-x86_64-linux".format(version)
         print("Downloading", name)
         url = "https://github.com/ocaml/opam/releases/download/{}/{}".format(
@@ -527,8 +534,7 @@ def install_opam_packages(upgrade):
         return
 
     opam = path.join(home, ".local", "bin", "opam")
-    if not path.exists(opam):
-        install_opam(opam)
+    install_opam(opam)
 
     if not path.exists(path.join(home, '.opam')):
         subproc.run([opam, 'init'])
@@ -545,7 +551,7 @@ def install_opam_packages(upgrade):
             # build tools
             "ocamlfind", "dune", "alcotest",
             # basic libs
-            "base", "stdio", "labltk",
+            "base", "stdio", "core", "labltk",
             # owl
             "owl-top",
             ]
