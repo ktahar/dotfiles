@@ -7,7 +7,7 @@ setl fileencoding=utf-8
 setl foldmethod=indent
 
 " LSP mappings
-nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
+nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()

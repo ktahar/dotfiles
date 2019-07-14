@@ -4,8 +4,8 @@ endif
 let b:did_ftplugin_cpp_my = 1
 
 " LSP mappings
-nnoremap <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
+nnoremap <buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 
 " GNU Global
 nnoremap <silent><buffer> <LocalLeader>f :<C-u>Gtags -f %<CR>
