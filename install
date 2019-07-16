@@ -300,6 +300,7 @@ def install_apt_packages(args):
             "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
             "rlwrap", "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
+            "apt-file",
             # build tools
             "build-essential", "cmake", "llvm",
             # I personally use vim built from source.
