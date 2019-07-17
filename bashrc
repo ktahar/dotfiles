@@ -1,7 +1,7 @@
 # NOTE: this bashrc is intended to be used on Windows (Git Bash).
 # use zsh (see zshrc / zshenv) on Linux.
 
-PS1="\[\e[32m\]\u@\h\[\[\e[00m\] \[\e[1;34m\]\w\[\[\e[00m\] \$ "
+PS1="\[\e[0;32m\]\u@\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \$ "
 
 _title="${USER}@${HOSTNAME}"
 case $TERM in
@@ -13,6 +13,9 @@ case $TERM in
         ;;
     rxvt-unicode*)
         _title="\e]0;urxvt $_title\a"
+        ;;
+    gnome*)
+        _title="\e]0;GNOME Terminal $_title\a"
         ;;
     *)
         _title="\e]0;$_title\a"

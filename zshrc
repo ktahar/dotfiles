@@ -113,6 +113,9 @@ my_prompt_precmd () {
         rxvt-unicode*)
             print -Pn "\e]0;urxvt $title\a"
             ;;
+        gnome*)
+            print -Pn "\e]0;GNOME Terminal $title\a"
+            ;;
         *)
             ;;
     esac
