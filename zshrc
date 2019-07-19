@@ -85,10 +85,10 @@ my_prompt_precmd () {
     base_prompt_etc=$(print -P "$base_prompt%~")
     prompt_length=${#base_prompt_etc}
     if [[ $prompt_length -lt 40 ]]; then
-        path_prompt="%F{blue}%~%F{white}"
+        path_prompt="%B%F{blue}%~%F{white}"
     else
         space_left=$(( $COLUMNS - $#base_prompt_expanded_no_color - 2 ))
-        path_prompt="%F{cyan}%${space_left}<...<%~$prompt_newline%F{white}"
+        path_prompt="%B%F{cyan}%${space_left}<...<%~$prompt_newline%F{white}"
     fi
     PS1="$base_prompt$path_prompt %# $post_prompt"
     PS2="$base_prompt$path_prompt %_> $post_prompt"
