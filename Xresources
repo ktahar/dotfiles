@@ -13,6 +13,8 @@ URxvt.perl-ext-common: default,resize-font
 ! URxvt.preeditType: OnTheSpot
 URxvt.inputMethod: ibus
 
+URxvt.intensityStyles: false
+
 ! special
 URxvt.foreground:   #f1ebeb
 URxvt.background:   #272822
