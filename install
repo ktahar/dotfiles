@@ -302,7 +302,7 @@ def install_apt_packages(args):
             "rlwrap", "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
             "apt-file",
             # build tools
-            "build-essential", "cmake", "llvm",
+            "build-essential", "cmake", "llvm", "autoconf",
             # I personally use vim built from source.
             # But install apt-pack vim here for root or other users.
             "vim",
@@ -552,7 +552,7 @@ def install_opam_packages(upgrade):
             # build tools
             "ocamlfind", "dune", "alcotest",
             # basic libs
-            "base", "stdio", "core", "labltk",
+            "base", "stdio", "core",
             "ppx_deriving",
             # owl
             "owl-top",
@@ -893,4 +893,3 @@ if __name__ == '__main__':
         main_linux(args)
     else:
         raise NotImplementedError("OS %s is not supported." % osname)
-
