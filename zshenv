@@ -49,14 +49,19 @@ export GEM_HOME=~/gems
 
 ## PATH
 typeset -U path
-### dirs to put at head.
-directories=($PYENV_ROOT/bin $GEM_HOME/bin ~/opt/node/bin ~/opt/go/bin ~/.local/bin)
+### put at head without existence check.
+directories=(~/opt/node/bin)
+for dir in $directories; do
+    path=($dir $path)
+done
+### put at head.
+directories=($PYENV_ROOT/bin $GEM_HOME/bin ~/opt/go/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
     fi
 done
-### dirs to put at tail.
+### put at tail.
 directories=($GOPATH/bin ~/dotfiles/bin)
 for dir in $directories; do
     if [ -d $dir ]; then

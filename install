@@ -595,11 +595,11 @@ def install_npm_packages(upgrade):
         """
 
         import io, tarfile, requests
-        major, minor, patch = 10, 15, 3
+        major, minor, patch = 10, 16, 0
         name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
         print("Downloading", name)
-        url = "https://nodejs.org/download/release/latest-v{}.x/{}.tar.xz".format(
-                major, name)
+        url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
+                major, minor, patch, name)
         res = requests.get(url)
         stream = io.BytesIO(res.content)
         with tarfile.open(fileobj=stream, mode='r:xz') as tar:
