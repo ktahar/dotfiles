@@ -13,7 +13,7 @@ except for things that strongly depends on environment.
 
 ### Full Install
 For full installation to Ubuntu desktop,
-first try `./install -d`, restart the X session, and then `./install -A`.
+first try `./install -dU`, restart the X session, and then `./install -A`.
 
 ## Uninstall
 
