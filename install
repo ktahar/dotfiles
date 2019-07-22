@@ -434,6 +434,7 @@ def install_pip_packages(args):
             "rospkg", "panflute", "requests",
             "ewmh", # for window focus control in fwdevince
             "compiledb",
+            "pygments",
             # "jedi",
             ])
 
