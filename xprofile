@@ -9,4 +9,8 @@ if [ "$XDG_SESSION_DESKTOP" == "i3" ]; then
     ## fzf (to filter dmenu)
     export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
     export PATH=$HOME/dotfiles/bin:$HOME/.fzf/bin:$PATH
+
+    ## Caps to Ctrl using setxkbmap because
+    ## XKBOPTIONS in /etc/default/keyboard is ignored on Ubuntu 16.04
+    setxkbmap -option caps:ctrl_modifier
 fi
