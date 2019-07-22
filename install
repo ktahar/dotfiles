@@ -611,9 +611,8 @@ def install_npm_packages(upgrade):
         install_node()
 
     npm = path.join(node_dir, 'bin', 'npm')
-    print(npm)
 
-    pkgs = ['ocaml-language-server']
+    pkgs = ['ocaml-language-server', 'npm-check-updates']
 
     if upgrade:
         subproc.run([npm, 'upgrade', '-g'])
