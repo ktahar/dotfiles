@@ -585,4 +585,3 @@ nnoremap <expr><silent><buffer> <Leader>v <SID>ViewFile(1)
 nnoremap <expr><silent><buffer> <Leader>b <SID>ViewFile(0)
 nnoremap <expr><silent><buffer> <Leader>r <SID>SetTeXmasterCurrent()
 nnoremap <expr><silent><buffer> <Leader>R <SID>EchoTeXmaster()
-

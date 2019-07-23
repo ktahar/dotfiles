@@ -197,6 +197,8 @@ wq () {
     fi
 }
 alias wqa='wq'
+alias ...='cd ../../'
+alias ....='cd ../../../'
 
 alias s='sudo -E'
 alias svim='sudo vim --noplugin'
