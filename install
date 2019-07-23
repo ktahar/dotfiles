@@ -320,8 +320,10 @@ def install_apt_packages(args):
     ex_pkgs = {}
     ex_pkgs["desktop"] = [
             ## i3wm and things to use with that
-            "i3", "rxvt-unicode-256color", "feh", "xsel",
-            "dunst", "pulseaudio", "pavucontrol", "pasystray",
+            "i3", "dunst", "rxvt-unicode-256color", "feh", "xsel",
+            "zathura", "xdotool",
+            ## audio, music
+            "pulseaudio", "pavucontrol", "pasystray",
             "mpd", "mpc", "ncmpc",
             ## lightdm instead of gdm3
             "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
@@ -432,7 +434,6 @@ def install_pip_packages(args):
             "pipenv", "cvxopt",
             "python-language-server", # to use pyls from vim-lsp.
             "rospkg", "panflute", "requests",
-            "ewmh", # for window focus control in fwdevince
             "compiledb",
             "pygments",
             # "jedi",

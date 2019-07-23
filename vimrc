@@ -342,6 +342,13 @@ if executable('ocaml-language-server')
        \ 'whitelist': ['ocaml'],
        \ })
 endif
+
+au User asyncomplete_setup call asyncomplete#register_source({
+    \ 'name': 'omni',
+    \ 'whitelist': ['tex'],
+    \ 'blacklist': ['c', 'cpp', 'ocaml', 'python'],
+    \ 'completor': function('asyncomplete#sources#omni#completor')
+    \  })
 "}}}
 
 "" fzf {{{
@@ -443,6 +450,11 @@ let g:tmux_navigator_no_mappings = 1
 "" vim-markdown {{{
 let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
+"}}}
+
+"" vimtex {{{
+let g:vimtex_compiler_method = 'latexmk'
+let g:vimtex_view_method = 'zathura'
 "}}}
 "}}}
 

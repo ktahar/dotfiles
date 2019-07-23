@@ -82,3 +82,9 @@
 [submodule "apps/OpenBLAS"]
 	path = apps/OpenBLAS
 	url = https://github.com/xianyi/OpenBLAS
+[submodule "vim/pack/my/start/vimtex"]
+	path = vim/pack/my/start/vimtex
+	url = https://github.com/lervag/vimtex
+[submodule "vim/pack/my/start/asyncomplete-omni.vim"]
+	path = vim/pack/my/start/asyncomplete-omni.vim
+	url = https://github.com/yami-beta/asyncomplete-omni.vim
