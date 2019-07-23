@@ -92,6 +92,8 @@ nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <C-n> :<C-u>cn<CR>
 nnoremap <C-p> :<C-u>cp<CR>
+nnoremap <silent> <Leader>q :<C-u>ccl<CR>
+nnoremap <silent> <Leader>Q :<C-u>cw<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
 nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
 nnoremap <silent> <Leader>M :<C-u>rightb term<CR>
