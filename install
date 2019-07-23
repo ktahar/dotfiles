@@ -111,7 +111,7 @@ def install_pip_packages_windows(args):
     """
 
     # install/upgrade pip first
-    subproc.run(['python', '-m', 'pip', 'install', '-U', 'pip'])
+    subproc.run(['python', '-m', 'pip', 'install', '-U', 'pip', 'setuptools'])
 
     opts = ['install']
     if args.upgrade:
@@ -123,7 +123,7 @@ def install_pip_packages_windows(args):
             "python-language-server", # to use pyls from vim-lsp.
             "panflute", "requests",
             # testing to remove dep. packages
-            # "jedi", "setuptools", "testresources", "python-dateutil",
+            # "jedi", "testresources", "python-dateutil",
             ]
 
     subproc.run(['pip'] + opts + pkgs)
@@ -414,9 +414,9 @@ def install_pip_packages(args):
     for pip in ('pip2', 'pip3'):
         local_pip = path.join(local_bin, pip)
         if path.exists(local_pip):
-            subproc.run([local_pip, 'install', '--user', '-U', 'pip'])
+            subproc.run([local_pip, 'install', '--user', '-U', 'pip', 'setuptools'])
         else:
-            subproc.run([pip, 'install', '--user', '-U', 'pip'])
+            subproc.run([pip, 'install', '--user', '-U', 'pip', 'setuptools'])
 
     opts = ['install', '--user']
     if args.upgrade:
@@ -425,7 +425,7 @@ def install_pip_packages(args):
     pkgs = [
             "numpy", "matplotlib", "scipy", "pandas", "ipython",
             # testing to remove dep. packages
-            # "pip", "setuptools", "testresources", "python-dateutil",
+            # "testresources", "python-dateutil",
             ]
 
     subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs)
