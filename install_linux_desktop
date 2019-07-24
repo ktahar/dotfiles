@@ -87,3 +87,7 @@ fi
 if [ ! -e ~/.xsession ]; then
     ln -s ~/dotfiles/i3/xsession ~/.xsession
 fi
+
+## change default applications (xdg-open)
+## setting will be written in ~/.config/mimeapps.list
+xdg-mime default zathura.desktop application/pdf
