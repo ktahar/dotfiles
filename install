@@ -419,14 +419,13 @@ def install_pip_packages(args):
             subproc.run([pip, 'install', '--user', '-U', 'pip', 'setuptools'])
 
     opts = ['install', '--user']
+
+    pkgs = ["scipy", "pandas", "ipython"]
+
     if args.upgrade:
         opts.append('-U')
-
-    pkgs = [
-            "numpy", "matplotlib", "scipy", "pandas", "ipython",
-            # testing to remove dep. packages
-            # "testresources", "python-dateutil",
-            ]
+        ## add only when upgrade, because these are installed as apt packages
+        pkgs.extend(["numpy", "matplotlib", "pygments"])
 
     subproc.run([path.join(local_bin, 'pip2')] + opts + pkgs)
 
@@ -435,8 +434,6 @@ def install_pip_packages(args):
             "python-language-server", # to use pyls from vim-lsp.
             "rospkg", "panflute", "requests",
             "compiledb",
-            "pygments",
-            # "jedi",
             ])
 
     ex_pkgs = {}
