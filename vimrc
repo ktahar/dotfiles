@@ -443,6 +443,7 @@ let g:tmux_navigator_no_mappings = 1
 "" vim-markdown {{{
 let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_folding_level = 3
 "}}}
 
 "" vimtex {{{
