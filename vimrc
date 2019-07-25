@@ -81,8 +81,8 @@ nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
-nnoremap <C-n> :<C-u>cn<CR>
-nnoremap <C-p> :<C-u>cp<CR>
+nnoremap <silent> <C-n> :<C-u>cn<CR>
+nnoremap <silent> <C-p> :<C-u>cp<CR>
 nnoremap <silent> <Leader>q :<C-u>ccl<CR>
 nnoremap <silent> <Leader>Q :<C-u>cw<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>

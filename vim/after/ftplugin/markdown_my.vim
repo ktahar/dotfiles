@@ -9,6 +9,11 @@ setl smartindent
 
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>TableFormat<CR>
 nnoremap <silent><buffer> <LocalLeader>e :<C-u>PrevimOpen<CR>
+" overwrite :Tagbar
+nnoremap <silent><buffer> <LocalLeader>b :<C-u>Toc<CR>
+" overwrite :cnext and :cprevious
+nnoremap <silent><buffer> <C-n> :<C-u>lnext<CR>
+nnoremap <silent><buffer> <C-p> :<C-u>lprevious<CR>
 
 " Convert to html by pandoc <LocalLeader>E
 function! s:PandocHTML()
