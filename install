@@ -42,12 +42,19 @@ def prompt(msg, default='y'):
                 return False
 
 def set_git_global_config():
+    graph = "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"
     configs = [("core.excludesfile", "~/.gitignore_global"),
             ("core.editor", "vim"),
             ("user.name", "Kosuke Tahara"),
             ("user.email", "ksk.tahara@gmail.com"),
             ("push.default", "simple"),
-            ("alias.graph", "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"),
+            ("alias.graph", graph),
+            ("alias.g", graph),
+            ("alias.a", "add"),
+            ("alias.c", "commit"),
+            ("alias.d", "diff"),
+            ("alias.s", "status"),
+            ("alias.l", "log"),
             ]
 
     if osname == 'Linux':
