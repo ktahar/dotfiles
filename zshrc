@@ -31,6 +31,7 @@ bindkey -M vicmd "/" history-incremental-search-backward
 bindkey -M vicmd "?" history-incremental-search-forward
 ## buffer stack
 setopt noflowcontrol # unbind "^S" and "^Q"
+stty -ixon # do the same for terminal apps like vim
 show_buffer_stack() {
     POSTDISPLAY="
 stack: $LBUFFER"
