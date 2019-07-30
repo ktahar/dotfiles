@@ -309,6 +309,7 @@ source $VIMRUNTIME/macros/matchit.vim
 " diagnostic option
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:lsp_preview_doubletap = 0
 
 if executable('pyls')
     " pip install python-language-server
