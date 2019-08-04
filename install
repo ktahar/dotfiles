@@ -84,7 +84,6 @@ def setup_shell(files=None):
 
         with open(p) as f:
             if contents[fn] in f.read():
-                print('[INFO] %s has already been set up.' % p)
                 continue
 
         print('Appending following contents to %s.' % p)
@@ -96,9 +95,7 @@ def setup_shell(files=None):
     if osname == 'Windows':
         return
 
-    if 'SHELL' in os.environ and os.environ['SHELL'] == '/bin/zsh':
-        print('[INFO] Already using zsh.')
-    else:
+    if not ('SHELL' in os.environ and os.environ['SHELL'] == '/bin/zsh'):
         if not path.exists("/bin/zsh"):
             printc("[ERROR] Cannot change shell to zsh because it is not installed.", 'r')
             return
@@ -768,9 +765,7 @@ def link_linux():
     for d in dirs:
         dn = path.join(home, d)
 
-        if path.exists(dn):
-            print("[INFO] already exists: %s" % dn)
-        else:
+        if not path.exists(dn):
             os.makedirs(dn)
             printc("created dir %s" % dn, 'g')
 
@@ -780,7 +775,8 @@ def link_linux():
         tgt = path.join(home, 'dotfiles', f[1])
 
         if path.exists(ln):
-            print("[INFO] already exists: %s" % ln)
+            if not path.islink(ln):
+                printc("[ERROR] already exists but is not link: %s" % ln, 'r')
         else:
             os.symlink(tgt, ln)
             printc("created sym link %s" % ln, 'g')
