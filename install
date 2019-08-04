@@ -739,6 +739,7 @@ files_linux = [
         (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
         (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
         (r".config/i3/config", r"i3/config"),
+        (r".config/i3status/config", r"i3/i3status.conf"),
         (r".config/qutebrowser/config.py", r"qutebrowser/config.py"),
         (r".Xresources", r"Xresources"),
         (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
@@ -758,6 +759,7 @@ def link_linux():
             r".ipython/profile_default/startup", r".local/tmp",
             r".config/gtk-3.0",
             r".config/i3",
+            r".config/i3status",
             r".config/qutebrowser",
             r".urxvt/ext",
             ]
