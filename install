@@ -497,10 +497,19 @@ def install_opam_packages(upgrade):
 
     def install_openblas():
         wd = path.join(home, "dotfiles", "apps", "OpenBLAS")
-        subproc.run(['make'], cwd=wd)
+        log = path.join(home, "dotfiles", "apps", "openblas.log")
+        print("Making OpenBLAS")
+
+        res = subproc.run(['make'], cwd=wd, stdout=subproc.PIPE)
+        if res.returncode != 0:
+            return False
+        with open(log, "w") as f:
+            f.write(res.stdout.decode())
+
         res = subproc.run(['make', 'PREFIX={}/.local'.format(home), 'install'],
                 cwd=wd, stdout=subproc.PIPE)
-        print(res.stdout.decode())
+        with open(log, "a") as f:
+            f.write(res.stdout.decode())
         return res.returncode == 0
 
     def install_opam(opam):
