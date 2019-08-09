@@ -437,7 +437,7 @@ def install_pip_packages(args):
             "pipenv", "cvxopt",
             "python-language-server", # to use pyls from vim-lsp.
             "rospkg", "panflute", "requests",
-            "compiledb",
+            "compiledb", "s-tui",
             ])
 
     ex_pkgs = {}
