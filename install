@@ -273,6 +273,9 @@ def setup_vim():
     hnow = res.stdout.decode()
 
     if hnow != hlast and prompt('Build Vim?'):
+        wd = path.join(home, "dotfiles", "apps", "vim", "src")
+        log = path.join(home, "dotfiles", "apps", "vim.log")
+        print("Building vim")
         vim_conf = ['./configure',
                 '--prefix={}/.local'.format(home),
                 '--with-features=huge',
@@ -281,10 +284,12 @@ def setup_vim():
                 '--enable-python3interp',
                 '--enable-fail-if-missing',
                 ]
-        subproc.run(vim_conf,
-                cwd=path.join(home, "dotfiles/apps/vim/src"))
-        subproc.run(["make", "install"],
-                cwd=path.join(home, "dotfiles/apps/vim/src"))
+        res = subproc.run(vim_conf, cwd=wd, stdout=subproc.PIPE)
+        with open(log, "w") as f:
+            f.write(res.stdout.decode())
+        res = subproc.run(["make", "install"], cwd=wd, stdout=subproc.PIPE)
+        with open(log, "a") as f:
+            f.write(res.stdout.decode())
 
         with open(head, 'w') as f:
             f.write(hnow)
@@ -487,18 +492,31 @@ def install_opam_packages(upgrade):
             raise RuntimeError(msg)
 
         wd = path.join(home, "dotfiles", "apps", "bubblewrap")
-        subproc.run(['./autogen.sh'], cwd=wd)
-        subproc.run(['./configure', '--prefix={}/.local'.format(home),
-            '--disable-man'], cwd=wd)
-        subproc.run(['make', 'clean'], cwd=wd)
-        subproc.run(['make'], cwd=wd)
-        subproc.run(['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
-                cwd=wd)
+        log = path.join(home, "dotfiles", "apps", "bubblewrap.log")
+        print("Building bubblewrap")
+
+        commands = [
+                ['./autogen.sh'],
+                ['./configure', '--prefix={}/.local'.format(home),
+                    '--disable-man'],
+                ['make', 'clean'],
+                ['make'],
+                ['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
+                ]
+
+        for i, cmd in enumerate(commands):
+            res = subproc.run(cmd, cwd=wd, stdout=subproc.PIPE)
+            with open(log, "w" if not i else "a") as f:
+                f.write(res.stdout.decode())
+            if res.returncode != 0:
+                return False
+
+        return True
 
     def install_openblas():
         wd = path.join(home, "dotfiles", "apps", "OpenBLAS")
         log = path.join(home, "dotfiles", "apps", "openblas.log")
-        print("Making OpenBLAS")
+        print("Building OpenBLAS")
 
         res = subproc.run(['make'], cwd=wd, stdout=subproc.PIPE)
         if res.returncode != 0:

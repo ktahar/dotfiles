@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
 
+import sys
 import os
 import platform
 import subprocess as subproc
+
+osname = platform.system()
+if osname == 'Windows':
+    home = os.environ.get('USERPROFILE')
+else:
+    home = os.environ.get('HOME')
+
+py = os.path.join(home, 'dotfiles', 'py')
+if py not in sys.path:
+    sys.path.append(py)
+from colour import printc
 
 osname = platform.system()
 if osname == 'Windows':
@@ -23,7 +35,7 @@ for path in paths:
 
     if not ("remotes/origin/HEAD" in name or "master" in name):
         # not following master (detached at some tag).
-        print("Skipping {} @ {}".format(path, name))
+        printc("Skipping {} @ {}".format(path, name), "y")
         continue
 
     print("Pulling {} @ {}".format(path, name))
