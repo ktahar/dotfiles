@@ -5,4 +5,7 @@ M-p: prev-line
 M-n: next-line
 M-h: complete-bar-prev
 M-l: complete-bar-next
+M-H: complete-bar-first
+M-L: complete-bar-last
+M-enter: complete-bar
 C-w: kill-prev-word
