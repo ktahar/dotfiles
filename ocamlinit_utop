@@ -6,3 +6,6 @@ Topdirs.dir_use Format.std_formatter (Filename.concat
 #utop_prompt_simple;;
 
 Sys.command "clear";;
+
+open Base;;
+open Stdio;;
