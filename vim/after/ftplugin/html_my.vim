@@ -5,5 +5,7 @@ let b:did_ftplugin_html_my = 1
 
 setl fileencoding=utf-8
 setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
-nnoremap <silent><buffer> <Leader>r :!start cmd /c "%"<CR>
 
+if (has('win32') || has('win64'))
+    nnoremap <silent><buffer> <LocalLeader>r :!start cmd /c "%"<CR>
+endif

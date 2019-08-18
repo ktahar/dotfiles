@@ -26,7 +26,7 @@ augroup ocaml_fmt
     autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_fmt()
 augroup END
 
-" Execute current file as a script <Leader>e
+" Execute current file as a script <LocalLeader>e
 function! s:ExecOcaml()
     lcd %:h
     if executable('ocaml')
@@ -34,4 +34,4 @@ function! s:ExecOcaml()
     endif
 endfunction
 " command! -buffer Exec call <SID>ExecOcaml()
-nnoremap <silent><buffer> <Leader>e :call <SID>ExecOcaml()<CR>
+nnoremap <silent><buffer> <LocalLeader>e :call <SID>ExecOcaml()<CR>
