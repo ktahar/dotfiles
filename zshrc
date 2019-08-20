@@ -246,6 +246,7 @@ alias oct='octave --no-gui'
 # Here are aliases to avoid calling other versions of pip through pyenv.
 # (May happen when calling pip after
 # `pyenv global 3.x.x`, which should never be done.)
+alias psh="pipenv shell"
 alias pip2="~/.local/bin/pip2"
 alias pip2i="~/.local/bin/pip2 install --user"
 alias pip2u="~/.local/bin/pip2 install --user -U"
