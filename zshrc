@@ -101,6 +101,9 @@ my_prompt_precmd () {
     else
         my_rprompt=""
     fi
+    if [[ $PIPENV_ACTIVE = 1 ]]; then
+        my_rprompt="[P]${my_rprompt}"
+    fi
 
     # set window title
     local title="${USER}@${HOST}"
