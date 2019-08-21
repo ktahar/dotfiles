@@ -246,6 +246,7 @@ alias oct='octave --no-gui'
 # Here are aliases to avoid calling other versions of pip through pyenv.
 # (May happen when calling pip after
 # `pyenv global 3.x.x`, which should never be done.)
+alias p="pipenv shell"
 alias psh="pipenv shell"
 alias pip2="~/.local/bin/pip2"
 alias pip2i="~/.local/bin/pip2 install --user"
@@ -296,5 +297,5 @@ vg() {
 ## pyenv
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
-    pyenv global system # always fix global python to system
+    pyenv global system # always use system python for global
 fi
