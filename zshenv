@@ -62,7 +62,7 @@ for dir in $directories; do
     fi
 done
 ### put at tail.
-directories=($GOPATH/bin ~/opt/mipcl/bin ~/dotfiles/bin)
+directories=($GOPATH/bin ~/dotfiles/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($path $dir)
