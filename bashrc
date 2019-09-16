@@ -54,8 +54,6 @@ alias gig='git graph'
 
 alias q='exit'
 alias ipy='ipython3'
-alias ipy3='ipython3'
-alias ipy2='ipython2'
 
 if [ -t 0 ]; then    # stdin is opened
     stty stop undef  # unbind C-s
