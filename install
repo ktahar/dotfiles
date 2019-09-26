@@ -333,7 +333,7 @@ def install_apt_packages(args):
     ex_pkgs["desktop"] = [
             ## i3wm and things to use with that
             "i3", "dunst", "rxvt-unicode-256color", "feh", "xsel",
-            "zathura", "xdotool",
+            "zathura", "xdotool", "xbacklight",
             ## audio, music
             "pulseaudio", "pavucontrol", "pasystray",
             "mpd", "mpc", "ncmpc",
