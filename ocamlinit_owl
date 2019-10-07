@@ -1,0 +1,14 @@
+(* use ~/.ocamlinit *)
+Topdirs.dir_use Format.std_formatter (Filename.concat
+(Sys.getenv "HOME") ".ocamlinit");;
+
+#require "utop";;
+#utop_prompt_simple;;
+
+#require "owl";;
+#require "owl-plplot";;
+
+Sys.command "clear";;
+
+open Owl;;
+open Owl_plplot;;
