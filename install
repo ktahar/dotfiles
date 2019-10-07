@@ -371,6 +371,7 @@ def install_apt_packages(args):
     ex_pkgs["opam"] = ["mercurial", "darcs",
             "m4", ## for opam package conf-m4
             "gfortran", ## to build OpenBLAS for Owl
+            "libplplot-dev", "libshp-dev", ## to use owl-plplot
             ]
 
     if distid == 'xenial':
@@ -586,7 +587,7 @@ def install_opam_packages(upgrade):
             "base", "stdio", "core",
             "ppx_deriving",
             # owl
-            "owl-top",
+            "owl-top", "owl-plplot",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
