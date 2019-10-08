@@ -10,7 +10,7 @@ setl tabstop=8 expandtab shiftwidth=2 softtabstop=2
 nnoremap <silent><buffer> <LocalLeader>h :<C-u>MerlinShrinkEnclosing<CR>
 nnoremap <silent><buffer> <LocalLeader>l :<C-u>MerlinGrowEnclosing<CR>
 
-nnoremap <silent><buffer> <LocalLeader>f :<C-u>MerlinTypeOf<CR>
+" nnoremap <silent><buffer> <LocalLeader>f :<C-u>MerlinTypeOf<CR>
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>MerlinTypeOf<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
@@ -21,10 +21,11 @@ function! s:ocaml_fmt()
     exec ':' .. now_line
 endfunction
 
-augroup ocaml_fmt
-    autocmd!
-    autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_fmt()
-augroup END
+nnoremap <silent><buffer> <LocalLeader>f :call <SID>ocaml_fmt()<CR>
+" augroup ocaml_fmt
+"     autocmd!
+"     autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_fmt()
+" augroup END
 
 " Execute current file as a script <LocalLeader>e
 function! s:ExecOcaml()
