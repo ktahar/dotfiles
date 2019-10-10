@@ -56,6 +56,7 @@ def set_git_global_config():
             ("alias.s", "status"),
             ("alias.l", "log"),
             ("alias.su", "submodule"),
+            ("alias.sup", "submodule update -i"),
             ("alias.ps", "push"),
             ("alias.pl", "pull"),
             ]
