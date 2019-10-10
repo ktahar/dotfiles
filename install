@@ -585,7 +585,7 @@ def install_opam_packages(upgrade):
             "ocamlfind", "dune", "alcotest",
             # basic libs
             "base", "stdio", "core",
-            "ppx_deriving",
+            "ppx_deriving", "atdgen",
             # owl
             "owl-top", "owl-plplot",
             ]
