@@ -361,6 +361,8 @@ def install_apt_packages(args):
             "python-numpy", "python3-numpy",
             "python-matplotlib", "python3-matplotlib",
             "python-pygments", "python3-pygments", # doc generation for qutebrowser
+            "python3-gdal", # pip install gdal is failing for some reason
+            "graphviz", "libgraphviz-dev", # to install pygraphviz
             ## libs to build python
             "libssl-dev", ## also for ruby gem package openssl
             "zlib1g-dev", ## also for ruby gem package jekyll
@@ -436,6 +438,7 @@ def install_pip_packages(args):
 
     pkgs = ["scipy", "pandas", "ipython",
             "pipenv", "cvxopt",
+            "networkx[all]", # [all] includes pygraphviz, gdal etc.
             "python-language-server", # to use pyls from vim-lsp.
             "rospkg", "panflute", "requests",
             "compiledb", "s-tui",
