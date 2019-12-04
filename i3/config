@@ -146,32 +146,47 @@ mode "$mode_system" {
 bindsym $mod+Shift+z exec --no-startup-id $Locker
 bindsym $mod+Shift+x mode "$mode_system"
 
-# resize window (you can also use the mouse for that)
+# resize window mode
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
+        bindsym Control+j mode "default"
         bindsym $mod+j mode "default"
+        bindsym m mode "move"
+        bindsym $mod+m mode "move"
 }
 
 bindsym $mod+r mode "resize"
+
+# move window mode
+mode "move" {
+        bindsym h move left 10 px
+        bindsym j move down 10 px
+        bindsym k move up 10 px
+        bindsym l move right 10 px
+        bindsym Left move left 10 px
+        bindsym Down move down 10 px
+        bindsym Up move up 10 px
+        bindsym Right move right 10 px
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Control+j mode "default"
+        bindsym $mod+j mode "default"
+        bindsym r mode "resize"
+        bindsym $mod+r mode "resize"
+}
+
+bindsym $mod+m mode "move"
 
 # Pulse Audio Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
