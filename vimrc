@@ -155,6 +155,13 @@ nnoremap <silent> <C-k>\ :<C-u>vsp<CR>
 nnoremap <silent> <C-k><Bar> :<C-u>vsp<CR>
 nnoremap <silent> <C-k>- :<C-u>sp<CR>
 nnoremap <C-k> <C-w>
+
+" insert datetime
+inoremap <expr> ,df strftime('%Y-%m-%d %H:%M')
+inoremap <expr> ,dd strftime('%Y-%m-%d')
+inoremap <expr> ,dt strftime('%H:%M')
+"" for header of diary
+inoremap <expr> ,dh strftime('## %Y-%m-%d')
 "}}}
 
 """ Commands (grep, diff etc.) {{{
