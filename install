@@ -304,6 +304,8 @@ def setup_vim():
     ## since there's upper limit of accepted number of commands
     ## (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
     vim = path.join(home, ".local", "bin", "vim")
+    if not os.path.exists(vim):
+        return
     for p in glob.glob(docs):
         subproc.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
 
@@ -322,7 +324,7 @@ def install_apt_packages(args):
             # But install apt-pack vim here for root or other users.
             "vim",
             ## libs to build vim
-            "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
+            "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
             ]
 
     ex_pkgs = {}
@@ -340,6 +342,7 @@ def install_apt_packages(args):
             ## web browsers
             "chromium-browser",
             "asciidoc", # for qutebrowser docs
+            "python-pygments", "python3-pygments", # doc generation for qutebrowser
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
@@ -359,11 +362,7 @@ def install_apt_packages(args):
             ## basic python libs
             ## Though we will install user-local libs using pip,
             ## sometimes it's better to have system-wide installation.
-            "python-dev", "python3-dev",
-            "python-pip", "python3-pip",
-            "python-numpy", "python3-numpy",
-            "python-matplotlib", "python3-matplotlib",
-            "python-pygments", "python3-pygments", # doc generation for qutebrowser
+            "python3-pip", "python3-numpy", "python3-matplotlib",
             "python3-gdal", # pip install gdal is failing for some reason
             "graphviz", "libgraphviz-dev", # to install pygraphviz
             ## libs to build python
