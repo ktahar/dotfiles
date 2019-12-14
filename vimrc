@@ -324,6 +324,7 @@ if executable('pyls')
        \ 'name': 'pyls',
        \ 'cmd': {server_info->['pyls']},
        \ 'whitelist': ['python'],
+       \ 'workspace_config': {'pyls': {'plugins': {'pycodestyle': {'enabled': v:false}}}},
        \ })
     " au FileType python setl omnifunc=lsp#complete
 endif
