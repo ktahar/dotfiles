@@ -323,11 +323,12 @@ def install_apt_packages(args):
             "vim",
             ## libs to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev",
-            "xorg-dev", ## to enable +clipboard +X11
             ]
 
     ex_pkgs = {}
     ex_pkgs["desktop"] = [
+            ## libs to build vim
+            "xorg-dev", ## to enable +clipboard +X11
             ## i3wm and things to use with that
             "i3", "dunst", "rxvt-unicode-256color", "feh", "xsel",
             "zathura", "xdotool", "xbacklight",
