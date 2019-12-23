@@ -39,6 +39,9 @@ stack: $LBUFFER"
 }
 zle -N show_buffer_stack
 bindkey "^Q" show_buffer_stack
+
+## builtin
+disable r
 #}}}
 
 # prompt {{{
