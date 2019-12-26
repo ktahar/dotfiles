@@ -238,6 +238,7 @@ alias uo='utop -init ~/dotfiles/ocamlinit_owl'
 alias ml='rlwrap ocaml'
 alias oct='octave --no-gui'
 alias za='zathura'
+alias f='feh -.'
 
 # Always use system python for global and managing things in ~/.local.
 # And use `pipenv` in project-directory to use different version of python.
