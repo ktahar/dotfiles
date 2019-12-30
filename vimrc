@@ -64,6 +64,9 @@ set spelllang=en,cjk
 if !s:is_win && !has("gui_running")
     set fillchars=vert:│,fold:─
 endif
+
+set textwidth=78
+set formatoptions=jMql
 "}}}
 
 """ map {{{
