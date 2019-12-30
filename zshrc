@@ -209,6 +209,7 @@ alias ....='cd ../../../'
 
 alias s='sudo -E'
 alias svim='sudo vim --noplugin'
+alias so='source'
 alias v='vim'
 alias vi='vim'
 alias ls='ls --color=auto'
