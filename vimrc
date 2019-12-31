@@ -435,16 +435,6 @@ smap <C-f> <Plug>snipMateNextOrTrigger
 nnoremap <silent> <Leader>b :<C-u>TagbarToggle<CR>
 let g:tagbar_map_togglesort = "r"
 let g:tagbar_sort = 0
-let g:tagbar_type_tex = {
-            \ 'ctagstype' : 'latex',
-            \ 'kinds' : [
-            \ 'l:labels',
-            \ 'c:chapters',
-            \ 's:sections',
-            \ 't:subsections',
-            \ 'u:subsubsections',
-            \]
-            \ }
 "}}}
 
 "" open-browser {{{

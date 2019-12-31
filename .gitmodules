@@ -88,3 +88,6 @@
 [submodule "vim/pack/my/start/vim-commentary"]
 	path = vim/pack/my/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary
+[submodule "apps/ctags"]
+	path = apps/ctags
+	url = https://github.com/universal-ctags/ctags

@@ -309,25 +309,70 @@ def setup_vim():
     for p in glob.glob(docs):
         subproc.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
 
+def setup_ctags():
+    """setup universal-ctags.
+    """
+
+    # Build
+    ## check commit hash of HEAD
+    head = path.join(home, "dotfiles/apps/ctags.HEAD")
+    if path.exists(head):
+        with open(head) as f:
+            hlast = f.readline()
+    else:
+        hlast = None
+
+    res = subproc.run(['git', 'rev-parse', '--short', 'HEAD'],
+            cwd=path.join(home, "dotfiles/apps/ctags"),
+            stdout=subproc.PIPE)
+    hnow = res.stdout.decode()
+
+    if hnow != hlast and prompt('Build universal-ctags?'):
+        wd = path.join(home, "dotfiles", "apps", "ctags")
+        log = path.join(home, "dotfiles", "apps", "ctags.log")
+        print("Building universal-ctags")
+        commands = [
+                ['./autogen.sh'],
+                ['./configure', '--prefix={}/.local'.format(home)],
+                ['make'],
+                ['make', 'install'],
+                ]
+        for i, cmd in enumerate(commands):
+            res = subproc.run(cmd, cwd=wd, stdout=subproc.PIPE)
+            with open(log, "w" if not i else "a") as f:
+                f.write(res.stdout.decode())
+            if res.returncode != 0:
+                return
+
+        with open(head, 'w') as f:
+            f.write(hnow)
+
 def install_apt_packages(args):
     pkgs = [
             "ncurses-term", "silversearcher-ag", "htop", "tree", "curl", "wget",
             "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "exuberant-ctags", "global", "pandoc", "unison", "p7zip-full",
-            "rlwrap", "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
-            "apt-file",
+            "global", "pandoc", "unison", "p7zip-full",
+            "rlwrap", "apt-file",
             # build tools
             "build-essential", "cmake", "llvm",
             "devscripts", "pkg-config",
             "autoconf", "libtool",
+            ]
+
+    ex_pkgs = {}
+
+    ex_pkgs["vim"] = [
             # I personally use vim built from source.
             # But install apt-pack vim here for root or other users.
             "vim",
             ## libs to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
+            ## libs to build universal-ctags
+            "python3-docutils", "libseccomp-dev",
+            "libjansson-dev", "libyaml-dev", "libxml2-dev",
+            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
             ]
 
-    ex_pkgs = {}
     ex_pkgs["desktop"] = [
             ## libs to build vim
             "xorg-dev", ## to enable +clipboard +X11
@@ -756,7 +801,7 @@ files_linux = [
         (r".tmux/plugins", r"tmux/plugins"),
         (r".fzf", r"apps/fzf"),
         (r".pyenv", r"apps/pyenv"),
-        (r".ctags", r"ctags"),
+        (r".ctags.d", r"ctags.d"),
         (r".gitignore_global", r"gitignore_global"),
         (r".agignore", r"agignore"),
         (r".latexmkrc", r"latexmkrc"),
@@ -889,6 +934,7 @@ def main_linux(args):
     if args.vim:
         printc('[vim]', 'b')
         setup_vim()
+        setup_ctags()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')

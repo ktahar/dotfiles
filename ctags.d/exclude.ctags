@@ -1,0 +1,5 @@
+--exclude=GPATH
+--exclude=GRTAGS
+--exclude=GTAGS
+--exclude=GSYMS
+--exclude=HTML
