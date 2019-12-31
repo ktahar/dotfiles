@@ -25,9 +25,6 @@
 [submodule "vim/pack/my/start/vim-obsession"]
 	path = vim/pack/my/start/vim-obsession
 	url = https://github.com/tpope/vim-obsession
-[submodule "vim/pack/my/start/nerdcommenter"]
-	path = vim/pack/my/start/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter
 [submodule "vim/pack/my/start/tagbar"]
 	path = vim/pack/my/start/tagbar
 	url = https://github.com/majutsushi/tagbar
@@ -88,3 +85,6 @@
 [submodule "vim/pack/my/start/asyncomplete-omni.vim"]
 	path = vim/pack/my/start/asyncomplete-omni.vim
 	url = https://github.com/yami-beta/asyncomplete-omni.vim
+[submodule "vim/pack/my/start/vim-commentary"]
+	path = vim/pack/my/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary

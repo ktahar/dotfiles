@@ -431,11 +431,6 @@ imap <C-f> <Esc>a<Plug>snipMateNextOrTrigger
 smap <C-f> <Plug>snipMateNextOrTrigger
 "}}}
 
-"" NERDCommenter {{{
-let g:NERDSpaceDelims = 1
-let g:NERDDefaultAlign = 'left'
-"}}}
-
 "" Tagbar {{{
 nnoremap <silent> <Leader>b :<C-u>TagbarToggle<CR>
 let g:tagbar_map_togglesort = "r"
