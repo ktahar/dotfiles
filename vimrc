@@ -165,8 +165,10 @@ inoremap <expr> ,dh strftime('## %Y-%m-%d')
 "}}}
 
 """ Plugin Loading {{{
-let g:no_gvimrc_example=1
-let g:no_vimrc_example=1
+source $VIMRUNTIME/macros/matchit.vim
+
+let g:no_gvimrc_example = 1
+let g:no_vimrc_example  = 1
 " Skip loading default plugins
 let g:loaded_gzip               = 1
 let g:loaded_tar                = 1
@@ -338,8 +340,6 @@ endif
 "}}}
 
 """ Plugin Settings {{{
-source $VIMRUNTIME/macros/matchit.vim
-
 "" vim-lsp {{{
 " diagnostic option
 " let g:lsp_log_verbose = 1
