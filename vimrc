@@ -72,7 +72,37 @@ let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
-nnoremap Q <Nop>
+
+" macro recording starts with Q (instead of q)
+nnoremap Q q
+
+function! ToggleQL (force_llist)
+    if (a:force_llist || ! g:map_for_llist)
+        let g:map_for_llist = 1
+        nnoremap <silent> <C-n> :<C-u>lnext<CR>
+        nnoremap <silent> <C-p> :<C-u>lprev<CR>
+        nnoremap qn :<C-u>lnext<CR>
+        nnoremap qp :<C-u>lprev<CR>
+        nnoremap qq :<C-u>ll<CR>
+        nnoremap qo :<C-u>lopen<CR>
+        nnoremap ql :<C-u>lclose<CR>
+        nnoremap qw :<C-u>lwindow<CR>
+    else
+        let g:map_for_llist = 0
+        nnoremap <silent> <C-n> :<C-u>cnext<CR>
+        nnoremap <silent> <C-p> :<C-u>cprev<CR>
+        nnoremap qn :<C-u>cnext<CR>
+        nnoremap qp :<C-u>cprev<CR>
+        nnoremap qq :<C-u>cc<CR>
+        nnoremap qo :<C-u>copen<CR>
+        nnoremap ql :<C-u>cclose<CR>
+        nnoremap qw :<C-u>cwindow<CR>
+    endif
+endfunction
+let g:map_for_llist = 1
+call ToggleQL(0)
+command! ToggleQL call ToggleQL(0)
+nnoremap <silent> <Leader>q :<C-u>ToggleQL<CR>
 
 inoremap <C-j> <ESC>
 cnoremap <C-j> <C-u><ESC>
@@ -81,10 +111,6 @@ nnoremap : ;
 nnoremap Y y$
 nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
-nnoremap <silent> <C-n> :<C-u>cn<CR>
-nnoremap <silent> <C-p> :<C-u>cp<CR>
-nnoremap <silent> <Leader>q :<C-u>ccl<CR>
-nnoremap <silent> <Leader>Q :<C-u>cw<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
 nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
 nnoremap <silent> <Leader>M :<C-u>rightb term<CR>
@@ -471,6 +497,9 @@ let g:vim_markdown_folding_level = 3
 "" vimtex {{{
 let g:vimtex_compiler_method = 'latexmk'
 let g:vimtex_view_method = 'zathura'
+let g:vimtex_toc_config = {
+    \ 'name': 'ToC',
+    \ 'mode': 2 }
 "}}}
 "}}}
 
