@@ -50,9 +50,6 @@ set hlsearch
 """ File
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,latin1
 
-""" Skip loading mswin.vim
-"let g:skip_loading_mswin=1
-
 """ Spell
 set nospell
 set spelllang=en,cjk
@@ -167,7 +164,35 @@ inoremap <expr> ,dt strftime('%H:%M')
 inoremap <expr> ,dh strftime('## %Y-%m-%d')
 "}}}
 
+""" Plugin Loading {{{
+let g:no_gvimrc_example=1
+let g:no_vimrc_example=1
+" Skip loading default plugins
+let g:loaded_gzip               = 1
+let g:loaded_tar                = 1
+let g:loaded_tarPlugin          = 1
+let g:loaded_zip                = 1
+let g:loaded_zipPlugin          = 1
+let g:loaded_rrhelper           = 1
+let g:loaded_vimball            = 1
+let g:loaded_vimballPlugin      = 1
+let g:loaded_getscript          = 1
+let g:loaded_getscriptPlugin    = 1
+" I use netrw actually
+" let g:loaded_netrw              = 1
+" let g:loaded_netrwPlugin        = 1
+" let g:loaded_netrwSettings      = 1
+" let g:loaded_netrwFileHandlers  = 1
+let g:did_install_default_menus = 1
+let g:skip_loading_mswin        = 1
+let g:did_install_syntax_menu   = 1
+"}}}
+
 """ Commands (grep, diff etc.) {{{
+" sudo write
+cabbrev w!! w !sudo tee > /dev/null %
+
+" eiji dictionary
 if executable('eiji')
     nnoremap <Leader>w :<C-u>!eiji <cword><CR>
 endif
@@ -312,7 +337,7 @@ endif
 "}}}
 "}}}
 
-""" Plugins {{{
+""" Plugin Settings {{{
 source $VIMRUNTIME/macros/matchit.vim
 
 "" vim-lsp {{{
