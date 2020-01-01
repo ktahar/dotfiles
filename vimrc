@@ -75,32 +75,37 @@ nnoremap ZQ <Nop>
 
 " macro recording starts with Q (instead of q)
 nnoremap Q q
+nnoremap q <Nop>
 
-function! ToggleQL (force_llist)
-    if (a:force_llist || ! g:map_for_llist)
-        let g:map_for_llist = 1
+function! ToggleQL (force_location)
+    if (a:force_location || g:mapping_quickfix)
+        let g:mapping_quickfix = 0
         nnoremap <silent> <C-n> :<C-u>lnext<CR>
         nnoremap <silent> <C-p> :<C-u>lprev<CR>
         nnoremap qn :<C-u>lnext<CR>
         nnoremap qp :<C-u>lprev<CR>
         nnoremap qq :<C-u>ll<CR>
         nnoremap qo :<C-u>lopen<CR>
-        nnoremap ql :<C-u>lclose<CR>
+        nnoremap qc :<C-u>lclose<CR>
+        nnoremap ql :<C-u>llist<CR>
         nnoremap qw :<C-u>lwindow<CR>
+        echo "location"
     else
-        let g:map_for_llist = 0
+        let g:mapping_quickfix = 1
         nnoremap <silent> <C-n> :<C-u>cnext<CR>
         nnoremap <silent> <C-p> :<C-u>cprev<CR>
         nnoremap qn :<C-u>cnext<CR>
         nnoremap qp :<C-u>cprev<CR>
         nnoremap qq :<C-u>cc<CR>
         nnoremap qo :<C-u>copen<CR>
-        nnoremap ql :<C-u>cclose<CR>
+        nnoremap qc :<C-u>cclose<CR>
+        nnoremap ql :<C-u>clist<CR>
         nnoremap qw :<C-u>cwindow<CR>
+        echo "quickfix"
     endif
 endfunction
-let g:map_for_llist = 1
-call ToggleQL(0)
+let g:mapping_quickfix = 0
+silent call ToggleQL(0)
 command! ToggleQL call ToggleQL(0)
 nnoremap <silent> <Leader>q :<C-u>ToggleQL<CR>
 
