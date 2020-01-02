@@ -84,6 +84,10 @@ function! ToggleQL (force_location)
         nnoremap <silent> <C-p> :<C-u>lprev<CR>
         nnoremap qn :<C-u>lnext<CR>
         nnoremap qp :<C-u>lprev<CR>
+        nnoremap qN :<C-u>llast<CR>
+        nnoremap qP :<C-u>lfirst<CR>
+        nnoremap qf :<C-u>lnfile<CR>
+        nnoremap qF :<C-u>lpfile<CR>
         nnoremap qq :<C-u>ll<CR>
         nnoremap qo :<C-u>lopen<CR>
         nnoremap qc :<C-u>lclose<CR>
@@ -96,6 +100,10 @@ function! ToggleQL (force_location)
         nnoremap <silent> <C-p> :<C-u>cprev<CR>
         nnoremap qn :<C-u>cnext<CR>
         nnoremap qp :<C-u>cprev<CR>
+        nnoremap qN :<C-u>clast<CR>
+        nnoremap qP :<C-u>cfirst<CR>
+        nnoremap qf :<C-u>cnfile<CR>
+        nnoremap qF :<C-u>cpfile<CR>
         nnoremap qq :<C-u>cc<CR>
         nnoremap qo :<C-u>copen<CR>
         nnoremap qc :<C-u>cclose<CR>
