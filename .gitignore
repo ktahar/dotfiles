@@ -7,7 +7,7 @@ tags
 vim/.netrwhist
 vim/pack/my/start/merlin
 vim/pack/my/start/ocp-indent
-apps/vim.HEAD
+apps/*.HEAD
 apps/*.log
 bin/urxvt_local
 
