@@ -395,8 +395,6 @@ def install_apt_packages(args):
     if distid != 'xenial':
         # just for fun. this is not on xenial.
         pkgs.append("neofetch")
-        # just for private machines. this is not on xenial.
-        ex_pkgs["desktop"].append("xiccd")
 
     ex_pkgs["gem"] = ["ruby-full",
             "libssl-dev", ## for gem package openssl
