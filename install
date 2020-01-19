@@ -856,7 +856,7 @@ def link_linux():
 
         if path.exists(ln):
             if not path.islink(ln):
-                printc("[ERROR] already exists but is not link: %s" % ln, 'r')
+                printc("[WARN] already exists but is not link: %s" % ln, 'y')
         else:
             os.symlink(tgt, ln)
             printc("created sym link %s" % ln, 'g')
