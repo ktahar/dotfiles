@@ -386,8 +386,7 @@ def install_apt_packages(args):
             "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
             ## web browsers
             "chromium-browser",
-            "asciidoc", # for qutebrowser docs
-            "python-pygments", "python3-pygments", # doc generation for qutebrowser
+            "asciidoc", "python3-venv", "python3-pygments", # for qutebrowser docs
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
@@ -493,15 +492,6 @@ def install_pip_packages(args):
         opts.append('-U')
         ## add only when upgrade, because these are installed as apt packages
         pkgs.extend(["numpy", "matplotlib", "pygments"])
-
-    ex_pkgs = {}
-    ex_pkgs["desktop"] = [
-            "tox", "PyQt5", "PyQtWebEngine", # for qutebrowser.
-            ]
-
-    for k, l in ex_pkgs.items():
-        if getattr(args, k):
-            pkgs.extend(l)
 
     subproc.run([local_pip] + opts + pkgs)
 
@@ -732,14 +722,13 @@ def install_qutebrowser():
     if path.exists(qb_dir):
         return
 
-    tag='v1.7.0'
+    tag='v1.10.0'
     # in case of bootstrap install, where ~/.local/bin is not in $PATH.
-    tox = path.join(home, '.local', 'bin', 'tox')
     subproc.run(['git', 'clone', 'https://github.com/qutebrowser/qutebrowser',
         '-b', tag, '--depth', '1'], cwd=path.join(home, 'opt'))
     subproc.run(['git', 'checkout', '-b', tag], cwd=qb_dir)
-    subproc.run([tox, '-e', 'mkvenv'], cwd=qb_dir)
-    subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
+    subproc.run(['python3', './scripts/mkvenv.py'], cwd=qb_dir)
+    # subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
     entry_contents = """[Desktop Entry]
 Version={}
 Terminal=false
