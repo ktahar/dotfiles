@@ -10,17 +10,25 @@ import argparse
 import platform
 
 osname = platform.system()
+
 if osname == 'Windows':
     home = os.environ.get('USERPROFILE')
 else:
     home = os.environ.get('HOME')
-if osname == 'Linux':
-    distname, distversion, distid = platform.linux_distribution()
 
 py = path.join(home, 'dotfiles', 'py')
 if py not in sys.path:
     sys.path.append(py)
+
 from colour import printc
+
+if osname == 'Linux':
+    try:
+        r = subproc.run(['lsb_release', '-sc'], stdout=subproc.PIPE)
+        distid = r.stdout.decode().strip()
+    except FileNotFoundError as e:
+        printc('[ERROR] command lsb_release is not found.', 'r')
+        sys.exit(1)
 
 def prompt(msg, default='y'):
     if sys.version_info.major == 2: inp = raw_input
@@ -970,12 +978,13 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
+    print(distid)
 
     if osname == 'Windows':
         main_windows(args)
     elif osname == 'Linux' and args.minimum:
         main_linux_minimum(args)
-    elif osname == 'Linux' and distname == 'Ubuntu' or distname == 'Debian':
+    elif osname == 'Linux':
         main_linux(args)
     else:
         raise NotImplementedError("OS %s is not supported." % osname)
