@@ -970,9 +970,10 @@ if __name__ == '__main__':
 
     if osname == 'Windows':
         main_windows(args)
-    elif osname == 'Linux' and args.minimum:
-        main_linux_minimum(args)
     elif osname == 'Linux':
-        main_linux(args)
+        if args.minimum:
+            main_linux_minimum(args)
+        else:
+            main_linux(args)
     else:
         raise NotImplementedError("OS %s is not supported." % osname)
