@@ -387,11 +387,15 @@ def install_apt_packages(args):
             ## i3wm and things to use with that
             "i3", "dunst", "rxvt-unicode-256color", "feh", "xsel",
             "zathura", "xdotool", "xbacklight",
-            ## audio, music
+            ## audio
             "pulseaudio", "pavucontrol", "pasystray",
-            "mpd", "mpc", "ncmpc",
             ## lightdm instead of gdm3
             "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
+            ]
+
+    ex_pkgs["fulldesktop"] = [
+            # music
+            "mpd", "mpc", "ncmpc",
             ## web browsers
             "chromium-browser",
             "asciidoc", "python3-venv", "python3-pygments", # for qutebrowser docs
@@ -439,7 +443,7 @@ def install_apt_packages(args):
             pkgs.extend(l)
 
     # FIXME: temporary dirty logic for dependency resolution...
-    if args.desktop and not args.pip:
+    if args.fulldesktop and not args.pip:
         pkgs.extend(ex_pkgs["pip"])
 
     pkgs = list(set(pkgs))
@@ -892,10 +896,10 @@ def main_linux(args):
     # check absence of zsh to detect whether the install is first time.
     # if so, install apt packages because it's required to setup shell and fzf.
     no_zsh = not path.exists("/bin/zsh")
-    if any((no_zsh, args.apt, args.desktop, args.pip, args.gem, args.opam, args.vim)):
+    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.gem, args.opam, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
-    if any((args.desktop, args.pip)):
+    if any((args.fulldesktop, args.pip)):
         printc('[pip packages]', 'b')
         install_pip_packages(args)
 
@@ -917,11 +921,11 @@ def main_linux(args):
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
 
     # qutebrowser should be after pip (requires tox).
-    if args.desktop:
-        printc('[desktop (qutebrowser)]', 'b')
+    if args.fulldesktop:
+        printc('[fulldesktop (qutebrowser)]', 'b')
         install_qutebrowser()
         install_quickmarks()
-        printc('[desktop (matlab)]', 'b')
+        printc('[fulldesktop (matlab)]', 'b')
         setup_matlab()
 
     # vim should be the last because some package managers install vim plugins.
@@ -947,6 +951,8 @@ def parse_args():
             help='Install apt packages.')
     parser.add_argument('-d', '--desktop', action='store_true',
             help='Install packages, settings and fonts for desktop.')
+    parser.add_argument('-f', '--fulldesktop', action='store_true',
+            help='Install packages, settings and fonts for full desktop.')
     parser.add_argument('-p', '--pip', action='store_true',
             help='Install pip packages.')
     parser.add_argument('-g', '--gem', action='store_true',
@@ -960,7 +966,7 @@ def parse_args():
 
     args =  parser.parse_args()
     if args.all:
-        for a in ('vim', 'apt', 'desktop', 'pip', 'gem', 'opam', 'go', 'npm'):
+        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'gem', 'opam', 'go', 'npm'):
             setattr(args, a, True)
 
     return args
