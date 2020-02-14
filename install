@@ -892,7 +892,7 @@ def main_linux(args):
     # check absence of zsh to detect whether the install is first time.
     # if so, install apt packages because it's required to setup shell and fzf.
     no_zsh = not path.exists("/bin/zsh")
-    if any((no_zsh, args.apt, args.desktop, args.pip, args.gem, args.opam)):
+    if any((no_zsh, args.apt, args.desktop, args.pip, args.gem, args.opam, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
     if any((args.desktop, args.pip)):
