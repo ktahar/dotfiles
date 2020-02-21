@@ -398,7 +398,8 @@ def install_apt_packages(args):
             "mpd", "mpc", "ncmpc",
             ## web browsers
             "chromium-browser",
-            "asciidoc", "python3-venv", "python3-pygments", # for qutebrowser docs
+            "asciidoc", "python3-venv", # for qutebrowser docs
+            "texlive-full",
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
@@ -493,7 +494,7 @@ def install_pip_packages(args):
     opts = ['install', '--user']
 
     pkgs = ["scipy", "pandas", "ipython",
-            "pipenv", "cvxopt",
+            "pipenv", "cvxopt", "pygments",
             "networkx[all]", # [all] includes pygraphviz, gdal etc.
             "python-language-server", # to use pyls from vim-lsp.
             "rospkg", "panflute", "requests",
@@ -503,7 +504,7 @@ def install_pip_packages(args):
     if args.upgrade:
         opts.append('-U')
         ## add only when upgrade, because these are installed as apt packages
-        pkgs.extend(["numpy", "matplotlib", "pygments"])
+        pkgs.extend(["numpy", "matplotlib"])
 
     subproc.run([local_pip] + opts + pkgs)
 
