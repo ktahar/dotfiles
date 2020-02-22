@@ -497,7 +497,7 @@ def install_pip_packages(args):
             "pipenv", "cvxopt", "pygments",
             "networkx[all]", # [all] includes pygraphviz, gdal etc.
             "python-language-server", # to use pyls from vim-lsp.
-            "rospkg", "panflute", "requests",
+            "panflute", "requests",
             "compiledb", "s-tui",
             ]
 
