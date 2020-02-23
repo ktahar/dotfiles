@@ -372,11 +372,15 @@ def install_apt_packages(args):
             "vim",
             ## libs to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
-            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
             ## libs to build universal-ctags
             "python3-docutils", "libseccomp-dev",
             "libjansson-dev", "libyaml-dev", "libxml2-dev",
             ]
+    # to use clangd from vim-lsp.
+    if distid == 'xenial':
+        ex_pkgs["vim"].append("clang-tools-6.0")
+    elif distid == 'bionic':
+        ex_pkgs["vim"].append("clangd-9")
 
     ex_pkgs["desktop"] = [
             ## libs to build vim

@@ -395,14 +395,17 @@ if executable('pyls')
        \ })
     " au FileType python setl omnifunc=lsp#complete
 endif
-if executable('clangd-6.0')
-    " sudo apt install clang-tools-6.0
-    au User lsp_setup call lsp#register_server({
-       \ 'name': 'clangd-6.0',
-       \ 'cmd': {server_info->['clangd-6.0']},
-       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-       \ })
-endif
+for g:clangd_cmd in ['clangd-9', 'clangd-6.0', 'clangd']
+    if executable(g:clangd_cmd)
+        " sudo apt install clang-tools-6.0 or clangd-9
+        au User lsp_setup call lsp#register_server({
+           \ 'name': g:clangd_cmd,
+           \ 'cmd': {server_info->[g:clangd_cmd]},
+           \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+           \ })
+        break
+    endif
+endfor
 if executable('ocaml-language-server')
     " npm install -g ocaml-language-server
     au User lsp_setup call lsp#register_server({
