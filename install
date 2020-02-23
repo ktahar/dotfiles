@@ -31,19 +31,16 @@ if osname == 'Linux':
         sys.exit(1)
 
 def prompt(msg, default='y'):
-    if sys.version_info.major == 2: inp = raw_input
-    else: inp = input
-
     if not isinstance(default, str): default = ''
     default = default.lower()
 
     if default == 'y':
-        return inp('%s [Y/n]:' % msg).lower() != 'n'
+        return input('%s [Y/n]:' % msg).lower() != 'n'
     elif default == 'n':
-        return inp('%s [y/N]:' % msg).lower() == 'y'
+        return input('%s [y/N]:' % msg).lower() == 'y'
     else:
         while True:
-            a = inp('%s [y/n]:' % msg).lower()
+            a = input('%s [y/n]:' % msg).lower()
             if a == 'y':
                 return True
             elif a == 'n':
@@ -362,7 +359,7 @@ def install_apt_packages(args):
             "global", "pandoc", "unison", "p7zip-full",
             "rlwrap", "apt-file",
             # build tools
-            "build-essential", "cmake", "llvm",
+            "build-essential", "cmake",
             "devscripts", "pkg-config",
             "autoconf", "libtool",
             ]
@@ -375,18 +372,18 @@ def install_apt_packages(args):
             "vim",
             ## libs to build vim
             "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
+            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
             ## libs to build universal-ctags
             "python3-docutils", "libseccomp-dev",
             "libjansson-dev", "libyaml-dev", "libxml2-dev",
-            "clang-tools-6.0", ## to use clangd-6.0 from vim-lsp.
             ]
 
     ex_pkgs["desktop"] = [
             ## libs to build vim
             "xorg-dev", ## to enable +clipboard +X11
-            ## i3wm and things to use with that
-            "i3", "dunst", "rxvt-unicode-256color", "feh", "xsel",
-            "zathura", "xdotool", "xbacklight",
+            ## i3wm and basic things to use with that
+            "i3", "dunst", "rxvt-unicode-256color", "feh",
+            "xsel", "xdotool", "xbacklight",
             ## audio
             "pulseaudio", "pavucontrol", "pasystray",
             ## lightdm instead of gdm3
@@ -394,12 +391,16 @@ def install_apt_packages(args):
             ]
 
     ex_pkgs["fulldesktop"] = [
+            # additional build tools
+            "llvm",
             # music
             "mpd", "mpc", "ncmpc",
             ## web browsers
             "chromium-browser",
-            "asciidoc", "python3-venv", # for qutebrowser docs
-            "texlive-full",
+            # for qutebrowser docs
+            "asciidoc", "python3-venv", "python3-pygments",
+            # read / write documents
+            "texlive-full", "zathura",
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             ]
@@ -415,11 +416,11 @@ def install_apt_packages(args):
 
     ex_pkgs["pip"] = [
             ## basic python libs
-            ## Though we will install user-local libs using pip,
-            ## sometimes it's better to have system-wide installation.
-            "python3-pip", "python3-numpy", "python3-matplotlib",
+            "python3-pip", "python3-requests",
+            "python3-numpy", "python3-scipy",
+            "python3-matplotlib","python3-pandas",
+            "python3-ipython",
             "python3-gdal", # pip install gdal is failing for some reason
-            "graphviz", "libgraphviz-dev", # to install pygraphviz
             ## libs to build python
             "libssl-dev", ## also for ruby gem package openssl
             "zlib1g-dev", ## also for ruby gem package jekyll
@@ -442,10 +443,6 @@ def install_apt_packages(args):
     for k, l in ex_pkgs.items():
         if getattr(args, k):
             pkgs.extend(l)
-
-    # FIXME: temporary dirty logic for dependency resolution...
-    if args.fulldesktop and not args.pip:
-        pkgs.extend(ex_pkgs["pip"])
 
     pkgs = list(set(pkgs))
 
@@ -473,11 +470,6 @@ def install_pip_packages(args):
     Because this will install with --user option,
     installed packages will be located in ~/.local.
 
-    Matplotlib and pandas depend on python-dateutil,
-    but pandas needs newer version.
-    (And not automatically upgraded to that version.)
-    So, upgrade python-dateutil explicitly.
-
     """
 
     # prefer pip at ~/.local/bin
@@ -493,18 +485,10 @@ def install_pip_packages(args):
 
     opts = ['install', '--user']
 
-    pkgs = ["scipy", "pandas", "ipython",
-            "pipenv", "cvxopt", "pygments",
-            "networkx[all]", # [all] includes pygraphviz, gdal etc.
+    pkgs = ["pipenv",
             "python-language-server", # to use pyls from vim-lsp.
-            "panflute", "requests",
-            "compiledb", "s-tui",
+            "panflute", "compiledb", "s-tui",
             ]
-
-    if args.upgrade:
-        opts.append('-U')
-        ## add only when upgrade, because these are installed as apt packages
-        pkgs.extend(["numpy", "matplotlib"])
 
     subproc.run([local_pip] + opts + pkgs)
 
@@ -900,7 +884,7 @@ def main_linux(args):
     if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.gem, args.opam, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
-    if any((args.fulldesktop, args.pip)):
+    if args.pip:
         printc('[pip packages]', 'b')
         install_pip_packages(args)
 
@@ -921,7 +905,7 @@ def main_linux(args):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
 
-    # qutebrowser should be after pip (requires tox).
+    # qutebrowser should be after apt (requires python3-pygments)
     if args.fulldesktop:
         printc('[fulldesktop (qutebrowser)]', 'b')
         install_qutebrowser()
