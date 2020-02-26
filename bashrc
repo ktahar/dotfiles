@@ -33,7 +33,6 @@ alias s='sudo -E'
 alias svim='sudo vim --noplugin'
 alias v='vim'
 alias vi='vim'
-
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls --color -BC'
@@ -44,10 +43,9 @@ alias lta='ls --color -altrh'
 alias lat='ls --color -altrh'
 alias less='less -R'
 alias info='info --vi-keys'
-
 alias g='git'
 alias gi='git'
-
+alias t='tmux'
 alias q='exit'
 alias ipy='ipython3'
 
