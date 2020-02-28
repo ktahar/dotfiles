@@ -1,5 +1,6 @@
 # ktaha's zshenv
 
+export SHELL=/bin/zsh
 export EDITOR=vim
 
 ## C headers and libs
