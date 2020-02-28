@@ -2,6 +2,7 @@
 
 export SHELL=/bin/zsh
 export EDITOR=vim
+export LANG=en_US.UTF-8
 
 ## C headers and libs
 ### CPATH
