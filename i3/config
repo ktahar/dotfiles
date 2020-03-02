@@ -200,14 +200,20 @@ bindsym $mod+Down exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
+# Color
+client.focused #2D993B #297720 #FFFFFF #2CF468 #297720
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         status_command i3status
         tray_output primary
+        colors {
+                focused_workspace #2D993B #297720 #FFFFFF
+        }
 }
 
-exec --no-startup-id ibus-daemon -dx # need this on Ubuntu 16.04 not on 18.04
+# exec --no-startup-id ibus-daemon -dx # need this on Ubuntu 16.04 not on 18.04
 exec --no-startup-id dunst
 exec --no-startup-id pasystray
 exec --no-startup-id nm-applet
