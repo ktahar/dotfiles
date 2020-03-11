@@ -58,9 +58,6 @@
 [submodule "vim/pack/my/start/vim-tmux-navigator"]
 	path = vim/pack/my/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
-[submodule "apps/bubblewrap"]
-	path = apps/bubblewrap
-	url = https://github.com/projectatomic/bubblewrap
 [submodule "apps/pyenv"]
 	path = apps/pyenv
 	url = https://github.com/pyenv/pyenv

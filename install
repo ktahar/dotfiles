@@ -376,10 +376,9 @@ def install_apt_packages(args):
             "python3-docutils", "libseccomp-dev",
             "libjansson-dev", "libyaml-dev", "libxml2-dev",
             ]
-    # to use clangd from vim-lsp.
-    if distid == 'xenial':
-        ex_pkgs["vim"].append("clang-tools-6.0")
-    elif distid == 'bionic':
+
+    # use clangd from vim-lsp. package name depends on distros.
+    if distid == 'bionic':
         ex_pkgs["vim"].append("clangd-9")
 
     ex_pkgs["desktop"] = [
@@ -399,19 +398,17 @@ def install_apt_packages(args):
             "llvm",
             # music
             "mpd", "mpc", "ncmpc",
-            ## web browsers
+            # web browsers
             "chromium-browser",
-            # for qutebrowser docs
+            ## for qutebrowser docs
             "asciidoc", "python3-venv", "python3-pygments",
             # read / write documents
             "texlive-full", "zathura",
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
+            # misc
+            "neofetch",
             ]
-
-    if distid != 'xenial':
-        # just for fun. this is not on xenial.
-        pkgs.append("neofetch")
 
     ex_pkgs["gem"] = ["ruby-full",
             "libssl-dev", ## for gem package openssl
@@ -436,12 +433,8 @@ def install_apt_packages(args):
             "m4", ## for opam package conf-m4
             "gfortran", ## to build OpenBLAS for Owl
             "libplplot-dev", "libshp-dev", ## to use owl-plplot
+            "bubblewrap",
             ]
-
-    if distid == 'xenial':
-        ex_pkgs["opam"].append("libcap-dev") # to build bubblewrap for opam
-    else:
-        ex_pkgs["opam"].append("bubblewrap") # for opam
 
     for k, l in ex_pkgs.items():
         if getattr(args, k):
@@ -512,45 +505,12 @@ def install_gem_packages(upgrade):
 def install_opam_packages(upgrade):
     """install OCaml packages using opam.
 
-    [bubblewrap]
-    required by OPAM 2.0.
-    While Ubuntu 18.04+ has apt package for this,
-    Ubuntu 16.04 doesn't. So, build from source.
-
     [OpenBLAS]
     required by Owl.
     Since libopenblas-dev in apt package lacks something,
     build from source.
 
     """
-
-    def install_bwrap():
-        if not (osname == 'Linux' and distid == 'xenial'):
-            msg = "You don't have to build bwrap on platform other than Ubuntu 16.04."
-            msg += "\nYou can install it from apt (run ./install -a)."
-            raise RuntimeError(msg)
-
-        wd = path.join(home, "dotfiles", "apps", "bubblewrap")
-        log = path.join(home, "dotfiles", "apps", "bubblewrap.log")
-        print("Building bubblewrap")
-
-        commands = [
-                ['./autogen.sh'],
-                ['./configure', '--prefix={}/.local'.format(home),
-                    '--disable-man'],
-                ['make', 'clean'],
-                ['make'],
-                ['install', '-c', 'bwrap', "{}/.local/bin".format(home)],
-                ]
-
-        for i, cmd in enumerate(commands):
-            res = subproc.run(cmd, cwd=wd, stdout=subproc.PIPE)
-            with open(log, "w" if not i else "a") as f:
-                f.write(res.stdout.decode())
-            if res.returncode != 0:
-                return False
-
-        return True
 
     def install_openblas():
         wd = path.join(home, "dotfiles", "apps", "OpenBLAS")
@@ -595,8 +555,6 @@ def install_opam_packages(upgrade):
             f.write(res.content)
         os.chmod(opam, 0o755)
 
-    if not shutil.which("bwrap"):
-        install_bwrap()
     if not path.exists(path.join(home, ".local", "lib", "libopenblas.so")):
         built = install_openblas()
         if built:
