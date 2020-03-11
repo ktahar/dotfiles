@@ -78,12 +78,6 @@ cd ./gnome && ./gnome-term-load.sh && cd ..
 ## To avoid nautilus hang-up on i3 session (occurs on Ubuntu 16.04)
 gsettings set org.gnome.desktop.background show-desktop-icons false
 
-## install ibus-mozc
-dpkg-query -W ibus-mozc &> /dev/null
-if [ "$?" != 0 ]; then
-    sudo -E apt install ibus-mozc
-fi
-
 ## xsession for xrdp
 if [ ! -e ~/.xsession ]; then
     ln -s ~/dotfiles/i3/xsession ~/.xsession

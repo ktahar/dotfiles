@@ -387,6 +387,7 @@ def install_apt_packages(args):
             ## i3wm and basic things to use with that
             "i3", "dunst", "rxvt-unicode-256color", "feh",
             "xsel", "xdotool", "xbacklight",
+            "ibus-mozc",
             ## audio
             "pulseaudio", "pavucontrol", "pasystray",
             ## lightdm instead of gdm3
@@ -453,7 +454,8 @@ def install_apt_packages(args):
         if not args.upgrade:
             return
 
-    subproc.run(['sudo', '-E', 'apt', 'update'])
+    if not args.skip_apt_update:
+        subproc.run(['sudo', '-E', 'apt', 'update'])
 
     if args.upgrade:
         subproc.run(['sudo', '-E', 'apt', 'upgrade'])
@@ -885,6 +887,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('--uninstall', action='store_true',
             help='Uninstall by removing links. Other options are ignored.')
+    parser.add_argument('--skip-apt-update', action='store_true',
+            help='Skip apt update.')
     parser.add_argument('-m', '--minimum', action='store_true',
             help='Perform minimum installation (for servers etc.).')
     parser.add_argument('-U', '--upgrade', action='store_true',
