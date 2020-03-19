@@ -4,7 +4,6 @@ import sys
 import os
 from os import path
 import glob
-import shutil
 import subprocess as subproc
 import argparse
 import platform
@@ -640,7 +639,7 @@ def install_npm_packages(upgrade):
 
     npm = path.join(node_dir, 'bin', 'npm')
 
-    pkgs = ['ocaml-language-server', 'npm-check-updates']
+    pkgs = ['ocaml-language-server', 'npm-check-updates', 'tldr', 'diff-so-fancy']
 
     if upgrade:
         subproc.run([npm, 'upgrade', '-g'])
