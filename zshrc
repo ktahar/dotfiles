@@ -220,7 +220,6 @@ alias la='ls --color -alh'
 alias lt='ls --color -Bltrh'
 alias lta='ls --color -altrh'
 alias lat='ls --color -altrh'
-alias less='less -R'
 alias info='info --vi-keys'
 alias g='git'
 alias gi='git'
@@ -231,27 +230,24 @@ alias ipy='ipython3'
 alias docker_rm_all='docker rm -f $(docker ps -aq)'
 alias docker_rmi_all='docker rmi -f $(docker images -q)'
 alias marp='npx marp'
-alias marpw='npx marp -w'
 alias marpp='npx marp --allow-local-files --pdf'
 alias utop='utop -init ~/dotfiles/ocamlinit_utop'
 alias ut='utop'
 alias uo='utop -init ~/dotfiles/ocamlinit_owl'
 alias ml='rlwrap ocaml'
-alias oct='octave --no-gui'
 alias za='zathura'
 alias f='feh -.'
 
 # Always use system python for global and managing things in ~/.local.
 # And use `pipenv` in project-directory to use different version of python.
 # Here are aliases to avoid calling other versions of pip through pyenv.
-# (May happen when calling pip after
-# `pyenv global 3.x.x`, which should never be done.)
+# (May happen when calling pip after `pyenv global 3.x.x`, which should never be done.)
 alias p="pipenv shell"
 alias psh="pipenv shell"
+alias pip="~/.local/bin/pip"
 alias pip3="~/.local/bin/pip3"
 alias pip3i="~/.local/bin/pip3 install --user"
 alias pip3u="~/.local/bin/pip3 install --user -U"
-alias pip="~/.local/bin/pip"
 
 # Tools, Plugins and Extensions
 ## OPAM
