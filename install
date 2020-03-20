@@ -410,11 +410,6 @@ def install_apt_packages(args):
             "neofetch",
             ]
 
-    ex_pkgs["gem"] = ["ruby-full",
-            "libssl-dev", ## for gem package openssl
-            "zlib1g-dev", ## for gem package jekyll
-            ]
-
     ex_pkgs["pip"] = [
             ## basic python libs
             "python3-pip", "python3-requests",
@@ -422,8 +417,8 @@ def install_apt_packages(args):
             "python3-matplotlib","python3-pandas",
             "python3-ipython", "ipython3",
             ## libs to build python
-            "libssl-dev", ## also for ruby gem package openssl
-            "zlib1g-dev", ## also for ruby gem package jekyll
+            "libssl-dev",
+            "zlib1g-dev",
             "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
             "libncurses5-dev", "xz-utils", "tk-dev",
             "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
@@ -488,20 +483,6 @@ def install_pip_packages(args):
             ]
 
     subproc.run([local_pip] + opts + pkgs)
-
-def install_gem_packages(upgrade):
-    """install ruby packages using gem.
-
-    """
-
-    if upgrade:
-        subproc.run(['gem', 'update'])
-
-    pkgs = [
-            "jekyll", "bundler",
-            ]
-
-    subproc.run(['gem', 'install'] + pkgs)
 
 def install_opam_packages(upgrade):
     """install OCaml packages using opam.
@@ -843,7 +824,7 @@ def main_linux(args):
     # check absence of zsh to detect whether the install is first time.
     # if so, install apt packages because it's required to setup shell and fzf.
     no_zsh = not path.exists("/bin/zsh")
-    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.gem, args.opam, args.vim)):
+    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.opam, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
     if args.pip:
@@ -862,7 +843,7 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('gem', 'opam', 'npm', 'go'):
+    for pack in ('opam', 'npm', 'go'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
@@ -904,8 +885,6 @@ def parse_args():
             help='Install packages, settings and fonts for full desktop.')
     parser.add_argument('-p', '--pip', action='store_true',
             help='Install pip packages.')
-    parser.add_argument('-g', '--gem', action='store_true',
-            help='Install gem packages.')
     parser.add_argument('-o', '--opam', action='store_true',
             help='Install opam packages.')
     parser.add_argument('-G', '--go', action='store_true',
@@ -915,7 +894,7 @@ def parse_args():
 
     args =  parser.parse_args()
     if args.all:
-        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'gem', 'opam', 'go', 'npm'):
+        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'opam', 'go', 'npm'):
             setattr(args, a, True)
 
     return args

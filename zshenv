@@ -46,9 +46,6 @@ if [ -d ~/go ]; then
     export GOPATH=~/go
 fi
 
-## Ruby and gem
-export GEM_HOME=~/gems
-
 ## PATH
 typeset -U path
 ### put at head without existence check.
@@ -57,7 +54,7 @@ for dir in $directories; do
     path=($dir $path)
 done
 ### put at head.
-directories=($PYENV_ROOT/bin $GEM_HOME/bin ~/opt/go/bin ~/.local/bin)
+directories=($PYENV_ROOT/bin ~/opt/go/bin ~/.local/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
