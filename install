@@ -424,11 +424,10 @@ def install_apt_packages(args):
             "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
             ]
 
-    ex_pkgs["opam"] = ["mercurial", "darcs",
+    ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap",
             "m4", ## for opam package conf-m4
             "gfortran", ## to build OpenBLAS for Owl
             "libplplot-dev", "libshp-dev", ## to use owl-plplot
-            "bubblewrap",
             ]
 
     for k, l in ex_pkgs.items():
@@ -560,11 +559,10 @@ def install_opam_packages(upgrade):
     pkgs = [
             # dev tools
             "utop", "merlin", "ocamlformat",
-            # build tools
+            # build / test tools
             "ocamlfind", "dune", "alcotest",
-            # basic libs
+            # std libs
             "base", "stdio",
-            # "core", "ppx_deriving", "atdgen",
             # owl
             "owl-top", "owl-plplot",
             ]
