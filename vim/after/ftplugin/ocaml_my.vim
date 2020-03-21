@@ -15,16 +15,10 @@ nnoremap <silent><buffer> <LocalLeader>t :<C-u>MerlinTypeOf<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 
-function! s:ocaml_fmt()
-    let now_line = line('.')
-    exec ':%! ocp-indent'
-    exec ':' .. now_line
-endfunction
-
-nnoremap <silent><buffer> <LocalLeader>f :call <SID>ocaml_fmt()<CR>
+nnoremap <silent><buffer> <LocalLeader>f :Neoformat<CR>
 " augroup ocaml_fmt
 "     autocmd!
-"     autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_fmt()
+"     autocmd BufWrite *.mli\= undojoin | Neoformat
 " augroup END
 
 " Execute current file as a script <LocalLeader>e

@@ -517,8 +517,8 @@ def install_opam_packages(upgrade):
         """
 
         import requests, hashlib
-        version = "2.0.5"
-        h = "df994c53792cad806287f56717fb515524a9e7d074e6f782c8e6d3b364930ac2c891e40b1c0adb81449a2324088f0ce0b66c863124ddacaead88fad282c080a8"
+        version = "2.0.6"
+        h = "2b9d4a99aa28a193c88c7c6f6265203bd3cfeef98929d6f5cfce4b52cd9ddbd7be7eddc1d3d9c440f81d65074dd7851b8d29cd397fb06d2cfccffb54d3cdcc6a"
 
         if path.exists(opam):
             res = subproc.run([opam, "--version"], stdout=subproc.PIPE)
@@ -559,25 +559,25 @@ def install_opam_packages(upgrade):
 
     pkgs = [
             # dev tools
-            "utop", "merlin", "ocp-indent",
+            "utop", "merlin", "ocamlformat",
             # build tools
             "ocamlfind", "dune", "alcotest",
             # basic libs
-            "base", "stdio", "core",
-            "ppx_deriving", "atdgen",
+            "base", "stdio",
+            # "core", "ppx_deriving", "atdgen",
             # owl
             "owl-top", "owl-plplot",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
 
-    # setup merlin and ocp-indent.
+    # setup merlin (ocp-indent is removed for now)
     res = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
 
     opam_share = res.stdout.decode().strip()
 
     ## create symlink for `pkg` as vim pack.
-    for pkg in ('merlin', 'ocp-indent'):
+    for pkg in ('merlin',): # + ('ocp-indent')
         pkg_path = path.join(opam_share, pkg, 'vim')
         pack_path = path.join(home, 'dotfiles',
                 'vim', 'pack', 'my', 'start', pkg)
@@ -732,14 +732,15 @@ files_linux = [
         (r".gitignore_global", r"gitignore_global"),
         (r".agignore", r"agignore"),
         (r".latexmkrc", r"latexmkrc"),
-        (r".ocamlinit", r"ocamlinit"),
-        (r".utoprc", r"utoprc"),
-        (r".lambda-term-inputrc", r"lambda-term-inputrc"),
+        (r".ocamlinit", r"ocaml/ocamlinit"),
+        (r".utoprc", r"ocaml/utoprc"),
+        (r".config/ocamlformat", r"ocaml/ocamlformat"),
+        (r".lambda-term-inputrc", r"ocaml/lambda-term-inputrc"),
         (r".config/zathura/zathurarc", r"zathurarc"),
         (r".config/feh/keys", r"feh_keys"),
-        (r".config/matplotlib/matplotlibrc", r"matplotlibrc"),
-        (r".ipython/profile_default/ipython_config.py", r"ipython_config.py"),
-        (r".ipython/profile_default/startup/ipython_startup.py", r"ipython_startup.py"),
+        (r".config/matplotlib/matplotlibrc", r"python/matplotlibrc"),
+        (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
+        (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
         (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
         (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
         (r".config/i3/config", r"i3/config"),
