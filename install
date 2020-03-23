@@ -394,8 +394,6 @@ def install_apt_packages(args):
             ]
 
     ex_pkgs["fulldesktop"] = [
-            # additional build tools
-            "llvm",
             # music
             "mpd", "mpc", "ncmpc",
             # web browsers
