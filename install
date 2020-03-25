@@ -420,11 +420,7 @@ def install_apt_packages(args):
             "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
             ]
 
-    ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap",
-            "m4", ## for opam package conf-m4
-            "gfortran", ## to build OpenBLAS for Owl
-            "libplplot-dev", "libshp-dev", ## to use owl-plplot
-            ]
+    ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap", "m4"]
 
     for k, l in ex_pkgs.items():
         if getattr(args, k):
@@ -484,29 +480,7 @@ def install_pip_packages(upgrade):
 def install_opam_packages(upgrade):
     """install OCaml packages using opam.
 
-    [OpenBLAS]
-    required by Owl.
-    Since libopenblas-dev in apt package lacks something,
-    build from source.
-
     """
-
-    def install_openblas():
-        wd = path.join(home, "dotfiles", "apps", "OpenBLAS")
-        log = path.join(home, "dotfiles", "apps", "openblas.log")
-        print("Building OpenBLAS")
-
-        res = subproc.run(['make'], cwd=wd, stdout=subproc.PIPE)
-        if res.returncode != 0:
-            return False
-        with open(log, "w") as f:
-            f.write(res.stdout.decode())
-
-        res = subproc.run(['make', 'PREFIX={}/.local'.format(home), 'install'],
-                cwd=wd, stdout=subproc.PIPE)
-        with open(log, "a") as f:
-            f.write(res.stdout.decode())
-        return res.returncode == 0
 
     def install_opam(opam):
         """install opam itself to ~/.local/bin.
@@ -534,14 +508,6 @@ def install_opam_packages(upgrade):
             f.write(res.content)
         os.chmod(opam, 0o755)
 
-    if not path.exists(path.join(home, ".local", "lib", "libopenblas.so")):
-        built = install_openblas()
-        if built:
-            printc("[WARN] OpenBLAS is built but opam install is skipped. type 'source ~/.zshenv' and run ./install -o again.", 'y')
-        else:
-            printc("[ERROR] OpenBLAS build is failed. Try 'git submodule update -i' to update the source.", 'r')
-        return
-
     opam = path.join(home, ".local", "bin", "opam")
     install_opam(opam)
 
@@ -561,25 +527,20 @@ def install_opam_packages(upgrade):
             "ocamlfind", "dune", "alcotest",
             # std libs
             "base", "stdio",
-            # owl
-            "owl-top", "owl-plplot",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
 
-    # setup merlin (ocp-indent is removed for now)
+    # setup merlin
     res = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
-
     opam_share = res.stdout.decode().strip()
-
-    ## create symlink for `pkg` as vim pack.
-    for pkg in ('merlin',): # + ('ocp-indent')
-        pkg_path = path.join(opam_share, pkg, 'vim')
-        pack_path = path.join(home, 'dotfiles',
-                'vim', 'pack', 'my', 'start', pkg)
-        if not path.exists(pack_path):
-            os.symlink(pkg_path, pack_path)
-            printc("created sym link %s" % pack_path, 'g')
+    ## create symlink for merlin as vim pack.
+    pkg_path = path.join(opam_share, 'merlin', 'vim')
+    pack_path = path.join(home, 'dotfiles',
+            'vim', 'pack', 'my', 'start', 'merlin')
+    if not path.exists(pack_path):
+        os.symlink(pkg_path, pack_path)
+        printc("created sym link %s" % pack_path, 'g')
 
 def make_opt_dir():
     opt = path.join(home, 'opt')

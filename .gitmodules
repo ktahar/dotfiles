@@ -73,9 +73,6 @@
 [submodule "urxvt/resize-font"]
 	path = urxvt/resize-font
 	url = https://github.com/simmel/urxvt-resize-font
-[submodule "apps/OpenBLAS"]
-	path = apps/OpenBLAS
-	url = https://github.com/xianyi/OpenBLAS
 [submodule "vim/pack/my/start/vimtex"]
 	path = vim/pack/my/start/vimtex
 	url = https://github.com/lervag/vimtex
