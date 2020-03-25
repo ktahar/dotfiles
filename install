@@ -451,11 +451,13 @@ def install_apt_packages(args):
     if needs_install:
         subproc.run(['sudo', '-E', 'apt', 'install'] + pkgs)
 
-def install_pip_packages(args):
+def install_pip_packages(upgrade):
     """install python packages using pip.
 
     Because this will install with --user option,
     installed packages will be located in ~/.local.
+
+    (temporary) upgrade arg is ignored.
 
     """
 
@@ -777,9 +779,6 @@ def main_linux(args):
     if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.opam, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
-    if args.pip:
-        printc('[pip packages]', 'b')
-        install_pip_packages(args)
 
     # shell and fzf should be after apt (require zsh).
     printc('[shell]', 'b')
@@ -787,20 +786,20 @@ def main_linux(args):
     printc('[fzf]', 'b')
     setup_fzf()
 
+    # desktop tools
     if args.desktop:
         printc('[desktop]', 'b')
         subproc.run(['./install_linux_desktop'])
+    if args.fulldesktop:
+        printc('[fulldesktop]', 'b')
+        setup_matlab()
 
     # language package managers
     import __main__
-    for pack in ('opam', 'npm', 'go'):
+    for pack in ('pip', 'npm', 'go', 'opam'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
-
-    if args.fulldesktop:
-        printc('[fulldesktop (matlab)]', 'b')
-        setup_matlab()
 
     # vim should be the last because some package managers install vim plugins.
     # e.g. merlin by opam.
