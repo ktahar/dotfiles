@@ -11,7 +11,7 @@ if osname == 'Windows':
 else:
     home = os.environ.get('HOME')
 
-py = os.path.join(home, 'dotfiles', 'py')
+py = os.path.join(home, 'dotfiles', 'python')
 if py not in sys.path:
     sys.path.append(py)
 from colour import printc
