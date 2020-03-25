@@ -16,7 +16,6 @@ if [ -d ~/go ]; then
 fi
 
 ## PATH
-typeset -T PATH path
 typeset -U path
 ### put at head without existence check.
 directories=(~/opt/node/bin)
