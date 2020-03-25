@@ -802,6 +802,8 @@ def parse_args():
             help='Install npm packages.')
 
     args =  parser.parse_args()
+    if args.fulldesktop:
+        args.desktop = True
     if args.all:
         for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'opam', 'go', 'npm'):
             setattr(args, a, True)
