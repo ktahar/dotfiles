@@ -398,8 +398,6 @@ def install_apt_packages(args):
             "mpd", "mpc", "ncmpc",
             # web browsers
             "chromium-browser",
-            ## for qutebrowser docs
-            "asciidoc", "python3-venv", "python3-pygments",
             # read / write documents
             "texlive-full", "zathura",
             ## Microsoft fonts (Arial etc.)
@@ -649,34 +647,6 @@ def install_go_packages(upgrade):
 
     subproc.run([go, 'get', '-u'] + pkgs)
 
-def install_qutebrowser():
-    """install qutebrowser to ~/opt/qutebrowser.
-
-    """
-
-    qb_dir = path.join(make_opt_dir(), 'qutebrowser')
-    if path.exists(qb_dir):
-        return
-
-    tag='v1.10.0'
-    # in case of bootstrap install, where ~/.local/bin is not in $PATH.
-    subproc.run(['git', 'clone', 'https://github.com/qutebrowser/qutebrowser',
-        '-b', tag, '--depth', '1'], cwd=path.join(home, 'opt'))
-    subproc.run(['git', 'checkout', '-b', tag], cwd=qb_dir)
-    subproc.run(['python3', './scripts/mkvenv.py'], cwd=qb_dir)
-    # subproc.run(['python3', 'scripts/asciidoc2html.py'], cwd=qb_dir)
-    entry_contents = """[Desktop Entry]
-Version={}
-Terminal=false
-Type=Application
-Name=qutebrowser
-Exec={}/dotfiles/bin/qutebrowser
-""".format(tag, home)
-    entry_file = path.join(home, ".local", "share",
-            "applications", "qutebrowser.desktop")
-    with open(entry_file, 'w') as f:
-        f.write(entry_contents)
-
 def setup_matlab():
     """make desktop entry for MATLAB (~/opt/matlab).
 
@@ -698,21 +668,6 @@ Categories=Control;MATLAB;
             "applications", "matlab.desktop")
     with open(entry_file, 'w') as f:
         f.write(entry_contents)
-
-def install_quickmarks():
-    """install qutebrowser's quickmarks to ~/opt/quickmarks.
-
-    Since URLs may contain private access tokens,
-    quickmarks repo is private (not included in dotfiles).
-
-    """
-
-    qm_dir = path.join(home, 'opt', 'quickmarks')
-    if path.exists(qm_dir):
-        return
-    subproc.run(['git', 'clone', 'https://ktahar@github.com/ktahar/quickmarks'],
-            cwd=path.join(home, 'opt'))
-    subproc.run(['./install'], cwd=qm_dir)
 
 files_linux = [
         (r".vimrc", r"vimrc"),
@@ -741,7 +696,6 @@ files_linux = [
         (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
         (r".config/i3/config", r"i3/config"),
         (r".config/i3status/config", r"i3/i3status.conf"),
-        (r".config/qutebrowser/config.py", r"qutebrowser/config.py"),
         (r".Xresources", r"Xresources"),
         (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
         ]
@@ -761,7 +715,6 @@ def link_linux():
             r".config/gtk-3.0",
             r".config/i3",
             r".config/i3status",
-            r".config/qutebrowser",
             r".config/zathura",
             r".config/feh",
             r".urxvt/ext",
@@ -845,11 +798,7 @@ def main_linux(args):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
 
-    # qutebrowser should be after apt (requires python3-pygments)
     if args.fulldesktop:
-        printc('[fulldesktop (qutebrowser)]', 'b')
-        install_qutebrowser()
-        install_quickmarks()
         printc('[fulldesktop (matlab)]', 'b')
         setup_matlab()
 
