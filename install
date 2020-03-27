@@ -403,7 +403,7 @@ def install_apt_packages(args):
             ## Microsoft fonts (Arial etc.)
             "ttf-mscorefonts-installer",
             # misc
-            "neofetch",
+            "neofetch", "flameshot",
             ]
 
     ex_pkgs["pip"] = [

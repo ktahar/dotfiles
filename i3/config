@@ -213,7 +213,8 @@ bar {
         }
 }
 
-exec --no-startup-id ibus-daemon -dx # need this on Ubuntu 16.04 not on 18.04 ?
+exec --no-startup-id ibus-daemon -dx # unnecessary on Ubuntu 18.04 ?
 exec --no-startup-id dunst
 exec --no-startup-id pasystray
 exec --no-startup-id nm-applet
+# exec --no-startup-id flameshot
