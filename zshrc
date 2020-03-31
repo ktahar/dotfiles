@@ -235,8 +235,6 @@ alias ut='utop -init ~/dotfiles/ocaml/ocamlinit_utop'
 alias za='zathura'
 alias f='feh -.'
 alias p="pipenv shell"
-alias pip3i="~/.local/bin/pip3 install --user"
-alias pip3u="~/.local/bin/pip3 install --user -U"
 
 # Tools, Plugins and Extensions
 ## OPAM
