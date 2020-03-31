@@ -8,14 +8,17 @@ import subprocess as subproc
 import argparse
 import platform
 
+script_dir = path.dirname(path.realpath(__file__))
+
 osname = platform.system()
+arch = platform.uname().machine
 
 if osname == 'Windows':
     home = os.environ.get('USERPROFILE')
 else:
     home = os.environ.get('HOME')
 
-py = path.join(home, 'dotfiles', 'python')
+py = path.join(script_dir, 'python')
 if py not in sys.path:
     sys.path.append(py)
 
@@ -268,7 +271,7 @@ def setup_vim():
 
     # Build
     ## check commit hash of HEAD
-    head = path.join(home, "dotfiles/apps/vim.HEAD")
+    head = path.join(script_dir, "apps", "vim.HEAD")
     if path.exists(head):
         with open(head) as f:
             hlast = f.readline()
@@ -276,13 +279,13 @@ def setup_vim():
         hlast = None
 
     res = subproc.run(['git', 'rev-parse', '--short', 'HEAD'],
-            cwd=path.join(home, "dotfiles/apps/vim"),
+            cwd=path.join(script_dir, "apps", "vim"),
             stdout=subproc.PIPE)
     hnow = res.stdout.decode()
 
     if hnow != hlast and prompt('Build Vim?'):
-        wd = path.join(home, "dotfiles", "apps", "vim", "src")
-        log = path.join(home, "dotfiles", "apps", "vim.log")
+        wd = path.join(script_dir, "apps", "vim", "src")
+        log = path.join(script_dir, "apps", "vim.log")
         print("Building vim")
         vim_conf = ['./configure',
                 '--prefix={}/.local'.format(home),
@@ -303,7 +306,7 @@ def setup_vim():
             f.write(hnow)
 
     # Generate helptags
-    docs = path.join(home, "dotfiles", "vim", "pack", "my", "start", "*", "doc")
+    docs = path.join(script_dir, "vim", "pack", "my", "start", "*", "doc")
     ## Don't pass many commands to vim like -c helptags p0 -c helptags p1 ...
     ## since there's upper limit of accepted number of commands
     ## (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
@@ -319,7 +322,7 @@ def setup_ctags():
 
     # Build
     ## check commit hash of HEAD
-    head = path.join(home, "dotfiles/apps/ctags.HEAD")
+    head = path.join(script_dir, "apps", "ctags.HEAD")
     if path.exists(head):
         with open(head) as f:
             hlast = f.readline()
@@ -327,13 +330,13 @@ def setup_ctags():
         hlast = None
 
     res = subproc.run(['git', 'rev-parse', '--short', 'HEAD'],
-            cwd=path.join(home, "dotfiles/apps/ctags"),
+            cwd=path.join(script_dir, "apps", "ctags"),
             stdout=subproc.PIPE)
     hnow = res.stdout.decode()
 
     if hnow != hlast and prompt('Build universal-ctags?'):
-        wd = path.join(home, "dotfiles", "apps", "ctags")
-        log = path.join(home, "dotfiles", "apps", "ctags.log")
+        wd = path.join(script_dir, "apps", "ctags")
+        log = path.join(script_dir, "apps", "ctags.log")
         print("Building universal-ctags")
         commands = [
                 ['./autogen.sh'],
@@ -539,7 +542,7 @@ def install_opam_packages(upgrade):
     opam_share = res.stdout.decode().strip()
     ## create symlink for merlin as vim pack.
     pkg_path = path.join(opam_share, 'merlin', 'vim')
-    pack_path = path.join(home, 'dotfiles',
+    pack_path = path.join(script_dir,
             'vim', 'pack', 'my', 'start', 'merlin')
     if not path.exists(pack_path):
         os.symlink(pkg_path, pack_path)
@@ -558,7 +561,7 @@ def install_npm_packages(upgrade):
     """
 
     def install_node():
-        """install Node.js to ~/opt/node.
+        """install Node.js in ~/opt/node.
 
         """
 
@@ -573,6 +576,10 @@ def install_npm_packages(upgrade):
         with tarfile.open(fileobj=stream, mode='r:xz') as tar:
             tar.extractall(path=path.join(home, 'opt'))
         os.symlink(path.join(home, 'opt', name), node_dir)
+
+    if arch != "x86_64":
+        printc("Machine arch {} is not supported for now.".format(arch), 'r')
+        return
 
     node_dir = path.join(make_opt_dir(), 'node')
     if not path.exists(node_dir):
@@ -589,7 +596,7 @@ def install_npm_packages(upgrade):
 
 def install_go_packages(upgrade):
     def install_go():
-        """install Golang to ~/opt/go.
+        """install Golang in ~/opt/go.
 
         """
 
@@ -602,6 +609,10 @@ def install_go_packages(upgrade):
         stream = io.BytesIO(res.content)
         with tarfile.open(fileobj=stream, mode='r:gz') as tar:
             tar.extractall(path=path.join(home, 'opt'))
+
+    if arch != "x86_64":
+        printc("Machine arch {} is not supported for now.".format(arch), 'r')
+        return
 
     go_dir = path.join(make_opt_dir(), 'go')
     if not path.exists(go_dir):
