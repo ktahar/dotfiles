@@ -234,15 +234,7 @@ alias marpp='npx marp --allow-local-files --pdf'
 alias ut='utop -init ~/dotfiles/ocaml/ocamlinit_utop'
 alias za='zathura'
 alias f='feh -.'
-
-# Always use system python for global and managing things in ~/.local.
-# And use `pipenv` in project-directory to use different version of python.
-# Here are aliases to avoid calling other versions of pip through pyenv.
-# (May happen when calling pip after `pyenv global 3.x.x`, which should never be done.)
 alias p="pipenv shell"
-alias psh="pipenv shell"
-alias pip="~/.local/bin/pip"
-alias pip3="~/.local/bin/pip3"
 alias pip3i="~/.local/bin/pip3 install --user"
 alias pip3u="~/.local/bin/pip3 install --user -U"
 
@@ -283,9 +275,3 @@ vg() {
         vim $file +$line
     fi
 }
-
-## pyenv
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-    pyenv global system # always use system python for global
-fi

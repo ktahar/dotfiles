@@ -6,8 +6,6 @@ export LANG=en_US.UTF-8
 export LESS=-R
 
 ## Python
-### pyenv and pipenv
-export PYENV_ROOT=~/.pyenv
 export PIPENV_VENV_IN_PROJECT=1
 
 ## Golang
@@ -18,12 +16,12 @@ fi
 ## PATH
 typeset -U path
 ### put at head without existence check.
-directories=(~/opt/node/bin)
+directories=(~/opt/node/bin ~/.local/bin)
 for dir in $directories; do
     path=($dir $path)
 done
 ### put at head.
-directories=($PYENV_ROOT/bin ~/opt/go/bin ~/.local/bin)
+directories=(~/opt/go/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($dir $path)
