@@ -460,18 +460,9 @@ def install_pip_packages(upgrade):
 
     """
 
-    # prefer pip at ~/.local/bin
-    local_bin = path.join(home, '.local', 'bin')
-
     # install/upgrade pip first
-    pip = 'pip3'
-    local_pip = path.join(local_bin, pip)
-    if path.exists(local_pip):
-        subproc.run([local_pip, 'install', '--user', '-U', 'pip', 'setuptools'])
-    else:
-        subproc.run([pip, 'install', '--user', '-U', 'pip', 'setuptools'])
-
-    opts = ['install', '--user']
+    subproc.run(['python3', '-m', 'pip', 'install', '--user', '-U',
+        'pip', 'setuptools', 'testresources'])
 
     pkgs = [
             # python dev tools
@@ -481,7 +472,7 @@ def install_pip_packages(upgrade):
             "panflute", "compiledb", "s-tui",
             ]
 
-    subproc.run([local_pip] + opts + pkgs)
+    subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
 
 def install_opam_packages(upgrade):
     """install OCaml packages using opam.
