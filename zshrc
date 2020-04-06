@@ -235,6 +235,7 @@ alias ut='utop -init ~/dotfiles/ocaml/ocamlinit_utop'
 alias za='zathura'
 alias f='feh -.'
 alias p="pipenv shell"
+alias py="python3"
 
 # Tools, Plugins and Extensions
 ## pipenv
