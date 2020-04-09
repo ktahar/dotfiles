@@ -1,5 +1,1 @@
 #use "topfind";;
-
-(* require Jane Street stdlibs *)
-#require "base";;
-#require "stdio";;

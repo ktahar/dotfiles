@@ -2,10 +2,14 @@
 Topdirs.dir_use Format.std_formatter (Filename.concat
 (Sys.getenv "HOME") ".ocamlinit");;
 
+(* Jane Street stdlibs *)
+#require "base";;
+#require "stdio";;
+
 #require "utop";;
 #utop_prompt_simple;;
 
 Sys.command "clear";;
 
-open Base;;
-open Stdio;;
+(* open Base;; *)
+(* open Stdio;; *)
