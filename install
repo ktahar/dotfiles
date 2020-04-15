@@ -467,7 +467,7 @@ def install_pip_packages(upgrade):
     pkgs = [
             # python dev tools
             "pipenv", "mypy",
-            "python-language-server", # to use pyls from vim-lsp.
+            "python-language-server[all]", # to use pyls from vim-lsp.
             # tools written in python
             "panflute", "compiledb", "s-tui",
             ]
