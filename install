@@ -443,12 +443,12 @@ def install_apt_packages(args):
             return
 
     if not args.skip_apt_update:
-        subproc.run(['sudo', '-E', 'apt', 'update'])
+        subproc.run(['sudo', 'apt', 'update'])
 
     if args.upgrade:
-        subproc.run(['sudo', '-E', 'apt', 'upgrade'])
+        subproc.run(['sudo', 'apt', 'upgrade'])
     if needs_install:
-        subproc.run(['sudo', '-E', 'apt', 'install'] + pkgs)
+        subproc.run(['sudo', 'apt', 'install'] + pkgs)
 
 def install_pip_packages(upgrade):
     """install python packages using pip.
