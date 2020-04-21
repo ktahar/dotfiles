@@ -207,7 +207,6 @@ alias wqa='wq'
 alias ...='cd ../../'
 alias ....='cd ../../../'
 
-alias s='sudo -E'
 alias svim='sudo vim --noplugin'
 alias so='source'
 alias v='vim'

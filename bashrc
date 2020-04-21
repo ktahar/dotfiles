@@ -29,7 +29,6 @@ bind '"\C-j": vi-movement-mode'
 
 set -o ignoreeof
 
-alias s='sudo -E'
 alias svim='sudo vim --noplugin'
 alias v='vim'
 alias vi='vim'
