@@ -410,8 +410,6 @@ def install_apt_packages(args):
     ex_pkgs["fulldesktop"] = [
             # music
             "mpd", "mpc", "ncmpc",
-            # web browsers
-            "chromium-browser",
             # read / write documents
             "texlive-full", "zathura",
             ## Microsoft fonts (Arial etc.)
