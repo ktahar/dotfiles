@@ -3,6 +3,7 @@
 import sys
 import os
 from os import path
+import shutil
 import glob
 import subprocess as subproc
 import argparse
@@ -305,8 +306,10 @@ def setup_vim():
         with open(head, 'w') as f:
             f.write(hnow)
 
+def setup_vim_plugins():
     # Generate helptags
-    docs = path.join(script_dir, "vim", "pack", "my", "start", "*", "doc")
+    pack = path.join(script_dir, "vim", "pack", "my", "start")
+    docs = path.join(pack, "*", "doc")
     ## Don't pass many commands to vim like -c helptags p0 -c helptags p1 ...
     ## since there's upper limit of accepted number of commands
     ## (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
@@ -315,6 +318,14 @@ def setup_vim():
         return
     for p in glob.glob(docs):
         subproc.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
+
+    # markdown-preview.nvim
+    if not shutil.which("yarn"):
+        printc("[ERROR] yarn not found. run ./install -n and retry.", "r")
+        return
+    mkdp_app = path.join(pack, "markdown-preview.nvim", "app")
+    if not os.path.exists(path.join(mkdp_app, "node_modules")):
+        subproc.run(["yarn", "install"], cwd=mkdp_app)
 
 def setup_ctags():
     """setup universal-ctags.
@@ -557,7 +568,7 @@ def install_npm_packages(upgrade):
         """
 
         import io, tarfile, requests
-        major, minor, patch = 10, 16, 0
+        major, minor, patch = 12, 16, 2
         name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
@@ -578,7 +589,8 @@ def install_npm_packages(upgrade):
 
     npm = path.join(node_dir, 'bin', 'npm')
 
-    pkgs = ['ocaml-language-server', 'npm-check-updates', 'tldr', 'diff-so-fancy']
+    pkgs = ['yarn', 'npm-check-updates', 'ocaml-language-server',
+            'tldr', 'diff-so-fancy']
 
     if upgrade:
         subproc.run([npm, 'upgrade', '-g'])
@@ -766,12 +778,14 @@ def main_linux(args):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
 
-    # vim should be the last because some package managers install vim plugins.
-    # e.g. merlin by opam.
+    # vim should be the last because
+    # - some package managers install vim plugins. (e.g. merlin by opam).
+    # - some plugins require tools (yarn for markdown-preview.nvim).
     if args.vim:
         printc('[vim]', 'b')
         setup_vim()
         setup_ctags()
+        setup_vim_plugins()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
@@ -805,6 +819,8 @@ def parse_args():
     args =  parser.parse_args()
     if args.fulldesktop:
         args.desktop = True
+    if args.vim:
+        args.npm = True
     if args.all:
         for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'opam', 'go', 'npm'):
             setattr(args, a, True)
