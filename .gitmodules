@@ -1,9 +1,6 @@
 [submodule "vim/pack/my/start/fzf.vim"]
 	path = vim/pack/my/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
-[submodule "vim/pack/my/start/previm"]
-	path = vim/pack/my/start/previm
-	url = https://github.com/previm/previm
 [submodule "vim/pack/my/start/open-browser.vim"]
 	path = vim/pack/my/start/open-browser.vim
 	url = https://github.com/tyru/open-browser.vim

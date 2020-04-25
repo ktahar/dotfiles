@@ -15,6 +15,10 @@ nnoremap <silent><buffer> <LocalLeader>t :<C-u>MerlinTypeOf<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 
+" overwrite :cnext and :cprevious
+nnoremap <silent><buffer> <C-n> :<C-u>lnext<CR>
+nnoremap <silent><buffer> <C-p> :<C-u>lprevious<CR>
+
 nnoremap <silent><buffer> <LocalLeader>f :Neoformat<CR>
 " augroup ocaml_fmt
 "     autocmd!
