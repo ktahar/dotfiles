@@ -590,7 +590,7 @@ def install_npm_packages(upgrade):
     npm = path.join(node_dir, 'bin', 'npm')
 
     pkgs = ['yarn', 'npm-check-updates', 'ocaml-language-server',
-            'tldr', 'diff-so-fancy']
+            'tldr', 'diff-so-fancy', '@marp-team/marp-cli']
 
     if upgrade:
         subproc.run([npm, 'upgrade', '-g'])
