@@ -1,6 +1,6 @@
 [read-line]
-C-p: history-prev
-C-n: history-next
+C-p: history-search-prev
+C-n: history-search-next
 M-p: prev-line
 M-n: next-line
 M-h: complete-bar-prev

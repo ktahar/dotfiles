@@ -668,7 +668,7 @@ files_linux = [
         (r".ocamlinit", r"ocaml/ocamlinit"),
         (r".utoprc", r"ocaml/utoprc"),
         (r".config/ocamlformat", r"ocaml/ocamlformat"),
-        (r".lambda-term-inputrc", r"ocaml/lambda-term-inputrc"),
+        (r".config/.lambda-term-inputrc", r"ocaml/lambda-term-inputrc"),
         (r".config/zathura/zathurarc", r"zathurarc"),
         (r".config/feh/keys", r"feh_keys"),
         (r".config/matplotlib/matplotlibrc", r"python/matplotlibrc"),
