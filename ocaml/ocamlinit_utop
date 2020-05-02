@@ -8,6 +8,7 @@ Topdirs.dir_use Format.std_formatter (Filename.concat
 
 #require "utop";;
 #utop_prompt_simple;;
+#edit_mode_vi;;
 
 Sys.command "clear";;
 
