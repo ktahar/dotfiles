@@ -11,9 +11,9 @@ cd dotfiles/ && ./install
 The install script will do setups,
 except for things that strongly depends on environment.
 
-### Full Install
+### Full install
 For full installation to Ubuntu desktop,
-first try `./install -dU`, restart the X session, and then `./install -A`.
+first try `./install -f`, restart the X session, and then `./install -A`.
 
 ## Uninstall
 
