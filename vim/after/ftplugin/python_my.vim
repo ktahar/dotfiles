@@ -9,7 +9,8 @@ setl foldmethod=indent
 " LSP mappings
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <silent><buffer> <LocalLeader>f :<C-u>LspDocumentFormat<CR>
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()
@@ -34,22 +35,3 @@ function! s:ExecPy_i()
     endif
 endfunction
 nnoremap <silent><buffer> <LocalLeader>i :call <SID>ExecPy_i()<CR>
-
-" Execute current file (python2): <LocalLeader>E
-function! s:ExecPy2()
-    lcd %:h
-    if executable('python')
-        !python %
-    endif
-endfunction
-nnoremap <silent><buffer> <LocalLeader>E :call <SID>ExecPy2()<CR>
-nnoremap <silent><buffer> <LocalLeader>X :call <SID>ExecPy2()<CR>
-
-" Execute current file (python2, interactive): <LocalLeader>I
-function! s:ExecPy2_i()
-    lcd %:h
-    if executable('python')
-        !python -i %
-    endif
-endfunction
-nnoremap <silent><buffer> <LocalLeader>I :call <SID>ExecPy2_i()<CR>

@@ -79,9 +79,6 @@
 [submodule "apps/ctags"]
 	path = apps/ctags
 	url = https://github.com/universal-ctags/ctags
-[submodule "vim/pack/my/start/neoformat"]
-	path = vim/pack/my/start/neoformat
-	url = https://github.com/sbdchd/neoformat
 [submodule "vim/pack/my/start/markdown-preview.nvim"]
 	path = vim/pack/my/start/markdown-preview.nvim
 	url = https://github.com/iamcco/markdown-preview.nvim
