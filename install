@@ -451,7 +451,7 @@ def install_apt_packages(args):
         if not args.upgrade:
             return
 
-    if not args.skip_apt_update:
+    if not args.skip_update:
         subproc.run(['sudo', 'apt', 'update'])
 
     if args.upgrade:
@@ -459,13 +459,11 @@ def install_apt_packages(args):
     if needs_install:
         subproc.run(['sudo', 'apt', 'install'] + pkgs)
 
-def install_pip_packages(upgrade):
+def install_pip_packages(args):
     """install python packages using pip.
 
     Because this will install with --user option,
     installed packages will be located in ~/.local.
-
-    (temporary) upgrade arg is ignored.
 
     """
 
@@ -483,7 +481,7 @@ def install_pip_packages(upgrade):
 
     subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
 
-def install_opam_packages(upgrade):
+def install_opam_packages(args):
     """install OCaml packages using opam.
 
     """
@@ -500,7 +498,7 @@ def install_opam_packages(upgrade):
         if path.exists(opam):
             res = subproc.run([opam, "--version"], stdout=subproc.PIPE)
             v = res.stdout.decode().strip()
-            if not upgrade or v == version:
+            if not args.upgrade or v == version:
                 return
 
         name = "opam-{}-x86_64-linux".format(version)
@@ -522,13 +520,20 @@ def install_opam_packages(upgrade):
         printc("[WARN] opam init is done but opam install is skipped. type 'eval $(opam env)' and run ./install -o again.", 'y')
         return
 
-    subproc.run([opam, 'update'])
-    if upgrade:
+    if not args.skip_update:
+        subproc.run([opam, 'update'])
+    if args.upgrade:
         subproc.run([opam, 'upgrade'])
+
+    res = subproc.run([opam, 'show', 'ocaml-lsp-server'],
+            stdout=subproc.DEVNULL)
+    if res.returncode != 0:
+        subproc.run([opam, 'pin', 'add', 'ocaml-lsp-server',
+            'https://github.com/ocaml/ocaml-lsp.git'])
 
     pkgs = [
             # dev tools
-            "utop", "merlin", "ocamlformat",
+            "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
             # build / test tools
             "ocamlfind", "dune", "alcotest",
             # std libs
@@ -555,7 +560,7 @@ def make_opt_dir():
 
     return opt
 
-def install_npm_packages(upgrade):
+def install_npm_packages(args):
     """install npm packages.
 
     """
@@ -587,15 +592,15 @@ def install_npm_packages(upgrade):
 
     npm = path.join(node_dir, 'bin', 'npm')
 
-    pkgs = ['yarn', 'npm-check-updates', 'ocaml-language-server',
+    pkgs = ['yarn', 'npm-check-updates',
             'tldr', 'diff-so-fancy', '@marp-team/marp-cli']
 
-    if upgrade:
+    if args.upgrade:
         subproc.run([npm, 'upgrade', '-g'])
 
     subproc.run([npm, 'install', '-g'] + pkgs)
 
-def install_go_packages(upgrade):
+def install_go_packages(args):
     def install_go():
         """install Golang in ~/opt/go.
 
@@ -774,7 +779,7 @@ def main_linux(args):
     for pack in ('pip', 'npm', 'go', 'opam'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
-            getattr(__main__, 'install_{}_packages'.format(pack))(args.upgrade)
+            getattr(__main__, 'install_{}_packages'.format(pack))(args)
 
     # vim should be the last because
     # - some package managers install vim plugins. (e.g. merlin by opam).
@@ -789,8 +794,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('--uninstall', action='store_true',
             help='Uninstall by removing links. Other options are ignored.')
-    parser.add_argument('--skip-apt-update', action='store_true',
-            help='Skip apt update.')
+    parser.add_argument('--skip-update', action='store_true',
+            help='Skip updating repos.')
     parser.add_argument('-m', '--minimum', action='store_true',
             help='Perform minimum installation (for servers etc.).')
     parser.add_argument('-U', '--upgrade', action='store_true',

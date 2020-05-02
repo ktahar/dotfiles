@@ -406,11 +406,10 @@ for g:clangd_cmd in ['clangd-9', 'clangd-6.0', 'clangd']
         break
     endif
 endfor
-if executable('ocaml-language-server')
-    " npm install -g ocaml-language-server
+if executable('ocamllsp')
     au User lsp_setup call lsp#register_server({
-       \ 'name': 'ocaml-language-server',
-       \ 'cmd': {server_info->[&shell, &shellcmdflag, 'ocaml-language-server --stdio']},
+       \ 'name': 'ocamllsp',
+       \ 'cmd': {server_info->['ocamllsp']},
        \ 'whitelist': ['ocaml'],
        \ })
 endif
