@@ -432,7 +432,9 @@ def install_apt_packages(args):
             "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
             ]
 
-    ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap", "m4"]
+    ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap", "m4",
+            "libffi-dev" # for ctypes-foreign
+            ]
 
     for k, l in ex_pkgs.items():
         if getattr(args, k):
@@ -535,7 +537,7 @@ def install_opam_packages(args):
             # dev tools
             "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
             # build / test tools
-            "ocamlfind", "dune", "alcotest",
+            "ocamlfind", "dune", "alcotest", "ctypes", "ctypes-foreign",
             # std libs
             "base", "stdio",
             ]
