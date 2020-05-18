@@ -545,9 +545,11 @@ def install_opam_packages(args):
             # dev tools
             "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
             # build / test tools
-            "ocamlfind", "dune", "alcotest", "ctypes", "ctypes-foreign",
+            "ocamlfind", "dune", "alcotest",
             # std libs
             "base", "stdio",
+            # misc libs
+            "ctypes", "ctypes-foreign", "atdgen",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
