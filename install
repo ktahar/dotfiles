@@ -453,7 +453,13 @@ def install_apt_packages(args):
         if not args.upgrade:
             return
 
-    sudo_apt = ['sudo', '-E', 'apt'] if args.preserve_env else ['sudo', 'apt']
+    if args.preserve_env:
+        sudo_apt = [
+                'sudo',
+                '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
+                'apt']
+    else:
+        sudo_apt = ['sudo', 'apt']
 
     if not args.skip_update:
         subproc.run(sudo_apt + ['update'])
@@ -801,7 +807,7 @@ def parse_args():
     parser.add_argument('--skip-update', action='store_true',
             help='Skip updating repos.')
     parser.add_argument('-E', '--preserve-env', action='store_true',
-            help='Preserve env vals for sudo.')
+            help='Preserve proxy-related env vals for sudo.')
     parser.add_argument('-m', '--minimum', action='store_true',
             help='Perform minimum installation (for servers etc.).')
     parser.add_argument('-U', '--upgrade', action='store_true',
