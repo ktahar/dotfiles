@@ -367,7 +367,8 @@ def setup_ctags():
 
 def install_apt_packages(args):
     pkgs = [
-            "ncurses-term", "silversearcher-ag", "htop", "tree", "curl", "wget",
+            "ncurses-term", "silversearcher-ag", "htop", "dstat",
+            "tree", "curl", "wget",
             "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
             "global", "pandoc", "unison", "p7zip-full",
             "rlwrap", "apt-file",
@@ -425,8 +426,7 @@ def install_apt_packages(args):
             "python3-matplotlib","python3-pandas",
             "python3-ipython", "ipython3",
             ## libs to build python
-            "libssl-dev",
-            "zlib1g-dev",
+            "libssl-dev", "zlib1g-dev",
             "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
             "libncurses5-dev", "xz-utils", "tk-dev",
             "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
