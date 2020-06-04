@@ -238,7 +238,9 @@ alias py="python3"
 
 # Tools, Plugins and Extensions
 ## pipenv
-eval "$(pipenv --completion)"
+if type pipenv > /dev/null; then
+    eval "$(pipenv --completion)"
+fi
 
 ## OPAM
 test -r ${HOME}/.opam/opam-init/init.zsh && . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
