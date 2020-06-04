@@ -453,13 +453,21 @@ def install_apt_packages(args):
         if not args.upgrade:
             return
 
+    if args.preserve_env:
+        sudo_apt = [
+                'sudo',
+                '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
+                'apt']
+    else:
+        sudo_apt = ['sudo', 'apt']
+
     if not args.skip_update:
-        subproc.run(['sudo', 'apt', 'update'])
+        subproc.run(sudo_apt + ['update'])
 
     if args.upgrade:
-        subproc.run(['sudo', 'apt', 'upgrade'])
+        subproc.run(sudo_apt + ['upgrade'])
     if needs_install:
-        subproc.run(['sudo', 'apt', 'install'] + pkgs)
+        subproc.run(sudo_apt + ['install'] + pkgs)
 
 def install_pip_packages(args):
     """install python packages using pip.
@@ -537,9 +545,11 @@ def install_opam_packages(args):
             # dev tools
             "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
             # build / test tools
-            "ocamlfind", "dune", "alcotest", "ctypes", "ctypes-foreign",
+            "ocamlfind", "dune", "alcotest",
             # std libs
             "base", "stdio",
+            # misc libs
+            "ctypes", "ctypes-foreign", "atdgen",
             ]
 
     subproc.run([opam, 'install'] + pkgs)
@@ -798,6 +808,8 @@ def parse_args():
             help='Uninstall by removing links. Other options are ignored.')
     parser.add_argument('--skip-update', action='store_true',
             help='Skip updating repos.')
+    parser.add_argument('-E', '--preserve-env', action='store_true',
+            help='Preserve proxy-related env vals for sudo.')
     parser.add_argument('-m', '--minimum', action='store_true',
             help='Perform minimum installation (for servers etc.).')
     parser.add_argument('-U', '--upgrade', action='store_true',
@@ -816,7 +828,7 @@ def parse_args():
             help='Install pip packages.')
     parser.add_argument('-o', '--opam', action='store_true',
             help='Install opam packages.')
-    parser.add_argument('-G', '--go', action='store_true',
+    parser.add_argument('-g', '--go', action='store_true',
             help='Install go packages.')
     parser.add_argument('-n', '--npm', action='store_true',
             help='Install npm packages.')
