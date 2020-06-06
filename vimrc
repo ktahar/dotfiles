@@ -425,7 +425,7 @@ au User asyncomplete_setup call asyncomplete#register_source({
 "}}}
 
 "" neoformat {{{
-nnoremap <silent><buffer> <Leader>f :<C-u>Neoformat<CR>
+nnoremap <silent> <Leader>f :<C-u>Neoformat<CR>
 
 let g:neoformat_ocaml_ocamlformat = {
     \ 'exe': 'ocamlformat',
