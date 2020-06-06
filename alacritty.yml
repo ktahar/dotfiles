@@ -3,6 +3,8 @@ font:
     family: Cica
   size: 16.0
 
+draw_bold_text_with_bright_colors: false
+
 colors:
   primary:
     background: '#272822'
