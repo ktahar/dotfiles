@@ -25,6 +25,7 @@ if py not in sys.path:
 
 from colour import printc
 
+
 if osname == 'Linux':
     try:
         r = subproc.run(['lsb_release', '-sc'], stdout=subproc.PIPE)
@@ -33,8 +34,10 @@ if osname == 'Linux':
         printc('[ERROR] command lsb_release is not found.', 'r')
         sys.exit(1)
 
+
 def prompt(msg, default='y'):
-    if not isinstance(default, str): default = ''
+    if not isinstance(default, str):
+        default = ''
     default = default.lower()
 
     if default == 'y':
@@ -49,25 +52,26 @@ def prompt(msg, default='y'):
             elif a == 'n':
                 return False
 
+
 def set_git_global_config():
     graph = "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"
     configs = [("core.excludesfile", "~/.gitignore_global"),
-            ("core.editor", "vim --noplugin"),
-            ("user.name", "Kosuke Tahara"),
-            ("user.email", "ksk.tahara@gmail.com"),
-            ("push.default", "simple"),
-            ("alias.graph", graph),
-            ("alias.g", graph),
-            ("alias.a", "add"),
-            ("alias.c", "commit"),
-            ("alias.d", "diff"),
-            ("alias.s", "status"),
-            ("alias.l", "log"),
-            ("alias.su", "submodule"),
-            ("alias.sup", "submodule update -i"),
-            ("alias.ps", "push"),
-            ("alias.pl", "pull"),
-            ]
+               ("core.editor", "vim --noplugin"),
+               ("user.name", "Kosuke Tahara"),
+               ("user.email", "ksk.tahara@gmail.com"),
+               ("push.default", "simple"),
+               ("alias.graph", graph),
+               ("alias.g", graph),
+               ("alias.a", "add"),
+               ("alias.c", "commit"),
+               ("alias.d", "diff"),
+               ("alias.s", "status"),
+               ("alias.l", "log"),
+               ("alias.su", "submodule"),
+               ("alias.sup", "submodule update -i"),
+               ("alias.ps", "push"),
+               ("alias.pl", "pull"),
+               ]
 
     if osname == 'Linux':
         configs.append(("credential.helper", "cache"))
@@ -75,12 +79,13 @@ def set_git_global_config():
     for k, v in configs:
         subproc.run(['git', 'config', '--global', k, v])
 
+
 def setup_shell(files=None):
     contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
-            '.zshrc': "source $HOME/dotfiles/zshrc\n",
-            '.zshenv': "source $HOME/dotfiles/zshenv\n",
-            '.xprofile': "source $HOME/dotfiles/xprofile\n",
-            }
+                '.zshrc': "source $HOME/dotfiles/zshrc\n",
+                '.zshenv': "source $HOME/dotfiles/zshenv\n",
+                '.xprofile': "source $HOME/dotfiles/xprofile\n",
+                }
     if files is None:
         files = contents.keys()
     for fn in files:
@@ -114,6 +119,7 @@ def setup_shell(files=None):
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
 
+
 def install_pip_packages_windows(args):
     r"""install python packages using pip.
 
@@ -134,28 +140,30 @@ def install_pip_packages_windows(args):
         opts.append('-U')
 
     pkgs = [
-            "numpy", "matplotlib", "scipy", "pandas", "ipython",
-            "pipenv", "cvxopt",
-            "python-language-server", # to use pyls from vim-lsp.
-            "panflute", "requests",
-            # testing to remove dep. packages
-            # "jedi", "testresources", "python-dateutil",
-            ]
+        "numpy", "matplotlib", "scipy", "pandas", "ipython",
+        "pipenv", "cvxopt",
+        "python-language-server",  # to use pyls from vim-lsp.
+        "panflute", "requests",
+        # testing to remove dep. packages
+        # "jedi", "testresources", "python-dateutil",
+    ]
 
     subproc.run(['pip'] + opts + pkgs)
 
+
 files_windows = [
-        (r"_vimrc", r"vimrc"),
-        (r"_gvimrc", r"gvimrc"),
-        (r".vimrc", r"vimrc"),
-        (r".gvimrc", r"gvimrc"),
-        (r".latexmkrc", r"latexmkrc"),
-        (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
-        (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
-        (r"vimfiles", r"vim"),
-        (r".vim", r"vim"),
-        (r".minttyrc", r"windows\minttyrc"),
-        ]
+    (r"_vimrc", r"vimrc"),
+    (r"_gvimrc", r"gvimrc"),
+    (r".vimrc", r"vimrc"),
+    (r".gvimrc", r"gvimrc"),
+    (r".latexmkrc", r"latexmkrc"),
+    (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
+    (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
+    (r"vimfiles", r"vim"),
+    (r".vim", r"vim"),
+    (r".minttyrc", r"windows\minttyrc"),
+]
+
 
 def unlink_windows():
     for f in files_windows:
@@ -165,6 +173,7 @@ def unlink_windows():
             printc("[WARN] removed {}".format(ln), 'y')
         else:
             print("[INFO] {} doesn't exist".format(ln))
+
 
 def link_windows(args):
     """make directories and symbolic links for windows.
@@ -186,10 +195,10 @@ def link_windows(args):
             return
 
     dirs = [
-            r".config\matplotlib",
-            r".ipython\profile_default\startup",
-            r".local\tmp"
-            ]
+        r".config\matplotlib",
+        r".ipython\profile_default\startup",
+        r".local\tmp"
+    ]
 
     printc('[dirs]', 'b')
     for d in dirs:
@@ -228,6 +237,7 @@ def link_windows(args):
                 subproc.run(['mklink', '/J', ln, tgt], shell=True)
                 printc("created junction %s" % ln, 'g')
 
+
 def main_windows(args):
     if args.uninstall:
         printc('[remove links]', 'r')
@@ -244,17 +254,19 @@ def main_windows(args):
     printc('[shell]', 'b')
     setup_shell(files=['.bashrc'])
 
+
 def setup_fzf():
     """setup fzf.
 
     """
 
     fzf_install = [path.join(home, '.fzf/install'),
-            '--key-bindings',
-            '--completion',
-            '--no-update-rc',
-            '--no-bash']
+                   '--key-bindings',
+                   '--completion',
+                   '--no-update-rc',
+                   '--no-bash']
     subproc.run(fzf_install)
+
 
 def setup_vim():
     """setup vim.
@@ -271,7 +283,7 @@ def setup_vim():
     """
 
     # Build
-    ## check commit hash of HEAD
+    # check commit hash of HEAD
     head = path.join(script_dir, "apps", "vim.HEAD")
     if path.exists(head):
         with open(head) as f:
@@ -280,8 +292,8 @@ def setup_vim():
         hlast = None
 
     res = subproc.run(['git', 'rev-parse', '--short', 'HEAD'],
-            cwd=path.join(script_dir, "apps", "vim"),
-            stdout=subproc.PIPE)
+                      cwd=path.join(script_dir, "apps", "vim"),
+                      stdout=subproc.PIPE)
     hnow = res.stdout.decode()
 
     if hnow != hlast and prompt('Build Vim?'):
@@ -289,13 +301,13 @@ def setup_vim():
         log = path.join(script_dir, "apps", "vim.log")
         print("Building vim")
         vim_conf = ['./configure',
-                '--prefix={}/.local'.format(home),
-                '--with-features=huge',
-                '--enable-gui=no',
-                #  '--with-x=yes', # seems enabled implicitly.
-                '--enable-python3interp',
-                '--enable-fail-if-missing',
-                ]
+                    '--prefix={}/.local'.format(home),
+                    '--with-features=huge',
+                    '--enable-gui=no',
+                    #  '--with-x=yes', # seems enabled implicitly.
+                    '--enable-python3interp',
+                    '--enable-fail-if-missing',
+                    ]
         res = subproc.run(vim_conf, cwd=wd, stdout=subproc.PIPE)
         with open(log, "w") as f:
             f.write(res.stdout.decode())
@@ -306,13 +318,14 @@ def setup_vim():
         with open(head, 'w') as f:
             f.write(hnow)
 
+
 def setup_vim_plugins():
     # Generate helptags
     pack = path.join(script_dir, "vim", "pack", "my", "start")
     docs = path.join(pack, "*", "doc")
-    ## Don't pass many commands to vim like -c helptags p0 -c helptags p1 ...
-    ## since there's upper limit of accepted number of commands
-    ## (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
+    # Don't pass many commands to vim like -c helptags p0 -c helptags p1 ...
+    # since there's upper limit of accepted number of commands
+    # (`man 1 vim` says it's 10, but I choose safer way; do it one-by-one.)
     vim = path.join(home, ".local", "bin", "vim")
     if not os.path.exists(vim):
         return
@@ -327,12 +340,13 @@ def setup_vim_plugins():
     if not os.path.exists(path.join(mkdp_app, "node_modules")):
         subproc.run(["yarn", "install"], cwd=mkdp_app)
 
+
 def setup_ctags():
     """setup universal-ctags.
     """
 
     # Build
-    ## check commit hash of HEAD
+    # check commit hash of HEAD
     head = path.join(script_dir, "apps", "ctags.HEAD")
     if path.exists(head):
         with open(head) as f:
@@ -341,8 +355,8 @@ def setup_ctags():
         hlast = None
 
     res = subproc.run(['git', 'rev-parse', '--short', 'HEAD'],
-            cwd=path.join(script_dir, "apps", "ctags"),
-            stdout=subproc.PIPE)
+                      cwd=path.join(script_dir, "apps", "ctags"),
+                      stdout=subproc.PIPE)
     hnow = res.stdout.decode()
 
     if hnow != hlast and prompt('Build universal-ctags?'):
@@ -350,11 +364,11 @@ def setup_ctags():
         log = path.join(script_dir, "apps", "ctags.log")
         print("Building universal-ctags")
         commands = [
-                ['./autogen.sh'],
-                ['./configure', '--prefix={}/.local'.format(home)],
-                ['make'],
-                ['make', 'install'],
-                ]
+            ['./autogen.sh'],
+            ['./configure', '--prefix={}/.local'.format(home)],
+            ['make'],
+            ['make', 'install'],
+        ]
         for i, cmd in enumerate(commands):
             res = subproc.run(cmd, cwd=wd, stdout=subproc.PIPE)
             with open(log, "w" if not i else "a") as f:
@@ -365,76 +379,77 @@ def setup_ctags():
         with open(head, 'w') as f:
             f.write(hnow)
 
+
 def install_apt_packages(args):
     pkgs = [
-            "ncurses-term", "silversearcher-ag", "htop", "dstat",
-            "tree", "curl", "wget",
-            "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
-            "global", "pandoc", "unison", "p7zip-full",
-            "rlwrap", "apt-file",
-            # build tools
-            "build-essential", "cmake",
-            "devscripts", "pkg-config",
-            "autoconf", "libtool",
-            ]
+        "ncurses-term", "silversearcher-ag", "htop", "dstat",
+        "tree", "curl", "wget",
+        "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
+        "global", "pandoc", "unison", "p7zip-full",
+        "rlwrap", "apt-file",
+        # build tools
+        "build-essential", "cmake",
+        "devscripts", "pkg-config",
+        "autoconf", "libtool",
+    ]
 
     ex_pkgs = {}
 
     ex_pkgs["vim"] = [
-            # I personally use vim built from source.
-            # But install apt-pack vim here for root or other users.
-            "vim",
-            ## libs to build vim
-            "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
-            ## libs to build universal-ctags
-            "python3-docutils", "libseccomp-dev",
-            "libjansson-dev", "libyaml-dev", "libxml2-dev",
-            ]
+        # I personally use vim built from source.
+        # But install apt-pack vim here for root or other users.
+        "vim",
+        # libs to build vim
+        "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
+        # libs to build universal-ctags
+        "python3-docutils", "libseccomp-dev",
+        "libjansson-dev", "libyaml-dev", "libxml2-dev",
+    ]
 
     # use clangd from vim-lsp. package name depends on distros.
     if distid == 'bionic':
         ex_pkgs["vim"].append("clangd-9")
 
     ex_pkgs["desktop"] = [
-            ## libs to build vim
-            "xorg-dev", ## to enable +clipboard +X11
-            ## i3wm and basic things to use with that
-            "i3", "dunst", "rxvt-unicode-256color", "feh",
-            "xsel", "xdotool", "xbacklight",
-            "ibus-mozc",
-            ## audio
-            "pulseaudio", "pavucontrol", "pasystray",
-            ## lightdm instead of gdm3
-            "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
-            ]
+        # libs to build vim
+        "xorg-dev",  # to enable +clipboard +X11
+        # i3wm and basic things to use with that
+        "i3", "dunst", "rxvt-unicode-256color", "feh",
+        "xsel", "xdotool", "xbacklight",
+        "ibus-mozc",
+        # audio
+        "pulseaudio", "pavucontrol", "pasystray",
+        # lightdm instead of gdm3
+        "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
+    ]
 
     ex_pkgs["fulldesktop"] = [
-            # music
-            "mpd", "mpc", "ncmpc",
-            # read / write documents
-            "texlive-full", "zathura",
-            ## Microsoft fonts (Arial etc.)
-            "ttf-mscorefonts-installer",
-            # misc
-            "neofetch", "flameshot",
-            ]
+        # music
+        "mpd", "mpc", "ncmpc",
+        # read / write documents
+        "texlive-full", "zathura",
+        # Microsoft fonts (Arial etc.)
+        "ttf-mscorefonts-installer",
+        # misc
+        "neofetch", "flameshot",
+    ]
 
     ex_pkgs["pip"] = [
-            ## basic python libs
-            "python3-pip", "python3-requests",
-            "python3-numpy", "python3-scipy",
-            "python3-matplotlib","python3-pandas",
-            "python3-ipython", "ipython3",
-            ## libs to build python
-            "libssl-dev", "zlib1g-dev",
-            "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
-            "libncurses5-dev", "xz-utils", "tk-dev",
-            "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
-            ]
+        # basic python libs
+        "python3-pip", "python3-requests",
+        "python3-numpy", "python3-scipy",
+        "python3-matplotlib", "python3-pandas",
+        "python3-ipython", "ipython3",
+        # libs to build python
+        "libssl-dev", "zlib1g-dev",
+        "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
+        "libncurses5-dev", "xz-utils", "tk-dev",
+        "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
+    ]
 
     ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap", "m4",
-            "libffi-dev" # for ctypes-foreign
-            ]
+                       "libffi-dev"  # for ctypes-foreign
+                       ]
 
     for k, l in ex_pkgs.items():
         if getattr(args, k):
@@ -446,7 +461,7 @@ def install_apt_packages(args):
     printc(" ".join(pkgs), "g")
 
     res = subproc.run(['dpkg-query', '-W'] + pkgs,
-            stdout=subproc.DEVNULL, stderr=subproc.DEVNULL)
+                      stdout=subproc.DEVNULL, stderr=subproc.DEVNULL)
     needs_install = res.returncode
     if not needs_install:
         print("[INFO] all pkgs are already installed.")
@@ -455,9 +470,9 @@ def install_apt_packages(args):
 
     if args.preserve_env:
         sudo_apt = [
-                'sudo',
-                '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
-                'apt']
+            'sudo',
+            '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
+            'apt']
     else:
         sudo_apt = ['sudo', 'apt']
 
@@ -469,6 +484,7 @@ def install_apt_packages(args):
     if needs_install:
         subproc.run(sudo_apt + ['install'] + pkgs)
 
+
 def install_pip_packages(args):
     """install python packages using pip.
 
@@ -479,17 +495,18 @@ def install_pip_packages(args):
 
     # install/upgrade pip first
     subproc.run(['python3', '-m', 'pip', 'install', '--user', '-U',
-        'pip', 'setuptools', 'testresources'])
+                 'pip', 'setuptools', 'testresources'])
 
     pkgs = [
-            # python dev tools
-            "pipenv", "mypy",
-            "python-language-server[all]", # to use pyls from vim-lsp.
-            # tools written in python
-            "panflute", "compiledb", "s-tui",
-            ]
+        # python dev tools
+        "pipenv", "mypy",
+        "python-language-server[all]",  # to use pyls from vim-lsp.
+        # tools written in python
+        "panflute", "compiledb", "s-tui",
+    ]
 
     subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
+
 
 def install_opam_packages(args):
     """install OCaml packages using opam.
@@ -501,7 +518,8 @@ def install_opam_packages(args):
 
         """
 
-        import requests, hashlib
+        import requests
+        import hashlib
         version = "2.0.6"
         h = "2b9d4a99aa28a193c88c7c6f6265203bd3cfeef98929d6f5cfce4b52cd9ddbd7be7eddc1d3d9c440f81d65074dd7851b8d29cd397fb06d2cfccffb54d3cdcc6a"
 
@@ -514,7 +532,7 @@ def install_opam_packages(args):
         name = "opam-{}-x86_64-linux".format(version)
         print("Downloading", name)
         url = "https://github.com/ocaml/opam/releases/download/{}/{}".format(
-                version, name)
+            version, name)
         res = requests.get(url)
         if hashlib.sha512(res.content).hexdigest() != h:
             raise RuntimeError("SHA512 hash of opam binary doesn't match!")
@@ -536,34 +554,35 @@ def install_opam_packages(args):
         subproc.run([opam, 'upgrade'])
 
     res = subproc.run([opam, 'show', 'ocaml-lsp-server'],
-            stdout=subproc.DEVNULL)
+                      stdout=subproc.DEVNULL)
     if res.returncode != 0:
         subproc.run([opam, 'pin', 'add', 'ocaml-lsp-server',
-            'https://github.com/ocaml/ocaml-lsp.git'])
+                     'https://github.com/ocaml/ocaml-lsp.git'])
 
     pkgs = [
-            # dev tools
-            "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
-            # build / test tools
-            "ocamlfind", "dune", "alcotest",
-            # std libs
-            "base", "stdio",
-            # misc libs
-            "ctypes", "ctypes-foreign", "atdgen",
-            ]
+        # dev tools
+        "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
+        # build / test tools
+        "ocamlfind", "dune", "alcotest",
+        # std libs
+        "base", "stdio",
+        # misc libs
+        "ctypes", "ctypes-foreign", "atdgen",
+    ]
 
     subproc.run([opam, 'install'] + pkgs)
 
     # setup merlin
     res = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
     opam_share = res.stdout.decode().strip()
-    ## create symlink for merlin as vim pack.
+    # create symlink for merlin as vim pack.
     pkg_path = path.join(opam_share, 'merlin', 'vim')
     pack_path = path.join(script_dir,
-            'vim', 'pack', 'my', 'start', 'merlin')
+                          'vim', 'pack', 'my', 'start', 'merlin')
     if not path.exists(pack_path):
         os.symlink(pkg_path, pack_path)
         printc("created sym link %s" % pack_path, 'g')
+
 
 def make_opt_dir():
     opt = path.join(home, 'opt')
@@ -571,6 +590,7 @@ def make_opt_dir():
         os.mkdir(opt)
 
     return opt
+
 
 def install_npm_packages(args):
     """install npm packages.
@@ -582,12 +602,14 @@ def install_npm_packages(args):
 
         """
 
-        import io, tarfile, requests
+        import io
+        import tarfile
+        import requests
         major, minor, patch = 12, 16, 2
         name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
-                major, minor, patch, name)
+            major, minor, patch, name)
         res = requests.get(url)
         stream = io.BytesIO(res.content)
         with tarfile.open(fileobj=stream, mode='r:xz') as tar:
@@ -612,13 +634,16 @@ def install_npm_packages(args):
 
     subproc.run([npm, 'install', '-g'] + pkgs)
 
+
 def install_go_packages(args):
     def install_go():
         """install Golang in ~/opt/go.
 
         """
 
-        import io, tarfile, requests
+        import io
+        import tarfile
+        import requests
         major, minor, patch = 1, 12, 4
         name = "go{}.{}.{}.linux-amd64".format(major, minor, patch)
         print("Downloading", name)
@@ -642,6 +667,7 @@ def install_go_packages(args):
 
     subproc.run([go, 'get', '-u'] + pkgs)
 
+
 def setup_matlab():
     """make desktop entry for MATLAB (~/opt/matlab).
 
@@ -660,39 +686,41 @@ Categories=Control;MATLAB;
 """.format(matlab)
 
     entry_file = path.join(home, ".local", "share",
-            "applications", "matlab.desktop")
+                           "applications", "matlab.desktop")
     with open(entry_file, 'w') as f:
         f.write(entry_contents)
 
+
 files_linux = [
-        (r".vimrc", r"vimrc"),
-        (r".gvimrc", r"gvimrc"),
-        (r".vim", r"vim"),
-        (r".ideavimrc", r"ideavimrc"),
-        (r".inputrc", r"inputrc"),
-        (r".tmux.conf", r"tmux.conf"),
-        (r".tmux/plugins", r"tmux/plugins"),
-        (r".fzf", r"apps/fzf"),
-        (r".ctags.d", r"ctags.d"),
-        (r".gitignore_global", r"gitignore_global"),
-        (r".agignore", r"agignore"),
-        (r".latexmkrc", r"latexmkrc"),
-        (r".ocamlinit", r"ocaml/ocamlinit"),
-        (r".utoprc", r"ocaml/utoprc"),
-        (r".config/ocamlformat", r"ocaml/ocamlformat"),
-        (r".config/.lambda-term-inputrc", r"ocaml/lambda-term-inputrc"),
-        (r".config/zathura/zathurarc", r"zathurarc"),
-        (r".config/feh/keys", r"feh_keys"),
-        (r".config/matplotlib/matplotlibrc", r"python/matplotlibrc"),
-        (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
-        (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
-        (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
-        (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
-        (r".config/i3/config", r"i3/config"),
-        (r".config/i3status/config", r"i3/i3status.conf"),
-        (r".Xresources", r"Xresources"),
-        (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
-        ]
+    (r".vimrc", r"vimrc"),
+    (r".gvimrc", r"gvimrc"),
+    (r".vim", r"vim"),
+    (r".ideavimrc", r"ideavimrc"),
+    (r".inputrc", r"inputrc"),
+    (r".tmux.conf", r"tmux.conf"),
+    (r".tmux/plugins", r"tmux/plugins"),
+    (r".fzf", r"apps/fzf"),
+    (r".ctags.d", r"ctags.d"),
+    (r".gitignore_global", r"gitignore_global"),
+    (r".agignore", r"agignore"),
+    (r".latexmkrc", r"latexmkrc"),
+    (r".ocamlinit", r"ocaml/ocamlinit"),
+    (r".utoprc", r"ocaml/utoprc"),
+    (r".config/ocamlformat", r"ocaml/ocamlformat"),
+    (r".config/.lambda-term-inputrc", r"ocaml/lambda-term-inputrc"),
+    (r".config/zathura/zathurarc", r"zathurarc"),
+    (r".config/feh/keys", r"feh_keys"),
+    (r".config/matplotlib/matplotlibrc", r"python/matplotlibrc"),
+    (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
+    (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
+    (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
+    (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
+    (r".config/i3/config", r"i3/config"),
+    (r".config/i3status/config", r"i3/i3status.conf"),
+    (r".Xresources", r"Xresources"),
+    (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
+]
+
 
 def unlink_linux():
     for f in files_linux:
@@ -702,6 +730,7 @@ def unlink_linux():
             printc("[WARN] removed {}".format(ln), 'y')
         else:
             print("[INFO] {} doesn't exist".format(ln))
+
 
 def link_linux():
     dirs = [r".tmux", r".config/matplotlib",
@@ -734,6 +763,7 @@ def link_linux():
             os.symlink(tgt, ln)
             printc("created sym link %s" % ln, 'g')
 
+
 def main_linux_minimum(args):
     """Minimum installation for Linux.
 
@@ -753,6 +783,7 @@ def main_linux_minimum(args):
 
     printc('[shell]', 'b')
     setup_shell()
+
 
 def main_linux(args):
     if args.uninstall:
@@ -802,38 +833,39 @@ def main_linux(args):
         setup_ctags()
         setup_vim_plugins()
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Install my dotfiles etc.')
     parser.add_argument('--uninstall', action='store_true',
-            help='Uninstall by removing links. Other options are ignored.')
+                        help='Uninstall by removing links. Other options are ignored.')
     parser.add_argument('--skip-update', action='store_true',
-            help='Skip updating repos.')
+                        help='Skip updating repos.')
     parser.add_argument('-E', '--preserve-env', action='store_true',
-            help='Preserve proxy-related env vals for sudo.')
+                        help='Preserve proxy-related env vals for sudo.')
     parser.add_argument('-m', '--minimum', action='store_true',
-            help='Perform minimum installation (for servers etc.).')
+                        help='Perform minimum installation (for servers etc.).')
     parser.add_argument('-U', '--upgrade', action='store_true',
-            help='Upgrade packages etc.')
+                        help='Upgrade packages etc.')
     parser.add_argument('-v', '--vim', action='store_true',
-            help='Build vim and generate helptags for plugins.')
+                        help='Build vim and generate helptags for plugins.')
     parser.add_argument('-A', '--all', action='store_true',
-            help='Install all extra things.')
+                        help='Install all extra things.')
     parser.add_argument('-a', '--apt', action='store_true',
-            help='Install apt packages.')
+                        help='Install apt packages.')
     parser.add_argument('-d', '--desktop', action='store_true',
-            help='Install packages, settings and fonts for desktop.')
+                        help='Install packages, settings and fonts for desktop.')
     parser.add_argument('-f', '--fulldesktop', action='store_true',
-            help='Install packages, settings and fonts for full desktop.')
+                        help='Install packages, settings and fonts for full desktop.')
     parser.add_argument('-p', '--pip', action='store_true',
-            help='Install pip packages.')
+                        help='Install pip packages.')
     parser.add_argument('-o', '--opam', action='store_true',
-            help='Install opam packages.')
+                        help='Install opam packages.')
     parser.add_argument('-g', '--go', action='store_true',
-            help='Install go packages.')
+                        help='Install go packages.')
     parser.add_argument('-n', '--npm', action='store_true',
-            help='Install npm packages.')
+                        help='Install npm packages.')
 
-    args =  parser.parse_args()
+    args = parser.parse_args()
     if args.fulldesktop:
         args.desktop = True
     if args.vim:
@@ -843,6 +875,7 @@ def parse_args():
             setattr(args, a, True)
 
     return args
+
 
 if __name__ == '__main__':
     args = parse_args()
