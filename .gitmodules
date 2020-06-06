@@ -82,3 +82,6 @@
 [submodule "vim/pack/my/start/markdown-preview.nvim"]
 	path = vim/pack/my/start/markdown-preview.nvim
 	url = https://github.com/iamcco/markdown-preview.nvim
+[submodule "vim/pack/my/start/neoformat"]
+	path = vim/pack/my/start/neoformat
+	url = https://github.com/sbdchd/neoformat

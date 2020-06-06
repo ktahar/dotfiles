@@ -422,6 +422,24 @@ au User asyncomplete_setup call asyncomplete#register_source({
     \  })
 "}}}
 
+"" neoformat {{{
+let g:neoformat_ocaml_ocamlformat = {
+    \ 'exe': 'ocamlformat',
+    \ 'no_append': 1,
+    \ 'stdin': 1,
+    \ 'args': ['--enable-outside-detected-project', '--name', '"%:p"', '-']
+    \ }
+
+let g:neoformat_enabled_ocaml = ['ocamlformat']
+
+let g:neoformat_python_autopep8 = {
+    \ 'exe': 'autopep8',
+    \ 'args': ['--max-line-length 99', '--ignore E402'],
+    \ }
+
+let g:neoformat_enabled_python = ['autopep8']
+"}}}
+
 "" fzf {{{
 let g:fzf_action = {
     \ 'ctrl-t': 'tab split',

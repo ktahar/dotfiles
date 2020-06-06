@@ -6,11 +6,13 @@ let b:did_ftplugin_python_my = 1
 setl fileencoding=utf-8
 setl foldmethod=indent
 
-" LSP mappings
+" LSP
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <silent><buffer> <LocalLeader>f :<C-u>LspDocumentFormat<CR>
+
+" Formatter
+nnoremap <silent><buffer> <LocalLeader>f :<C-u>Neoformat<CR>
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()

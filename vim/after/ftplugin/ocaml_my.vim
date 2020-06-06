@@ -6,6 +6,7 @@ let b:did_ftplugin_ocaml_my = 1
 setl fileencoding=utf-8
 setl tabstop=8 expandtab shiftwidth=2 softtabstop=2
 
+" LSP
 " NOTE: I don't understand what these are for now
 nnoremap <silent><buffer> <LocalLeader>h :<C-u>MerlinShrinkEnclosing<CR>
 nnoremap <silent><buffer> <LocalLeader>l :<C-u>MerlinGrowEnclosing<CR>
@@ -14,7 +15,9 @@ nnoremap <silent><buffer> <LocalLeader>g :<C-u>MerlinTypeOf<CR>
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <silent><buffer> <LocalLeader>f :<C-u>LspDocumentFormat<CR>
+
+" Formatter
+nnoremap <silent><buffer> <LocalLeader>f :<C-u>Neoformat<CR>
 
 " overwrite :cnext and :cprevious
 nnoremap <silent><buffer> <C-n> :<C-u>lnext<CR>
