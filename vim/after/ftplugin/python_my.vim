@@ -11,9 +11,6 @@ nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 
-" Formatter
-nnoremap <silent><buffer> <LocalLeader>f :<C-u>Neoformat<CR>
-
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()
     lcd %:h

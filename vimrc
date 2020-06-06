@@ -323,7 +323,7 @@ autocmd BufNewFile,BufRead *.launch set filetype=xml
 let no_ocaml_maps = 1
 let g:merlin_disable_default_keybindings = 1
 autocmd BufNewFile,BufRead ocamlinit* set filetype=ocaml
-autocmd BufNewFile,BufRead dune set filetype=dune
+autocmd BufNewFile,BufRead dune* set filetype=dune
 
 "" Binary {{{
 " vim -b : edit binary using xxd-format!
@@ -391,7 +391,9 @@ if executable('pyls')
        \ 'name': 'pyls',
        \ 'cmd': {server_info->['pyls']},
        \ 'whitelist': ['python'],
-       \ 'workspace_config': {'pyls': {'plugins': {'pycodestyle': {'enabled': v:false}}}},
+       \ 'workspace_config': {'pyls': {'plugins': {'pycodestyle':
+       \ {'enabled': v:false}}
+       \ }},
        \ })
     " au FileType python setl omnifunc=lsp#complete
 endif
@@ -423,6 +425,8 @@ au User asyncomplete_setup call asyncomplete#register_source({
 "}}}
 
 "" neoformat {{{
+nnoremap <silent><buffer> <Leader>f :<C-u>Neoformat<CR>
+
 let g:neoformat_ocaml_ocamlformat = {
     \ 'exe': 'ocamlformat',
     \ 'no_append': 1,

@@ -16,9 +16,6 @@ nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 
-" Formatter
-nnoremap <silent><buffer> <LocalLeader>f :<C-u>Neoformat<CR>
-
 " overwrite :cnext and :cprevious
 nnoremap <silent><buffer> <C-n> :<C-u>lnext<CR>
 nnoremap <silent><buffer> <C-p> :<C-u>lprevious<CR>
