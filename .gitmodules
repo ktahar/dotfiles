@@ -85,3 +85,6 @@
 [submodule "vim/pack/my/start/neoformat"]
 	path = vim/pack/my/start/neoformat
 	url = https://github.com/sbdchd/neoformat
+[submodule "vim/pack/my/start/vim-python-pep8-indent"]
+	path = vim/pack/my/start/vim-python-pep8-indent
+	url = https://github.com/Vimjas/vim-python-pep8-indent
