@@ -438,7 +438,8 @@ let g:neoformat_enabled_ocaml = ['ocamlformat']
 
 let g:neoformat_python_autopep8 = {
     \ 'exe': 'autopep8',
-    \ 'args': ['--max-line-length 99', '--ignore E402'],
+    \ 'stdin': 1,
+    \ 'args': ['--max-line-length 99', '--ignore E402', '-'],
     \ }
 
 let g:neoformat_enabled_python = ['autopep8']
