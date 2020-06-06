@@ -711,6 +711,7 @@ files_linux = [
     (r".config/zathura/zathurarc", r"zathurarc"),
     (r".config/feh/keys", r"feh_keys"),
     (r".config/matplotlib/matplotlibrc", r"python/matplotlibrc"),
+    (r".config/alacritty/alacritty.yml", r"alacritty.yml"),
     (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
     (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
     (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
@@ -740,6 +741,7 @@ def link_linux():
             r".config/i3status",
             r".config/zathura",
             r".config/feh",
+            r".config/alacritty",
             r".urxvt/ext",
             ]
 
