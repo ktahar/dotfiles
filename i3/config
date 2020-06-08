@@ -24,8 +24,8 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec urxvt_local
-bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec urxvt_local
 
 # kill focused window
 bindsym $mod+Shift+q kill
