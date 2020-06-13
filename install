@@ -414,7 +414,7 @@ def install_apt_packages(args):
         # libs to build vim
         "xorg-dev",  # to enable +clipboard +X11
         # i3wm and basic things to use with that
-        "i3", "dunst", "rxvt-unicode-256color", "feh",
+        "i3", "dunst", "rxvt-unicode-256color", "alacritty", "feh",
         "xsel", "xdotool", "xbacklight",
         "ibus-mozc",
         # audio
@@ -456,6 +456,12 @@ def install_apt_packages(args):
             pkgs.extend(l)
 
     pkgs = list(set(pkgs))
+
+    # add ppa repos
+    if args.desktop and not glob.glob("/etc/apt/sources.list.d/mmstick76-ubuntu-alacritty-*.list"):
+        subproc.run(['sudo',
+                     '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
+                     'apt-add-repository', 'ppa:mmstick76/alacritty'])
 
     printc("[INFO] apt pkgs attempting to install", "g")
     printc(" ".join(pkgs), "g")
