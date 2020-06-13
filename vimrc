@@ -439,10 +439,24 @@ let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_python_autopep8 = {
     \ 'exe': 'autopep8',
     \ 'stdin': 1,
-    \ 'args': ['--max-line-length 99', '--ignore E402', '-'],
+    \ 'args': ['-'],
     \ }
-
 let g:neoformat_enabled_python = ['autopep8']
+
+for g:clangformat_cmd in ['clang-format-9', 'clang-format-6.0', 'clang-format']
+    if executable(g:clangformat_cmd)
+        " sudo apt install clang-tools-6.0 or clang-format-9
+        let g:neoformat_c_clangformat = {
+            \ 'exe': 'clang-format-9',
+            \ 'args': ['--assume-filename=' . expand('%:t')],
+            \ 'stdin': 1,
+            \ }
+        let g:neoformat_cpp_clangformat = g:neoformat_c_clangformat
+        let g:neoformat_enabled_c = ['clangformat']
+        let g:neoformat_enabled_cpp = g:neoformat_enabled_c
+        break
+    endif
+endfor
 "}}}
 
 "" fzf {{{

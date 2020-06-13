@@ -406,9 +406,9 @@ def install_apt_packages(args):
         "libjansson-dev", "libyaml-dev", "libxml2-dev",
     ]
 
-    # use clangd from vim-lsp. package name depends on distros.
+    # use clang tools from vim. package name depends on distros.
     if distid == 'bionic':
-        ex_pkgs["vim"].append("clangd-9")
+        ex_pkgs["vim"].extend(["clangd-9", "clang-format-9"])
 
     ex_pkgs["desktop"] = [
         # libs to build vim

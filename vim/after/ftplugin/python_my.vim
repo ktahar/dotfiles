@@ -10,6 +10,7 @@ setl foldmethod=indent
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
 nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <silent><buffer> <LocalLeader>r :<C-u>LspRename<CR>
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()
