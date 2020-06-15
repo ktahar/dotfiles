@@ -295,28 +295,29 @@ def setup_vim():
                       cwd=path.join(script_dir, "apps", "vim"),
                       stdout=subproc.PIPE)
     hnow = res.stdout.decode()
+    if hnow == hlast:
+        return
 
-    if hnow != hlast and prompt('Build Vim?'):
-        wd = path.join(script_dir, "apps", "vim", "src")
-        log = path.join(script_dir, "apps", "vim.log")
-        print("Building vim")
-        vim_conf = ['./configure',
-                    '--prefix={}/.local'.format(home),
-                    '--with-features=huge',
-                    '--enable-gui=no',
-                    #  '--with-x=yes', # seems enabled implicitly.
-                    '--enable-python3interp',
-                    '--enable-fail-if-missing',
-                    ]
-        res = subproc.run(vim_conf, cwd=wd, stdout=subproc.PIPE)
-        with open(log, "w") as f:
-            f.write(res.stdout.decode())
-        res = subproc.run(["make", "install"], cwd=wd, stdout=subproc.PIPE)
-        with open(log, "a") as f:
-            f.write(res.stdout.decode())
+    wd = path.join(script_dir, "apps", "vim", "src")
+    log = path.join(script_dir, "apps", "vim.log")
+    print("Building vim")
+    vim_conf = ['./configure',
+                '--prefix={}/.local'.format(home),
+                '--with-features=huge',
+                '--enable-gui=no',
+                #  '--with-x=yes', # seems enabled implicitly.
+                '--enable-python3interp',
+                '--enable-fail-if-missing',
+                ]
+    res = subproc.run(vim_conf, cwd=wd, stdout=subproc.PIPE)
+    with open(log, "w") as f:
+        f.write(res.stdout.decode())
+    res = subproc.run(["make", "install"], cwd=wd, stdout=subproc.PIPE)
+    with open(log, "a") as f:
+        f.write(res.stdout.decode())
 
-        with open(head, 'w') as f:
-            f.write(hnow)
+    with open(head, 'w') as f:
+        f.write(hnow)
 
 
 def setup_vim_plugins():
@@ -342,8 +343,7 @@ def setup_vim_plugins():
 
 
 def setup_ctags():
-    """setup universal-ctags.
-    """
+    """setup universal-ctags."""
 
     # Build
     # check commit hash of HEAD
@@ -359,25 +359,27 @@ def setup_ctags():
                       stdout=subproc.PIPE)
     hnow = res.stdout.decode()
 
-    if hnow != hlast and prompt('Build universal-ctags?'):
-        wd = path.join(script_dir, "apps", "ctags")
-        log = path.join(script_dir, "apps", "ctags.log")
-        print("Building universal-ctags")
-        commands = [
-            ['./autogen.sh'],
-            ['./configure', '--prefix={}/.local'.format(home)],
-            ['make'],
-            ['make', 'install'],
-        ]
-        for i, cmd in enumerate(commands):
-            res = subproc.run(cmd, cwd=wd, stdout=subproc.PIPE)
-            with open(log, "w" if not i else "a") as f:
-                f.write(res.stdout.decode())
-            if res.returncode != 0:
-                return
+    if hnow == hlast:
+        return
 
-        with open(head, 'w') as f:
-            f.write(hnow)
+    wd = path.join(script_dir, "apps", "ctags")
+    log = path.join(script_dir, "apps", "ctags.log")
+    print("Building universal-ctags")
+    commands = [
+        ['./autogen.sh'],
+        ['./configure', '--prefix={}/.local'.format(home)],
+        ['make'],
+        ['make', 'install'],
+    ]
+    for i, cmd in enumerate(commands):
+        res = subproc.run(cmd, cwd=wd, stdout=subproc.PIPE)
+        with open(log, "w" if not i else "a") as f:
+            f.write(res.stdout.decode())
+        if res.returncode != 0:
+            return
+
+    with open(head, 'w') as f:
+        f.write(hnow)
 
 
 def install_apt_packages(args):
