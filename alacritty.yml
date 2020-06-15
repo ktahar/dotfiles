@@ -5,6 +5,9 @@ font:
 
 draw_bold_text_with_bright_colors: false
 
+mouse:
+  hide_when_typing: true
+
 colors:
   primary:
     background: '#272822'
