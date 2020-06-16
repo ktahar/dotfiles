@@ -441,7 +441,11 @@ let g:neoformat_python_autopep8 = {
     \ 'stdin': 1,
     \ 'args': ['-'],
     \ }
-let g:neoformat_enabled_python = ['autopep8']
+let g:neoformat_python_yapf = {
+    \ 'exe': 'yapf',
+    \ 'stdin': 1,
+    \ }
+let g:neoformat_enabled_python = ['autopep8', 'yapf']
 
 for g:clangformat_cmd in ['clang-format-9', 'clang-format-6.0', 'clang-format']
     if executable(g:clangformat_cmd)
