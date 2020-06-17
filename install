@@ -552,7 +552,7 @@ def install_opam_packages(args):
     install_opam(opam)
 
     if not path.exists(path.join(home, '.opam')):
-        subproc.run([opam, 'init'])
+        subproc.run([opam, 'init', '--no-setup', '--enable-shell-hook'])
         printc("[WARN] opam init is done but opam install is skipped. type 'eval $(opam env)' and run ./install -o again.", 'y')
         return
 
