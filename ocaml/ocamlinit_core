@@ -2,8 +2,12 @@
 Topdirs.dir_use Format.std_formatter (Filename.concat
 (Sys.getenv "HOME") ".ocamlinit");;
 
+#require "core";;
+
 #require "utop";;
 #utop_prompt_simple;;
 #edit_mode_vi;;
 
 Sys.command "clear";;
+
+open Core;;

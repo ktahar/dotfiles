@@ -573,7 +573,7 @@ def install_opam_packages(args):
         # build / test tools
         "ocamlfind", "dune", "alcotest",
         # std libs
-        "base", "stdio",
+        "core",
         # misc libs
         "ctypes", "ctypes-foreign", "atdgen",
     ]

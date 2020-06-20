@@ -231,6 +231,7 @@ alias docker_rmi_all='docker rmi -f $(docker images -q)'
 alias marp='npx marp'
 alias marpp='npx marp --allow-local-files --pdf'
 alias ut='utop -init ~/dotfiles/ocaml/ocamlinit_utop'
+alias uc='utop -init ~/dotfiles/ocaml/ocamlinit_core'
 alias za='zathura'
 alias f='feh -.'
 alias p="pipenv shell"
