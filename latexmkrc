@@ -24,7 +24,7 @@ if ($^O eq 'MSWin32') {
     $xelatex = 'xelatex %O -synctex=1 %S';
     $biber = 'biber %O --bblencoding=utf8 -u -U --output_safechars %B';
     $bibtex = 'upbibtex %O %B';
-    $makeindex = 'mendex %O -o %D %S'; # upmendex is not installed for texlive-full in Ubuntu 16.
+    $makeindex = 'upmendex %O -o %D %S';
     $dvipdf = 'dvipdfmx %O -o %D %S';
     $dvips = 'dvips %O -z -f %S | convbkmk -u > %D';
     $ps2pdf = 'ps2pdf %O %S %D';
