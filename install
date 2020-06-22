@@ -572,6 +572,8 @@ def install_opam_packages(args):
         "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
         # build / test tools
         "ocamlfind", "dune", "alcotest",
+        # doc tools
+        "odoc", "odig", "ocaml-manual",
         # std libs
         "core",
         # misc libs
