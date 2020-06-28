@@ -582,17 +582,6 @@ def install_opam_packages(args):
 
     subproc.run([opam, 'install'] + pkgs)
 
-    # setup merlin
-    res = subproc.run([opam, 'config', 'var', 'share'], stdout=subproc.PIPE)
-    opam_share = res.stdout.decode().strip()
-    # create symlink for merlin as vim pack.
-    pkg_path = path.join(opam_share, 'merlin', 'vim')
-    pack_path = path.join(script_dir,
-                          'vim', 'pack', 'my', 'start', 'merlin')
-    if not path.exists(pack_path):
-        os.symlink(pkg_path, pack_path)
-        printc("created sym link %s" % pack_path, 'g')
-
 
 def make_opt_dir():
     opt = path.join(home, 'opt')

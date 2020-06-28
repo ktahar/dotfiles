@@ -280,6 +280,8 @@ let no_ocaml_maps = 1
 let g:merlin_disable_default_keybindings = 1
 autocmd BufNewFile,BufRead ocamlinit* set filetype=ocaml
 autocmd BufNewFile,BufRead dune* set filetype=dune
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 "" Binary {{{
 " vim -b : edit binary using xxd-format!
