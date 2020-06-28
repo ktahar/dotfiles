@@ -52,9 +52,6 @@
 [submodule "vim/pack/my/start/vim-grammarous"]
 	path = vim/pack/my/start/vim-grammarous
 	url = https://github.com/rhysd/vim-grammarous
-[submodule "vim/pack/my/start/vim-tmux-navigator"]
-	path = vim/pack/my/start/vim-tmux-navigator
-	url = https://github.com/christoomey/vim-tmux-navigator
 [submodule "vim/pack/my/start/vim-markdown"]
 	path = vim/pack/my/start/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown

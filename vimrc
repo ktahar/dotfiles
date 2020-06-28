@@ -128,42 +128,6 @@ nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
 nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
 nnoremap <silent> <Leader>M :<C-u>rightb term<CR>
 
-"" tmux window selection. cf. vim-tmux-navigation. {{{
-function! s:TmuxSocket()
-    " The socket path is the first value in the comma-separated list of $TMUX.
-    return split($TMUX, ',')[0]
-endfunction
-
-function! s:TmuxCommand(args)
-    let cmd = 'tmux -S ' . s:TmuxSocket() . ' ' . a:args
-    return system(cmd)
-endfunction
-
-function! s:TmuxWindow(dir)
-    let args = 'select-window -' . a:dir
-    silent call s:TmuxCommand(args)
-endfunction
-
-if empty($TMUX)
-    " unmap to avoid confusing behaviour
-    nnoremap <C-k>p <Nop>
-    nnoremap <C-k>n <Nop>
-    if exists(':terminal')
-        tnoremap <C-k>p <Nop>
-        tnoremap <C-k>n <Nop>
-    endif
-else
-    command! TmuxWindowPrevious call s:TmuxWindow('p')
-    command! TmuxWindowNext call s:TmuxWindow('n')
-    nnoremap <silent> <C-k>p :<C-u>TmuxWindowPrevious<CR>
-    nnoremap <silent> <C-k>n :<C-u>TmuxWindowNext<CR>
-    if exists(':terminal')
-        tnoremap <silent> <C-k>p <C-k>:<C-u>TmuxWindowPrevious<CR>
-        tnoremap <silent> <C-k>n <C-k>:<C-u>TmuxWindowNext<CR>
-    endif
-endif
-"}}}
-
 if exists(':terminal')
     if exists('+termwinkey')
         set termwinkey=<C-k>
@@ -173,23 +137,15 @@ if exists(':terminal')
     tnoremap <C-k><C-J> <C-k>N
     tnoremap <C-k>[ <C-k>N
     tnoremap <C-k><C-[> <C-k>N
-    tnoremap <silent> <C-k>h <C-k>:<C-u>TmuxNavigateLeft<CR>
-    tnoremap <silent> <C-k>j <C-k>:<C-u>TmuxNavigateDown<CR>
-    tnoremap <silent> <C-k>k <C-k>:<C-u>TmuxNavigateUp<CR>
-    tnoremap <silent> <C-k>l <C-k>:<C-u>TmuxNavigateRight<CR>
 endif
-nnoremap <silent> <C-k>h :<C-u>TmuxNavigateLeft<CR>
-nnoremap <silent> <C-k>j :<C-u>TmuxNavigateDown<CR>
-nnoremap <silent> <C-k>k :<C-u>TmuxNavigateUp<CR>
-nnoremap <silent> <C-k>l :<C-u>TmuxNavigateRight<CR>
 nnoremap <C-k><C-h> <C-w>H
 nnoremap <C-k><C-j> <C-w>J
 nnoremap <C-k><C-k> <C-w>K
 nnoremap <C-k><C-l> <C-w>L
-nnoremap <C-k>H 6<C-w><
-nnoremap <C-k>J 3<C-w>+
-nnoremap <C-k>K 3<C-w>-
-nnoremap <C-k>L 6<C-w>>
+nnoremap <C-k>H 4<C-w><
+nnoremap <C-k>J 2<C-w>+
+nnoremap <C-k>K 2<C-w>-
+nnoremap <C-k>L 4<C-w>>
 nnoremap <silent> <C-k>\ :<C-u>vsp<CR>
 nnoremap <silent> <C-k><Bar> :<C-u>vsp<CR>
 nnoremap <silent> <C-k>- :<C-u>sp<CR>
