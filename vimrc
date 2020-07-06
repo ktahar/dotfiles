@@ -348,7 +348,7 @@ if executable('pyls')
     au User lsp_setup call lsp#register_server({
        \ 'name': 'pyls',
        \ 'cmd': {server_info->['pyls']},
-       \ 'whitelist': ['python'],
+       \ 'allowlist': ['python'],
        \ 'workspace_config': {'pyls': {'plugins': {'pycodestyle':
        \ {'enabled': v:false}}
        \ }},
@@ -360,8 +360,8 @@ for g:clangd_cmd in ['clangd-9', 'clangd-6.0', 'clangd']
         " sudo apt install clang-tools-6.0 or clangd-9
         au User lsp_setup call lsp#register_server({
            \ 'name': g:clangd_cmd,
-           \ 'cmd': {server_info->[g:clangd_cmd]},
-           \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+           \ 'cmd': {server_info->[g:clangd_cmd, '--background-index']},
+           \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp'],
            \ })
         break
     endif
@@ -370,14 +370,14 @@ if executable('ocamllsp')
     au User lsp_setup call lsp#register_server({
        \ 'name': 'ocamllsp',
        \ 'cmd': {server_info->['ocamllsp']},
-       \ 'whitelist': ['ocaml'],
+       \ 'allowlist': ['ocaml'],
        \ })
 endif
 
 au User asyncomplete_setup call asyncomplete#register_source({
     \ 'name': 'omni',
-    \ 'whitelist': ['tex'],
-    \ 'blacklist': ['c', 'cpp', 'ocaml', 'python'],
+    \ 'allowlist': ['tex'],
+    \ 'blocklist': ['c', 'cpp', 'ocaml', 'python'],
     \ 'completor': function('asyncomplete#sources#omni#completor')
     \  })
 "}}}

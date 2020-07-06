@@ -28,9 +28,6 @@
 [submodule "vim/pack/my/start/editorconfig-vim"]
 	path = vim/pack/my/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
-[submodule "vim/pack/my/start/async.vim"]
-	path = vim/pack/my/start/async.vim
-	url = https://github.com/prabirshrestha/async.vim
 [submodule "vim/pack/my/start/vim-lsp"]
 	path = vim/pack/my/start/vim-lsp
 	url = https://github.com/prabirshrestha/vim-lsp
