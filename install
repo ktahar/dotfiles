@@ -596,7 +596,7 @@ def install_npm_packages(args):
 
     """
 
-    def install_node():
+    def install_node(a):
         """install Node.js in ~/opt/node.
 
         """
@@ -604,8 +604,8 @@ def install_npm_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 12, 16, 2
-        name = "node-v{}.{}.{}-linux-x64".format(major, minor, patch)
+        major, minor, patch = 12, 18, 2
+        name = "node-v{}.{}.{}-linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
             major, minor, patch, name)
@@ -615,13 +615,15 @@ def install_npm_packages(args):
             tar.extractall(path=path.join(home, 'opt'))
         os.symlink(path.join(home, 'opt', name), node_dir)
 
-    if arch != "x86_64":
+    archs = {"x86_64": "x64", "aarch64": "arm64"}
+
+    if arch not in archs:
         printc("Machine arch {} is not supported for now.".format(arch), 'r')
         return
 
     node_dir = path.join(make_opt_dir(), 'node')
     if not path.exists(node_dir):
-        install_node()
+        install_node(archs[arch])
 
     npm = path.join(node_dir, 'bin', 'npm')
 
@@ -635,7 +637,7 @@ def install_npm_packages(args):
 
 
 def install_go_packages(args):
-    def install_go():
+    def install_go(a):
         """install Golang in ~/opt/go.
 
         """
@@ -643,8 +645,8 @@ def install_go_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 1, 12, 4
-        name = "go{}.{}.{}.linux-amd64".format(major, minor, patch)
+        major, minor, patch = 1, 14, 4
+        name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://dl.google.com/go/{}.tar.gz".format(name)
         res = requests.get(url)
@@ -652,13 +654,15 @@ def install_go_packages(args):
         with tarfile.open(fileobj=stream, mode='r:gz') as tar:
             tar.extractall(path=path.join(home, 'opt'))
 
-    if arch != "x86_64":
+    archs = {"x86_64": "amd64", "aarch64": "arm64"}
+
+    if arch not in archs:
         printc("Machine arch {} is not supported for now.".format(arch), 'r')
         return
 
     go_dir = path.join(make_opt_dir(), 'go')
     if not path.exists(go_dir):
-        install_go()
+        install_go(archs[arch])
 
     go = path.join(go_dir, 'bin', 'go')
 

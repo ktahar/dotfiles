@@ -47,7 +47,8 @@ set smartcase
 set incsearch
 set hlsearch
 
-""" File
+""" Encoding
+set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,latin1
 
 """ Spell
