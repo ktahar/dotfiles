@@ -521,15 +521,18 @@ def install_opam_packages(args):
 
     """
 
-    def install_opam(opam):
+    def install_opam(opam, a):
         """install opam itself to ~/.local/bin.
 
         """
 
         import requests
         import hashlib
-        version = "2.0.6"
-        h = "2b9d4a99aa28a193c88c7c6f6265203bd3cfeef98929d6f5cfce4b52cd9ddbd7be7eddc1d3d9c440f81d65074dd7851b8d29cd397fb06d2cfccffb54d3cdcc6a"
+        version = "2.0.7"
+        hashes = {
+            "x86_64": "da75b0cb5ad50f95d31857a7d72f1836132a1fa1cdbfdedf684342b798e7107b4add4c74c05d5ce44881309fa1e57707538dbcda874e7f74b269b1bb204f3ae3",
+            "arm64": "0dd4d80496545f684af39dc5b4b28867bc19a74186577c38bd2a8934d871c2cbcdb9891bfd41c080b5f12d5a3c8801e203df8a76d55e1e22fe80d31447402e46"
+        }
 
         if path.exists(opam):
             res = subproc.run([opam, "--version"], stdout=subproc.PIPE)
@@ -537,19 +540,25 @@ def install_opam_packages(args):
             if not args.upgrade or v == version:
                 return
 
-        name = "opam-{}-x86_64-linux".format(version)
+        name = "opam-{}-{}-linux".format(version, a)
         print("Downloading", name)
         url = "https://github.com/ocaml/opam/releases/download/{}/{}".format(
             version, name)
         res = requests.get(url)
-        if hashlib.sha512(res.content).hexdigest() != h:
+        if hashlib.sha512(res.content).hexdigest() != hashes[a]:
             raise RuntimeError("SHA512 hash of opam binary doesn't match!")
         with open(opam, 'wb') as f:
             f.write(res.content)
         os.chmod(opam, 0o755)
 
+    archs = {"x86_64": "x86_64", "aarch64": "arm64"}
+
+    if arch not in archs:
+        printc("Machine arch {} is not supported for now.".format(arch), 'r')
+        return
+
     opam = path.join(home, ".local", "bin", "opam")
-    install_opam(opam)
+    install_opam(opam, archs[arch])
 
     if not path.exists(path.join(home, '.opam')):
         subproc.run([opam, 'init', '--no-setup', '--enable-shell-hook'])
