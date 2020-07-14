@@ -107,6 +107,9 @@ my_prompt_precmd () {
     if [[ $PIPENV_ACTIVE = 1 ]]; then
         my_rprompt="[P]${my_rprompt}"
     fi
+    if [[ -n $ROS_DISTRO ]]; then
+        my_rprompt="[R]${my_rprompt}"
+    fi
 
     # set window title
     local title="${USER}@${HOST}"
