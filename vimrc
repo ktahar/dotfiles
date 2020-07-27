@@ -361,7 +361,7 @@ for g:clangd_cmd in ['clangd-9', 'clangd-6.0', 'clangd']
         " sudo apt install clang-tools-6.0 or clangd-9
         au User lsp_setup call lsp#register_server({
            \ 'name': g:clangd_cmd,
-           \ 'cmd': {server_info->[g:clangd_cmd, '--background-index']},
+           \ 'cmd': {server_info->[g:clangd_cmd, '--background-index', '--header-insertion=never']},
            \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp'],
            \ })
         break
