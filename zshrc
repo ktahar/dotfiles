@@ -47,13 +47,11 @@ disable r
 # prompt {{{
 ## show hostname only if ssh
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    base_prompt="%F{green}%n@%m%k "
+    base_prompt="%F{cyan}%n@%m"
 else
-    base_prompt="%F{green}%n%k "
+    base_prompt="%F{cyan}%n"
 fi
-post_prompt="%b%f%k"
-base_prompt_no_color=${base_prompt//\%(F\{*\}|k)/}
-post_prompt_no_color=${post_prompt//\%(F\{*\}|k)/}
+base_prompt="${base_prompt} %B%~%b%f"
 prompt_newline=$'\n%{\r%}'
 
 ## vcs
@@ -82,34 +80,22 @@ bindkey -M vicmd "^F" my_prompt_vcs_toggle
 
 my_prompt_precmd () {
     setopt noxtrace localoptions
-    local base_prompt_expanded_no_color base_prompt_etc
-    local prompt_length space_left
-
-    base_prompt_expanded_no_color=$(print -P "$base_prompt_no_color")
-    base_prompt_etc=$(print -P "$base_prompt%~")
-    prompt_length=${#base_prompt_etc}
-    if [[ $prompt_length -lt 40 ]]; then
-        path_prompt="%B%F{blue}%~%F{white}"
-    else
-        space_left=$(( $COLUMNS - $#base_prompt_expanded_no_color - 2 ))
-        path_prompt="%B%F{cyan}%${space_left}<...<%~$prompt_newline%F{white}"
-    fi
-    PS1="$base_prompt$path_prompt %# $post_prompt"
-    PS2="$base_prompt$path_prompt %_> $post_prompt"
-    PS3="$base_prompt$path_prompt ?# $post_prompt"
-
-    if [ $my_prompt_vcs_enable = 1 ]; then
-        vcs_info
-        my_rprompt="${vcs_info_msg_0_}"
-    else
-        my_rprompt=""
-    fi
+    extra_prompt=""
     if [[ $PIPENV_ACTIVE = 1 ]]; then
-        my_rprompt="[P]${my_rprompt}"
+        extra_prompt="${extra_prompt}[P]"
     fi
     if [[ -n $ROS_DISTRO ]]; then
-        my_rprompt="[R]${my_rprompt}"
+        extra_prompt="${extra_prompt}[R]"
     fi
+    if [ $my_prompt_vcs_enable = 1 ]; then
+        vcs_info
+        extra_prompt="${extra_prompt}${vcs_info_msg_0_}"
+    fi
+    extra_prompt="$extra_prompt$prompt_newline"
+
+    PS1="$base_prompt $extra_prompt%F{white}%# %f"
+    PS2="%F{white}%_> %f"
+    PS3="%F{white}?# %f"
 
     # set window title
     local title="${USER}@${HOST}"
@@ -137,7 +123,7 @@ add-zsh-hook precmd my_prompt_precmd
 ## vi mode status indicator
 vicmd_prompt="[N]"
 zle-line-init zle-line-finish zle-keymap-select () {
-    RPROMPT="${${KEYMAP/vicmd/$vicmd_prompt}/(main|viins)/}${my_rprompt}"
+    RPROMPT="${${KEYMAP/vicmd/$vicmd_prompt}/(main|viins)/}"
     zle reset-prompt
 }
 
@@ -246,7 +232,7 @@ if type pipenv > /dev/null; then
     eval "$(pipenv --completion)"
 fi
 
-## OPAM
+## opam
 test -r ${HOME}/.opam/opam-init/init.zsh && . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 ## zsh-syntax-highlighting
