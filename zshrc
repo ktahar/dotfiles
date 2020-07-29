@@ -51,7 +51,7 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 else
     base_prompt="%F{cyan}%n"
 fi
-base_prompt="${base_prompt} %B%30<...<%~%<<%b%f"
+base_prompt="${base_prompt} %B%40<...<%~%<<%b%f"
 prompt_newline=$'\n%{\r%}'
 
 ## vcs
@@ -102,7 +102,7 @@ my_prompt_precmd () {
         vcs_info
         extra_prompt="${extra_prompt}${vcs_info_msg_0_}"
     fi
-    extra_prompt="$extra_prompt$prompt_newline"
+    extra_prompt="%F{white}$extra_prompt%f$prompt_newline"
 
     PS1="$base_prompt $extra_prompt%F{white}%# %f"
     PS2="%F{white}%_> %f"
