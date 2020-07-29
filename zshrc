@@ -51,7 +51,7 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 else
     base_prompt="%F{cyan}%n"
 fi
-base_prompt="${base_prompt} %B%~%b%f"
+base_prompt="${base_prompt} %B%30<...<%~%<<%b%f"
 prompt_newline=$'\n%{\r%}'
 
 ## vcs
