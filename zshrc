@@ -80,12 +80,23 @@ bindkey -M vicmd "^F" my_prompt_vcs_toggle
 
 my_prompt_precmd () {
     setopt noxtrace localoptions
+    local p
     extra_prompt=""
     if [[ $PIPENV_ACTIVE = 1 ]]; then
-        extra_prompt="${extra_prompt}[P]"
+        if [[ -n $VIRTUAL_ENV ]]; then
+            p=":$(basename $(dirname $VIRTUAL_ENV))"
+        else
+            p=""
+        fi
+        extra_prompt="${extra_prompt}[P${p}]"
     fi
     if [[ -n $ROS_DISTRO ]]; then
-        extra_prompt="${extra_prompt}[R]"
+        if [[ -n $ROS_WORKSPACE ]]; then
+            p=":$(basename $ROS_WORKSPACE)"
+        else
+            p=""
+        fi
+        extra_prompt="${extra_prompt}[R${p}]"
     fi
     if [ $my_prompt_vcs_enable = 1 ]; then
         vcs_info
