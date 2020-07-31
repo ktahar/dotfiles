@@ -102,9 +102,9 @@ my_prompt_precmd () {
         vcs_info
         extra_prompt="${extra_prompt}${vcs_info_msg_0_}"
     fi
-    extra_prompt="%F{white}$extra_prompt%f$prompt_newline"
+    extra_prompt="%F{white}$extra_prompt%f"
 
-    PS1="$base_prompt $extra_prompt%F{white}%# %f"
+    PS1="$base_prompt $extra_prompt$prompt_newline%F{white}%# %f"
     PS2="%F{white}%_> %f"
     PS3="%F{white}?# %f"
 
@@ -132,9 +132,9 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd my_prompt_precmd
 
 ## vi mode status indicator
-vicmd_prompt="[N]"
 zle-line-init zle-line-finish zle-keymap-select () {
-    RPROMPT="${${KEYMAP/vicmd/$vicmd_prompt}/(main|viins)/}"
+    vicmd_prompt="${${KEYMAP/vicmd/[N]}/(main|viins)/}"
+    PS1="$base_prompt $extra_prompt%F{white}$vicmd_prompt$prompt_newline%# %f"
     zle reset-prompt
 }
 
