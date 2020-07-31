@@ -82,3 +82,6 @@
 [submodule "vim/pack/my/start/vim-python-pep8-indent"]
 	path = vim/pack/my/start/vim-python-pep8-indent
 	url = https://github.com/Vimjas/vim-python-pep8-indent
+[submodule "vim/pack/my/start/iceberg.vim"]
+	path = vim/pack/my/start/iceberg.vim
+	url = https://github.com/cocopon/iceberg.vim
