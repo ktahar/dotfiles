@@ -516,6 +516,9 @@ let g:vimtex_view_method = 'zathura'
 let g:vimtex_toc_config = {
     \ 'name': 'ToC',
     \ 'mode': 2 }
+let g:vimtex_quickfix_ignore_filters = [
+    \ 'LaTeX Font Warning',
+    \]
 "}}}
 "}}}
 
