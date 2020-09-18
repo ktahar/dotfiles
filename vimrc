@@ -386,6 +386,36 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
     \ }))
 "}}}
 
+"" vsnip {{{
+" modified version of expand_or_jump() (added set nofoldenable before expand()).
+" see vim-vsnip/plugin/vsnip.vim for the original.
+inoremap <silent> <Plug>(my-vsnip-expand-or-jump) <Esc>:<C-u>call <SID>expand_or_jump()<CR>
+snoremap <silent> <Plug>(my-vsnip-expand-or-jump) <Esc>:<C-u>call <SID>expand_or_jump()<CR>
+function! s:expand_or_jump()
+  let l:context = vsnip#get_context()
+  let l:session = vsnip#get_session()
+  if !empty(l:context)
+    set nofoldenable
+    call vsnip#expand()
+  elseif !empty(l:session) && l:session.jumpable(1)
+    call l:session.jump(1)
+  endif
+endfunction
+
+let g:vsnip_snippet_dir = expand('~/dotfiles/vsnip')
+imap <expr> <C-f>   vsnip#available(1)  ? '<Plug>(my-vsnip-expand-or-jump)' : '<C-f>'
+smap <expr> <C-f>   vsnip#available(1)  ? '<Plug>(my-vsnip-expand-or-jump)' : '<C-f>'
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'        : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'        : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'        : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'        : '<S-Tab>'
+" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+nmap        s   <Plug>(vsnip-select-text)
+xmap        s   <Plug>(vsnip-select-text)
+nmap        S   <Plug>(vsnip-cut-text)
+xmap        S   <Plug>(vsnip-cut-text)
+"}}}
+"
 "" neoformat {{{
 nnoremap <silent> <Leader>f :<C-u>Neoformat<CR>
 
@@ -468,11 +498,6 @@ nnoremap <c-h> :<C-u>FZFfile 1<CR>
 nnoremap <Leader>j :<C-u>Buffers<CR>
 " grep and fuzzy search  (using fzf.vim)
 nnoremap <Leader>a :<C-u>Ag<space>
-"}}}
-
-"" snipmate {{{
-imap <C-f> <Esc>a<Plug>snipMateNextOrTrigger
-smap <C-f> <Plug>snipMateNextOrTrigger
 "}}}
 
 "" Tagbar {{{

@@ -10,12 +10,6 @@
 [submodule "vim/pack/my/start/tlib_vim"]
 	path = vim/pack/my/start/tlib_vim
 	url = https://github.com/tomtom/tlib_vim
-[submodule "vim/pack/my/start/vim-snipmate"]
-	path = vim/pack/my/start/vim-snipmate
-	url = https://github.com/garbas/vim-snipmate
-[submodule "vim/pack/my/start/vim-snippets"]
-	path = vim/pack/my/start/vim-snippets
-	url = https://github.com/honza/vim-snippets
 [submodule "vim/pack/my/start/vim-surround"]
 	path = vim/pack/my/start/vim-surround
 	url = https://github.com/tpope/vim-surround
@@ -85,3 +79,9 @@
 [submodule "vim/pack/my/start/iceberg.vim"]
 	path = vim/pack/my/start/iceberg.vim
 	url = https://github.com/cocopon/iceberg.vim
+[submodule "vim/pack/my/start/vim-vsnip"]
+	path = vim/pack/my/start/vim-vsnip
+	url = https://github.com/hrsh7th/vim-vsnip
+[submodule "vim/pack/my/start/vim-vsnip-integ"]
+	path = vim/pack/my/start/vim-vsnip-integ
+	url = https://github.com/hrsh7th/vim-vsnip-integ
