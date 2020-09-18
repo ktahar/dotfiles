@@ -57,12 +57,6 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
 # split in horizontal orientation
 bindsym $mod+backslash split h
 bindsym $mod+bar split h
@@ -148,45 +142,17 @@ bindsym $mod+Shift+x mode "$mode_system"
 
 # resize window mode
 mode "resize" {
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width  4 px or 4 ppt
+        bindsym j resize grow height   4 px or 4 ppt
+        bindsym k resize shrink height 4 px or 4 ppt
+        bindsym l resize grow width    4 px or 4 ppt
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym Control+j mode "default"
         bindsym $mod+j mode "default"
-        bindsym m mode "move"
-        bindsym $mod+m mode "move"
 }
-
 bindsym $mod+r mode "resize"
-
-# move window mode
-mode "move" {
-        bindsym h move left 10 px
-        bindsym j move down 10 px
-        bindsym k move up 10 px
-        bindsym l move right 10 px
-        bindsym Left move left 10 px
-        bindsym Down move down 10 px
-        bindsym Up move up 10 px
-        bindsym Right move right 10 px
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym Control+j mode "default"
-        bindsym $mod+j mode "default"
-        bindsym r mode "resize"
-        bindsym $mod+r mode "resize"
-}
-
-bindsym $mod+m mode "move"
 
 # Pulse Audio Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
