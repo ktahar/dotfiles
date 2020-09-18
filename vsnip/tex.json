@@ -1,0 +1,83 @@
+{
+    "environment": {
+        "prefix": ["begin"],
+        "body": [
+            "\\begin{$1}",
+            "  $2",
+            "\\end{$1}"
+        ],
+        "description": "Environment definition."
+    },
+    "figure": {
+        "prefix": ["figure"],
+        "body": [
+            "\\begin{figure}[hbtp]",
+            "  \\centering",
+            "  \\includegraphics[width=${1:10.0}cm]{${2:filename}}",
+            "  \\caption[$3]",
+            "  {\\label{fig:$4} $3}",
+            "\\end{figure}"
+        ],
+        "description": "Figure env."
+    },
+    "table": {
+        "prefix": ["table"],
+        "body": [
+            "\\begin{table}[hbtp]",
+            "  \\begin{center}",
+            "    \\caption{\\label{tab:$1} $2}",
+            "    \\begin{tabular}{${3:lcr}}",
+            "    \\hline",
+            "    $4 & $5 & $6 \\\\\\ \\hline \\hline",
+            "    $7 & $8 & $9 \\\\\\ \\hline",
+            "    \\end{tabular}",
+            "  \\end{center}",
+            "\\end{table}"
+        ],
+        "description": "Figure env."
+    },
+    "equation": {
+        "prefix": ["equation"],
+        "body": [
+            "\\begin{equation}",
+            "  $1 \\label{eq:$2}",
+            "\\end{equation}"
+        ],
+        "description": "Equation env."
+    },
+    "align": {
+        "prefix": ["align"],
+        "body": [
+            "\\begin{align}",
+            "  $1 &= $2 \\label{eq:$3} \\\\\\",
+            "  $4 &= $5 \\label{eq:$6} \\\\\\",
+            "\\end{align}"
+        ],
+        "description": "Align env."
+    },
+    "enumerate": {
+        "prefix": ["enumerate"],
+        "body": [
+            "\\begin{enumerate}",
+            "  \\item $1 \\label{enum:$2}",
+            "\\end{enumerate}"
+        ],
+        "description": "Enumerate env."
+    },
+    "itemize": {
+        "prefix": ["itemize"],
+        "body": [
+            "\\begin{itemize}",
+            "  \\item $1",
+            "\\end{itemize}"
+        ],
+        "description": "Itemize env."
+    },
+    "item": {
+        "prefix": ["item"],
+        "body": [
+            "\\item $1"
+        ],
+        "description": "Item of itemize or enumerate."
+    }
+}
