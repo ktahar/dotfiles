@@ -85,3 +85,6 @@
 [submodule "vim/pack/my/start/vim-vsnip-integ"]
 	path = vim/pack/my/start/vim-vsnip-integ
 	url = https://github.com/hrsh7th/vim-vsnip-integ
+[submodule "vim/pack/my/start/vim-slime"]
+	path = vim/pack/my/start/vim-slime
+	url = https://github.com/jpalardy/vim-slime

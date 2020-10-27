@@ -500,6 +500,11 @@ nnoremap <Leader>j :<C-u>Buffers<CR>
 nnoremap <Leader>a :<C-u>Ag<space>
 "}}}
 
+"" slime {{{
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "{last}"}
+"}}}
+
 "" Tagbar {{{
 nnoremap <silent> <Leader>b :<C-u>TagbarToggle<CR>
 let g:tagbar_map_togglesort = "r"
