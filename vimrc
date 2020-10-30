@@ -405,10 +405,10 @@ endfunction
 let g:vsnip_snippet_dir = expand('~/dotfiles/vsnip')
 imap <expr> <C-f>   vsnip#available(1)  ? '<Plug>(my-vsnip-expand-or-jump)' : '<C-f>'
 smap <expr> <C-f>   vsnip#available(1)  ? '<Plug>(my-vsnip-expand-or-jump)' : '<C-f>'
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'        : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'        : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'        : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'        : '<S-Tab>'
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'         : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'         : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'         : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'         : '<S-Tab>'
 " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
 nmap        s   <Plug>(vsnip-select-text)
 xmap        s   <Plug>(vsnip-select-text)
