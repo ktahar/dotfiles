@@ -3,6 +3,8 @@ if exists('b:did_ftplugin_cpp_my')
 endif
 let b:did_ftplugin_cpp_my = 1
 
+setl foldmethod=syntax
+
 " LSP mappings
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
