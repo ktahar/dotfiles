@@ -714,6 +714,7 @@ files_linux = [
     (r".tmux/plugins", r"tmux/plugins"),
     (r".fzf", r"apps/fzf"),
     (r".ctags.d", r"ctags.d"),
+    (r".clang-format", r"clang-format"),
     (r".gitignore_global", r"gitignore_global"),
     (r".agignore", r"agignore"),
     (r".latexmkrc", r"latexmkrc"),

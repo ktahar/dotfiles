@@ -8,7 +8,7 @@
             "",
             "        ${4:pass}"
         ],
-        "description": "Class definition."
+        "description": "class definition"
     },
     "np": {
         "prefix": ["np"],
@@ -22,27 +22,27 @@
         "body": [
             "import scipy as sp"
         ],
-        "description": "Import scipy."
+        "description": "import scipy"
     },
     "plt": {
         "prefix": ["plt"],
         "body": [
             "import matplotlib.pyplot as plt"
         ],
-        "description": "Import matplotlib.pyplot."
+        "description": "import matplotlib.pyplot"
     },
     "mpl": {
         "prefix": ["mpl"],
         "body": [
             "import matplotlib as mpl"
         ],
-        "description": "Import matplotlib."
+        "description": "import matplotlib"
     },
     "pd": {
         "prefix": ["pd"],
         "body": [
             "import pandas as pd"
         ],
-        "description": "Import pandas."
+        "description": "import pandas"
     }
 }
