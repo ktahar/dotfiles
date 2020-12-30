@@ -614,7 +614,7 @@ def install_npm_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 12, 18, 2
+        major, minor, patch = 14, 15, 3
         name = "node-v{}.{}.{}-linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
@@ -655,7 +655,7 @@ def install_go_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 1, 14, 4
+        major, minor, patch = 1, 15, 6
         name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://dl.google.com/go/{}.tar.gz".format(name)
