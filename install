@@ -571,12 +571,6 @@ def install_opam_packages(args):
     if args.upgrade:
         subproc.run([opam, 'upgrade'])
 
-    res = subproc.run([opam, 'show', 'ocaml-lsp-server'],
-                      stdout=subproc.DEVNULL)
-    if res.returncode != 0:
-        subproc.run([opam, 'pin', 'add', 'ocaml-lsp-server',
-                     'https://github.com/ocaml/ocaml-lsp.git'])
-
     pkgs = [
         # dev tools
         "utop", "merlin", "ocamlformat", "ocaml-lsp-server",
