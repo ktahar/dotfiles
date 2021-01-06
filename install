@@ -382,8 +382,13 @@ def setup_ctags():
     with open(head, 'w') as f:
         f.write(hnow)
 
-
 def install_apt_packages(args):
+    def add_ppa_repository(user, repo):
+        if not glob.glob("/etc/apt/sources.list.d/{}-ubuntu-{}-*.list".format(user, repo)):
+            subproc.run(['sudo',
+                         '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
+                         'apt-add-repository', 'ppa:{}/{}'.format(user, repo)])
+
     pkgs = [
         "ncurses-term", "silversearcher-ag", "htop", "dstat",
         "tree", "curl", "wget",
@@ -417,7 +422,7 @@ def install_apt_packages(args):
         # libs to build vim
         "xorg-dev",  # to enable +clipboard +X11
         # i3wm and basic things to use with that
-        "i3", "dunst", "rxvt-unicode-256color", "alacritty", "feh",
+        "i3", "dunst", "rxvt-unicode-256color", "feh",
         "xsel", "xdotool", "xbacklight",
         "ibus-mozc",
         # audio
@@ -450,21 +455,22 @@ def install_apt_packages(args):
         "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
     ]
 
-    ex_pkgs["opam"] = ["mercurial", "darcs", "bubblewrap", "m4",
-                       "libffi-dev"  # for ctypes-foreign
-                       ]
+    ex_pkgs["opam"] = [
+        "mercurial", "darcs", "bubblewrap", "m4",
+        # for ctypes-foreign
+        "libffi-dev",
+    ]
+
+    ex_pkgs["cargo"] = [
+        # for alacritty
+        "libfreetype6-dev", "libfontconfig1-dev", "libxcb-xfixes0-dev",
+    ]
 
     for k, l in ex_pkgs.items():
         if getattr(args, k):
             pkgs.extend(l)
 
     pkgs = list(set(pkgs))
-
-    # add ppa repos
-    if args.desktop and not glob.glob("/etc/apt/sources.list.d/mmstick76-ubuntu-alacritty-*.list"):
-        subproc.run(['sudo',
-                     '--preserve-env=http_proxy,https_proxy,ftp_proxy,no_proxy',
-                     'apt-add-repository', 'ppa:mmstick76/alacritty'])
 
     printc("[INFO] apt pkgs attempting to install", "g")
     printc(" ".join(pkgs), "g")
@@ -674,6 +680,27 @@ def install_go_packages(args):
 
     subproc.run([go, 'get', '-u'] + pkgs)
 
+def install_cargo_packages(args):
+    def install_rust():
+        """install Rust
+
+        """
+
+        import requests
+        url = "https://sh.rustup.rs"
+        res = requests.get(url)
+        subproc.run(["bash", "-s", "--", "--no-modify-path"], input=res.content)
+
+    cargo_dir = path.join(home, '.cargo')
+    if not path.exists(cargo_dir):
+        install_rust()
+
+    cargo = path.join(cargo_dir, 'bin', 'cargo')
+
+    pkgs = ['alacritty']
+
+    subproc.run([cargo, 'install'] + pkgs)
+
 
 def setup_matlab():
     """make desktop entry for MATLAB (~/opt/matlab).
@@ -809,7 +836,7 @@ def main_linux(args):
     # check absence of zsh to detect whether the install is first time.
     # if so, install apt packages because it's required to setup shell and fzf.
     no_zsh = not path.exists("/bin/zsh")
-    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.opam, args.vim)):
+    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.opam, args.cargo, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
 
@@ -829,7 +856,7 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('pip', 'npm', 'go', 'opam'):
+    for pack in ('pip', 'npm', 'go', 'opam', 'cargo'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args)
@@ -874,6 +901,8 @@ def parse_args():
                         help='Install go packages.')
     parser.add_argument('-n', '--npm', action='store_true',
                         help='Install npm packages.')
+    parser.add_argument('-c', '--cargo', action='store_true',
+                        help='Install cargo packages.')
 
     args = parser.parse_args()
     if args.fulldesktop:
