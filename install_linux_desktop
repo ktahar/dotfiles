@@ -30,7 +30,7 @@ fc-list | grep Cica > /dev/null
 if [[ "$?" = 0 && -z "${opthash[(i)-f]}" ]]; then
     echo "Cica font is already installed."
 else
-    cica_v=v5.0.1
+    cica_v=v5.0.2
     cica_fn=Cica_${cica_v}_with_emoji.zip
     cica_dir=Cica_${cica_v}
 
@@ -40,7 +40,7 @@ else
     unzip ${cica_fn} -d ${cica_dir}
     mkdir -p ~/.local/share/fonts
     mv ${cica_dir}/Cica*.ttf ~/.local/share/fonts/
-    fc-cache -fv
+    fc-cache -f
     rm -r ${cica_fn} ${cica_dir}
 fi
 
