@@ -9,5 +9,8 @@ setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " override TagbarToggle
 nnoremap <silent> <Leader>b :<C-u>VimtexTocToggle<CR>
 
+" Tabularize the tabular
+vnoremap <silent> <Leader>t :Tabularize /\(&\\|\\\\\)<CR>
+
 " map for location list
 silent call ToggleQL(1)
