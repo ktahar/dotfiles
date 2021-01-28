@@ -40,6 +40,10 @@ for dir in $directories; do
     fi
 done
 
+typeset -T LD_LIBRARY_PATH ld_library_path
+typeset -U ld_library_path
+export LD_LIBRARY_PATH
+
 ## fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
 export FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
