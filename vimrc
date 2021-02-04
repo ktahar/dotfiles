@@ -65,6 +65,7 @@ endif
 
 set textwidth=0
 set formatoptions=jMql
+set nrformats+=unsigned
 "}}}
 
 """ map {{{
