@@ -10,6 +10,17 @@
         ],
         "description": "class definition"
     },
+    "main": {
+        "prefix": ["main"],
+        "body": [
+            "def main():",
+            "    return",
+            "",
+            "if __name__ == \"__main__\":",
+            "    main()"
+        ],
+        "description": "main function"
+    },
     "np": {
         "prefix": ["np"],
         "body": [
