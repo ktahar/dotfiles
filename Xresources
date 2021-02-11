@@ -9,6 +9,8 @@ URxvt.pointerBlank: true
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 URxvt.perl-ext-common: default,resize-font
+! unbind Meta(Alt)-s
+URxvt.keysym.M-s: builtin-string:
 ! URxvt.perl-ext-common: default,resize-font,xim-onthespot
 ! URxvt.preeditType: OnTheSpot
 URxvt.inputMethod: ibus
