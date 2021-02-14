@@ -1,12 +1,8 @@
 " ktaha's ideavimrc
 
 " standard maps
-
-" Don't change mapleader to space,
-" because of following bug.
-" - key input of <some-key> remains after entering <leader><some-key>.
-" nnoremap <Space> <Nop>
-" let mapleader = " "
+nnoremap <Space> <Nop>
+let mapleader = " "
 
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
