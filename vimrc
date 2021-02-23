@@ -65,7 +65,9 @@ endif
 
 set textwidth=0
 set formatoptions=jMql
-set nrformats+=unsigned
+if has("patch-8.2.0860")
+    set nrformats+=unsigned
+endif
 "}}}
 
 """ map {{{
