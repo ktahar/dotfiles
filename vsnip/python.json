@@ -26,7 +26,7 @@
         "body": [
             "import numpy as np"
         ],
-        "description": "Import numpy."
+        "description": "import numpy"
     },
     "sp": {
         "prefix": ["sp"],
