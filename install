@@ -731,6 +731,7 @@ files_linux = [
     (r".vim", r"vim"),
     (r".ideavimrc", r"ideavimrc"),
     (r".inputrc", r"inputrc"),
+    (r".toprc", r"toprc"),
     (r".tmux.conf", r"tmux.conf"),
     (r".tmux/plugins", r"tmux/plugins"),
     (r".fzf", r"apps/fzf"),
