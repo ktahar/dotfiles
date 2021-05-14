@@ -11,6 +11,6 @@ Mem	fieldscur=¥º»<½¾¿ÀÁMBNÃD34·Å&'()*+,-./0125689FGHIJKLOPQRSTUVWXYZ[\]^_`abcdef
 	summclr=6, msgsclr=3, headclr=3, taskclr=6
 Usr	fieldscur=¥¦§¨ª°¹·ºÄÅ)+,-./1234568;<=>?@ABCFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghij
 	winflags=195380, sortindx=3, maxtasks=0, graph_cpus=1, graph_mems=1
-	summclr=6, msgsclr=0, headclr=0, taskclr=6
+	summclr=6, msgsclr=7, headclr=7, taskclr=6
 Fixed_widest=0, Summ_mscale=2, Task_mscale=1, Zero_suppress=1
 
