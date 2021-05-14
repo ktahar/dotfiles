@@ -5,12 +5,12 @@ Def	fieldscur=¥¨³´»½ÀÄ·º¹Å&')*+,-./012568<>?ABCFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdef
 	summclr=6, msgsclr=2, headclr=2, taskclr=6
 Job	fieldscur=¥¦¹·º(³´Ä»½@<§Å)*+,-./012568>?ABCFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghij
 	winflags=195380, sortindx=0, maxtasks=0, graph_cpus=1, graph_mems=1
-	summclr=5, msgsclr=4, headclr=4, taskclr=5
+	summclr=6, msgsclr=5, headclr=5, taskclr=6
 Mem	fieldscur=¥º»<½¾¿ÀÁMBNÃD34·Å&'()*+,-./0125689FGHIJKLOPQRSTUVWXYZ[\]^_`abcdefghij
 	winflags=195380, sortindx=21, maxtasks=0, graph_cpus=1, graph_mems=1
-	summclr=1, msgsclr=3, headclr=3, taskclr=1
+	summclr=6, msgsclr=3, headclr=3, taskclr=6
 Usr	fieldscur=¥¦§¨ª°¹·ºÄÅ)+,-./1234568;<=>?@ABCFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghij
 	winflags=195380, sortindx=3, maxtasks=0, graph_cpus=1, graph_mems=1
-	summclr=7, msgsclr=0, headclr=0, taskclr=7
+	summclr=6, msgsclr=0, headclr=0, taskclr=6
 Fixed_widest=0, Summ_mscale=2, Task_mscale=1, Zero_suppress=1
 
