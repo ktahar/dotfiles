@@ -558,14 +558,6 @@ let g:vimtex_quickfix_ignore_filters = [
     \ 'LaTeX Font Warning',
     \]
 "}}}
-
-"" tabular {{{
-if exists(':AddTabularPattern')
-    AddTabularPattern texc /\(&\|\\\\\)/c1
-    AddTabularPattern texl /\(&\|\\\\\)/l1
-    AddTabularPattern texr /\(&\|\\\\\)/r1
-endif
-"}}}
 "}}}
 
 """ Colorscheme {{{
