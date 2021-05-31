@@ -390,19 +390,23 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 "}}}
 
 "" vsnip {{{
+" avoid loading vsnip on old vim
+if !exists("#TextChangedP")
+    let g:loaded_vsnip = 1
+endif
 " modified version of expand_or_jump() (added set nofoldenable before expand()).
 " see vim-vsnip/plugin/vsnip.vim for the original.
 inoremap <silent> <Plug>(my-vsnip-expand-or-jump) <Esc>:<C-u>call <SID>expand_or_jump()<CR>
 snoremap <silent> <Plug>(my-vsnip-expand-or-jump) <Esc>:<C-u>call <SID>expand_or_jump()<CR>
 function! s:expand_or_jump()
-  let l:context = vsnip#get_context()
-  let l:session = vsnip#get_session()
-  if !empty(l:context)
-    set nofoldenable
-    call vsnip#expand()
-  elseif !empty(l:session) && l:session.jumpable(1)
-    call l:session.jump(1)
-  endif
+    let l:context = vsnip#get_context()
+    let l:session = vsnip#get_session()
+    if !empty(l:context)
+        set nofoldenable
+        call vsnip#expand()
+    elseif !empty(l:session) && l:session.jumpable(1)
+        call l:session.jump(1)
+    endif
 endfunction
 
 let g:vsnip_snippet_dir = expand('~/dotfiles/vsnip')
