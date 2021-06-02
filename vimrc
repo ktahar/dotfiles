@@ -391,7 +391,7 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 
 "" vsnip {{{
 " avoid loading vsnip on old vim
-if !exists("#TextChangedP")
+if !exists("##TextChangedP")
     let g:loaded_vsnip = 1
 endif
 " modified version of expand_or_jump() (added set nofoldenable before expand()).

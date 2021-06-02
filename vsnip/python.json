@@ -21,6 +21,17 @@
         ],
         "description": "main function"
     },
+    "argparse": {
+        "prefix": ["arg"],
+        "body": [
+            "def parse_args(args=None):",
+            "    parser = argparse.ArgumentParser(prog='$1', description='$2')",
+            "    parser.add_argument('-$3', help='$4')",
+            "",
+            "    return parser.parse_args(args)"
+        ],
+        "description": "main function"
+    },
     "np": {
         "prefix": ["np"],
         "body": [
