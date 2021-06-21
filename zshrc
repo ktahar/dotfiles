@@ -230,6 +230,7 @@ alias ut='utop -init ~/dotfiles/ocaml/ocamlinit_utop'
 alias uc='utop -init ~/dotfiles/ocaml/ocamlinit_core'
 alias za='zathura'
 alias f='feh -.'
+alias fz='feh -.Z'
 alias p="pipenv shell"
 alias py="python3"
 
