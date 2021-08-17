@@ -140,6 +140,7 @@ zle -N zle-keymap-select
 #}}}
 
 # completion {{{
+fpath+=~/.zfunc
 zmodload -i zsh/complist
 autoload -Uz compinit
 compinit
