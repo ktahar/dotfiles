@@ -146,10 +146,10 @@ nnoremap <C-k><C-h> <C-w>H
 nnoremap <C-k><C-j> <C-w>J
 nnoremap <C-k><C-k> <C-w>K
 nnoremap <C-k><C-l> <C-w>L
-nnoremap <C-k>H 4<C-w><
-nnoremap <C-k>J 2<C-w>+
-nnoremap <C-k>K 2<C-w>-
-nnoremap <C-k>L 4<C-w>>
+nnoremap <C-k>H <C-w><
+nnoremap <C-k>J <C-w>+
+nnoremap <C-k>K <C-w>-
+nnoremap <C-k>L <C-w>>
 nnoremap <silent> <C-k>\ :<C-u>vsp<CR>
 nnoremap <silent> <C-k><Bar> :<C-u>vsp<CR>
 nnoremap <silent> <C-k>- :<C-u>sp<CR>
@@ -390,19 +390,23 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 "}}}
 
 "" vsnip {{{
+" avoid loading vsnip on old vim
+if !exists("##TextChangedP")
+    let g:loaded_vsnip = 1
+endif
 " modified version of expand_or_jump() (added set nofoldenable before expand()).
 " see vim-vsnip/plugin/vsnip.vim for the original.
 inoremap <silent> <Plug>(my-vsnip-expand-or-jump) <Esc>:<C-u>call <SID>expand_or_jump()<CR>
 snoremap <silent> <Plug>(my-vsnip-expand-or-jump) <Esc>:<C-u>call <SID>expand_or_jump()<CR>
 function! s:expand_or_jump()
-  let l:context = vsnip#get_context()
-  let l:session = vsnip#get_session()
-  if !empty(l:context)
-    set nofoldenable
-    call vsnip#expand()
-  elseif !empty(l:session) && l:session.jumpable(1)
-    call l:session.jump(1)
-  endif
+    let l:context = vsnip#get_context()
+    let l:session = vsnip#get_session()
+    if !empty(l:context)
+        set nofoldenable
+        call vsnip#expand()
+    elseif !empty(l:session) && l:session.jumpable(1)
+        call l:session.jump(1)
+    endif
 endfunction
 
 let g:vsnip_snippet_dir = expand('~/dotfiles/vsnip')
@@ -557,14 +561,6 @@ let g:vimtex_toc_config = {
 let g:vimtex_quickfix_ignore_filters = [
     \ 'LaTeX Font Warning',
     \]
-"}}}
-
-"" tabular {{{
-if exists(':AddTabularPattern')
-    AddTabularPattern texc /\(&\|\\\\\)/c1
-    AddTabularPattern texl /\(&\|\\\\\)/l1
-    AddTabularPattern texr /\(&\|\\\\\)/r1
-endif
 "}}}
 "}}}
 

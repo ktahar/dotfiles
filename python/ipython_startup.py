@@ -2,13 +2,17 @@ import sys, os, shutil
 import datetime
 import json
 import subprocess as subproc
-
-import numpy as np
-import scipy as sp
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import pandas as pd
 from functools import reduce
+
+try:
+    import numpy as np
+    import scipy as sp
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    import torch
+    import pandas as pd
+except ImportError:
+    pass
 
 from IPython import get_ipython
 from prompt_toolkit.enums import DEFAULT_BUFFER

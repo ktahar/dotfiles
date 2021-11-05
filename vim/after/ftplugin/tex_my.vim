@@ -17,3 +17,11 @@ vnoremap <silent> <Leader>tr :Tabularize texr<CR>
 
 " map for location list
 silent call ToggleQL(1)
+
+if exists('g:did_tex_tabular_pattern_my')
+    finish
+endif
+let g:did_tex_tabular_pattern_my = 1
+AddTabularPattern texc /\(&\|\\\\\)/c1
+AddTabularPattern texl /\(&\|\\\\\)/l1
+AddTabularPattern texr /\(&\|\\\\\)/r1

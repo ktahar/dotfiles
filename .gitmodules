@@ -88,3 +88,6 @@
 [submodule "vim/pack/my/start/vim-slime"]
 	path = vim/pack/my/start/vim-slime
 	url = https://github.com/jpalardy/vim-slime
+[submodule "vim/pack/my/start/vim-polyglot"]
+	path = vim/pack/my/start/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot
