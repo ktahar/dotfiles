@@ -535,10 +535,11 @@ def install_opam_packages(args):
 
         import requests
         import hashlib
-        version = "2.0.7"
+        version = "2.0.8"
+        # watch this for hash: https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
         hashes = {
-            "x86_64": "da75b0cb5ad50f95d31857a7d72f1836132a1fa1cdbfdedf684342b798e7107b4add4c74c05d5ce44881309fa1e57707538dbcda874e7f74b269b1bb204f3ae3",
-            "arm64": "0dd4d80496545f684af39dc5b4b28867bc19a74186577c38bd2a8934d871c2cbcdb9891bfd41c080b5f12d5a3c8801e203df8a76d55e1e22fe80d31447402e46"
+            "x86_64": "66eee43400fa014e2128a2ffb82b36f7a9bcec4c1d243c7a38bb608ab86c8e814a7b1219e6f21beedac28b2b8c51b233377a8f7bd22fee2ff3c9c56f9264f3f0",
+            "arm64": "74f23cd478371e9f1de88bb89ab6d07985c2077b3392288399e37499514c03b7c826f29147282d147efeba0700aee73e8b8230ee77ba0a433dddfe42d15b1df7",
         }
 
         if path.exists(opam):
