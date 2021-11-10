@@ -627,7 +627,7 @@ def install_npm_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 14, 15, 5
+        major, minor, patch = 16, 13, 0
         name = "node-v{}.{}.{}-linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
