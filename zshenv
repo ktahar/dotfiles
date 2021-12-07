@@ -5,9 +5,6 @@ export EDITOR=vim
 export LANG=en_US.UTF-8
 export LESS=-R
 
-## Python
-export PIPENV_VENV_IN_PROJECT=1
-
 ## Golang
 if [ -d ~/go ]; then
     export GOPATH=~/go
