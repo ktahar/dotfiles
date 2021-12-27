@@ -127,9 +127,9 @@ def install_pip_packages_windows(args):
     Assuming only Python3 is installed and pip is equivalent to pip3.
 
     Recommended to add following to user's PATH.
-    %LOCALAPPDATA%\Programs\Python\Python37\
-    %LOCALAPPDATA%\Programs\Python\Python37\Scripts
-    %LOCALAPPDATA%\Programs\Python\Python37\Library\bin
+    %LOCALAPPDATA%\Programs\Python\Python3XY\
+    %LOCALAPPDATA%\Programs\Python\Python3XY\Scripts
+    %LOCALAPPDATA%\Programs\Python\Python3XY\Library\bin
 
     """
 
@@ -142,7 +142,6 @@ def install_pip_packages_windows(args):
 
     pkgs = [
         "numpy", "matplotlib", "scipy", "pandas", "ipython",
-        "pipenv", "cvxopt",
         "python-language-server",  # to use pyls from vim-lsp.
         "panflute", "requests",
         # testing to remove dep. packages
@@ -158,11 +157,12 @@ files_windows = [
     (r".vimrc", r"vimrc"),
     (r".gvimrc", r"gvimrc"),
     (r".latexmkrc", r"latexmkrc"),
-    (r".config\matplotlib\matplotlibrc", r"matplotlibrc"),
-    (r".ipython\profile_default\startup\ipython_startup.py", r"ipython_startup.py"),
+    (r".config\matplotlib\matplotlibrc", r"python\matplotlibrc"),
+    (r".ipython\profile_default\startup\ipython_startup.py", r"python\ipython_startup.py"),
     (r"vimfiles", r"vim"),
     (r".vim", r"vim"),
     (r".minttyrc", r"windows\minttyrc"),
+    (r"dotfiles\vim\pack\my\start\fzf", r"apps\fzf"),
 ]
 
 
@@ -748,6 +748,8 @@ files_linux = [
     (r".tmux.conf", r"tmux.conf"),
     (r".tmux/plugins", r"tmux/plugins"),
     (r".fzf", r"apps/fzf"),
+    # to support windows (cannot symlink inside git repo)
+    (r"dotfiles/vim/pack/my/start/fzf", r"apps/fzf"),
     (r".ctags.d", r"ctags.d"),
     (r".clang-format", r"clang-format"),
     (r".gitignore_global", r"gitignore_global"),

@@ -33,9 +33,9 @@ set guioptions-=e
 """ windows specific settings
 if s:is_win
     "" transparency
-    autocmd guienter * set transparency=240
-    autocmd FocusGained * set transparency=240
-    autocmd FocusLost * set transparency=220
+    " autocmd guienter * set transparency=240
+    " autocmd FocusGained * set transparency=240
+    " autocmd FocusLost * set transparency=220
 
     "" GUI Window Maximize, redo
     nnoremap <M-x> :simalt ~x<CR>

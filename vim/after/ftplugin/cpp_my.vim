@@ -13,6 +13,6 @@ nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <silent><buffer> <LocalLeader>r :<C-u>LspRename<CR>
 
 " GNU Global
-nnoremap <silent><buffer> <LocalLeader>a :<C-u>Gtags -f %<CR>
-nnoremap <buffer> <LocalLeader>g :<C-u>Gtags -g
-nnoremap <silent><buffer> <LocalLeader>c :<C-u>GtagsCursor<CR>
+" nnoremap <silent><buffer> <LocalLeader>a :<C-u>Gtags -f %<CR>
+" nnoremap <buffer> <LocalLeader>g :<C-u>Gtags -g
+" nnoremap <silent><buffer> <LocalLeader>c :<C-u>GtagsCursor<CR>

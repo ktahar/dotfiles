@@ -11,9 +11,27 @@ cd dotfiles/ && ./install
 The install script will do setups,
 except for things that strongly depends on environment.
 
-### Full install
+### Full install (Ubuntu)
 For full installation to Ubuntu desktop,
 first try `./install -f`, restart the X session, and then `./install -A`.
+
+### TODO for Windows
+List of TODO things for Windows.
+
+#### Programs
+- Windows Terminal: get from the store
+- winget Python.Python.3 vim.vim "The Silver Searcher"
+- fzf: run apps/fzf/install.ps1 in PowerShell
+- poetry: https://install.python-poetry.org
+
+#### Environment variables
+- path
+    - %APPDATA%\Python\Scripts
+    - %APPDATA%\Python\Python3XY\Scripts
+    - %HOME%\.fzf\bin
+- fzf (see zshenv)
+    - FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
+    - FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
 
 ## Uninstall
 
