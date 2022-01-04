@@ -156,6 +156,7 @@ files_windows = [
     (r"_gvimrc", r"gvimrc"),
     (r".vimrc", r"vimrc"),
     (r".gvimrc", r"gvimrc"),
+    (r".fzf", r"apps\fzf"),
     (r".latexmkrc", r"latexmkrc"),
     (r".config\matplotlib\matplotlibrc", r"python\matplotlibrc"),
     (r".ipython\profile_default\startup\ipython_startup.py", r"python\ipython_startup.py"),
