@@ -83,7 +83,7 @@ my_prompt_precmd () {
     local p
     extra_prompt=""
     if [[ -n $VIRTUAL_ENV ]]; then
-        p=":$(basename $(dirname $VIRTUAL_ENV))"
+        p=":$(basename $VIRTUAL_ENV)"
         extra_prompt="${extra_prompt}[P${p}]"
     fi
     if [[ -n $ROS_DISTRO ]]; then
