@@ -5,6 +5,7 @@ let b:did_ftplugin_python_my = 1
 
 setl fileencoding=utf-8
 setl foldmethod=indent
+silent call ToggleQL(1)
 
 " LSP
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
