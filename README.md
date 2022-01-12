@@ -22,7 +22,6 @@ List of TODO things for Windows.
 - Windows Terminal: get from the store
 - winget Python.Python.3 vim.vim "The Silver Searcher"
 - fzf: run apps/fzf/install.ps1 in PowerShell
-- poetry: https://install.python-poetry.org
 
 #### Environment variables
 - path

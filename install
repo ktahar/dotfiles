@@ -509,31 +509,19 @@ def install_pip_packages(args):
 
     """
 
-    def install_poetry(poetry):
-        subproc.run(["curl", "-sSLO", "https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py"])
-        subproc.run(["python3", "./install-poetry.py"])
-        os.remove("./install-poetry.py")
-        ret = subproc.run([poetry, "completions", "zsh"], stdout=subproc.PIPE, encoding="utf-8")
-        with open(path.join(home, ".zfunc", "_poetry"), "w") as f:
-            f.write(ret.stdout)
-
     # install/upgrade pip first
     subproc.run(['python3', '-m', 'pip', 'install', '--user', '-U',
                  'pip', 'setuptools', 'testresources'])
 
     pkgs = [
         # python dev tools
-        "mypy", "ipython",
+        "virtualenv", "mypy", "ipython",
         "python-language-server[all]",  # to use pyls from vim-lsp.
         # tools written in python
         "panflute", "compiledb", "s-tui",
     ]
 
     subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
-
-    poetry = path.join(home, ".local", "bin", "poetry")
-    if not path.exists(poetry):
-        install_poetry(poetry)
 
 
 def install_opam_packages(args):
