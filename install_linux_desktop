@@ -85,4 +85,10 @@ fi
 
 ## change default applications (xdg-open)
 ## setting will be written in ~/.config/mimeapps.list
-xdg-mime default zathura.desktop application/pdf
+if [[ -e /usr/share/applications/org.pwmt.zathura.desktop ]]; then
+    xdg-mime default org.pwmt.zathura.desktop application/pdf
+elif [[ -e /usr/share/applications/zathura.desktop ]]; then
+    xdg-mime default zathura.desktop application/pdf
+else
+    echo "/usr/share/applications/*zathura.desktop is not found"
+fi
