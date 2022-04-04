@@ -30,8 +30,8 @@ fc-list | grep Cica > /dev/null
 if [[ "$?" = 0 && -z "${opthash[(i)-f]}" ]]; then
     echo "Cica font is already installed."
 else
-    cica_v=v5.0.2
-    cica_fn=Cica_${cica_v}_with_emoji.zip
+    cica_v=v5.0.3
+    cica_fn=Cica_${cica_v}.zip
     cica_dir=Cica_${cica_v}
 
     echo "Download and install Cica ${cica_v}..."
