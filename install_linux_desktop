@@ -65,9 +65,8 @@ gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize
 
 ## install language support
 if [[ -n "${opthash[(i)-l]}" ]]; then
-    langsup=$(check-language-support)
-    if [[ -n "$langsup" ]]; then
-        sudo -E apt install $langsup
+    if [[ -n $(check-language-support) ]]; then
+        sudo -E apt install $(check-language-support)
     fi
 fi
 
