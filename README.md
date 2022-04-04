@@ -14,6 +14,7 @@ except for things that strongly depends on environment.
 ### Full install (Ubuntu)
 For full installation to Ubuntu desktop,
 first try `./install -f`, restart the X session, and then `./install -A`.
+If IM(mozc) is not working properly, try `./install_linux_desktop -l`.
 
 ### TODO for Windows
 List of TODO things for Windows.
