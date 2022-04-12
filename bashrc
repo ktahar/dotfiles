@@ -46,6 +46,9 @@ alias gi='git'
 alias t='tmux'
 alias q='exit'
 alias ipy='ipython3'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
 
 if [ -t 0 ]; then    # stdin is opened
     stty stop undef  # unbind C-s
