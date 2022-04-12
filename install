@@ -136,19 +136,17 @@ def install_pip_packages_windows(args):
     # install/upgrade pip first
     subproc.run(['python', '-m', 'pip', 'install', '-U', 'pip', 'setuptools'])
 
-    opts = ['install']
-    if args.upgrade:
-        opts.append('-U')
-
     pkgs = [
-        "numpy", "matplotlib", "scipy", "pandas", "ipython",
-        "python-language-server",  # to use pyls from vim-lsp.
-        "panflute", "requests",
-        # testing to remove dep. packages
-        # "jedi", "testresources", "python-dateutil",
+        # scipy stack
+        "numpy", "matplotlib", "scipy", "pandas",
+        # python dev tools
+        "virtualenv", "mypy", "ipython",
+        "python-language-server[all]",  # to use pyls from vim-lsp.
+        # tools written in python
+        "panflute", "compiledb", "s-tui",
     ]
 
-    subproc.run(['pip'] + opts + pkgs)
+    subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
 
 
 files_windows = [

@@ -27,7 +27,7 @@ List of TODO things for Windows.
 - path
     - %APPDATA%\Python\Scripts
     - %APPDATA%\Python\Python3XY\Scripts
-    - %HOME%\.fzf\bin
+    - %USERPROFILE%\.fzf\bin
 - fzf (see zshenv)
     - FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
     - FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
