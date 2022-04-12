@@ -143,10 +143,10 @@ def install_pip_packages_windows(args):
         "virtualenv", "mypy", "ipython",
         "python-language-server[all]",  # to use pyls from vim-lsp.
         # tools written in python
-        "panflute", "compiledb", "s-tui",
+        "panflute", "compiledb",
     ]
 
-    subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
+    subproc.run(['python', '-m', 'pip', 'install', '--user'] + pkgs)
 
 
 files_windows = [
@@ -516,7 +516,7 @@ def install_pip_packages(args):
         "virtualenv", "mypy", "ipython",
         "python-language-server[all]",  # to use pyls from vim-lsp.
         # tools written in python
-        "panflute", "compiledb", "s-tui",
+        "panflute", "compiledb",
     ]
 
     subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
