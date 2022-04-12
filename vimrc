@@ -81,24 +81,8 @@ nnoremap ZQ <Nop>
 nnoremap Q q
 nnoremap q <Nop>
 
-function! ToggleQL (force_location)
-    if (a:force_location || g:mapping_quickfix)
-        let g:mapping_quickfix = 0
-        nnoremap <silent> <C-n> :<C-u>lnext<CR>
-        nnoremap <silent> <C-p> :<C-u>lprev<CR>
-        nnoremap qn :<C-u>lnext<CR>
-        nnoremap qp :<C-u>lprev<CR>
-        nnoremap qN :<C-u>llast<CR>
-        nnoremap qP :<C-u>lfirst<CR>
-        nnoremap qf :<C-u>lnfile<CR>
-        nnoremap qF :<C-u>lpfile<CR>
-        nnoremap qq :<C-u>ll<CR>
-        nnoremap qo :<C-u>lopen<CR>
-        nnoremap qc :<C-u>lclose<CR>
-        nnoremap ql :<C-u>llist<CR>
-        nnoremap qw :<C-u>lwindow<CR>
-        echo "location"
-    else
+function! ToggleQL (force_quickfix)
+    if (a:force_quickfix || !g:mapping_quickfix)
         let g:mapping_quickfix = 1
         nnoremap <silent> <C-n> :<C-u>cnext<CR>
         nnoremap <silent> <C-p> :<C-u>cprev<CR>
@@ -114,9 +98,26 @@ function! ToggleQL (force_location)
         nnoremap ql :<C-u>clist<CR>
         nnoremap qw :<C-u>cwindow<CR>
         echo "quickfix"
+    else
+        let g:mapping_quickfix = 0
+        nnoremap <silent> <C-n> :<C-u>lnext<CR>
+        nnoremap <silent> <C-p> :<C-u>lprev<CR>
+        nnoremap qn :<C-u>lnext<CR>
+        nnoremap qp :<C-u>lprev<CR>
+        nnoremap qN :<C-u>llast<CR>
+        nnoremap qP :<C-u>lfirst<CR>
+        nnoremap qf :<C-u>lnfile<CR>
+        nnoremap qF :<C-u>lpfile<CR>
+        nnoremap qq :<C-u>ll<CR>
+        nnoremap qo :<C-u>lopen<CR>
+        nnoremap qc :<C-u>lclose<CR>
+        nnoremap ql :<C-u>llist<CR>
+        nnoremap qw :<C-u>lwindow<CR>
+        echo "location"
     endif
 endfunction
-let g:mapping_quickfix = 0
+let g:mapping_quickfix = 1
+" start with location mode
 silent call ToggleQL(0)
 command! ToggleQL call ToggleQL(0)
 nnoremap <silent> <Leader>q :<C-u>ToggleQL<CR>

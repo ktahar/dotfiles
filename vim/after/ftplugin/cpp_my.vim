@@ -4,7 +4,6 @@ endif
 let b:did_ftplugin_cpp_my = 1
 
 setl foldmethod=syntax
-silent call ToggleQL(1)
 
 " LSP mappings
 nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
