@@ -7,10 +7,10 @@ set visualbell t_vb=
 
 """ screen size and fonts
 if s:is_win
-    set guifont=Cica:h14:cSHIFTJIS
+    set guifont=Cica:h16:cSHIFTJIS
     set guifontwide=MS_Gothic:h12:cSHIFTJIS
 elseif has('unix')
-    set guifont=Cica\ 14
+    set guifont=Cica\ 16
 endif
 
 """ cursor blink off
