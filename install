@@ -655,7 +655,7 @@ def install_go_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 1, 15, 6
+        major, minor, patch = 1, 18, 2
         name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://dl.google.com/go/{}.tar.gz".format(name)
@@ -676,9 +676,9 @@ def install_go_packages(args):
 
     go = path.join(go_dir, 'bin', 'go')
 
-    pkgs = ['github.com/laurent22/massren']
+    pkgs = ["github.com/laurent22/massren@latest"]
 
-    subproc.run([go, 'get', '-u'] + pkgs)
+    subproc.run([go, 'install', '-u'] + pkgs)
 
 def install_cargo_packages(args):
     def install_rust():
