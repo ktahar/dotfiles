@@ -30,7 +30,7 @@ if osname == 'Linux':
     try:
         r = subproc.run(['lsb_release', '-sc'], stdout=subproc.PIPE)
         distid = r.stdout.decode().strip()
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         printc('[ERROR] command lsb_release is not found.', 'r')
         sys.exit(1)
 
@@ -414,14 +414,14 @@ def install_apt_packages(args):
     ]
 
     # use clang tools from vim. package name depends on distros.
-    if distid == 'bionic':
+    if distid == "bionic":
         ex_pkgs["vim"].extend(["clangd-9", "clang-format-9"])
 
     ex_pkgs["desktop"] = [
         # libs to build vim
         "xorg-dev",  # to enable +clipboard +X11
         # i3wm and basic things to use with that
-        "i3", "dunst", "rxvt-unicode-256color", "feh",
+        "i3", "dunst", "feh",
         "xsel", "xdotool", "xbacklight",
         "ibus-mozc",
         # audio
@@ -429,6 +429,12 @@ def install_apt_packages(args):
         # lightdm instead of gdm3
         "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
     ]
+
+    # package name has been changed.
+    if distid in ("xenial", "bionic"):
+        ex_pkgs["desktop"].append("rxvt-unicode-256color")
+    else:
+        ex_pkgs["desktop"].append("rxvt-unicode")
 
     ex_pkgs["fulldesktop"] = [
         # music
