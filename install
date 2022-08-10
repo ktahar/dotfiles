@@ -514,8 +514,7 @@ def install_pip_packages(args):
     """
 
     # install/upgrade pip first
-    subproc.run(['python3', '-m', 'pip', 'install', '--user', '-U',
-                 'pip', 'setuptools', 'testresources'])
+    subproc.run(['python3', '-m', 'pip', 'install', '--user', '-U', 'pip'])
 
     pkgs = [
         # python dev tools
