@@ -12,6 +12,7 @@ Follow procedures below to complete setup.
     * add Japanese -> mozc
     * next input source to "Shift+Space"
     * may configure to use custom font
+1. start mozc's config dialog. if ibus GUI doesn't work, try `/usr/lib/mozc/mozc_tool --mode=config_dialog`.
 1. load keymap at dotfiles/mozc/keymap.txt. Properties -> Keymap -> Customize... -> Edit -> Import from file
     * "Ctrl+Space" is mapped to Activate / Deactivate IME.
 1. load dict at dotfiles/mozc/dict.txt. Properties -> Dictionary -> Edit user dictionary -> Import to this dictionary
