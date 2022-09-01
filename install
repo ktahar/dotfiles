@@ -660,8 +660,11 @@ def install_go_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 1, 18, 4
-        name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
+        major, minor, patch = 1, 19, 0
+        if patch:
+            name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
+        else:
+            name = "go{}.{}.linux-{}".format(major, minor, a)
         print("Downloading", name)
         url = "https://dl.google.com/go/{}.tar.gz".format(name)
         res = requests.get(url)
