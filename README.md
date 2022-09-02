@@ -22,7 +22,7 @@ List of TODO things for Windows.
 #### Programs
 - Windows Terminal: get from the store
 - winget Python.Python.3 vim.vim "The Silver Searcher"
-- fzf: run apps/fzf/install.ps1 in PowerShell
+- fzf: run apps/fzf/install.ps1 in PowerShell (PowerShell -ExecutionPolicy RemoteSigned .\install.ps1)
 
 #### Environment variables
 - path

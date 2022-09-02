@@ -60,4 +60,9 @@ fi
 if [ -z "${DOTFILES_ENV_SET+1}" ]; then
     export DOTFILES_ENV_SET=1
     export PATH=$PATH:$HOME/dotfiles/bin
+
+    ## fzf
+    export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
+    export FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
+    export FZF_COMPLETION_TRIGGER='~~'
 fi
