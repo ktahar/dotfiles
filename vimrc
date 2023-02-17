@@ -353,7 +353,18 @@ let g:lsp_preview_doubletap = 0
 nnoremap <buffer> <expr><Down> lsp#scroll(+4)
 nnoremap <buffer> <expr><Up> lsp#scroll(-4)
 
-if executable('pyls')
+if executable('pylsp')
+    " pip install python-lsp-server
+    au User lsp_setup call lsp#register_server({
+       \ 'name': 'pylsp',
+       \ 'cmd': {server_info->['pylsp']},
+       \ 'allowlist': ['python'],
+       \ 'workspace_config': {'pylsp': {'plugins': {'pycodestyle':
+       \ {'enabled': v:false}}
+       \ }},
+       \ })
+    " au FileType python setl omnifunc=lsp#complete
+elseif executable('pyls')
     " pip install python-language-server
     au User lsp_setup call lsp#register_server({
        \ 'name': 'pyls',
