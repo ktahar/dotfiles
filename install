@@ -519,7 +519,7 @@ def install_pip_packages(args):
     pkgs = [
         # python dev tools
         "virtualenv", "mypy", "ipython",
-        "python-language-server[all]",  # to use pyls from vim-lsp.
+        "python-lsp-server[all]",  # to use pylsp from vim-lsp.
         # tools written in python
         "panflute", "compiledb",
     ]
