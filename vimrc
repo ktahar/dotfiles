@@ -349,7 +349,8 @@ endif
 " diagnostic option
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('~/vim-lsp.log')
-let g:lsp_preview_doubletap = 0
+" let g:lsp_preview_doubletap = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
 nnoremap <buffer> <expr><Down> lsp#scroll(+4)
 nnoremap <buffer> <expr><Up> lsp#scroll(-4)
 
