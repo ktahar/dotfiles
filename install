@@ -137,11 +137,10 @@ def install_pip_packages_windows(args):
     subproc.run(['python', '-m', 'pip', 'install', '-U', 'pip', 'setuptools'])
 
     pkgs = [
-        # scipy stack
-        "numpy", "matplotlib", "scipy", "pandas",
         # python dev tools
         "virtualenv", "mypy", "ipython",
         "python-lsp-server[all]",  # to use pylsp from vim-lsp.
+        "black",
         # tools written in python
         "panflute", "compiledb",
     ]
@@ -520,6 +519,7 @@ def install_pip_packages(args):
         # python dev tools
         "virtualenv", "mypy", "ipython",
         "python-lsp-server[all]",  # to use pylsp from vim-lsp.
+        "black",
         # tools written in python
         "panflute", "compiledb",
     ]

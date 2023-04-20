@@ -365,17 +365,6 @@ if executable('pylsp')
        \ }},
        \ })
     " au FileType python setl omnifunc=lsp#complete
-elseif executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-       \ 'name': 'pyls',
-       \ 'cmd': {server_info->['pyls']},
-       \ 'allowlist': ['python'],
-       \ 'workspace_config': {'pyls': {'plugins': {'pycodestyle':
-       \ {'enabled': v:false}}
-       \ }},
-       \ })
-    " au FileType python setl omnifunc=lsp#complete
 endif
 for g:clangd_cmd in ['clangd-9', 'clangd-6.0', 'clangd']
     if executable(g:clangd_cmd)
@@ -453,16 +442,21 @@ let g:neoformat_ocaml_ocamlformat = {
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 
-let g:neoformat_python_autopep8 = {
-    \ 'exe': 'autopep8',
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
     \ 'stdin': 1,
-    \ 'args': ['-'],
+    \ 'args': ['-q', '-'],
     \ }
 let g:neoformat_python_yapf = {
     \ 'exe': 'yapf',
     \ 'stdin': 1,
     \ }
-let g:neoformat_enabled_python = ['autopep8', 'yapf']
+let g:neoformat_python_autopep8 = {
+    \ 'exe': 'autopep8',
+    \ 'stdin': 1,
+    \ 'args': ['-'],
+    \ }
+let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8']
 
 for g:clangformat_cmd in ['clang-format-9', 'clang-format-6.0', 'clang-format']
     if executable(g:clangformat_cmd)
