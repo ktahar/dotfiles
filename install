@@ -412,9 +412,12 @@ def install_apt_packages(args):
         "libjansson-dev", "libyaml-dev", "libxml2-dev",
     ]
 
-    # use clang tools from vim. package name depends on distros.
+    # use clang tools from vim.
+    # we have to append version number for old ubuntu distro.
     if distid == "bionic":
-        ex_pkgs["vim"].extend(["clangd-9", "clang-format-9"])
+        ex_pkgs["vim"].extend(["clangd-9", "clang-format"])
+    else:
+        ex_pkgs["vim"].extend(["clangd", "clang-format"])
 
     ex_pkgs["desktop"] = [
         # libs to build vim
@@ -430,7 +433,7 @@ def install_apt_packages(args):
     ]
 
     # package name has been changed.
-    if distid in ("xenial", "bionic"):
+    if distid == "bionic":
         ex_pkgs["desktop"].append("rxvt-unicode-256color")
     else:
         ex_pkgs["desktop"].append("rxvt-unicode")

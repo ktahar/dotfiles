@@ -366,9 +366,9 @@ if executable('pylsp')
        \ })
     " au FileType python setl omnifunc=lsp#complete
 endif
-for g:clangd_cmd in ['clangd-9', 'clangd-6.0', 'clangd']
+for g:clangd_cmd in ['clangd', 'clangd-9']
     if executable(g:clangd_cmd)
-        " sudo apt install clang-tools-6.0 or clangd-9
+        " sudo apt install clangd or clangd-9 (ubuntu bionic)
         au User lsp_setup call lsp#register_server({
            \ 'name': g:clangd_cmd,
            \ 'cmd': {server_info->[g:clangd_cmd, '--background-index', '--header-insertion=never']},
@@ -458,20 +458,17 @@ let g:neoformat_python_autopep8 = {
     \ }
 let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8']
 
-for g:clangformat_cmd in ['clang-format-9', 'clang-format-6.0', 'clang-format']
-    if executable(g:clangformat_cmd)
-        " sudo apt install clang-tools-6.0 or clang-format-9
-        let g:neoformat_c_clangformat = {
-            \ 'exe': 'clang-format-9',
-            \ 'args': ['--assume-filename=' . expand('%:t')],
-            \ 'stdin': 1,
-            \ }
-        let g:neoformat_cpp_clangformat = g:neoformat_c_clangformat
-        let g:neoformat_enabled_c = ['clangformat']
-        let g:neoformat_enabled_cpp = g:neoformat_enabled_c
-        break
-    endif
-endfor
+if executable('clang-format')
+    " sudo apt install clang-format
+    let g:neoformat_c_clangformat = {
+        \ 'exe': 'clang-format',
+        \ 'args': ['--assume-filename=' . expand('%:t')],
+        \ 'stdin': 1,
+        \ }
+    let g:neoformat_cpp_clangformat = g:neoformat_c_clangformat
+    let g:neoformat_enabled_c = ['clangformat']
+    let g:neoformat_enabled_cpp = g:neoformat_enabled_c
+endif
 "}}}
 
 "" fzf {{{
