@@ -334,7 +334,8 @@ def setup_vim_plugins():
 
     # markdown-preview.nvim
     if not shutil.which("yarn"):
-        printc("[ERROR] yarn not found. run ./install -n and retry.", "r")
+        printc("[WARN] markdown-previw.nvim is not installed because yarn is not found.", "y")
+        printc("[WARN] run ./install -n and retry if you need it.", "y")
         return
     mkdp_app = path.join(pack, "markdown-preview.nvim", "app")
     if not os.path.exists(path.join(mkdp_app, "node_modules")):
@@ -622,7 +623,7 @@ def install_npm_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 16, 14, 2
+        major, minor, patch = 18, 16, 0
         name = "node-v{}.{}.{}-linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
@@ -922,8 +923,6 @@ def parse_args():
     args = parser.parse_args()
     if args.fulldesktop:
         args.desktop = True
-    if args.vim:
-        args.npm = True
     if args.all:
         for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'opam', 'go', 'npm'):
             setattr(args, a, True)
