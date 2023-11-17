@@ -155,7 +155,7 @@ files_windows = [
     (r".gvimrc", r"gvimrc"),
     (r".fzf", r"apps\fzf"),
     (r".latexmkrc", r"latexmkrc"),
-    (r".config\matplotlib\matplotlibrc", r"python\matplotlibrc"),
+    (r".matplotlib\matplotlibrc", r"python\matplotlibrc"),
     (r".ipython\profile_default\startup\ipython_startup.py", r"python\ipython_startup.py"),
     (r"vimfiles", r"vim"),
     (r".vim", r"vim"),
@@ -194,7 +194,7 @@ def link_windows(args):
             return
 
     dirs = [
-        r".config\matplotlib",
+        r".matplotlib",
         r".ipython\profile_default\startup",
         r".local\tmp"
     ]

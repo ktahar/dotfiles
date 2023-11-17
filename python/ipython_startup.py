@@ -21,7 +21,7 @@ from prompt_toolkit.keys import Keys
 from prompt_toolkit.filters import HasFocus, ViInsertMode
 from prompt_toolkit.key_binding.vi_state import InputMode
 
-ipy= get_ipython()
+ipy = get_ipython()
 ipy.run_line_magic("load_ext", "autoreload")
 ipy.run_line_magic("autoreload","1")
 
@@ -36,8 +36,6 @@ if getattr(ipy, "pt_app", None):
    registry = ipy.pt_app.key_bindings
    registry.add_binding(Keys.ControlJ, filter=(HasFocus(DEFAULT_BUFFER)
        & ViInsertMode()))(switch_to_navigation_mode)
-
-plt.ion()
 
 # I'm too stupid to check slicing and array-shape things interactively every time :(
 li = list(range(10))
