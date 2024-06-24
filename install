@@ -142,7 +142,7 @@ def install_pip_packages_windows(args):
         "python-lsp-server[all]",  # to use pylsp from vim-lsp.
         "black",
         # tools written in python
-        "panflute", "compiledb",
+        "compiledb",
     ]
 
     subproc.run(['python', '-m', 'pip', 'install', '--user'] + pkgs)
@@ -525,7 +525,7 @@ def install_pip_packages(args):
         "python-lsp-server[all]",  # to use pylsp from vim-lsp.
         "black",
         # tools written in python
-        "panflute", "compiledb",
+        "compiledb",
     ]
 
     subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
