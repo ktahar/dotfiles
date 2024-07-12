@@ -273,8 +273,8 @@ font.sans-serif     : Arial, DejaVu Sans, Bitstream Vera Sans, Lucida Grande, Ve
 #mathtext.bf  : serif:bold
 #mathtext.sf  : sans
 mathtext.fontset : stix # Should be 'dejavusans' (default),
-                               # 'dejavuserif', 'cm' (Computer Modern), 'stix',
-                               # 'stixsans' or 'custom'
+                        # 'dejavuserif', 'cm' (Computer Modern), 'stix',
+                        # 'stixsans' or 'custom'
 #mathtext.fallback_to_cm : True  # When True, use symbols from the Computer Modern
                                  # fonts when a symbol can not be found in one of
                                  # the custom math fonts.
@@ -439,11 +439,11 @@ figure.figsize   : 8.0, 6.0 #6.4, 4.8   # figure size in inches
                                # the pyplot interface before emitting a warning.
                                # If less than one this feature is disabled.
 
-# The figure subplot parameters.  All dimensions are a fraction of the
-figure.subplot.left    : 0.15 # 0.125  # the left side of the subplots of the figure
+# The figure subplot parameters.  All dimensions are a fraction of the figure width and height.
+#figure.subplot.left    : 0.125  # the left side of the subplots of the figure
 #figure.subplot.right   : 0.9    # the right side of the subplots of the figure
-figure.subplot.bottom  : 0.125 # 0.11    # the bottom of the subplots of the figure
-#figure.subplot.top     : 0.88    # the top of the subplots of the figure
+#figure.subplot.bottom  : 0.11   # the bottom of the subplots of the figure
+#figure.subplot.top     : 0.88   # the top of the subplots of the figure
 #figure.subplot.wspace  : 0.2    # the amount of width reserved for blank space between subplots,
                                  # expressed as a fraction of the average axis width
 #figure.subplot.hspace  : 0.2    # the amount of height reserved for white space between subplots,
