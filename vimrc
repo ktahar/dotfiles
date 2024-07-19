@@ -563,7 +563,11 @@ let g:vim_markdown_folding_level = 3
 
 "" vimtex {{{
 let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_view_method = 'zathura'
+if s:is_win
+    let g:vimtex_view_general_viewer = $LOCALAPPDATA . '\SumatraPDF\SumatraPDF.exe'
+else
+    let g:vimtex_view_method = 'zathura'
+endif
 let g:vimtex_toc_config = {
     \ 'name': 'ToC',
     \ 'mode': 2 }
