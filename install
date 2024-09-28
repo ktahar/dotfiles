@@ -247,8 +247,8 @@ def main_windows(args):
     link_windows(args)
     printc('[git global config]', 'b')
     set_git_global_config()
-    if args.pip:
-        printc('[pip]', 'b')
+    if args.python:
+        printc('[python]', 'b')
         install_pip_packages_windows(args)
     printc('[shell]', 'b')
     setup_shell(files=['.bashrc'])
@@ -450,13 +450,16 @@ def install_apt_packages(args):
         "neofetch", "flameshot",
     ]
 
-    ex_pkgs["pip"] = [
+    ex_pkgs["python"] = [
         # basic python libs
         "python3-pip", "python3-requests",
         "python3-venv", "python3-virtualenv",
         "python3-numpy", "python3-scipy",
         "python3-matplotlib", "python3-pandas",
         "python3-ipython", "ipython3",
+        # python dev tools
+        "python3-pylsp", "python3-mypy",
+        "black",
         # libs to build python
         "libssl-dev", "zlib1g-dev",
         "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
@@ -507,29 +510,6 @@ def install_apt_packages(args):
         subproc.run(sudo_apt + ['upgrade'])
     if needs_install:
         subproc.run(sudo_apt + ['install'] + pkgs)
-
-
-def install_pip_packages(args):
-    """install python packages using pip.
-
-    Because this will install with --user option,
-    installed packages will be located in ~/.local.
-
-    """
-
-    # install/upgrade pip first
-    subproc.run(['python3', '-m', 'pip', 'install', '--user', '-U', 'pip'])
-
-    pkgs = [
-        # python dev tools
-        "mypy", "ipython",
-        "python-lsp-server[all]",  # to use pylsp from vim-lsp.
-        "black",
-        # tools written in python
-        "compiledb",
-    ]
-
-    subproc.run(['python3', '-m', 'pip', 'install', '--user'] + pkgs)
 
 
 def install_opam_packages(args):
@@ -853,7 +833,7 @@ def main_linux(args):
     # check absence of zsh to detect whether the install is first time.
     # if so, install apt packages because it's required to setup shell and fzf.
     no_zsh = not path.exists("/bin/zsh")
-    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.pip, args.opam, args.cargo, args.vim)):
+    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.python, args.opam, args.cargo, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
 
@@ -873,7 +853,7 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('pip', 'npm', 'go', 'opam', 'cargo'):
+    for pack in ('npm', 'go', 'opam', 'cargo'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args)
@@ -910,8 +890,8 @@ def parse_args():
                         help='Install packages, settings and fonts for desktop.')
     parser.add_argument('-f', '--fulldesktop', action='store_true',
                         help='Install packages, settings and fonts for full desktop.')
-    parser.add_argument('-p', '--pip', action='store_true',
-                        help='Install pip packages.')
+    parser.add_argument('-p', '--python', action='store_true',
+                        help='Install python packages.')
     parser.add_argument('-o', '--opam', action='store_true',
                         help='Install opam packages.')
     parser.add_argument('-g', '--go', action='store_true',
@@ -925,7 +905,7 @@ def parse_args():
     if args.fulldesktop:
         args.desktop = True
     if args.all:
-        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'pip', 'opam', 'go', 'npm'):
+        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'python', 'opam', 'go', 'npm'):
             setattr(args, a, True)
 
     return args
