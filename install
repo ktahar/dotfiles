@@ -426,7 +426,7 @@ def install_apt_packages(args):
         # i3wm and basic things to use with that
         "i3", "dunst", "feh",
         "xsel", "xdotool", "xbacklight",
-        "ibus-mozc",
+        "ibus-mozc", "mozc-utils-gui",
         # audio
         "pulseaudio", "pavucontrol", "pasystray",
         # lightdm instead of gdm3
