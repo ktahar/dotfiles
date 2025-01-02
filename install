@@ -425,7 +425,7 @@ def install_apt_packages(args):
         "xorg-dev",  # to enable +clipboard +X11
         # i3wm and basic things to use with that
         "i3", "dunst", "feh",
-        "xsel", "xdotool", "xbacklight",
+        "xsel", "xdotool", "brightnessctl",
         "ibus-mozc", "mozc-utils-gui",
         # audio
         "pulseaudio", "pavucontrol", "pasystray",

@@ -1,5 +1,14 @@
 # i3
 
+## brightnessctl
+[brightnessctl](https://github.com/Hummer12007/brightnessctl) is used for control of brightness for laptop.
+As in the README, we must add user to `video` and `input` groups.
+
+```bash
+sudo usermod -aG video,input <username>
+```
+
+
 ## xrdp
 [xsession](xsession) file is used to use i3 from xrdp session.
 

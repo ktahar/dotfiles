@@ -167,8 +167,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym $mod+Down exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Screen Brightness Control
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
 # color-class  border  bground text    indicator child_border
 client.focused #56B7A5 #56B7A5 #262626 #66EFD5   #56B7A5
