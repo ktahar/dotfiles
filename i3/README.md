@@ -8,7 +8,6 @@ As in the README, we must add user to `video` and `input` groups.
 sudo usermod -aG video,input <username>
 ```
 
-
 ## xrdp
 [xsession](xsession) file is used to use i3 from xrdp session.
 
