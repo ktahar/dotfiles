@@ -468,7 +468,7 @@ def install_apt_packages(args):
     ]
 
     ex_pkgs["opam"] = [
-        "mercurial", "darcs", "bubblewrap", "m4",
+        "mercurial", "bubblewrap", "m4",
         # for ctypes-foreign
         "libffi-dev",
     ]
