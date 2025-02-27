@@ -604,7 +604,7 @@ def install_npm_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 20, 9, 0
+        major, minor, patch = 22, 14, 0
         name = "node-v{}.{}.{}-linux-{}".format(major, minor, patch, a)
         print("Downloading", name)
         url = "https://nodejs.org/dist/v{}.{}.{}/{}.tar.xz".format(
@@ -627,8 +627,7 @@ def install_npm_packages(args):
 
     npm = path.join(node_dir, 'bin', 'npm')
 
-    pkgs = ['yarn', 'npm-check-updates',
-            'diff-so-fancy', '@marp-team/marp-cli']
+    pkgs = ['yarn', 'npm-check-updates', 'diff-so-fancy']
 
     if args.upgrade:
         subproc.run([npm, 'upgrade', '-g'])
