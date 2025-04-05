@@ -644,7 +644,7 @@ def install_go_packages(args):
         import io
         import tarfile
         import requests
-        major, minor, patch = 1, 19, 0
+        major, minor, patch = 1, 24, 2
         if patch:
             name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
         else:
