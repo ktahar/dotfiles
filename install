@@ -81,34 +81,37 @@ def set_git_global_config():
         subproc.run(['git', 'config', '--global', k, v])
 
 
-def setup_shell(files=None):
-    contents = {'.bashrc': "source $HOME/dotfiles/bashrc\n",
-                '.zshrc': "source $HOME/dotfiles/zshrc\n",
-                '.zshenv': "source $HOME/dotfiles/zshenv\n",
-                '.xprofile': "source $HOME/dotfiles/xprofile\n",
-                }
+def write_append_line(lines, files=None):
     if files is None:
-        files = contents.keys()
+        files = lines.keys()
     for fn in files:
         p = path.join(home, fn)
 
         if not path.exists(p):
             print('Writing following contents to %s.' % p)
-            print(contents[fn])
+            print(lines[fn])
             if prompt('OK?'):
                 with open(p, 'w') as f:
-                    f.write(contents[fn])
+                    f.write(lines[fn])
             continue
 
         with open(p) as f:
-            if contents[fn] in f.read():
+            if lines[fn] in f.read():
                 continue
 
         print('Appending following contents to %s.' % p)
-        print(contents[fn])
+        print(lines[fn])
         if prompt('OK?'):
             with open(p, 'a') as f:
-                f.write(contents[fn])
+                f.write(lines[fn])
+
+def setup_shell(files=None):
+    lines = {
+        '.bashrc': "source $HOME/dotfiles/bashrc\n",
+        '.zshrc': "source $HOME/dotfiles/zshrc\n",
+        '.zshenv': "source $HOME/dotfiles/zshenv\n",
+    }
+    write_append_line(lines, files)
 
     if osname == 'Windows':
         return
@@ -119,6 +122,15 @@ def setup_shell(files=None):
             return
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
+
+def setup_x():
+    """Setup files for X and other Linux desktop stuffs."""
+
+    lines = {
+        '.xprofile': "source $HOME/dotfiles/xprofile\n",
+        '.config/i3/config': "include $HOME/dotfiles/i3/config\n",
+    }
+    write_append_line(lines)
 
 
 def install_pip_packages_windows(args):
@@ -746,7 +758,6 @@ files_linux = [
     (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
     (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
     (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
-    (r".config/i3/config", r"i3/config"),
     (r".config/i3status/config", r"i3/i3status.conf"),
     (r".Xresources", r"Xresources"),
     (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
@@ -846,6 +857,7 @@ def main_linux(args):
     if args.desktop:
         printc('[desktop]', 'b')
         subproc.run(['./install_linux_desktop'])
+        setup_x()
     if args.fulldesktop:
         printc('[fulldesktop]', 'b')
         setup_matlab()
