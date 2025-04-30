@@ -249,6 +249,9 @@ if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
                 \ | wincmd p | diffthis
 endif
+
+"" temp: quickly open notebook
+nnoremap <Leader>nn :e ~/Dropbox/lnb-chi/index.md<CR>
 "}}}
 
 """ Fileformat and Filetype {{{
