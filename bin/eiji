@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 """
 eiji
@@ -19,6 +19,8 @@ import os
 import re
 import argparse
 import subprocess
+import platform
+import locale
 
 version = 144
 
@@ -45,6 +47,14 @@ modes = (
         'full', # full text search.
         )
 
+osname = platform.system()
+if osname == "Windows":
+    default_searcher = "ag"
+    encoding = locale.getencoding()
+else:
+    default_searcher = "grep"
+    encoding = "utf-8"
+
 def parse_args():
     def check(opt, possible):
         if opt not in possible:
@@ -64,7 +74,7 @@ def parse_args():
 
     parser.add_argument('-s', '--searcher',
             help="searcher program. one of {}".format(searchers),
-            type=str, default='grep')
+            type=str, default=default_searcher)
 
     parser.add_argument('-c', '--case-sensitive',
             help="search case sensitively for Roman alphabets.",
@@ -153,7 +163,7 @@ def main():
 
         proc = subprocess.run(cmd, stdout=subprocess.PIPE)
 
-        res = proc.stdout.decode()
+        res = proc.stdout.decode(encoding=encoding)
         if not res:
             continue
 
