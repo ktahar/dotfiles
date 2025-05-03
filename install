@@ -463,6 +463,8 @@ def install_apt_packages(args):
     ]
 
     ex_pkgs["python"] = [
+        # it should be fine now
+        "python-is-python3",
         # basic python libs
         "python3-pip", "python3-requests",
         "python3-venv", "python3-virtualenv",
