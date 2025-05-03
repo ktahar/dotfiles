@@ -233,6 +233,10 @@ alias za='zathura'
 alias f='feh -.'
 alias fz='feh -.Z'
 alias py="python3"
+alias jdate="TZ=Asia/Tokyo date"
+alias cdate="TZ=America/Chicago date"
+alias edate="TZ=America/Detroit date"
+alias pdate="TZ=America/Los_Angeles date"
 
 # Tools, Plugins and Extensions
 ## opam
