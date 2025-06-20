@@ -357,8 +357,8 @@ if executable('pylsp')
        \ 'name': 'pylsp',
        \ 'cmd': {server_info->['pylsp']},
        \ 'allowlist': ['python'],
-       \ 'workspace_config': {'pylsp': {'plugins': {'pycodestyle':
-       \ {'enabled': v:false}}
+       \ 'workspace_config': {'pylsp': {'plugins':
+       \ {'pycodestyle': {'enabled': v:false}},
        \ }},
        \ })
     " au FileType python setl omnifunc=lsp#complete
