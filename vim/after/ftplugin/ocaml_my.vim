@@ -12,10 +12,10 @@ nnoremap <silent><buffer> <LocalLeader>h :<C-u>MerlinShrinkEnclosing<CR>
 nnoremap <silent><buffer> <LocalLeader>l :<C-u>MerlinGrowEnclosing<CR>
 
 nnoremap <silent><buffer> <LocalLeader>g :<C-u>MerlinTypeOf<CR>
-nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
-nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <silent><buffer> <LocalLeader>r :<C-u>LspRename<CR>
+nnoremap <silent><buffer> <LocalLeader>t <plug>(lsp-hover)
+nnoremap <silent><buffer> <LocalLeader>d <plug>(lsp-definition)
+nnoremap <silent><buffer> <LocalLeader>n <plug>(lsp-document-diagnostics)
+nnoremap <silent><buffer> <LocalLeader>r <plug>(lsp-rename)
 
 " overwrite :cnext and :cprevious
 nnoremap <silent><buffer> <C-n> :<C-u>lnext<CR>

@@ -7,10 +7,10 @@ setl fileencoding=utf-8
 setl foldmethod=indent
 
 " LSP
-nnoremap <silent><buffer> <LocalLeader>t :<C-u>LspHover<CR>
-nnoremap <silent><buffer> <LocalLeader>d :<C-u>LspDefinition<CR>
-nnoremap <silent><buffer> <LocalLeader>n :<C-u>LspDocumentDiagnostics<CR>
-nnoremap <silent><buffer> <LocalLeader>r :<C-u>LspRename<CR>
+nnoremap <silent><buffer> <LocalLeader>t <plug>(lsp-hover)
+nnoremap <silent><buffer> <LocalLeader>d <plug>(lsp-definition)
+nnoremap <silent><buffer> <LocalLeader>n <plug>(lsp-document-diagnostics)
+nnoremap <silent><buffer> <LocalLeader>r <plug>(lsp-rename)
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()
