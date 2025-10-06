@@ -186,6 +186,7 @@ bar {
 
 # Floating applications
 for_window [title="MAHOS.DigitalOutGUI*"] floating enable
+for_window [title="MAHOS.PosTweakerGUI*"] floating enable
 
 exec --no-startup-id ibus-daemon -dx # unnecessary on Ubuntu 18.04 ?
 exec --no-startup-id dunst
