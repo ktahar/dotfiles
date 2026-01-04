@@ -423,14 +423,9 @@ def install_apt_packages(args):
         # libs to build universal-ctags
         "python3-docutils", "libseccomp-dev",
         "libjansson-dev", "libyaml-dev", "libxml2-dev",
+        # clang tools
+        "clangd", "clang-format",
     ]
-
-    # use clang tools from vim.
-    # we have to append version number for old ubuntu distro.
-    if distid == "bionic":
-        ex_pkgs["vim"].extend(["clangd-9", "clang-format"])
-    else:
-        ex_pkgs["vim"].extend(["clangd", "clang-format"])
 
     ex_pkgs["desktop"] = [
         # libs to build vim
@@ -443,13 +438,9 @@ def install_apt_packages(args):
         "pulseaudio", "pavucontrol", "pasystray",
         # lightdm instead of gdm3
         "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
+        # terminal
+        "rxvt-unicode", "alacritty",
     ]
-
-    # package name has been changed.
-    if distid == "bionic":
-        ex_pkgs["desktop"].append("rxvt-unicode-256color")
-    else:
-        ex_pkgs["desktop"].append("rxvt-unicode")
 
     ex_pkgs["fulldesktop"] = [
         # music
@@ -485,11 +476,6 @@ def install_apt_packages(args):
         "mercurial", "bubblewrap", "m4",
         # for ctypes-foreign
         "libffi-dev",
-    ]
-
-    ex_pkgs["cargo"] = [
-        # for alacritty
-        "libfreetype6-dev", "libfontconfig1-dev", "libxcb-xfixes0-dev",
     ]
 
     for k, l in ex_pkgs.items():
@@ -686,28 +672,6 @@ def install_go_packages(args):
 
     subproc.run([go, 'install'] + pkgs)
 
-def install_cargo_packages(args):
-    def install_rust():
-        """install Rust
-
-        """
-
-        import requests
-        url = "https://sh.rustup.rs"
-        res = requests.get(url)
-        subproc.run(["bash", "-s", "--", "--no-modify-path"], input=res.content)
-
-    cargo_dir = path.join(home, '.cargo')
-    if not path.exists(cargo_dir):
-        install_rust()
-
-    cargo = path.join(cargo_dir, 'bin', 'cargo')
-
-    pkgs = ['alacritty']
-
-    subproc.run([cargo, 'install'] + pkgs)
-
-
 def setup_matlab():
     """make desktop entry for MATLAB (~/opt/matlab).
 
@@ -755,7 +719,7 @@ files_linux = [
     (r".config/zathura/zathurarc", r"zathurarc"),
     (r".config/feh/keys", r"feh_keys"),
     (r".config/matplotlib/matplotlibrc", r"python/matplotlibrc"),
-    (r".config/alacritty/alacritty.yml", r"alacritty.yml"),
+    (r".config/alacritty/alacritty.toml", r"alacritty.toml"),
     (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
     (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
     (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
@@ -845,7 +809,7 @@ def main_linux(args):
     # check absence of zsh to detect whether the install is first time.
     # if so, install apt packages because it's required to setup shell and fzf.
     no_zsh = not path.exists("/bin/zsh")
-    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.python, args.opam, args.cargo, args.vim)):
+    if any((no_zsh, args.apt, args.desktop, args.fulldesktop, args.python, args.opam, args.vim)):
         printc('[apt packages]', 'b')
         install_apt_packages(args)
 
@@ -866,7 +830,7 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('npm', 'go', 'opam', 'cargo'):
+    for pack in ('npm', 'go', 'opam'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args)
@@ -911,8 +875,6 @@ def parse_args():
                         help='Install go packages.')
     parser.add_argument('-n', '--npm', action='store_true',
                         help='Install npm packages.')
-    parser.add_argument('-c', '--cargo', action='store_true',
-                        help='Install cargo packages.')
 
     args = parser.parse_args()
     if args.fulldesktop:

@@ -1,0 +1,64 @@
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.bright]
+black = "#76715e"
+blue = "#66d9ee"
+cyan = "#66efd5"
+green = "#a7e22e"
+magenta = "#ae82ff"
+red = "#fa2772"
+white = "#cfd0c2"
+yellow = "#e7db75"
+
+[colors.cursor]
+cursor = "#f1ebeb"
+text = "#000000"
+
+[colors.normal]
+black = "#48483e"
+blue = "#55bcce"
+cyan = "#56b7a5"
+green = "#8fc029"
+magenta = "#9358fe"
+red = "#dc2566"
+white = "#acada1"
+yellow = "#d4c96e"
+
+[colors.primary]
+background = "#272822"
+foreground = "#f1ebeb"
+
+[font]
+size = 16.0
+
+[font.normal]
+family = "Cica"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Control|Alt"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Control|Alt"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Equals"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Backslash"
+mods = "Control"
+
+[mouse]
+hide_when_typing = true

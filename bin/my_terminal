@@ -1,8 +1,8 @@
 #!/bin/bash
-if command -v urxvt_local &> /dev/null; then
+if command -v alacritty &> /dev/null; then
+    alacritty
+elif command -v urxvt_local &> /dev/null; then
     urxvt_local
-elif [[ -e ~/.cargo/bin/alacritty ]]; then
-    ~/.cargo/bin/alacritty
 elif command -v gnome-terminal &> /dev/null; then
     gnome-terminal
 else
