@@ -401,7 +401,7 @@ def install_apt_packages(args):
                          'apt-add-repository', 'ppa:{}/{}'.format(user, repo)])
 
     pkgs = [
-        "ncurses-term", "silversearcher-ag", "dstat",
+        "ncurses-term", "ripgrep", "silversearcher-ag", "dstat",
         "tree", "curl", "wget",
         "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
         "global", "pandoc", "unison", "p7zip-full",

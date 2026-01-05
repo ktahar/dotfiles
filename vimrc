@@ -205,7 +205,10 @@ function! s:get_git_root()
 endfunction
 
 "" grep
-if executable('ag')
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --smart-case\ $*
+    set grepformat=%f:%l:%c:%m
+elseif executable('ag')
     set grepprg=ag\ --vimgrep\ $*
     set grepformat=%f:%l:%c:%m
 endif
@@ -493,7 +496,7 @@ function! s:fzf_file(bang, ...) abort
     let l:root = s:get_git_root()
     let l:opts = {}
     if hidden
-        let l:opts.source = 'ag --nocolor --nogroup --hidden -g ""'
+        let l:opts.source = 'rg --files --hidden --glob "!.git/*"'
     endif
     if empty(l:root)
         let l:prompt = s:shortpath(getcwd())

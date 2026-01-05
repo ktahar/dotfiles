@@ -47,5 +47,5 @@ export LD_LIBRARY_PATH=${LIBRARY_PATH}
 
 ## fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
-export FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
 export FZF_COMPLETION_TRIGGER='~~'

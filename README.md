@@ -21,7 +21,7 @@ List of TODO things for Windows.
 
 #### Programs
 - Windows Terminal: get from the store
-- winget Python.Python.3 vim.vim "The Silver Searcher"
+- winget Python.Python.3 vim.vim BurntSushi.ripgrep
 - fzf: run apps/fzf/install.ps1 in PowerShell (PowerShell -ExecutionPolicy RemoteSigned .\install.ps1)
 
 #### Environment variables
@@ -31,7 +31,7 @@ List of TODO things for Windows.
     - %USERPROFILE%\.fzf\bin
 - fzf (see zshenv)
     - FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
-    - FZF_DEFAULT_COMMAND='ag --nocolor --nogroup -g ""'
+    - FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
 
 ## Uninstall
 
