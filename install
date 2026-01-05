@@ -344,15 +344,6 @@ def setup_vim_plugins():
     for p in glob.glob(docs):
         subproc.run([vim, '-c', 'helptags ' + p, '-c', 'quit'])
 
-    # markdown-preview.nvim
-    if not shutil.which("yarn"):
-        printc("[WARN] markdown-previw.nvim is not installed because yarn is not found.", "y")
-        printc("[WARN] run ./install -n and retry if you need it.", "y")
-        return
-    mkdp_app = path.join(pack, "markdown-preview.nvim", "app")
-    if not os.path.exists(path.join(mkdp_app, "node_modules")):
-        subproc.run(["yarn", "install"], cwd=mkdp_app)
-
 
 def setup_ctags():
     """setup universal-ctags."""
@@ -627,7 +618,7 @@ def install_npm_packages(args):
 
     npm = path.join(node_dir, 'bin', 'npm')
 
-    pkgs = ['yarn', 'npm-check-updates', 'diff-so-fancy']
+    pkgs = ['npm-check-updates', 'diff-so-fancy']
 
     if args.upgrade:
         subproc.run([npm, 'upgrade', '-g'])
@@ -838,7 +829,6 @@ def main_linux(args):
 
     # vim should be the last because
     # - some package managers install vim plugins. (e.g. merlin by opam).
-    # - some plugins require tools (yarn for markdown-preview.nvim).
     if args.vim:
         printc('[vim]', 'b')
         setup_vim()
