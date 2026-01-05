@@ -10,11 +10,6 @@ if [ -d ~/go ]; then
     export GOPATH=~/go
 fi
 
-## Rust
-if [ -e ~/.cargo/env ]; then
-    source ~/.cargo/env
-fi
-
 ## PATH
 typeset -U path
 ### put at head without existence check.

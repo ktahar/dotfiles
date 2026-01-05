@@ -225,8 +225,6 @@ alias qa!='tmux kill-server'
 alias ipy='ipython3'
 alias docker_rm_all='docker rm -f $(docker ps -aq)'
 alias docker_rmi_all='docker rmi -f $(docker images -q)'
-alias marp='npx marp'
-alias marpp='npx marp --allow-local-files --pdf'
 alias ut='utop -init ~/dotfiles/ocaml/ocamlinit_utop'
 alias uc='utop -init ~/dotfiles/ocaml/ocamlinit_core'
 alias za='zathura'
@@ -259,7 +257,7 @@ fe() {
 # fo [FUZZY PATTERN] - Open the selected file with xdg-open (for images etc.)
 fo() {
     local files
-    IFS=$'\n' files=($(ag --nocolor --nogroup -a -g "" | fzf-tmux --query="$1" --multi -0 -1))
+    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi -0 -1))
     if [ -n "$files" ]; then
         for f in $files; do
             xdg-open $f &
@@ -269,7 +267,7 @@ fo() {
 # vg [REGEX PATTERN] - fuzzy grep open via ag
 vg() {
     local file line
-    IFS=' ' read -r file line <<< "$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
+    IFS=' ' read -r file line <<< "$(rg -n --no-heading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
 
     if [[ -n $file ]]; then
         vim $file +$line
