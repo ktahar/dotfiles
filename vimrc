@@ -273,12 +273,6 @@ endif
 "" Markdown extension
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
-"" Sumo extension
-autocmd BufNewFile,BufRead *.{sumocfg} set filetype=xml
-
-"" GridLAB-D extension
-autocmd BufNewFile,BufRead *.{glm} set filetype=glm
-
 "" TeX thing
 let g:tex_flavor = "latex"
 
@@ -513,8 +507,6 @@ nnoremap <c-h> :<C-u>FZFfile 1<CR>
 
 " buffer search (using fzf.vim)
 nnoremap <Leader>j :<C-u>Buffers<CR>
-" grep and fuzzy search  (using fzf.vim)
-nnoremap <Leader>a :<C-u>Ag<space>
 "}}}
 
 "" slime {{{
@@ -534,21 +526,6 @@ let g:tagbar_left = 1
 " let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gb <Plug>(openbrowser-smart-search)
 vmap gb <Plug>(openbrowser-smart-search)
-"}}}
-
-"" vim-grammarous {{{
-let g:grammarous#show_first_error = 1
-" let g:grammarous#use_location_list = 1
-let g:grammarous#hooks = {}
-function! g:grammarous#hooks.on_check(errs) abort
-    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
-endfunction
-
-function! g:grammarous#hooks.on_reset(errs) abort
-    nnoremap <buffer><C-n> :<C-u>cn<CR>
-    nnoremap <buffer><C-p> :<C-u>cp<CR>
-endfunction
 "}}}
 
 "" tmux-navigator {{{

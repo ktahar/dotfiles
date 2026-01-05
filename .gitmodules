@@ -4,12 +4,6 @@
 [submodule "vim/pack/my/start/open-browser.vim"]
 	path = vim/pack/my/start/open-browser.vim
 	url = https://github.com/tyru/open-browser.vim
-[submodule "vim/pack/my/start/vim-addon-mw-utils"]
-	path = vim/pack/my/start/vim-addon-mw-utils
-	url = https://github.com/MarcWeber/vim-addon-mw-utils
-[submodule "vim/pack/my/start/tlib_vim"]
-	path = vim/pack/my/start/tlib_vim
-	url = https://github.com/tomtom/tlib_vim
 [submodule "vim/pack/my/start/vim-surround"]
 	path = vim/pack/my/start/vim-surround
 	url = https://github.com/tpope/vim-surround
@@ -40,9 +34,6 @@
 [submodule "apps/fzf"]
 	path = apps/fzf
 	url = https://github.com/junegunn/fzf
-[submodule "vim/pack/my/start/vim-grammarous"]
-	path = vim/pack/my/start/vim-grammarous
-	url = https://github.com/rhysd/vim-grammarous
 [submodule "vim/pack/my/start/vim-markdown"]
 	path = vim/pack/my/start/vim-markdown
 	url = https://github.com/plasticboy/vim-markdown
@@ -67,9 +58,6 @@
 [submodule "apps/ctags"]
 	path = apps/ctags
 	url = https://github.com/universal-ctags/ctags
-[submodule "vim/pack/my/start/markdown-preview.nvim"]
-	path = vim/pack/my/start/markdown-preview.nvim
-	url = https://github.com/iamcco/markdown-preview.nvim
 [submodule "vim/pack/my/start/neoformat"]
 	path = vim/pack/my/start/neoformat
 	url = https://github.com/sbdchd/neoformat
