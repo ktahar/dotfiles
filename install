@@ -711,6 +711,7 @@ files_linux = [
     (r".clang-format", r"clang-format"),
     (r".gitignore_global", r"gitignore_global"),
     (r".agignore", r"agignore"),
+    (r".rgignore", r"rgignore"),
     (r".latexmkrc", r"latexmkrc"),
     (r".ocamlinit", r"ocaml/ocamlinit"),
     (r".utoprc", r"ocaml/utoprc"),
