@@ -393,7 +393,7 @@ def install_apt_packages(args):
 
     pkgs = [
         "ncurses-term", "ripgrep", "silversearcher-ag", "dstat",
-        "tree", "curl", "wget",
+        "tree", "curl", "wget", "eza",
         "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
         "global", "pandoc", "unison", "p7zip-full",
         "rlwrap", "apt-file", "pax-utils",
