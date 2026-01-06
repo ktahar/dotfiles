@@ -11,6 +11,11 @@ nnoremap <silent><buffer> <LocalLeader>t <plug>(lsp-hover)
 nnoremap <silent><buffer> <LocalLeader>d <plug>(lsp-definition)
 nnoremap <silent><buffer> <LocalLeader>n <plug>(lsp-document-diagnostics)
 nnoremap <silent><buffer> <LocalLeader>r <plug>(lsp-rename)
+nnoremap <silent><buffer> <LocalLeader>R <plug>(lsp-references)
+nnoremap <silent><buffer> <LocalLeader>S <plug>(lsp-document-symbol)
+
+" map qX for quickfix
+silent call ToggleQL(1)
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()
