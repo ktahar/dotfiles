@@ -155,6 +155,9 @@ config.keys = {
       end),
     },
   },
+
+  -- paste
+  { key = 'v', mods = 'CTRL|ALT', action = act.PasteFrom 'Clipboard' },
 }
 
 config.color_schemes = config.color_schemes or {}
