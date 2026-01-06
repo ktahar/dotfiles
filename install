@@ -165,6 +165,8 @@ files_windows = [
     (r"_gvimrc", r"gvimrc"),
     (r".vimrc", r"vimrc"),
     (r".gvimrc", r"gvimrc"),
+    (r".inputrc", r"inputrc_windows"),
+    (r".wezterm.lua", r"wezterm.lua"),
     (r".fzf", r"apps\fzf"),
     (r".agignore", r"agignore"),
     (r".rgignore", r"rgignore"),

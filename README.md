@@ -20,8 +20,7 @@ If IM(mozc) is not working properly, try `./install_linux_desktop -l`.
 List of TODO things for Windows.
 
 #### Programs
-- Windows Terminal: get from the store
-- winget Python.Python.3 vim.vim BurntSushi.ripgrep.MSVC UniversalCtags.Ctags
+- winget vim.vim wez.wezterm BurntSushi.ripgrep.MSVC UniversalCtags.Ctags
 - fzf: run apps/fzf/install.ps1 in PowerShell (PowerShell -ExecutionPolicy RemoteSigned .\install.ps1)
 
 #### Environment variables
