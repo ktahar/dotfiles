@@ -3,7 +3,6 @@
 import sys
 import os
 from os import path
-import shutil
 import glob
 import subprocess as subproc
 import argparse
@@ -23,16 +22,15 @@ py = path.join(script_dir, 'python')
 if py not in sys.path:
     sys.path.append(py)
 
-from colour import printc
+from colour import printc_smart as printc
 
-
-if osname == 'Linux':
-    try:
-        r = subproc.run(['lsb_release', '-sc'], stdout=subproc.PIPE)
-        distid = r.stdout.decode().strip()
-    except FileNotFoundError:
-        printc('[ERROR] command lsb_release is not found.', 'r')
-        sys.exit(1)
+# if osname == 'Linux':
+#     try:
+#         r = subproc.run(['lsb_release', '-sc'], stdout=subproc.PIPE)
+#         distid = r.stdout.decode().strip()
+#     except FileNotFoundError:
+#         printc('[ERROR] command lsb_release is not found.', 'r')
+#         sys.exit(1)
 
 
 def prompt(msg, default='y'):
@@ -69,7 +67,7 @@ def set_git_global_config():
                ("alias.l", "log"),
                ("alias.f", "fetch"),
                ("alias.su", "submodule"),
-               ("alias.sup", "submodule update -i"),
+               ("alias.sup", "submodule update --init"),
                ("alias.ps", "push"),
                ("alias.pl", "pull"),
                ]
@@ -168,6 +166,7 @@ files_windows = [
     (r".inputrc", r"inputrc_windows"),
     (r".wezterm.lua", r"wezterm.lua"),
     (r".fzf", r"apps\fzf"),
+    (r".gitignore_global", r"gitignore_global"),
     (r".agignore", r"agignore"),
     (r".rgignore", r"rgignore"),
     (r".latexmkrc", r"latexmkrc"),

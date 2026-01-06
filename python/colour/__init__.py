@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import os
+
 COLOURS = {
         'k': 0,  'black':  0,
         'r': 1,  'red':    1,
@@ -41,3 +43,10 @@ def col(text, fg=None, bg=None, bold=False, uline=False):
 def printc(text, fg=None, bg=None, bold=False, uline=False, **keyw):
     print(col(text, fg, bg, bold, uline), **keyw)
 
+_colour_term = os.environ.get('TERM', '').endswith('256color')
+
+def printc_smart(text, fg=None, bg=None, bold=False, uline=False, **keyw):
+    if _colour_term:
+        printc(text, fg=fg, bg=bg, bold=bold, uline=uline, **keyw)
+    else:
+        print(text, **keyw)
