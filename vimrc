@@ -345,8 +345,18 @@ endif
 " let g:lsp_log_file = expand('~/vim-lsp.log')
 " let g:lsp_preview_doubletap = 0
 let g:lsp_diagnostics_virtual_text_enabled = 0
-nnoremap <buffer> <expr><Down> lsp#scroll(+4)
-nnoremap <buffer> <expr><Up> lsp#scroll(-4)
+
+function! s:on_lsp_buffer_enabled() abort
+    " setl omnifunc=lsp#complete
+    nnoremap <buffer> <expr><Down> lsp#scroll(+4)
+    nnoremap <buffer> <expr><Up> lsp#scroll(-4)
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 if executable('pylsp')
     " pip install python-lsp-server
@@ -358,7 +368,6 @@ if executable('pylsp')
        \ {'pycodestyle': {'enabled': v:false}},
        \ }},
        \ })
-    " au FileType python setl omnifunc=lsp#complete
 endif
 for g:clangd_cmd in ['clangd', 'clangd-9']
     if executable(g:clangd_cmd)
