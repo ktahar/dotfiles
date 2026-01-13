@@ -158,6 +158,9 @@ config.keys = {
 
   -- paste
   { key = 'v', mods = 'CTRL|ALT', action = act.PasteFrom 'Clipboard' },
+
+  -- kill
+  { key = 'w', mods = 'CTRL|SHIFT', action = act.CloseCurrentPane { confirm = true } },
 }
 
 config.color_schemes = config.color_schemes or {}
