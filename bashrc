@@ -60,6 +60,9 @@ fi
 if [ -z "${DOTFILES_ENV_SET+1}" ]; then
     export DOTFILES_ENV_SET=1
     export PATH=$PATH:$HOME/dotfiles/bin
+    if [ -d "$HOME/.local/bin" ]; then
+        export PATH=$HOME/.local/bin:$PATH
+    fi
 
     ## fzf
     export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
