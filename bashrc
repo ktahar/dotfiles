@@ -49,6 +49,10 @@ alias ipy='ipython3'
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
+sadd () {
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/ktaha_ed25519
+}
 
 if [ -t 0 ]; then    # stdin is opened
     stty stop undef  # unbind C-s
