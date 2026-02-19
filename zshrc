@@ -236,6 +236,10 @@ alias jdate="TZ=Asia/Tokyo date"
 alias cdate="TZ=America/Chicago date"
 alias edate="TZ=America/Detroit date"
 alias pdate="TZ=America/Los_Angeles date"
+sadd () {
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/ktaha_ed25519
+}
 
 # Tools, Plugins and Extensions
 ## opam
