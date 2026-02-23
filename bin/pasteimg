@@ -1,0 +1,220 @@
+#!/usr/bin/env python3
+
+import argparse
+import datetime as dt
+import io
+import os
+import platform
+import shutil
+import subprocess
+import sys
+import uuid
+
+from PIL import Image
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Paste an image from clipboard, save it, and copy markdown link."
+    )
+    parser.add_argument(
+        "-d",
+        "--dir",
+        default="~/Dropbox/lnb-chi/img",
+        help="Directory to save image (default: ~/Dropbox/lnb-chi/img)",
+    )
+    parser.add_argument(
+        "-W",
+        "--width",
+        type=int,
+        default=2000,
+        help="Maximum width in pixels (default: 2000)",
+    )
+    parser.add_argument(
+        "-H",
+        "--height",
+        type=int,
+        default=1000,
+        help="Maximum height in pixels (default: 1000)",
+    )
+    parser.add_argument(
+        "-f",
+        "--format",
+        default="png",
+        choices=("png", "jpg", ".png", ".jpg"),
+        help="Save format: png or jpg (default: png)",
+    )
+    args = parser.parse_args()
+
+    if args.width <= 0 or args.height <= 0:
+        parser.error("width and height must be positive integers")
+
+    args.format = args.format.lstrip(".")
+    return args
+
+
+def get_clipboard_image_pil():
+    try:
+        from PIL import ImageGrab
+    except Exception as e:
+        print(f"Pillow ImageGrab is unavailable: {e}")
+        return None
+
+    data = ImageGrab.grabclipboard()
+    if data is not None and isinstance(data, Image.Image):
+        return data
+    if isinstance(data, list):
+        if len(data) != 1:
+            return None
+        p = data[0]
+        if not isinstance(p, str):
+            return None
+        try:
+            with Image.open(p) as img:
+                img.load()
+                return img.copy()
+        except Exception:
+            return None
+    return None
+
+
+def run_xclip(args):
+    try:
+        res = subprocess.run(args, capture_output=True, check=True)
+        return res.stdout
+    except FileNotFoundError:
+        return None
+    except subprocess.CalledProcessError:
+        return b""
+
+
+def get_clipboard_image_linux_x11():
+    if shutil.which("xclip") is None:
+        raise RuntimeError("xclip is required on Linux (X11) but not found in PATH.")
+
+    mime_types = ("image/png", "image/jpeg", "image/bmp", "image/tiff")
+    for mime in mime_types:
+        raw = run_xclip(["xclip", "-selection", "clipboard", "-t", mime, "-o"])
+        if raw is None:
+            raise RuntimeError("xclip is required on Linux (X11) but not found in PATH.")
+        if not raw:
+            continue
+        try:
+            img = Image.open(io.BytesIO(raw))
+            img.load()
+            return img
+        except Exception:
+            continue
+    return None
+
+
+def get_clipboard_image():
+    sysname = platform.system()
+    if sysname == "Windows":
+        return get_clipboard_image_pil()
+    if sysname == "Linux":
+        try:
+            img = get_clipboard_image_pil()
+            if img is not None:
+                return img
+        except Exception:
+            # Fall back to explicit X11 handling when ImageGrab is unavailable/fails.
+            pass
+        return get_clipboard_image_linux_x11()
+    raise RuntimeError(f"Unsupported OS: {sysname}")
+
+
+def resized_if_needed(img, max_w, max_h):
+    w, h = img.size
+    scale = min(max_w / w, max_h / h, 1.0)
+    if scale >= 1.0:
+        return img
+
+    new_w = max(1, int(round(w * scale)))
+    new_h = max(1, int(round(h * scale)))
+    try:
+        resample = Image.Resampling.LANCZOS
+    except AttributeError:
+        resample = Image.LANCZOS
+    return img.resize((new_w, new_h), resample=resample)
+
+
+def make_filename(ext):
+    stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
+    short_id = uuid.uuid4().hex[:6]
+    return f"{stamp}-{short_id}.{ext}"
+
+
+def save_image(img, out_path, fmt):
+    if fmt == "jpg" and img.mode not in ("RGB", "L"):
+        img = img.convert("RGB")
+    img.save(out_path, format="JPEG" if fmt == "jpg" else "PNG")
+
+
+def copy_text_to_clipboard(text):
+    sysname = platform.system()
+    if sysname == "Windows":
+        subprocess.run(["clip"], input=text, text=True, check=True)
+        return
+    if sysname == "Linux":
+        if shutil.which("xclip") is None:
+            raise RuntimeError("xclip is required to copy markdown link on Linux.")
+        subprocess.run(
+            ["xclip", "-selection", "clipboard"],
+            input=text,
+            text=True,
+            check=True,
+        )
+        return
+    raise RuntimeError(f"Unsupported OS: {sysname}")
+
+
+def build_markdown_relative_path(target_dir, filename):
+    # Assumes markdown file is located in parent directory of target_dir.
+    parent = os.path.dirname(target_dir)
+    rel = os.path.relpath(os.path.join(target_dir, filename), start=parent)
+    return rel.replace("\\", "/")
+
+
+def main():
+    args = parse_args()
+    target_dir = os.path.abspath(os.path.expanduser(args.dir))
+
+    try:
+        img = get_clipboard_image()
+    except RuntimeError as e:
+        print(f"[ERROR] {e}", file=sys.stderr)
+        return 1
+
+    if img is None:
+        print("[ERROR] No image found in clipboard.", file=sys.stderr)
+        return 1
+
+    img = resized_if_needed(img, args.width, args.height)
+
+    os.makedirs(target_dir, exist_ok=True)
+    filename = make_filename(args.format)
+    out_path = os.path.join(target_dir, filename)
+
+    try:
+        save_image(img, out_path, args.format)
+    except Exception as e:
+        print(f"[ERROR] Failed to save image: {e}", file=sys.stderr)
+        return 1
+
+    rel_path = build_markdown_relative_path(target_dir, filename)
+    md = f"![]({rel_path})"
+
+    try:
+        copy_text_to_clipboard(md)
+    except Exception as e:
+        print(f"[ERROR] Saved image, but failed to copy markdown link: {e}", file=sys.stderr)
+        print(md)
+        return 2
+
+    print(md)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
