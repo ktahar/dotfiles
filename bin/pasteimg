@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import uuid
+from urllib.parse import unquote, urlparse
 
 from PIL import Image
 
@@ -64,8 +65,6 @@ def get_clipboard_image_pil():
     if data is not None and isinstance(data, Image.Image):
         return data
     if isinstance(data, list):
-        if len(data) != 1:
-            return None
         p = data[0]
         if not isinstance(p, str):
             return None
@@ -92,11 +91,14 @@ def get_clipboard_image_linux_x11():
     if shutil.which("xclip") is None:
         raise RuntimeError("xclip is required on Linux (X11) but not found in PATH.")
 
+    # image itself is on clipboard
     mime_types = ("image/png", "image/jpeg", "image/bmp", "image/tiff")
     for mime in mime_types:
         raw = run_xclip(["xclip", "-selection", "clipboard", "-t", mime, "-o"])
         if raw is None:
-            raise RuntimeError("xclip is required on Linux (X11) but not found in PATH.")
+            raise RuntimeError(
+                "xclip is required on Linux (X11) but not found in PATH."
+            )
         if not raw:
             continue
         try:
@@ -105,6 +107,44 @@ def get_clipboard_image_linux_x11():
             return img
         except Exception:
             continue
+
+    def parse_uri_list(raw):
+        def parse_file_uri_or_path(s):
+            if not s:
+                return None
+            if s.startswith("file://"):
+                parsed = urlparse(s)
+                if parsed.scheme != "file":
+                    return None
+                if parsed.netloc not in ("", "localhost"):
+                    return None
+                return unquote(parsed.path)
+            return s
+
+        if raw is None:
+            return []
+        text = raw.decode("utf-8", errors="replace")
+        paths = []
+        for line in text.splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            p = parse_file_uri_or_path(line)
+            if p:
+                paths.append(p)
+        return paths
+
+    # image path is on clipboard
+    copied = run_xclip(["xclip", "-selection", "clipboard", "-o"])
+    for p in parse_uri_list(copied):
+        if p and os.path.isfile(p):
+            try:
+                with Image.open(p) as img:
+                    img.load()
+                    return img.copy()
+            except Exception:
+                pass
+
     return None
 
 
@@ -208,7 +248,10 @@ def main():
     try:
         copy_text_to_clipboard(md)
     except Exception as e:
-        print(f"[ERROR] Saved image, but failed to copy markdown link: {e}", file=sys.stderr)
+        print(
+            f"[ERROR] Saved image, but failed to copy markdown link: {e}",
+            file=sys.stderr,
+        )
         print(md)
         return 2
 
