@@ -55,6 +55,12 @@ def set_git_global_config():
     graph = "log --graph --date=format:'%F %T' --pretty='%C(auto)%h [%ad]%d %C(green)%an%C(reset) : %s'"
     configs = [("core.excludesfile", "~/.gitignore_global"),
                ("core.editor", "vim --noplugin"),
+               ("core.pager", "delta"),
+               ("interactive.diffFilter", "delta --color-only"),
+               ("delta.nativate", "true"),
+               ("delta.line-numbers", "true"),
+               ("delta.syntax-theme", "Monokai Extended"),
+               ("merge.conflictStyle", "zdiff3"),
                ("user.name", "Kosuke Tahara"),
                ("user.email", "ksk.tahara@gmail.com"),
                ("push.default", "simple"),
@@ -63,6 +69,7 @@ def set_git_global_config():
                ("alias.a", "add"),
                ("alias.c", "commit"),
                ("alias.d", "diff"),
+               ("alias.ds", "-c delta.side-by-side=true diff"),
                ("alias.s", "status"),
                ("alias.l", "log"),
                ("alias.f", "fetch"),
@@ -397,7 +404,7 @@ def install_apt_packages(args):
     pkgs = [
         "ncurses-term", "ripgrep", "silversearcher-ag", "dstat",
         "tree", "curl", "wget", "eza",
-        "git", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
+        "git", "git-delta", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
         "global", "pandoc", "unison", "p7zip-full",
         "rlwrap", "apt-file", "pax-utils",
         # build tools
@@ -621,7 +628,7 @@ def install_npm_packages(args):
 
     npm = path.join(node_dir, 'bin', 'npm')
 
-    pkgs = ['npm-check-updates', 'diff-so-fancy']
+    pkgs = ['npm-check-updates']
 
     if args.upgrade:
         subproc.run([npm, 'upgrade', '-g'])
