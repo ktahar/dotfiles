@@ -128,15 +128,6 @@ def setup_shell(files=None):
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
 
-def setup_x():
-    """Setup files for X and other Linux desktop stuffs."""
-
-    lines = {
-        '.xprofile': "source $HOME/dotfiles/xprofile\n",
-        '.config/i3/config': "include $HOME/dotfiles/i3/config\n",
-    }
-    write_append_line(lines)
-
 
 def install_pip_packages_windows(args):
     r"""install python packages using pip.
@@ -411,6 +402,8 @@ def install_apt_packages(args):
         "build-essential", "cmake",
         "devscripts", "pkg-config",
         "autoconf", "libtool",
+        # misc
+        "neofetch",
     ]
 
     ex_pkgs = {}
@@ -431,27 +424,17 @@ def install_apt_packages(args):
     ex_pkgs["desktop"] = [
         # libs to build vim
         "xorg-dev",  # to enable +clipboard +X11
-        # i3wm and basic things to use with that
-        "i3", "dunst", "feh",
-        "xsel", "xdotool", "brightnessctl",
-        "ibus-mozc", "mozc-utils-gui",
-        # audio
-        "pulseaudio", "pavucontrol", "pasystray",
-        # lightdm instead of gdm3
-        "lightdm", "lightdm-gtk-greeter", "lightdm-gtk-greeter-settings",
         # terminal
         "rxvt-unicode", "alacritty",
+        # misc
+        "flameshot", "feh", "zathura",
     ]
 
     ex_pkgs["fulldesktop"] = [
-        # music
-        "mpd", "mpc", "ncmpc",
         # read / write documents
-        "texlive-full", "zathura",
+        "texlive-full",
         # Microsoft fonts (Arial etc.)
         "ttf-mscorefonts-installer",
-        # misc
-        "neofetch", "flameshot",
     ]
 
     ex_pkgs["python"] = [
@@ -726,7 +709,6 @@ files_linux = [
     (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
     (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
     (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
-    (r".config/i3status/config", r"i3/i3status.conf"),
     (r".Xresources", r"Xresources"),
     (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
 ]
@@ -746,8 +728,6 @@ def link_linux():
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r".local/tmp",
             r".config/gtk-3.0",
-            r".config/i3",
-            r".config/i3status",
             r".config/zathura",
             r".config/feh",
             r".config/alacritty",
@@ -825,7 +805,6 @@ def main_linux(args):
     if args.desktop:
         printc('[desktop]', 'b')
         subproc.run(['./install_linux_desktop'])
-        setup_x()
     if args.fulldesktop:
         printc('[fulldesktop]', 'b')
         setup_matlab()

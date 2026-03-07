@@ -12,7 +12,7 @@ The install script will do setups,
 except for things that strongly depends on environment.
 
 ### Full install (Ubuntu)
-For full installation to Ubuntu desktop,
+For installing everything to Ubuntu desktop,
 first try `./install -f`, restart the X session, and then `./install -A`.
 If IM(mozc) is not working properly, try `./install_linux_desktop -l`.
 
@@ -66,7 +66,6 @@ See scripts in [submod](submod) for shortcuts.
 ## Environment specific
 See following directories.
 
-* [i3](i3)
 * [gnome](gnome)
 * [windows](windows)
 
