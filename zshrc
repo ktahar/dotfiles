@@ -45,11 +45,17 @@ disable r
 #}}}
 
 # prompt {{{
+if grep -qi microsoft /proc/sys/kernel/osrelease 2>/dev/null; then
+    prompt_accent=blue
+else
+    prompt_accent=cyan
+fi
+
 ## show hostname only if ssh
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    base_prompt="%F{cyan}%n@%m"
+    base_prompt="%F{$prompt_accent}%n@%m"
 else
-    base_prompt="%F{cyan}%n"
+    base_prompt="%F{$prompt_accent}%n"
 fi
 base_prompt="${base_prompt} %B%40<...<%~%<<%b%f"
 prompt_newline=$'\n%{\r%}'
