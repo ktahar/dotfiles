@@ -337,33 +337,6 @@ if executable('ibus')
 endif
 "}}}
 
-"" WSL clipboard {{{
-if has('win32unix') || getenv('WSL_DISTRO_NAME') !=# ''
-    function! WslClipboardCopy(reg, regtype, lines) abort
-        call system('clip.exe', join(a:lines, "\n"))
-    endfunction
-
-    function! WslClipboardPaste(reg) abort
-        let l:text = systemlist('powershell.exe -NoProfile -Command Get-Clipboard')
-        return ['', map(l:text, 'substitute(v:val, "\r$", "", "")')]
-    endfunction
-
-    let v:clipproviders['wsl'] = {
-                \ 'available': {-> executable('clip.exe') && executable('powershell.exe')},
-                \ 'copy': {
-                \   '+': function('WslClipboardCopy'),
-                \   '*': function('WslClipboardCopy'),
-                \ },
-                \ 'paste': {
-                \   '+': function('WslClipboardPaste'),
-                \   '*': function('WslClipboardPaste'),
-                \ },
-                \ }
-
-    set clipmethod+=wsl
-    set clipboard=unnamedplus
-endif
-"}}}
 "}}}
 
 """ Plugin Settings {{{

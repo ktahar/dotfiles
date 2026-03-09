@@ -37,6 +37,7 @@ Launch PowerShell as Admin and `wsl.exe --install`.
 Copy "schemes" section to setting.json opened by "Ctrl + ," shortcut.
 
 ### dotfiles
-`./install -v` at least (vim)
+
+`./install -pvw` at least (vim and python with WSL specific switch)
     - other options for programming languages will work.
     - won't need linux desktop options: `-d` or `-f`.
