@@ -165,7 +165,7 @@ inoremap <expr> ,dh strftime('## %Y-%m-%d')
 "}}}
 
 """ Plugin Loading {{{
-source $VIMRUNTIME/macros/matchit.vim
+packadd matchit
 
 let g:no_gvimrc_example = 1
 let g:no_vimrc_example  = 1
@@ -245,7 +245,10 @@ command MakeCtags call s:make_ctags()
 nnoremap <Leader>T :<C-u>MakeCtags<CR>
 
 "" grep to quickfix
-autocmd QuickFixCmdPost *grep* cwindow
+augroup my_quickfix
+    autocmd!
+    autocmd QuickFixCmdPost *grep* cwindow
+augroup END
 
 "" DiffOrig from vimrc_example.vim
 if !exists(":DiffOrig")
@@ -263,28 +266,34 @@ syntax on
 set tabstop=4 expandtab shiftwidth=4 softtabstop=4
 set foldmethod=marker
 
-"" Python skeleton
-if s:is_win
-    autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
-else
-    autocmd BufNewFile *.py 0r ~/.vim/skeleton.py
-endif
+augroup my_filetypes
+    autocmd!
 
-"" Markdown extension
-autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+    "" Python skeleton
+    if s:is_win
+        autocmd BufNewFile *.py 0r ~/vimfiles/skeleton.py
+    else
+        autocmd BufNewFile *.py 0r ~/.vim/skeleton.py
+    endif
+
+    "" Markdown
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+
+    "" ROS
+    autocmd BufNewFile,BufRead *.launch set filetype=xml
+
+    "" OCaml
+    autocmd BufNewFile,BufRead ocamlinit* set filetype=ocaml
+    autocmd BufNewFile,BufRead dune* set filetype=dune
+augroup END
 
 "" TeX thing
 let g:tex_flavor = "latex"
-
-"" ROS extension
-autocmd BufNewFile,BufRead *.launch set filetype=xml
 
 "" OCaml
 " prevent maps by default ocaml.vim and merlin.vim
 let no_ocaml_maps = 1
 let g:merlin_disable_default_keybindings = 1
-autocmd BufNewFile,BufRead ocamlinit* set filetype=ocaml
-autocmd BufNewFile,BufRead dune* set filetype=dune
 " temp. disable on windows
 if !s:is_win
     let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
@@ -332,8 +341,11 @@ if executable('ibus')
         endif
     endfunction
 
-    autocmd InsertLeave * call DeactivateIbusMozc()
-    autocmd InsertEnter * call ActivateIbusMozc()
+    augroup my_ibus
+        autocmd!
+        autocmd InsertLeave * call DeactivateIbusMozc()
+        autocmd InsertEnter * call ActivateIbusMozc()
+    augroup END
 endif
 "}}}
 
@@ -499,7 +511,7 @@ function! s:fzf_file(bang, ...) abort
     let l:hidden = get(a:, 1, 0)
     let l:root = s:get_git_root()
     let l:opts = {}
-    if hidden
+    if l:hidden
         let l:opts.source = 'rg --files --hidden --glob "!.git/*"'
     endif
     if empty(l:root)
