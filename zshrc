@@ -159,25 +159,29 @@ bindkey -M menuselect "j" vi-down-line-or-history
 bindkey -M menuselect "k" vi-up-line-or-history
 bindkey -M menuselect "l" vi-forward-char
 
-## other completers: _match _prefix _list _history _correct
+## completion flow:
+## - _expand handles things like aliases and parameter expansion
+## - _complete is the normal completion engine
+## - _approximate allows typo-tolerant matches, but can slow TAB on large sets
+## - _ignored retries matches that were hidden by ignored-patterns below
 zstyle ':completion:*' completer _expand _complete _approximate _ignored
-zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' format '[%B%d%b]'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:default' menu select=2
 eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt '%Sat %p (%l): Hit TAB for more, or the character to insert%s'
+## Case-insensitive matching, then looser matching around separators like . _ and -.
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' select-prompt '%Sscrolling: at %p (%l)%s'
-zstyle ':completion:*' use-compctl true # should be true to use ROS's completion
+zstyle ':completion:*' use-compctl false # was true before for ROS 1-era completion compatibility
 zstyle ':completion:*' verbose true
-## ignore backup or object files. but do not ignore for rm.
+## Hide common junk files in completion, but still show them for rm.
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?~' '*?.o'
 
 ## cd
 cdpath=(.. ~)
+## Prefer directories under the current tree before falling back to cdpath.
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
