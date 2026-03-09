@@ -5,11 +5,6 @@ export EDITOR=vim
 export LANG=en_US.UTF-8
 export LESS=-R
 
-## Golang
-if [ -d ~/go ]; then
-    export GOPATH=~/go
-fi
-
 ## PATH
 typeset -U path
 ### put at head without existence check.
@@ -17,15 +12,8 @@ directories=(~/opt/node/bin ~/.local/bin)
 for dir in $directories; do
     path=($dir $path)
 done
-### put at head.
-directories=(~/opt/go/bin)
-for dir in $directories; do
-    if [ -d $dir ]; then
-        path=($dir $path)
-    fi
-done
 ### put at tail.
-directories=($GOPATH/bin ~/dotfiles/bin)
+directories=(~/dotfiles/bin)
 for dir in $directories; do
     if [ -d $dir ]; then
         path=($path $dir)

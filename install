@@ -624,43 +624,6 @@ def install_npm_packages(args):
     subproc.run([npm, 'install', '-g'] + pkgs)
 
 
-def install_go_packages(args):
-    def install_go(a):
-        """install Golang in ~/opt/go.
-
-        """
-
-        import io
-        import tarfile
-        import requests
-        major, minor, patch = 1, 24, 2
-        if patch:
-            name = "go{}.{}.{}.linux-{}".format(major, minor, patch, a)
-        else:
-            name = "go{}.{}.linux-{}".format(major, minor, a)
-        print("Downloading", name)
-        url = "https://dl.google.com/go/{}.tar.gz".format(name)
-        res = requests.get(url)
-        stream = io.BytesIO(res.content)
-        with tarfile.open(fileobj=stream, mode='r:gz') as tar:
-            tar.extractall(path=path.join(home, 'opt'))
-
-    archs = {"x86_64": "amd64", "aarch64": "arm64"}
-
-    if arch not in archs:
-        printc("Machine arch {} is not supported for now.".format(arch), 'r')
-        return
-
-    go_dir = path.join(make_opt_dir(), 'go')
-    if not path.exists(go_dir):
-        install_go(archs[arch])
-
-    go = path.join(go_dir, 'bin', 'go')
-
-    pkgs = ["github.com/laurent22/massren@latest"]
-
-    subproc.run([go, 'install'] + pkgs)
-
 def setup_matlab():
     """make desktop entry for MATLAB (~/opt/matlab).
 
@@ -696,6 +659,7 @@ files_linux = [
     (r".fzf", r"apps/fzf"),
     # to support windows (cannot symlink inside git repo)
     (r"dotfiles/vim/pack/my/start/fzf", r"apps/fzf"),
+    (r"dotfiles/bin/vimv", r"apps/vimv/vimv"),
     (r".ctags.d", r"ctags.d"),
     (r".clang-format", r"clang-format"),
     (r".gitignore_global", r"gitignore_global"),
@@ -813,7 +777,7 @@ def main_linux(args):
 
     # language package managers
     import __main__
-    for pack in ('npm', 'go', 'opam'):
+    for pack in ('npm', 'opam'):
         if getattr(args, pack):
             printc('[{} packages]'.format(pack), 'b')
             getattr(__main__, 'install_{}_packages'.format(pack))(args)
@@ -855,8 +819,6 @@ def parse_args():
                         help='Install python packages.')
     parser.add_argument('-o', '--opam', action='store_true',
                         help='Install opam packages.')
-    parser.add_argument('-g', '--go', action='store_true',
-                        help='Install go packages.')
     parser.add_argument('-n', '--npm', action='store_true',
                         help='Install npm packages.')
 
@@ -864,7 +826,7 @@ def parse_args():
     if args.fulldesktop:
         args.desktop = True
     if args.all:
-        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'python', 'opam', 'go', 'npm'):
+        for a in ('vim', 'apt', 'desktop', 'fulldesktop', 'python', 'opam', 'npm'):
             setattr(args, a, True)
 
     return args
