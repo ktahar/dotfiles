@@ -2,28 +2,23 @@
 
 To be more specific, Ubuntu (LTS) desktop.
 
-## ibus-mozc
-ibus-mozc will be installed if Japanese language support is installed
-(search "language support" in the menu).
+## dotfiles
+All options of `./install` script will work.
+For installing everything on Ubuntu desktop,
+first try `./install -f`, restart the desktop session, and then `./install -A`.
+
+## Japanese IM (ibus-mozc)
+If IM (mozc) is not working, install language support: try `./install_linux_desktop -l`
+and/or look at the GUI menu by searching "language support".
+Apt packages `ibus-mozc` and `mozc-utils-gui` should be installed if Japanese language support is fine.
 Follow procedures below to complete setup.
 
 1. Language Support: confirm "Keyboard input method system" is "IBus"
 1. GNOME's settings (note that `ibus-setup` doesn't take effect for gnome)
-    * Settings -> Keyboard -> Input Sources: press + and select Japanese (mozc)
+    - Settings -> Keyboard -> Input Sources: press + and select Japanese (mozc)
 1. load keymap at dotfiles/mozc/keymap.txt. Properties -> Keymap -> Customize... -> Edit -> Import from file
-    * "Ctrl+Space" is mapped to Activate / Deactivate IME.
+    - "Ctrl+Space" is mapped to Activate / Deactivate IME.
 1. load dict at dotfiles/mozc/dict.txt. Properties -> Dictionary -> Edit user dictionary -> Import to this dictionary
-
-## Extension: TopIcons Redux (Recommended for Ubuntu 16.04)
-Visit [here](https://extensions.gnome.org/extension/1497/topicons-redux/) and
-download proper version.
-Import (downloaded zip file) from Tweak Tool's Extensions menu.
-
-To check gnome shell version:
-
-```bash
-gnome-shell --version
-```
 
 ## X keymap (/etc/default/keyboard -> XKBOPTIONS)
 See `man keyboard` and `/usr/share/X11/xkb/rules/xorg.lst`.
