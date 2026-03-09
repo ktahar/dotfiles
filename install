@@ -707,8 +707,6 @@ files_linux = [
     (r".config/alacritty/alacritty.toml", r"alacritty.toml"),
     (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
     (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
-    (r".config/gtk-3.0/settings.ini", r"gnome/gtk3-settings.ini"),
-    (r".gtkrc-2.0", r"gnome/gtkrc-2.0"),
     (r".Xresources", r"Xresources"),
     (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
 ]
@@ -727,7 +725,6 @@ def unlink_linux():
 def link_linux():
     dirs = [r".tmux", r".config/matplotlib",
             r".ipython/profile_default/startup", r".local/tmp",
-            r".config/gtk-3.0",
             r".config/zathura",
             r".config/feh",
             r".config/alacritty",
