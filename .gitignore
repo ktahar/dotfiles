@@ -11,5 +11,6 @@ vim/pack/my/start/fzf
 apps/*.HEAD
 apps/*.log
 bin/urxvt_local
+bin/vimv
 
 !/.editorconfig
