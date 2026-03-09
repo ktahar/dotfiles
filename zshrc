@@ -164,7 +164,8 @@ bindkey -M menuselect "l" vi-forward-char
 ## - _complete is the normal completion engine
 ## - _approximate allows typo-tolerant matches, but can slow TAB on large sets
 ## - _ignored retries matches that were hidden by ignored-patterns below
-zstyle ':completion:*' completer _expand _complete _approximate _ignored
+# zstyle ':completion:*' completer _expand _complete _approximate _ignored
+zstyle ':completion:*' completer _expand _complete _ignored
 zstyle ':completion:*' format '[%B%d%b]'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:default' menu select=2
