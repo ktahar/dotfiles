@@ -538,10 +538,6 @@ nmap gb <Plug>(openbrowser-smart-search)
 vmap gb <Plug>(openbrowser-smart-search)
 "}}}
 
-"" tmux-navigator {{{
-let g:tmux_navigator_no_mappings = 1
-"}}}
-
 "" vim-markdown {{{
 let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
