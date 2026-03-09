@@ -31,7 +31,9 @@ bindkey -M vicmd "/" history-incremental-search-backward
 bindkey -M vicmd "?" history-incremental-search-forward
 ## buffer stack
 setopt noflowcontrol # unbind "^S" and "^Q"
-stty -ixon # do the same for terminal apps like vim
+if [[ -t 0 ]]; then
+    stty -ixon # unbind "^S" and "^Q" for terminal apps like vim
+fi
 show_buffer_stack() {
     POSTDISPLAY="
 stack: $LBUFFER"
@@ -157,8 +159,8 @@ unsetopt menu_complete # should be unset to use auto_menu
 setopt auto_menu auto_list
 DIRSTACKSIZE=20
 
-## default bind for tab (^I) is expand-or-complete.
-## change complete-word when using completer _expand.
+## fzf wraps TAB later, but falls back to this native completion widget unless
+## the completion trigger is present.
 bindkey "^I" complete-word
 bindkey -M menuselect "h" vi-backward-char
 bindkey -M menuselect "j" vi-down-line-or-history
@@ -195,7 +197,8 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #}}}
 
-# commands, aliases, envs
+# envs, shell functions, and aliases
+export LESS=-R
 chpwd () {
     ls --color=auto -BC;
 }
@@ -210,6 +213,10 @@ wq () {
         ~/.tmux/plugins/tmux-resurrect/scripts/save.sh
         tmux kill-server
     fi
+}
+sadd () {
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/ktaha_ed25519
 }
 alias wqa='wq'
 alias ...='cd ../../'
@@ -247,10 +254,6 @@ alias jdate="TZ=Asia/Tokyo date"
 alias cdate="TZ=America/Chicago date"
 alias edate="TZ=America/Detroit date"
 alias pdate="TZ=America/Los_Angeles date"
-sadd () {
-    eval $(ssh-agent)
-    ssh-add ~/.ssh/ktaha_ed25519
-}
 
 # Tools, Plugins and Extensions
 ## opam

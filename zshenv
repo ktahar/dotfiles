@@ -1,9 +1,6 @@
 # ktaha's zshenv
 
-export SHELL=/bin/zsh
 export EDITOR=vim
-export LANG=en_US.UTF-8
-export LESS=-R
 
 ## PATH
 typeset -U path
@@ -19,14 +16,6 @@ for dir in $directories; do
         path=($path $dir)
     fi
 done
-
-typeset -T LIBRARY_PATH library_path
-typeset -U library_path
-export LIBRARY_PATH=~/.local/lib
-
-typeset -T LD_LIBRARY_PATH ld_library_path
-typeset -U ld_library_path
-export LD_LIBRARY_PATH=${LIBRARY_PATH}
 
 ## fzf
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
