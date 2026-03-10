@@ -15,6 +15,7 @@ arch = platform.uname().machine
 
 if osname == 'Windows':
     home = os.environ.get('USERPROFILE')
+    is_git_bash = bool(os.environ.get("MSYSTEM"))
 else:
     home = os.environ.get('HOME')
 
@@ -110,6 +111,7 @@ def write_append_line(lines, files=None):
             with open(p, 'a') as f:
                 f.write(lines[fn])
 
+
 def setup_shell(files=None):
     lines = {
         '.bashrc': "source $HOME/dotfiles/bashrc\n",
@@ -127,6 +129,13 @@ def setup_shell(files=None):
             return
         if prompt('Change default shell to /bin/zsh?'):
             subproc.run(['chsh', '-s', '/bin/zsh'])
+
+
+def install_winget_packages(args):
+    pkgs = ["wez.wezterm", "BurntSushi.ripgrep.MSVC", "UniversalCtags.Ctags", "dandavison.delta"]
+    printc("[INFO] winget pkgs attempting to install", "g")
+    printc(" ".join(pkgs), "g")
+    subproc.run(["winget", "install"] + pkgs)
 
 
 def install_pip_packages_windows(args):
@@ -201,8 +210,9 @@ def link_windows(args):
 
     admin = shdll.IsUserAnAdmin()
     if not admin:
-        print("You don't have Administrator priviledge. If you can get it, I recommend to install with it.")
-        if not prompt('Install anyway?', 'n'):
+        print("You don't have Administrator priviledge. It's highly recommended to grab it if possible.")
+        if not prompt("Proceed anyway (using hardlink/junction instead of symlink)?", "n"):
+            print("Skipped to make symbolic links.")
             return
 
     dirs = [
@@ -259,23 +269,28 @@ def main_windows(args):
     link_windows(args)
     printc('[git global config]', 'b')
     set_git_global_config()
+    if args.winget:
+        install_winget_packages(args)
     if args.python:
         printc('[python]', 'b')
         install_pip_packages_windows(args)
     printc('[shell]', 'b')
     setup_shell(files=['.bashrc'])
+    if is_git_bash:
+        printc('[fzf]', 'b')
+        setup_fzf()
 
 
 def setup_fzf():
-    """setup fzf.
-
-    """
+    """setup fzf."""
 
     fzf_install = [path.join(home, '.fzf/install'),
                    '--key-bindings',
                    '--completion',
-                   '--no-update-rc',
-                   '--no-bash']
+                   '--no-update-rc']
+    if is_git_bash:
+        # need to execute bash explicitly
+        fzf_install.insert(0, "bash")
     subproc.run(fzf_install)
 
 
@@ -383,6 +398,7 @@ def setup_ctags():
 
     with open(head, 'w') as f:
         f.write(hnow)
+
 
 def install_apt_packages(args):
     def add_ppa_repository(user, repo):
@@ -780,8 +796,6 @@ def parse_args():
                         help='Install all extra things.')
     parser.add_argument('-a', '--apt', action='store_true',
                         help='Install apt packages.')
-    parser.add_argument('-w', '--wsl', action='store_true',
-                        help='Install packages recommended for WSL.')
     parser.add_argument('-d', '--desktop', action='store_true',
                         help='Install packages, settings and fonts for desktop.')
     parser.add_argument('-f', '--fulldesktop', action='store_true',
@@ -792,6 +806,10 @@ def parse_args():
                         help='Install opam packages.')
     parser.add_argument('-n', '--npm', action='store_true',
                         help='Install npm packages.')
+    parser.add_argument('-w', '--wsl', action='store_true',
+                        help='Install apt packages recommended for WSL.')
+    parser.add_argument('-g', '--winget', action='store_true',
+                        help='Install winget packages.')
 
     args = parser.parse_args()
     if args.fulldesktop:

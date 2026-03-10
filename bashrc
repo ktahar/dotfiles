@@ -69,6 +69,7 @@ if [ -z "${DOTFILES_ENV_SET+1}" ]; then
     fi
 
     ## fzf
+    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
     export FZF_DEFAULT_OPTS='--bind=ctrl-j:abort'
     export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
     export FZF_COMPLETION_TRIGGER='~~'
