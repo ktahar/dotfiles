@@ -9,7 +9,7 @@ I live mainly on Git Bash on WezTerm.
 ### Programs
 - Install Git for Windows.
 - Install Python with the official installer.
-- `winget vim.vim wez.wezterm BurntSushi.ripgrep.MSVC UniversalCtags.Ctags`
+- `winget wez.wezterm BurntSushi.ripgrep.MSVC UniversalCtags.Ctags`
 
 ### dotfiles
 `python install` (no options)

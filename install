@@ -165,7 +165,6 @@ files_windows = [
     (r".wezterm.lua", r"wezterm.lua"),
     (r".fzf", r"apps\fzf"),
     (r".gitignore_global", r"gitignore_global"),
-    (r".agignore", r"agignore"),
     (r".rgignore", r"rgignore"),
     (r".latexmkrc", r"latexmkrc"),
     (r".matplotlib\matplotlibrc", r"python\matplotlibrc"),
@@ -393,10 +392,10 @@ def install_apt_packages(args):
                          'apt-add-repository', 'ppa:{}/{}'.format(user, repo)])
 
     pkgs = [
-        "ncurses-term", "ripgrep", "silversearcher-ag", "dstat",
+        "ncurses-term", "ripgrep", "dstat",
         "tree", "curl", "wget", "eza",
         "git", "git-delta", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
-        "global", "pandoc", "unison", "p7zip-full",
+        "pandoc", "unison", "p7zip-full",
         "rlwrap", "apt-file", "pax-utils",
         # build tools
         "build-essential", "cmake",
@@ -624,34 +623,10 @@ def install_npm_packages(args):
     subproc.run([npm, 'install', '-g'] + pkgs)
 
 
-def setup_matlab():
-    """make desktop entry for MATLAB (~/opt/matlab).
-
-    """
-
-    matlab = path.join(home, "opt", "matlab", "bin", "glnxa64", "MATLAB")
-    if not path.exists(matlab):
-        return
-
-    entry_contents = """[Desktop Entry]
-Terminal=false
-Type=Application
-Name=MATLAB
-Exec={} -desktop
-Categories=Control;MATLAB;
-""".format(matlab)
-
-    entry_file = path.join(home, ".local", "share",
-                           "applications", "matlab.desktop")
-    with open(entry_file, 'w') as f:
-        f.write(entry_contents)
-
-
 files_linux = [
     (r".vimrc", r"vimrc"),
     (r".gvimrc", r"gvimrc"),
     (r".vim", r"vim"),
-    (r".ideavimrc", r"ideavimrc"),
     (r".inputrc", r"inputrc"),
     (r".toprc", r"toprc"),
     (r".tmux.conf", r"tmux.conf"),
@@ -663,7 +638,6 @@ files_linux = [
     (r".ctags.d", r"ctags.d"),
     (r".clang-format", r"clang-format"),
     (r".gitignore_global", r"gitignore_global"),
-    (r".agignore", r"agignore"),
     (r".rgignore", r"rgignore"),
     (r".latexmkrc", r"latexmkrc"),
     (r".ocamlinit", r"ocaml/ocamlinit"),
@@ -771,9 +745,6 @@ def main_linux(args):
     if args.desktop:
         printc('[desktop]', 'b')
         subproc.run(['./install_linux_desktop'])
-    if args.fulldesktop:
-        printc('[fulldesktop]', 'b')
-        setup_matlab()
 
     # language package managers
     import __main__
@@ -814,7 +785,7 @@ def parse_args():
     parser.add_argument('-d', '--desktop', action='store_true',
                         help='Install packages, settings and fonts for desktop.')
     parser.add_argument('-f', '--fulldesktop', action='store_true',
-                        help='Install packages, settings and fonts for full desktop.')
+                        help='Install packages, settings and fonts for full-feature desktop.')
     parser.add_argument('-p', '--python', action='store_true',
                         help='Install python packages.')
     parser.add_argument('-o', '--opam', action='store_true',
