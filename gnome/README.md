@@ -1,6 +1,6 @@
-# gnome
+# GNOME
 
-To be more specific, Ubuntu (LTS) desktop.
+For Linux desktop - GNOME on Ubuntu LTS.
 
 ## dotfiles
 All options of `./install` script will work.

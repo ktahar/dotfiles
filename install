@@ -478,7 +478,7 @@ def install_apt_packages(args):
     ]
 
     ex_pkgs["opam"] = [
-        "mercurial", "bubblewrap", "m4",
+        "bubblewrap", "m4",
         # for ctypes-foreign
         "libffi-dev",
     ]
@@ -529,11 +529,11 @@ def install_opam_packages(args):
 
         import requests
         import hashlib
-        version = "2.3.0"
+        version = "2.5.0"
         # watch this for hash: https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
         hashes = {
-            "x86_64": "d4271d2387751313d5f904e8fdb3133ea893c72d09737139266d2bbe7624f81665a4276d2e55aa71856630ece8ce226b989560076599baae9afc053c5815f8c8",
-            "arm64": "a551cbaa44a6945e09b3daa3a3a7477821062d385037543cb71a188e4625c4ced76422689437aee602707076c1d16b68bed99ad5a31df98e69a8810dccb037b3",
+            "x86_64": "475dafcc7c2efebb8a8678b14a530231c5fe13582bd9883e4d4f3230497136709856b054a94b8b8460215bb2920b67507378b4ed06a44fb25e3549d200f66a33",
+            "arm64" : "7ad46611345ad41eda746e0c91f14b001d5f5273b9e72bc5f67ed1769bd654b07ab235c562062ff89e7e05fdcb63165a5313f84e8d208d92327da0ab766f9a63",
         }
 
         if path.exists(opam):
@@ -582,7 +582,7 @@ def install_opam_packages(args):
         # std libs
         "core",
         # misc libs
-        "ctypes", "ctypes-foreign", "atdgen",
+        "ctypes", "ctypes-foreign",
     ]
 
     subproc.run([opam, 'install'] + pkgs)
