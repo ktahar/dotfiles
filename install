@@ -18,6 +18,7 @@ if osname == 'Windows':
     is_git_bash = bool(os.environ.get("MSYSTEM"))
 else:
     home = os.environ.get('HOME')
+    is_git_bash = False
 
 py = path.join(script_dir, 'python')
 if py not in sys.path:
