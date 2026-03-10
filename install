@@ -395,7 +395,7 @@ def install_apt_packages(args):
         "ncurses-term", "ripgrep", "dstat",
         "tree", "curl", "wget", "eza",
         "git", "git-delta", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
-        "pandoc", "unison", "p7zip-full",
+        "unison", "p7zip-full",
         "rlwrap", "apt-file", "pax-utils",
         # build tools
         "build-essential", "cmake",
