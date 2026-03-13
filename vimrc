@@ -254,7 +254,7 @@ if !exists(":DiffOrig")
 endif
 
 "" temp: quickly open notebook
-nnoremap <Leader>o :e ~/Dropbox/lnb-chi/index.md<CR>
+nnoremap <Leader>o :e ~/OneDrive/lnb-chi/index.md<CR>
 "}}}
 
 """ Fileformat and Filetype {{{

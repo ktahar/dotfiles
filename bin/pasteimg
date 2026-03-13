@@ -21,8 +21,8 @@ def parse_args():
     parser.add_argument(
         "-d",
         "--dir",
-        default="~/Dropbox/lnb-chi/img",
-        help="Directory to save image (default: ~/Dropbox/lnb-chi/img)",
+        default="~/OneDrive/lnb-chi/img",
+        help="Directory to save image (default: ~/OneDrive/lnb-chi/img)",
     )
     parser.add_argument(
         "-W",
