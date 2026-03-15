@@ -440,6 +440,8 @@ def install_apt_packages(args):
     ex_pkgs["wsl"] = [
         # libs to build vim
         "xorg-dev",  # to enable +clipboard
+        # misc (lightweight GUI tools which are usable on WSL)
+        "feh", "zathura",
     ]
 
     ex_pkgs["desktop"] = [
