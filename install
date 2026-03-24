@@ -183,6 +183,7 @@ files_windows = [
     (r".vim", r"vim"),
     (r".minttyrc", r"windows\minttyrc"),
     (r"dotfiles\vim\pack\my\start\fzf", r"apps\fzf"),
+    (r"dotfiles\bin\vimv", r"apps\vimv\vimv"),
 ]
 
 
