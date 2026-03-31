@@ -410,7 +410,7 @@ def install_apt_packages(args):
                          'apt-add-repository', 'ppa:{}/{}'.format(user, repo)])
 
     pkgs = [
-        "ncurses-term", "ripgrep", "dstat",
+        "ncurses-term", "ripgrep",
         "tree", "curl", "wget", "eza",
         "git", "git-delta", "tmux", "zsh", "zsh-doc", "zsh-syntax-highlighting",
         "unison", "p7zip-full",
@@ -430,7 +430,7 @@ def install_apt_packages(args):
         # But install apt-pack vim here for root or other users.
         "vim",
         # libs to build vim
-        "gettext", "libtinfo-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
+        "gettext", "libncurses-dev", "libacl1-dev", "libgpm-dev", "python3-dev",
         # libs to build universal-ctags
         "python3-docutils", "libseccomp-dev",
         "libjansson-dev", "libyaml-dev", "libxml2-dev",
@@ -476,7 +476,7 @@ def install_apt_packages(args):
         # libs to build python
         "libssl-dev", "zlib1g-dev",
         "libbz2-dev", "libreadline-dev", "libsqlite3-dev",
-        "libncurses5-dev", "xz-utils", "tk-dev",
+        "libncurses-dev", "xz-utils", "tk-dev",
         "libxml2-dev", "libxmlsec1-dev", "libffi-dev", "liblzma-dev",
     ]
 
