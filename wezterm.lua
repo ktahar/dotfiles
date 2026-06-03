@@ -226,5 +226,6 @@ config.colors.tab_bar = {
   },
 }
 config.use_fancy_tab_bar = false
+config.tab_bar_at_bottom = true
 
 return config
