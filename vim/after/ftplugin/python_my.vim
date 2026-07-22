@@ -14,8 +14,9 @@ nnoremap <silent><buffer> <LocalLeader>r <plug>(lsp-rename)
 nnoremap <silent><buffer> <LocalLeader>R <plug>(lsp-references)
 nnoremap <silent><buffer> <LocalLeader>S <plug>(lsp-document-symbol)
 
-" map qX for quickfix
-silent call ToggleQL(1)
+" do not map qX for quickfix. it seems vim-lsp diagnostics
+" opens location list now
+" silent call ToggleQL(1)
 
 " Execute current file (python3 -> python): <LocalLeader>e
 function! s:ExecPy()

@@ -368,7 +368,14 @@ augroup lsp_install
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
-if executable('pylsp')
+if executable('basedpyright-langserver')
+    " pip install python-lsp-server
+    au User lsp_setup call lsp#register_server({
+       \ 'name': 'basedpyright',
+       \ 'cmd': {server_info->['basedpyright-langserver', '--stdio']},
+       \ 'allowlist': ['python'],
+       \ })
+elseif executable('pylsp')
     " pip install python-lsp-server
     au User lsp_setup call lsp#register_server({
        \ 'name': 'pylsp',
@@ -455,21 +462,7 @@ let g:neoformat_ocaml_ocamlformat = {
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 
-let g:neoformat_python_black = {
-    \ 'exe': 'black',
-    \ 'stdin': 1,
-    \ 'args': ['-q', '-'],
-    \ }
-let g:neoformat_python_yapf = {
-    \ 'exe': 'yapf',
-    \ 'stdin': 1,
-    \ }
-let g:neoformat_python_autopep8 = {
-    \ 'exe': 'autopep8',
-    \ 'stdin': 1,
-    \ 'args': ['-'],
-    \ }
-let g:neoformat_enabled_python = ['black', 'yapf', 'autopep8']
+let g:neoformat_enabled_python = ['ruff', 'black', 'yapf', 'autopep8']
 
 if executable('clang-format')
     " sudo apt install clang-format
