@@ -355,6 +355,11 @@ endif
 " let g:lsp_log_file = expand('~/vim-lsp.log')
 " let g:lsp_preview_doubletap = 0
 let g:lsp_diagnostics_virtual_text_enabled = 0
+if has('win32unix')
+    " enable workspaceFolders on MSYS (Git Bash) vim
+    " without this, basedpyright fails to find the project root (and config).
+    let g:lsp_experimental_workspace_folders = 1
+endif
 
 function! s:on_lsp_buffer_enabled() abort
     " setl omnifunc=lsp#complete
