@@ -67,10 +67,6 @@ config.key_tables = {
 }
 
 config.keys = {
-  -- window
-  { key = 'x', mods = 'ALT', action = wezterm.action_callback(function(window, pane) window:maximize() end) },
-  { key = 'r', mods = 'ALT', action = wezterm.action_callback(function(window, pane) window:restore() end) },
-
   -- split panes
   {
     key = '|',
