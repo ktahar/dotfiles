@@ -368,15 +368,15 @@ augroup lsp_install
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
-if executable('basedpyright-langserver')
-    " pip install python-lsp-server
+if !has('win32unix') && executable('basedpyright-langserver')
+    " use basedpyright (pip install basedpyright)
     au User lsp_setup call lsp#register_server({
        \ 'name': 'basedpyright',
        \ 'cmd': {server_info->['basedpyright-langserver', '--stdio']},
        \ 'allowlist': ['python'],
        \ })
 elseif executable('pylsp')
-    " pip install python-lsp-server
+    " use pylsp (pip install python-lsp-server[all])
     au User lsp_setup call lsp#register_server({
        \ 'name': 'pylsp',
        \ 'cmd': {server_info->['pylsp']},
