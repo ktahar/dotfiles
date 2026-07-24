@@ -28,7 +28,7 @@ set showtabline=1
 "" Status line, command
 set laststatus=2
 set cmdheight=2
-set history=50
+set history=1000
 set showmode
 set showcmd
 set wildmenu
@@ -40,7 +40,10 @@ set iminsert=0
 set imsearch=0
 set backspace=indent,eol,start
 
-""" search
+""" Timing
+set updatetime=300
+
+""" Search
 set wrapscan
 set ignorecase
 set smartcase
@@ -166,6 +169,8 @@ inoremap <expr> ,dh strftime('## %Y-%m-%d')
 
 """ Plugin Loading {{{
 packadd matchit
+packadd editorconfig
+packadd comment
 
 let g:no_gvimrc_example = 1
 let g:no_vimrc_example  = 1
