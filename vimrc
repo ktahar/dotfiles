@@ -357,76 +357,43 @@ endif
 "}}}
 
 """ Plugin Settings {{{
-"" vim-lsp {{{
-" diagnostic option
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('~/vim-lsp.log')
-" let g:lsp_preview_doubletap = 0
-let g:lsp_diagnostics_virtual_text_enabled = 0
-if has('win32unix')
-    " enable workspaceFolders on MSYS (Git Bash) vim
-    " without this, basedpyright fails to find the project root (and config).
-    let g:lsp_experimental_workspace_folders = 1
-endif
-
-function! s:on_lsp_buffer_enabled() abort
-    " setl omnifunc=lsp#complete
-    nnoremap <buffer> <expr><Down> lsp#scroll(+4)
-    nnoremap <buffer> <expr><Up> lsp#scroll(-4)
-endfunction
-
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-
+"" lsp {{{
+packadd lsp
 if executable('basedpyright-langserver')
-    " use basedpyright (pip install basedpyright)
-    au User lsp_setup call lsp#register_server({
-       \ 'name': 'basedpyright',
-       \ 'cmd': {server_info->['basedpyright-langserver', '--stdio']},
-       \ 'allowlist': ['python'],
-       \ })
+    call LspAddServer([#{name: 'basedpyright',
+                \   filetype: 'python',
+                \   path: 'basedpyright-langserver',
+                \   args: ['--stdio'],
+                \ }])
 elseif executable('pylsp')
-    " use pylsp (pip install python-lsp-server[all])
-    au User lsp_setup call lsp#register_server({
-       \ 'name': 'pylsp',
-       \ 'cmd': {server_info->['pylsp']},
-       \ 'allowlist': ['python'],
-       \ 'workspace_config': {'pylsp': {'plugins':
-       \ {'pycodestyle': {'enabled': v:false}},
-       \ }},
-       \ })
+    call LspAddServer([#{name: 'pylsp',
+                \   filetype: 'python',
+                \   path: 'pylsp',
+                \   args: [],
+                \   workspaceConfig: #{pylsp: #{plugins: #{
+                \       pycodestyle: #{enabled: v:false},
+                \   }}},
+                \ }])
 endif
-for g:clangd_cmd in ['clangd', 'clangd-9']
-    if executable(g:clangd_cmd)
-        " sudo apt install clangd or clangd-9 (ubuntu bionic)
-        au User lsp_setup call lsp#register_server({
-           \ 'name': g:clangd_cmd,
-           \ 'cmd': {server_info->[g:clangd_cmd, '--background-index', '--header-insertion=never']},
-           \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp'],
-           \ })
+" TODO: check if clangd works right
+for s:clangd_cmd in ['clangd', 'clangd-9']
+    if executable(s:clangd_cmd)
+        call LspAddServer([#{name: s:clangd_cmd,
+                    \   filetype: ['c', 'cpp', 'objc', 'objcpp'],
+                    \   path: s:clangd_cmd,
+                    \   args: ['--background-index', '--header-insertion=never'],
+                    \ }])
         break
     endif
 endfor
+" TODO: check if ocamllsp works right
 if executable('ocamllsp')
-    au User lsp_setup call lsp#register_server({
-       \ 'name': 'ocamllsp',
-       \ 'cmd': {server_info->['ocamllsp']},
-       \ 'allowlist': ['ocaml'],
-       \ })
+    call LspAddServer([#{name: 'ocamllsp',
+                \   filetype: 'ocaml',
+                \   path: 'ocamllsp',
+                \   args: [],
+                \ }])
 endif
-
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-    \ 'name': 'omni',
-    \ 'allowlist': ['tex'],
-    \ 'blocklist': ['c', 'cpp', 'ocaml', 'python'],
-    \ 'completor': function('asyncomplete#sources#omni#completor'),
-    \ 'config': {
-    \   'show_source_kind': 1
-    \ }
-    \ }))
 "}}}
 
 "" vsnip {{{

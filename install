@@ -157,7 +157,7 @@ def install_pip_packages_windows(args):
     pkgs = [
         # python dev tools
         "virtualenv", "mypy", "ipython",
-        "python-lsp-server[all]",  # to use pylsp from vim-lsp.
+        "python-lsp-server[all]",
         "black",
         # tools written in python
         "compiledb",

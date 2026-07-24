@@ -16,15 +16,6 @@
 [submodule "vim/pack/my/start/editorconfig-vim"]
 	path = vim/pack/my/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
-[submodule "vim/pack/my/start/vim-lsp"]
-	path = vim/pack/my/start/vim-lsp
-	url = https://github.com/prabirshrestha/vim-lsp
-[submodule "vim/pack/my/start/asyncomplete.vim"]
-	path = vim/pack/my/start/asyncomplete.vim
-	url = https://github.com/prabirshrestha/asyncomplete.vim
-[submodule "vim/pack/my/start/asyncomplete-lsp.vim"]
-	path = vim/pack/my/start/asyncomplete-lsp.vim
-	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
 [submodule "apps/vim"]
 	path = apps/vim
 	url = https://github.com/vim/vim
@@ -46,9 +37,6 @@
 [submodule "vim/pack/my/start/vimtex"]
 	path = vim/pack/my/start/vimtex
 	url = https://github.com/lervag/vimtex
-[submodule "vim/pack/my/start/asyncomplete-omni.vim"]
-	path = vim/pack/my/start/asyncomplete-omni.vim
-	url = https://github.com/yami-beta/asyncomplete-omni.vim
 [submodule "vim/pack/my/start/vim-commentary"]
 	path = vim/pack/my/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary
@@ -79,3 +67,6 @@
 [submodule "apps/vimv"]
 	path = apps/vimv
 	url = https://github.com/thameera/vimv
+[submodule "vim/pack/my/start/lsp"]
+	path = vim/pack/my/start/lsp
+	url = https://github.com/yegappan/lsp

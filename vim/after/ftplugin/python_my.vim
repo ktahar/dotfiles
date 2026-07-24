@@ -7,37 +7,23 @@ setl fileencoding=utf-8
 setl foldmethod=indent
 
 " LSP
-nnoremap <silent><buffer> <LocalLeader>t <plug>(lsp-hover)
-nnoremap <silent><buffer> <LocalLeader>d <plug>(lsp-definition)
-nnoremap <silent><buffer> <LocalLeader>n <plug>(lsp-document-diagnostics)
-nnoremap <silent><buffer> <LocalLeader>r <plug>(lsp-rename)
-nnoremap <silent><buffer> <LocalLeader>R <plug>(lsp-references)
-nnoremap <silent><buffer> <LocalLeader>S <plug>(lsp-document-symbol)
+nnoremap <silent><buffer> <LocalLeader>t <Cmd>LspHover<CR>
+nnoremap <silent><buffer> <LocalLeader>d <Cmd>LspGotoDefinition<CR>
+nnoremap <silent><buffer> <LocalLeader>n <Cmd>LspDiag show<CR>
+nnoremap <silent><buffer> <LocalLeader>N <Cmd>LspDiag current<CR>
+nnoremap <silent><buffer> <LocalLeader>r <Cmd>LspRename<CR>
+nnoremap <silent><buffer> <LocalLeader>R <Cmd>LspShowReferences<CR>
+nnoremap <silent><buffer> <LocalLeader>S <Cmd>LspDocumentSymbol<CR>
 
-" do not map qX for quickfix. it seems vim-lsp diagnostics
-" opens location list now
-" silent call ToggleQL(1)
-
-" Execute current file (python3 -> python): <LocalLeader>e
-function! s:ExecPy()
+" Execute current file (python3 -> python)
+function! s:ExecPy(interactive)
     lcd %:h
-    if executable('python3')
-        !python3 %
-    elseif executable('python')
-        !python %
+    let l:python = executable('python3') ? 'python3'
+                \ : executable('python') ? 'python' : ''
+    if !empty(l:python)
+        execute '!' . l:python . (a:interactive ? ' -i' : '') . ' %'
     endif
 endfunction
-" command! -buffer Exec call <SID>ExecPy()
-nnoremap <silent><buffer> <LocalLeader>e :call <SID>ExecPy()<CR>
-nnoremap <silent><buffer> <LocalLeader>x :call <SID>ExecPy()<CR>
-
-" Execute current file (python3 -> python, interactive): <LocalLeader>i
-function! s:ExecPy_i()
-    lcd %:h
-    if executable('python3')
-        !python3 -i %
-    elseif executable('python')
-        !python -i %
-    endif
-endfunction
-nnoremap <silent><buffer> <LocalLeader>i :call <SID>ExecPy_i()<CR>
+" non-interactive: <LocalLeader>e interactive <LocalLeader>E
+nnoremap <silent><buffer> <LocalLeader>e :call <SID>ExecPy(v:false)<CR>
+nnoremap <silent><buffer> <LocalLeader>E :call <SID>ExecPy(v:true)<CR>
