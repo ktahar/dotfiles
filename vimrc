@@ -380,7 +380,6 @@ elseif executable('pylsp')
                 \   }}},
                 \ }])
 endif
-" TODO: check if clangd works right
 for s:clangd_cmd in ['clangd', 'clangd-9']
     if executable(s:clangd_cmd)
         call LspAddServer([#{name: s:clangd_cmd,
@@ -391,7 +390,6 @@ for s:clangd_cmd in ['clangd', 'clangd-9']
         break
     endif
 endfor
-" TODO: check if ocamllsp works right
 if executable('ocamllsp')
     call LspAddServer([#{name: 'ocamllsp',
                 \   filetype: 'ocaml',
