@@ -314,11 +314,19 @@ augroup END
 
 """ Terminal specific {{{
 """ Cursor
-if has("unix") && index(["screen-256color", "gnome-256color", "xterm-256color", "rxvt-unicode-256color"], $TERM) >= 0
-    let &t_SI = "\<Esc>[6 q"
-    let &t_SR = "\<Esc>[4 q"
-    let &t_EI = "\<Esc>[2 q"
-endif
+" Defer this because something like `set termguicolors` can override this.
+function! s:set_cursor_shape() abort
+    if !has('gui_running') && index(["tmux-256color", "gnome-256color", "xterm-256color"], $TERM) >= 0
+        let &t_SI = "\<Esc>[6 q"
+        let &t_SR = "\<Esc>[4 q"
+        let &t_EI = "\<Esc>[2 q"
+    endif
+endfunction
+
+augroup my_cursor_shape
+    autocmd!
+    autocmd VimEnter * call s:set_cursor_shape()
+augroup END
 
 "" Linux Input Methods {{{
 if executable('ibus')
@@ -568,5 +576,8 @@ let g:vimtex_quickfix_ignore_filters = [
 "}}}
 
 """ Colorscheme {{{
+if exists('+termguicolors') && !has('gui_running')
+    silent! set termguicolors
+endif
 silent! colorscheme jellybeans
 "}}}

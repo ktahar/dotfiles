@@ -11,6 +11,7 @@ config.leader = {
 
 config.font = wezterm.font "Cica"
 config.font_size = 16
+config.cursor_blink_rate = 0
 config.default_prog = {
   'C:\\Program Files\\Git\\bin\\bash.exe',
   '-l',
