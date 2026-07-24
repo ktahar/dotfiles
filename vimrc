@@ -579,5 +579,12 @@ let g:vimtex_quickfix_ignore_filters = [
 if exists('+termguicolors') && !has('gui_running')
     silent! set termguicolors
 endif
+if has('terminal')
+    let g:terminal_ansi_colors = [
+        \ '#48483e', '#dc2566', '#8fc029', '#d4c96e',
+        \ '#55bcce', '#9358fe', '#56b7a5', '#f1ebeb',
+        \ '#76715e', '#fa2772', '#a7e22e', '#e7db75',
+        \ '#66d9ef', '#ae82ff', '#66efd5', '#ffffff' ]
+endif
 silent! colorscheme jellybeans
 "}}}
