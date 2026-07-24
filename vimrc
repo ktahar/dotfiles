@@ -316,7 +316,7 @@ augroup END
 """ Cursor
 " Defer this because something like `set termguicolors` can override this.
 function! s:set_cursor_shape() abort
-    if !has('gui_running') && index(["tmux-256color", "gnome-256color", "xterm-256color"], $TERM) >= 0
+    if !has('gui_running') && index(["tmux-256color", "xterm-256color", "alacritty", "gnome-256color"], $TERM) >= 0
         let &t_SI = "\<Esc>[6 q"
         let &t_SR = "\<Esc>[4 q"
         let &t_EI = "\<Esc>[2 q"

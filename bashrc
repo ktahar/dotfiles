@@ -5,14 +5,14 @@ PS1="\[\e[36m\]\u@\h\[\e[m\] \[\e[1;36m\]\w\[\e[m\] \$ "
 
 _title="${USER}@${HOSTNAME}"
 case $TERM in
-    screen*)
+    tmux*)
         _title="\ePtmux;\e\e]0;tmux $_title\a\e\\"
         ;;
     xterm*)
         _title="\e]0;xterm $_title\a"
         ;;
-    rxvt-unicode*)
-        _title="\e]0;urxvt $_title\a"
+    alacritty*)
+        _title="\e]0;Alacritty $_title\a"
         ;;
     gnome*)
         _title="\e]0;GNOME Terminal $_title\a"

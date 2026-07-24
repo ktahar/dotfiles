@@ -448,10 +448,8 @@ def install_apt_packages(args):
     ex_pkgs["desktop"] = [
         # libs to build vim
         "xorg-dev",  # to enable +clipboard +X11
-        # terminal
-        "rxvt-unicode", "alacritty",
-        # misc
-        "flameshot", "feh", "zathura",
+        # terminal, utils
+        "alacritty", "flameshot", "feh", "zathura",
     ]
 
     ex_pkgs["fulldesktop"] = [
@@ -670,8 +668,6 @@ files_linux = [
     (r".config/alacritty/alacritty.toml", r"alacritty.toml"),
     (r".ipython/profile_default/ipython_config.py", r"python/ipython_config.py"),
     (r".ipython/profile_default/startup/ipython_startup.py", r"python/ipython_startup.py"),
-    (r".Xresources", r"Xresources"),
-    (r".urxvt/ext/resize-font", r"urxvt/resize-font/resize-font"),
 ]
 
 
@@ -691,7 +687,6 @@ def link_linux():
             r".config/zathura",
             r".config/feh",
             r".config/alacritty",
-            r".urxvt/ext",
             r".zfunc",
             ]
 

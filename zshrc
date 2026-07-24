@@ -115,14 +115,14 @@ my_prompt_precmd () {
     # set window title
     local title="${USER}@${HOST}"
     case $TERM in
-        screen*)
+        tmux*)
             print -Pn "\ePtmux;\e\e]0;tmux $title\a\e\\"
             ;;
         xterm*)
             print -Pn "\e]0;xterm $title\a"
             ;;
-        rxvt-unicode*)
-            print -Pn "\e]0;urxvt $title\a"
+        alacritty*)
+            print -Pn "\e]0;Alacritty $title\a"
             ;;
         gnome*)
             print -Pn "\e]0;GNOME Terminal $title\a"
