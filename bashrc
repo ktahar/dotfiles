@@ -29,9 +29,15 @@ bind '"\C-j": vi-movement-mode'
 
 set -o ignoreeof
 
+if [[ -n "$MSYSTEM" && -f "$HOME/AppData/Local/Programs/Vim/vim.exe" ]]; then
+    alias v="${HOME}/AppData/Local/Programs/Vim/vim.exe"
+    alias vi="${HOME}/AppData/Local/Programs/Vim/vim.exe"
+    alias vim="${HOME}/AppData/Local/Programs/Vim/vim.exe"
+else
+    alias v='vim'
+    alias vi='vim'
+fi
 alias svim='sudo vim --noplugin'
-alias v='vim'
-alias vi='vim'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias l='ls --color -BC'
