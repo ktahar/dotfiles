@@ -57,7 +57,24 @@ local function spawn_tab_in_current_cwd(window, pane)
     )
 end
 
+local copy_mode = wezterm.gui.default_key_tables().copy_mode
+for i = #copy_mode, 1, -1 do
+  if copy_mode[i].key == 'Enter' and copy_mode[i].mods == 'NONE' then
+    table.remove(copy_mode, i)
+  end
+end
+table.insert(copy_mode, {
+  key = 'Enter',
+  mods = 'NONE',
+  action = act.Multiple {
+    { CopyTo = 'ClipboardAndPrimarySelection' },
+    { CopyMode = 'Close' },
+  },
+})
+
 config.key_tables = {
+  copy_mode = copy_mode,
+
   resize_pane = {
     { key = "h", mods = "SHIFT", action = act.AdjustPaneSize({ "Left", 3 }) },
     { key = "j", mods = "SHIFT", action = act.AdjustPaneSize({ "Down", 3 }) },
@@ -128,6 +145,9 @@ config.keys = {
   -- tab navigation
   { key = 'n', mods = 'LEADER', action = act.ActivateTabRelative(1) },
   { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
+
+  -- copy mode
+  { key = '[', mods = 'LEADER', action = act.ActivateCopyMode },
 
   -- numeric tab navigation
   { key = '1', mods = 'LEADER', action = act.ActivateTab(0) },
