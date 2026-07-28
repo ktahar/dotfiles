@@ -133,8 +133,6 @@ nnoremap Y y$
 nnoremap <silent> <Leader>cd :<C-u>lcd %:h<CR>:pwd<CR>
 nnoremap <silent> <Leader>h :<C-u>noh<CR>
 nnoremap <silent> <Leader>s :<C-u>setl spell!<CR>:setl spell?<CR>
-nnoremap <silent> <Leader>m :<C-u>vert rightb term<CR>
-nnoremap <silent> <Leader>M :<C-u>rightb term<CR>
 
 if exists(':terminal')
     if exists('+termwinkey')
