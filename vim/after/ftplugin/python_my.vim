@@ -6,6 +6,11 @@ let b:did_ftplugin_python_my = 1
 setl fileencoding=utf-8
 setl foldmethod=indent
 
+" PEP8-compliant hanging indent for parenthesized expressions.
+let g:python_indent = get(g:, 'python_indent', {})
+let g:python_indent.open_paren = 'shiftwidth()'
+let g:python_indent.closed_paren_align_last_line = v:false
+
 " LSP
 nnoremap <silent><buffer> <LocalLeader>t <Cmd>LspHover<CR>
 nnoremap <silent><buffer> <LocalLeader>d <Cmd>LspGotoDefinition<CR>
