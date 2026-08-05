@@ -364,6 +364,7 @@ endif
 packadd lsp
 call LspOptionsSet(#{
             \   semanticHighlight: v:false,
+            \   maxDiagnostics: 50,
             \})
 if executable('basedpyright-langserver')
     call LspAddServer([#{name: 'basedpyright',
