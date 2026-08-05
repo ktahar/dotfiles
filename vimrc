@@ -362,6 +362,9 @@ endif
 """ Plugin Settings {{{
 "" lsp {{{
 packadd lsp
+call LspOptionsSet(#{
+            \   semanticHighlight: v:false,
+            \})
 if executable('basedpyright-langserver')
     call LspAddServer([#{name: 'basedpyright',
                 \   filetype: 'python',
