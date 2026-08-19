@@ -10,13 +10,7 @@ if ($^O eq 'MSWin32') {
     $dvips = 'dvips %O -z -f %S | convbkmk -u > %D';
     $ps2pdf = 'ps2pdf.exe %O %S %D';
     $pdf_mode = 1;
-    if (-f 'C:/Program Files/SumatraPDF/SumatraPDF.exe') {
-        $pdf_previewer = '"C:/Program Files/SumatraPDF/SumatraPDF.exe" -reuse-instance';
-    } elsif (-f 'C:/Program Files (x86)/SumatraPDF/SumatraPDF.exe') {
-        $pdf_previewer = '"C:/Program Files (x86)/SumatraPDF/SumatraPDF.exe" -reuse-instance';
-    } else {
-        $pdf_previewer = 'texworks';
-    }
+    $pdf_previewer = 'SumatraPDF';
 } else {
     $latex = 'uplatex %O -synctex=1 %S';
     $pdflatex = 'lualatex %O -synctex=1 %S';

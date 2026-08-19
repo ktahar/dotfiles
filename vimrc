@@ -532,7 +532,9 @@ let g:vim_markdown_folding_level = 3
 "" vimtex {{{
 let g:vimtex_compiler_method = 'latexmk'
 if s:is_win
-    let g:vimtex_view_general_viewer = $LOCALAPPDATA . '\SumatraPDF\SumatraPDF.exe'
+    let g:vimtex_view_general_viewer = 'SumatraPDF'
+    let g:vimtex_view_general_options
+                \ = '-reuse-instance -forward-search @tex @line @pdf'
 else
     let g:vimtex_view_method = 'zathura'
 endif
