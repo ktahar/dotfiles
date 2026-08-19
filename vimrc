@@ -41,7 +41,7 @@ set imsearch=0
 set backspace=indent,eol,start
 
 """ Timing
-set updatetime=300
+set updatetime=1000
 
 """ Search
 set wrapscan
@@ -57,6 +57,17 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,iso-2022-jp-3,cp932,euc-jp,default,l
 """ Spell
 set nospell
 set spelllang=en,cjk
+
+""" Completion
+set complete=.,w,b
+set completeopt=menu,menuone,noselect,popup
+
+""" Autoread
+set autoread
+augroup auto_checktime
+    autocmd!
+    autocmd FocusGained,BufEnter,CursorHold * checktime
+augroup END
 
 """ fillchar
 " vertical split with │ (unicode char U+2502) instead of default |
@@ -363,6 +374,7 @@ endif
 "" lsp {{{
 packadd lsp
 call LspOptionsSet(#{
+            \   autoComplete: v:false,
             \   semanticHighlight: v:false,
             \   maxDiagnostics: 50,
             \})
