@@ -69,11 +69,10 @@ augroup auto_checktime
     autocmd FocusGained,BufEnter,CursorHold * checktime
 augroup END
 
-""" fillchar
+""" Fillchars (only for CUI)
 " vertical split with │ (unicode char U+2502) instead of default |
 " fold with ─ (unicode char U+2500) instead of default -
-" aiming only Linux terminal.
-if !s:is_win && !has("gui_running")
+if !has("gui_running")
     set fillchars=vert:│,fold:─
 endif
 
