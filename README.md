@@ -39,12 +39,6 @@ To sync with submodules:
 cd ~/dotfiles/ && ./submod/update # or, git submodule update --init
 ```
 
-To rebuild help tags for Vim plugins that have a `doc` directory:
-
-```bash
-cd ~/dotfiles/ && ./submod/helptags
-```
-
 To upgrade all the submodules (use with care):
 
 ```bash
