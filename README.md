@@ -8,7 +8,7 @@ cd && git clone --recursive https://ktahar@github.com/ktahar/dotfiles
 cd dotfiles/ && ./install
 ```
 
-The install script will do basic setups. 
+The install script will do basic setups.
 But, for desktop environments (Linux or Windows), look at environment-specific notes:
 
 - [Linux (GNOME)](gnome/README.md)
@@ -31,37 +31,44 @@ See following directories.
 * [tmux/plugins](tmux/plugins): plugins for tmux.
 
 ### Commands for submodule manipulation
+[submod](submod) contains some scripts for submodule manipulations.
+
 To sync with submodules:
 
 ```bash
-cd ~/dotfiles/ && git submodule update -i
+cd ~/dotfiles/ && ./submod/update # or, git submodule update --init
 ```
 
-To upgrade submodules:
+To rebuild help tags for Vim plugins that have a `doc` directory:
 
 ```bash
-cd ~/dotfiles/ && git submodule foreach git pull origin master
+cd ~/dotfiles/ && ./submod/helptags
 ```
 
-See scripts in [submod](submod) for shortcuts.
+To upgrade all the submodules (use with care):
+
+```bash
+cd ~/dotfiles/ && ./submod/upgrade
+```
 
 ## Guidelines
-Of course, these things are also just for me.
+Some guidelines to help maintain my environment.
 
-### Software installation directory on Linux
-1. prefer package manager to manual-download/build.
+### Software installation directory on Linux (Ubuntu)
+Not to mess up the Linux environment...
+
+1. prefer OS package manager to manual-download/build.
     1. Consider `apt` package first.
-    1. If it is too old or problematic, use language-specific package manager.
-    1. If problem is well-known and ppa solves that, use ppa.
-    1. If there are some other reasons, manually download binary or build from source.
-1. avoid system-wide installation (use of sudo).
+    1. If problem is well-known (well-localized) and ppa solves that, use ppa.
+    1. If it is tied to a programming language, consider using the language's package manager.
+    1. If nothing above applies, manually download the binary or build from source.
+1. avoid system-wide installation of custom-built stuffs (use of sudo).
     1. `sudo apt install` is OK.
-    1. But don't install manual-download/build things under `/usr` etc.
-    1. If it is really necessary, install under `/opt`.
-1. install "well-established" or "traditional" things (like C library) under `~/.local`.
+    1. But don't install manual-download/build things under `/usr` etc (don't `sudo make install` blindly).
+    1. If it is really necessary, consider installing under `/opt` (like, `PREFIX=/opt` and `sudo make install`).
+1. prefer installing user-local things under `~/.local`.
     1. `pip install --user` uses this directory too.
-    1. Manually-built libs and apps can be installed with `PREFIX=${HOME}/.local`
-    1. To use C libraries there, configure envs like `LIBRARY_PATH`.
-    See [zshenv](zshenv) and `man gcc`.
-1. install "stand-alone" or "not-well-known" things under `~/opt`.
-    1. languages like node.js and go are there now.
+    1. Custom-built libs and apps can be installed with `PREFIX=${HOME}/.local`
+    1. To use C libraries there, configure env vars like `LIBRARY_PATH` or `LD_LIBRARY_PATH`.
+1. also consider putting user-local things in `~/opt` if it doesn't look appropriate to use `~/.local`.
+    1. node.js/npm is placed there now.

@@ -21,6 +21,13 @@ On git bash, `python install -g`
 - `-g` installs WezTerm and CLI tools via winget.
 - `fzf` for bash should be configured too.
 
+### Not-automated
+There are optional stuffs yet to be automated.
+
+#### TeX environment
+- Install TeXLive
+- Install SumatraPDF and add PATH env var (%LOCALAPPDATA%/SumatraPDF is the default location)
+
 ### TeraTerm (deprecated)
 Copy TERATERM.INI to TeraTerm's directory or just load settings from TeraTerm.
 

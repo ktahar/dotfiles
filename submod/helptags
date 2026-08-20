@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+plugin_dir="$repo_dir/vim/pack/my/start"
+
+find "$plugin_dir" -mindepth 2 -maxdepth 2 -type d -name doc -print0 |
+    while IFS= read -r -d '' doc_dir; do
+        printf 'Generating helptags: %s\n' "${doc_dir#"$repo_dir"/}"
+        VIM_PLUGIN_DOC="$doc_dir" vim -Nu NONE -n -es \
+            -c 'execute "helptags " . fnameescape($VIM_PLUGIN_DOC)' \
+            -c quit
+    done
