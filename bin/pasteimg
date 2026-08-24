@@ -18,11 +18,18 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Paste an image from clipboard, save it, and copy markdown link."
     )
+
+    if "LNB_HOME" not in os.environ:
+        parser.error("Set LNB_HOME env var to use this script")
+    home = os.environ["LNB_HOME"]
+    home = os.path.abspath(os.path.expanduser(home))
+    default_dir = os.path.join(home, "img")
+
     parser.add_argument(
         "-d",
         "--dir",
-        default="~/Box/lnb-chi/img",
-        help="Directory to save image (default: ~/Box/lnb-chi/img)",
+        default=default_dir,
+        help=f"Directory to save image (default: {default_dir})",
     )
     parser.add_argument(
         "-W",
