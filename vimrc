@@ -265,9 +265,6 @@ if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
                 \ | wincmd p | diffthis
 endif
-
-"" temp: quickly open notebook
-nnoremap <Leader>o :e ~/Box/lnb-chi/index.md<CR>
 "}}}
 
 """ Fileformat and Filetype {{{
@@ -388,10 +385,12 @@ elseif executable('pylsp')
                 \   filetype: 'python',
                 \   path: 'pylsp',
                 \   args: [],
-                \   workspaceConfig: #{pylsp: #{plugins: #{
+                \   workspaceConfig: #{pylsp: #{plugins:
+                \   #{
                 \       pycodestyle: #{enabled: v:false},
-                \   }}},
-                \ }])
+                \   }
+                \   }},
+                \   }])
 endif
 for s:clangd_cmd in ['clangd', 'clangd-9']
     if executable(s:clangd_cmd)
