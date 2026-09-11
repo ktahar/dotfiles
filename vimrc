@@ -558,4 +558,8 @@ if has('terminal')
         \ '#66d9ef', '#ae82ff', '#66efd5', '#ffffff' ]
 endif
 silent! colorscheme jellybeans
+" workaround for native windows vim on git bash on wezterm usage
+if s:is_win && !has('gui_running')
+    highlight SpellBad guisp=NONE
+endif
 "}}}
