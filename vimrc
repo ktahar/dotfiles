@@ -40,9 +40,6 @@ set iminsert=0
 set imsearch=0
 set backspace=indent,eol,start
 
-""" Timing
-set updatetime=1000
-
 """ Search
 set wrapscan
 set ignorecase
@@ -68,6 +65,10 @@ augroup auto_checktime
     autocmd!
     autocmd FocusGained,BufEnter,CursorHold * checktime
 augroup END
+
+""" Misc behavior
+set updatetime=500
+set shellslash
 
 """ Fillchars (only for CUI)
 " vertical split with │ (unicode char U+2502) instead of default |
