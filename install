@@ -158,7 +158,6 @@ def install_pip_packages_windows(args):
         # python dev tools
         "virtualenv", "mypy", "ipython",
         "python-lsp-server[all]",
-        "black",
         # tools written in python
         "compiledb",
     ]
@@ -470,7 +469,6 @@ def install_apt_packages(args):
         "python3-ipython", "ipython3",
         # python dev tools
         "python3-pylsp", "python3-mypy",
-        "black",
         # libs to build python
         "libssl-dev", "zlib1g-dev",
         "libbz2-dev", "libreadline-dev", "libsqlite3-dev",

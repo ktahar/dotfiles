@@ -444,7 +444,7 @@ let g:neoformat_ocaml_ocamlformat = {
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 
-let g:neoformat_enabled_python = ['ruff', 'black', 'yapf', 'autopep8']
+let g:neoformat_enabled_python = ['ruff']
 
 if executable('clang-format')
     " sudo apt install clang-format
